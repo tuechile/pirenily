@@ -1,7 +1,8 @@
 // Loader GIF between pages. It only appears when a page is slow (over 200ms),
-// except on the way to the landing page, where it always plays.
+// except on the way to the landing page, where it always plays. Reduced motion (settings) turns it off.
 document.addEventListener("DOMContentLoaded", () => {
     const loader = document.querySelector('.loader-container');
+    if (!loader || document.documentElement.dataset.motion === 'reduced') return;
     const SLOW = 200;
     const LANDING_HOLD = 400;
     let timer = null;

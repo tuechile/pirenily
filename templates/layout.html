@@ -15,6 +15,8 @@
         rel="stylesheet">
     <link href="/static/favicon.ico" rel="icon">
     <link href="/static/css/styles.css?v={{ asset_v }}" rel="stylesheet">
+    <link href="/static/css/settings.css?v={{ asset_v }}" rel="stylesheet">
+    <script src="/static/settings.js?v={{ asset_v }}"></script>
     {% block extra_css %}
     {% endblock %}
 </head>
@@ -34,10 +36,11 @@
             <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
             <div class="nav-item-big">
                 <a class="nav-item" href="/about"{% if nav_section == "about" %} aria-current="page"{% endif %}> About </a>
-                <a class="nav-item" href="/design"{% if nav_section == "design" %} aria-current="page"{% endif %}> Design </a>
+                <a class="nav-item" href="/code"{% if nav_section == "code" %} aria-current="page"{% endif %}> Code </a>
                 <a class="nav-item" href="/play"{% if nav_section == "play" %} aria-current="page"{% endif %}> Play </a>
                 <a class="nav-item" href="/#portfolio"{% if nav_section == "projects" %} aria-current="page"{% endif %}> Projects </a>
             </div>
+            <button class="nav-item settings-btn" type="button" data-settings-open aria-controls="settings-panel" aria-label="Settings: view, theme and sound">☾ ♪</button>
         </nav>
         {% block content %}
         {% endblock %}

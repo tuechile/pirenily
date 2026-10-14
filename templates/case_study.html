@@ -22,10 +22,10 @@
     <aside class="cs-rail" aria-label="Sections">
         {% if nav_section == "projects" %}
         <a class="cs-back" href="/#portfolio">← Projects</a>
-        {% elif nav_section == "play" %}
-        <a class="cs-back" href="/personal">← Play</a>
+        {% elif nav_section == "code" %}
+        <a class="cs-back" href="/code">← Code</a>
         {% else %}
-        <a class="cs-back" href="/collab">← Design</a>
+        <a class="cs-back" href="/personal">← Play</a>
         {% endif %}
         <p class="cs-kicker">{% block rail_kicker %}Case study{% endblock %}</p>
         <p class="cs-rail-title" id="csRailTitle"></p>

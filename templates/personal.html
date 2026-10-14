@@ -36,14 +36,14 @@
     position: relative;
     display: block;
     text-decoration: none;
-    color: #fff;
+    color: var(--c-strong);
     padding: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+    box-shadow: 0 8px 24px rgba(var(--shadow-rgb), .25);
   }
 
   .card:hover,
   .card:focus-visible {
-    filter: blur(1px);
+    filter: var(--hover-blur);
     outline: none;
   }
 
@@ -54,15 +54,15 @@
   }
 
   .card__desc {
-    font-family: 'Crimson Text', serif;
-    font-size: 0.8rem;
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
     line-height: 1.4;
-    color: #e3e3e3;
+    color: var(--c-title);
   }
 
   .card__meta {
-    font-family: 'Crimson Text', serif;
-    font-size: 13px;
+    font-family: var(--font-body);
+    font-size: var(--fs-note);
     line-height: 1.35;
     color: var(--accent);
     margin-top: 6px;
@@ -99,25 +99,25 @@
     <a class="card" href="street" data-previews="{{ previews('street') }}" data-category="art">
       <div class="thumbnail-header">Street Photography</div>
       <div class="thumbnail-description">Through the lens of my Nikon D5100 since 2017</div>
-      <div class="thumbnail-description" style="color:#bbb;">Ongoing</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">Ongoing</div>
     </a>
 
     <a class="card" href="afvs" data-previews="{{ previews('afvs', ['p1-final.jpg', 'p1-360-1.jpg', 'p1-360-2.jpg', 'p1-code-face.jpg', 'p1-progress-1.jpg', 'p1-progress-2.jpg']) }}" data-category="interactivity">
       <div class="thumbnail-header">Coding and Interactivity</div>
       <div class="thumbnail-description">Self-expression through code — press a key to see the face react</div>
-      <div class="thumbnail-description" style="color:#bbb;">Ongoing</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">Ongoing</div>
     </a>
 
     <a class="card" href="gifafvs" data-previews="{{ previews('processing', ['output.gif']) }}" data-category="interactivity">
       <div class="thumbnail-header">What Brings You Here</div>
       <div class="thumbnail-description">Do you wish someone would tell you what to do?</div>
-      <div class="thumbnail-description" style="color:#bbb;">Oct 2024</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">Oct 2024</div>
     </a>
     
     <a class="card" href="essays" data-category="essays">
       <div class="thumbnail-header">Video essays</div>
       <div class="thumbnail-description">A list of possible video essays I might create</div>
-      <div class="thumbnail-description" style="color:#bbb;">May 2025</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">May 2025</div>
     </a>
 
         
@@ -125,26 +125,26 @@
       <div class="thumbnail-header">The land of rivers: An imagined tea garden</div>
       <div class="thumbnail-description">Final project for FYSEMR 65R - created with Clip Studio Paint and InDesign
       </div>
-      <div class="thumbnail-description" style="color:#bbb;">December 2024</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">December 2024</div>
     </a>
 
     <a class="card" href="superface" data-previews="{{ previews('self') }}" data-category="art">
       <div class="thumbnail-header">Superface</div>
       <div class="thumbnail-description">Self-edited self-portraits exploring makeup and persona</div>
-      <div class="thumbnail-description" style="color:#bbb;">Delayed after 2023</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">Delayed after 2023</div>
     </a>
 
     <a class="card" href="illustration" data-previews="{{ previews('illustration') }}" data-category="art">
       <div class="thumbnail-header">Illustrations</div>
       <div class="thumbnail-description">My journey in the world of drawing cartoons (2018-2024)</div>
-      <div class="thumbnail-description" style="color:#bbb;">Delayed after 2022</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">Delayed after 2022</div>
     </a>
 
     <!-- ESSAYS -->
     <a class="card" href="portal" data-previews="{{ previews('portal') }}" data-category="essays">
       <div class="thumbnail-header">The Portal</div>
       <div class="thumbnail-description">A collection of poems and short stories</div>
-      <div class="thumbnail-description" style="color:#bbb;">Discontinued in 2021</div>
+      <div class="thumbnail-description" style="color: var(--c-lead);">Discontinued in 2021</div>
     </a>
 
 

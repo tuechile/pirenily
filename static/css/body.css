@@ -4,16 +4,16 @@
 
 :root {
     --accent: #1ca591;
-    --border: rgba(255, 255, 255, 0.08);
-    --panel: rgba(255, 255, 255, 0.03);
-    --text: #888;
-    --title: #eee;
-    --lead: #bbb;
-    --globe-land: rgba(255, 255, 255, 0.32);
-    --globe-land-back: rgba(255, 255, 255, 0.05);
-    --globe-wish: #888;
-    --globe-home: rgba(255, 255, 255, 0.9);
-    --globe-route: rgba(28, 165, 145, 0.4);
+    --border: rgba(var(--fg-rgb), 0.08);
+    --panel: rgba(var(--fg-rgb), 0.03);
+    --text: var(--c-text);
+    --title: var(--c-title);
+    --lead: var(--c-lead);
+    --globe-land: rgba(var(--fg-rgb), 0.32);
+    --globe-land-back: rgba(var(--fg-rgb), 0.05);
+    --globe-wish: var(--c-text);
+    --globe-home: rgba(var(--fg-rgb), 0.9);
+    --globe-route: rgba(var(--accent-rgb), 0.4);
 }
 
 .progress-wrap {
@@ -23,17 +23,17 @@
     width: 100%;
     height: 6px;
     z-index: 9998;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(var(--bg-rgb), 0.2);
     backdrop-filter: blur(6px);
 }
 
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--accent), #fff, var(--accent));
+    background: linear-gradient(90deg, var(--accent), var(--c-strong), var(--accent));
     background-size: 200% 100%;
     animation: progGlow 4s linear infinite;
-    box-shadow: 0 0 18px rgba(28, 165, 145, 0.35);
+    box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.35);
 }
 
 @keyframes progGlow {
@@ -60,15 +60,15 @@
     border: 1px solid var(--border);
     border-radius: var(--r-lg);
     background:
-        radial-gradient(circle at 18% 20%, rgba(28, 165, 145, 0.18), transparent 42%),
-        radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.07), transparent 40%),
-        rgba(0, 0, 0, 0.18);
+        radial-gradient(circle at 18% 20%, rgba(var(--accent-rgb), 0.18), transparent 42%),
+        radial-gradient(circle at 82% 10%, rgba(var(--fg-rgb), 0.07), transparent 40%),
+        rgba(var(--bg-rgb), 0.18);
     backdrop-filter: blur(10px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 30px rgba(var(--shadow-rgb), 0.25);
 }
 
 .case-title {
-    font-family: "Crimson Text", serif;
+    font-family: var(--font-body);
     color: var(--title);
     margin: 0.25rem 0 0.25rem 0;
     letter-spacing: 0.3px;
@@ -76,10 +76,10 @@
 }
 
 .case-subtitle {
-    font-family: "Crimson Text", serif;
-    color: #bbb;
+    font-family: var(--font-body);
+    color: var(--c-lead);
     margin: 0.25rem 0 0.75rem 0;
-    font-size: 0.95rem;
+    font-size: var(--fs-body-sm);
     line-height: 1.8;
 }
 
@@ -91,27 +91,27 @@
 }
 
 .callout {
-    border: 1px dashed rgba(28, 165, 145, 0.55);
+    border: 1px dashed rgba(var(--accent-rgb), 0.55);
     border-radius: var(--r-lg);
     padding: 1rem 1.25rem;
-    background: rgba(28, 165, 145, 0.06);
+    background: rgba(var(--accent-rgb), 0.06);
     max-width: 920px;
     margin: 0 auto;
 }
 
 .callout h3 {
     margin: 0 0 0.5rem 0;
-    font-family: "Crimson Text", serif;
-    color: #ddd;
+    font-family: var(--font-body);
+    color: var(--c-soft);
     font-size: 1rem;
     font-style: italic;
 }
 
 .callout p {
     margin: 0.25rem 0;
-    font-family: "Crimson Text", serif;
+    font-family: var(--font-body);
     color: var(--text);
-    font-size: 0.8rem;
+    font-size: var(--fs-1);
     line-height: 1.8;
 }
 
@@ -121,7 +121,7 @@
     border-radius: var(--r-lg);
     border: 1px solid var(--border);
     background: var(--panel);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 22px rgba(var(--shadow-rgb), 0.25);
 }
 
 .media-card img {
@@ -139,9 +139,9 @@
 }
 
 .img-caption {
-    font-family: "Crimson Text", serif;
+    font-family: var(--font-body);
     color: var(--text);
-    font-size: 0.8rem;
+    font-size: var(--fs-1);
     line-height: 1.6;
     max-width: 920px;
     margin: 0.6rem auto 0 auto;
@@ -202,7 +202,7 @@
     border: 1px solid var(--border);
     border-radius: var(--r-lg);
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.12);
+    background: rgba(var(--bg-rgb), 0.12);
 }
 
 .acc-btn {
@@ -210,8 +210,8 @@
     text-align: left;
     background: transparent;
     border: none;
-    color: #ddd;
-    font-family: "Crimson Text", serif;
+    color: var(--c-soft);
+    font-family: var(--font-body);
     padding: 0.9rem 1rem;
     cursor: pointer;
     display: flex;
@@ -222,7 +222,7 @@
 
 .acc-btn span {
     font-style: italic;
-    font-size: 0.95rem;
+    font-size: var(--fs-body-sm);
 }
 
 .acc-btn .chev {
@@ -240,14 +240,14 @@
 .acc-inner {
     padding: 1rem;
     color: var(--text);
-    font-family: "Crimson Text", serif;
-    font-size: 0.8rem;
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
     line-height: 1.8;
 }
 
 .contact-logo {
     text-decoration: none;
-    color: white;
+    color: var(--c-strong);
     height: 1.5rem;
     width: auto;
     opacity: 0.5;
@@ -260,7 +260,7 @@
 }
 
 .contact-logo:hover {
-    filter: blur(1px) grayscale(100%);
+    filter: var(--hover-blur) grayscale(100%);
     opacity: 0.8;
 }
 
@@ -298,12 +298,12 @@
 
 .bio-text a {
     text-decoration: none;
-    color: #888;
+    color: var(--c-text);
     transition: color var(--dur-2) var(--ease-out);
 }
 
 .bio-text a:hover {
-    background: linear-gradient(45deg, #1ca591, #fff, #1ca591);
+    background: linear-gradient(45deg, var(--accent), var(--c-strong), var(--accent));
     background-size: 200%;
     background-clip: text;
     -webkit-background-clip: text;
@@ -313,19 +313,19 @@
 
 .bio-text h2,
 .bio-text p {
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     line-height: 1.8;
-    color: #777;
+    color: var(--c-dim);
 }
 
 .bio-text h2 {
     font-size: 1rem;
-    color: #ccc;
+    color: var(--c-pale);
 }
 
 .bio-text p {
-    font-size: 0.8rem;
-    color: #888;
+    font-size: var(--fs-1);
+    color: var(--c-text);
 }
 
 /* Travel globe on the right (drawn by the inline script in about.html) */
@@ -364,7 +364,7 @@
 }
 
 .travel-globe .globe-zoom button {
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1;
     color: var(--text);
@@ -378,13 +378,13 @@
 }
 
 .travel-globe .globe-zoom button:hover {
-    filter: blur(1px);
+    filter: var(--hover-blur);
 }
 
 .travel-globe .globe-place {
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     font-style: italic;
-    font-size: 0.85rem;
+    font-size: var(--fs-note);
     color: var(--title);
     min-height: 1.8em;
     margin: 0.4rem 0 0;
@@ -392,8 +392,8 @@
 
 .travel-globe .globe-count,
 .travel-globe .globe-legend {
-    font-family: 'Crimson Text', serif;
-    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-size: var(--fs-tiny);
     line-height: 1.8;
     color: var(--text);
     margin: 0;
@@ -465,7 +465,7 @@
 
 .gif-text {
     flex: 0 1 34rem;
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     line-height: var(--lh, 1.8);
 }
 
@@ -477,7 +477,7 @@
 }
 
 .gif-text p {
-    font-size: 0.9rem;
+    font-size: var(--fs-small);
     color: var(--text);
     text-align: justify;
     margin: 0 0 0.9rem;
@@ -485,7 +485,7 @@
 
 .gif-text .gif-kicker {
     font-style: italic;
-    font-size: 0.8rem;
+    font-size: var(--fs-1);
     color: var(--accent);
     text-align: left;
     margin: 0 0 0.3rem;
@@ -534,17 +534,17 @@
 }
 
 .bio-name {
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     font-size: 1rem;
-    color: #ccc;
+    color: var(--c-pale);
     text-align: center;
     margin: 0.9rem 0 0;
 }
 
 .bio-contact-text {
-    font-family: 'Crimson Text', serif;
-    font-size: 0.8rem;
-    color: #888;
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
+    color: var(--c-text);
     text-align: center;
     margin: 0;
 }
@@ -612,16 +612,16 @@
 .bio-card-note {
     grid-column: 1 / -1;
     margin: 8px 0 0;
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     font-style: italic;
-    font-size: 0.8rem;
+    font-size: var(--fs-1);
     line-height: 1.4;
     text-align: center;
     color: var(--text);
 }
 
 .bio-thumb:hover {
-    filter: grayscale(100%) blur(1px);
+    filter: grayscale(100%) var(--hover-blur);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -644,7 +644,7 @@
 
 .bio-image:hover {
     animation: grayscaleTransition 1s infinite alternate;
-    box-shadow: -0.25rem 0.25rem 0.5rem 0.05rem #1ca591;
+    box-shadow: -0.25rem 0.25rem 0.5rem 0.05rem var(--accent);
 }
 
 @keyframes grayscaleTransition {
@@ -660,7 +660,7 @@
 
 /* ========================================= Thumbnail Styling ========================================= */
 .thumbnail-container {
-    font-family: "Crimson Text", serif;
+    font-family: var(--font-body);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -671,13 +671,13 @@
 
 .thumbnail {
     display: flex;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(var(--shadow-rgb), 0.1);
     overflow: hidden;
     transition: box-shadow var(--dur-2) var(--ease-out);
 }
 
 .thumbnail:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 10px rgba(var(--shadow-rgb), 0.15);
 }
 
 .thumbnail img {
@@ -696,13 +696,13 @@
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #ddd;
+    color: var(--c-soft);
     text-decoration: none;
 }
 
 .thumbnail-description {
-    font-size: 0.8rem;
-    color: #666;
+    font-size: var(--fs-1);
+    color: var(--c-dimmer);
 }
 
 /* Only thumbnails that CONTAIN a link are interactive */
@@ -715,7 +715,7 @@
 .thumbnail:has(a):hover .thumbnail-content,
 .thumbnail:has(a:focus-visible) img,
 .thumbnail:has(a:focus-visible) .thumbnail-content {
-  filter: blur(1px);
+  filter: var(--hover-blur);
 }
 
 /* Smoothness */
@@ -750,7 +750,7 @@
 
 .item img:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(var(--shadow-rgb), 0.3);
 }
 
 /* Lightbox Overlay Styling */
@@ -770,7 +770,7 @@
 .lightbox-overlay img {
     max-width: 90%;
     max-height: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(var(--shadow-rgb), 0.5);
 }
 
 /* ========================================= Other small items ========================================= */
@@ -797,7 +797,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(var(--bg-rgb), 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -861,7 +861,7 @@
         padding: 1rem;
     }
     .bio-text {
-        font-size: 0.8rem;
+        font-size: var(--fs-1);
     }
     .thumbnail {
         flex-direction: column;
@@ -909,7 +909,7 @@
     width: fit-content;
     margin: -1rem auto 0;
     padding: 0.25rem;
-    font-family: "Crimson Text", serif;
+    font-family: var(--font-body);
     font-style: italic;
     background: var(--glass);
     border: 1px solid var(--hairline);
@@ -1022,16 +1022,16 @@
     margin: 40px;
     font-family: 'BHN Cinema';
     font-weight: normal;
-    color: #fff;
+    color: var(--c-strong);
     /* 4vw on a laptop, but never tiny on phones or huge on wide screens */
     font-size: clamp(2.25rem, 4vw, 4rem);
 }
 
 /* Design: a line under the page title, before the filters */
 .page-note {
-    font-family: 'Crimson Text', serif;
+    font-family: var(--font-body);
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: var(--fs-small);
     line-height: 1.8;
     color: var(--text);
     text-align: center;
@@ -1046,7 +1046,7 @@
 }
 
 .page-note a:hover {
-    filter: blur(1px);
+    filter: var(--hover-blur);
 }
 
 /* About: one line before the long bio */

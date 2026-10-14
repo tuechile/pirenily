@@ -1,17 +1,4 @@
-{% extends "layout.html" %}
-
-{% block title %}| Design{% endblock %}
-{% block extra_css %}
-<link href="/static/css/body.css?v={{ asset_v }}" rel="stylesheet">
-{% endblock %}
-
-{% block content %}
-<!--- Navigation page for displaying collaborative work and commissions --->
-<h1 class="page-title">Design</h1>
-<p class="page-note">
-    Hate my website? Pull an issue at <a href="https://github.com/tuechile/pirenily/issues" target="_blank" rel="noopener">github.com/tuechile/pirenily</a>
-    or mail me at <a href="mailto:chile@college.harvard.edu">chile@college.harvard.edu</a>
-</p>
+{# Design cards with the Selected / Brand / UI/UX / All toggle (home Projects section) #}
 <div class="view-toggle" role="group" aria-label="View mode">
     <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
     <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
@@ -19,7 +6,7 @@
     <button type="button" class="view-btn" data-view="all" aria-pressed="false">All</button>
 </div>
 <div class="design-list" id="designList">
-    <!-- Same card as the home Projects section. Selected = data-featured, Brand = data-brand, UI/UX = data-uiux; the rest only show under All -->
+    <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux; the rest only show under All -->
     <a class="project-thumb" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-featured>
         <img class="project-thumb-img project-thumb-img--cover" src="{{ img('design', 'hackharvard/logo-thumb.png') }}" alt="HackHarvard logo in red on black">
         <div class="project-thumb-meta">
@@ -225,14 +212,17 @@
             });
         });
 
-        setView({ "#brand": "brand", "#uiux": "uiux", "#all": "all" }[location.hash] || "selected");
+        var fromHash = { "#brand": "brand", "#uiux": "uiux", "#all": "all" }[location.hash];
+        setView(fromHash || "selected");
+        // /#all etc. has no element to jump to, so bring the list into view ourselves
+        // (after load, once the browser has finished its own hash scroll)
+        if (fromHash) window.addEventListener("load", function () {
+            setTimeout(function () {
+                document.getElementById("portfolio").scrollIntoView({ behavior: "instant" });
+            });
+        });
         placePill(false);
         document.fonts.ready.then(function () { placePill(false); });
         window.addEventListener("resize", function () { placePill(false); });
     })();
 </script>
-<script src="/static/popups.js?v={{ asset_v }}"></script>
-{% endblock %}
-<!--- Additional footer detail --->
-{% block footer%} <a class="com-footer" style="text-decoration: none; color: #888" href="/about">Commission me on
-    Instagram!</a> {%endblock%}

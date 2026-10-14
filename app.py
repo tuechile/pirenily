@@ -34,7 +34,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "70"
+ASSET_VERSION = "72"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -80,9 +80,9 @@ def _date_sort_key(filename):
 # Which top-nav item a page belongs to, so the nav can mark "you are here".
 NAV_SECTIONS = {
     "about": ["about"],
-    "design": ["design", "hackharvard", "merch", "olympics", "recit", "highlander"],
+    "code": ["code", "cs1710"],
     "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
-    "projects": ["t4sg", "commonspirit", "cs1710"],
+    "projects": ["hackharvard", "merch", "olympics", "recit", "highlander", "t4sg", "commonspirit"],
 }
 
 
@@ -165,14 +165,16 @@ SEARCH_INDEX = [
     ("/about", ["about", "about me", "chi", "chi le", "le tue chi", "tue", "chi tue le", "pirenily", "me",
                 "myself", "emily", "iron pig", "chi bell", "artist", "bio", "contact", "email", "instagram",
                 "linkedin", "github", "resume", "cv", "self photography"]),
-    ("/design", ["design", "graphic design", "collab", "collaboration", "collaborations", "collaborative work",
-                 "commission", "commissions", "commissioned work", "client", "client work", "clubs", "club",
-                 "art direction", "art director", "director", "direction", "member", "logo", "logos", "poster",
-                 "posters", "branding", "brand"]),
+    ("/#portfolio", ["projects", "project", "portfolio", "ux", "ui", "uiux", "ui ux", "case study", "case studies",
+                     "work", "design", "graphic design", "collab", "collaboration", "collaborations",
+                     "collaborative work", "commission", "commissions", "commissioned work", "client", "client work",
+                     "clubs", "club", "art direction", "art director", "director", "direction", "member", "logo",
+                     "logos", "poster", "posters", "branding", "brand"]),
     ("/play", ["play", "personal", "personal work", "self", "mine", "free", "journey", "person", "fun"]),
-    ("/#portfolio", ["projects", "project", "portfolio", "code", "coding projects", "ux", "ui", "uiux", "ui ux",
-                     "case study", "case studies", "work", "cinenode", "cine node", "aerotone", "aero tone",
-                     "arduino", "neural reconstruction", "handwritten curves", "handwriting", "machine learning"]),
+    ("/code", ["code", "coding", "coding projects", "programming", "cinenode", "cine node", "aerotone",
+               "aero tone", "arduino", "neural reconstruction", "handwritten curves", "handwriting",
+               "machine learning", "ascii avatar", "ascii", "avatar", "my superface", "ukuraoke", "ukulele",
+               "karaoke", "backtiming"]),
     ("/hackharvard", ["hackharvard", "hack harvard", "hackharvard 2026", "hack to the moon", "hackathon",
                       "harvard hackathon", "hhuh", "director of design"]),
     ("/merch", ["merch", "merchandise", "hpair", "hconf", "aconf", "hudc", "the game", "harvard yale", "tote", "tote bag", "crest", "notebook",
@@ -284,19 +286,20 @@ def commonspirit():
 def about():
     return render_template("about.html")
 
-# Old addresses still work: /collab and /client -> /design, /personal -> /play
+# Old addresses still work: /design, /collab and /client -> home Projects, /personal -> /play
+@app.route("/design")
 @app.route("/collab")
 @app.route("/client")
 def collab():
-    return redirect(url_for("design"), code=301)
+    return redirect("/#portfolio", code=301)
 
 @app.route("/personal")
 def personal():
     return redirect(url_for("play"), code=301)
 
-@app.route("/design")
-def design():
-    return render_template("collab.html")
+@app.route("/code")
+def code():
+    return render_template("code.html")
 
 @app.route("/play")
 def play():
