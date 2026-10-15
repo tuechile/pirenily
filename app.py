@@ -34,7 +34,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "80"
+ASSET_VERSION = "82"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -80,9 +80,9 @@ def _date_sort_key(filename):
 # Which top-nav item a page belongs to, so the nav can mark "you are here".
 NAV_SECTIONS = {
     "about": ["about"],
-    "code": ["code", "cs1710"],
+    "code": ["code"],
     "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
-    "projects": ["hackharvard", "merch", "olympics", "recit", "highlander", "t4sg", "commonspirit"],
+    "projects": ["hackharvard", "merch", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710"],
 }
 
 

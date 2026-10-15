@@ -23,11 +23,16 @@
     --light-icon: invert(0.85) sepia(0.2);
 }
 
-/* Teal swap picks for paper: selected text is pink with a soft yellow glow */
+/* No glows on paper: selected text is plain pink */
 :root[data-theme="light"] ::selection {
     color: var(--accent);
-    text-shadow: 0 0 2px var(--yellow), 0 0 5px var(--yellow);
+    text-shadow: none;
     background-color: transparent;
+}
+
+:root[data-theme="light"] :is(.progress-bar, .btn:hover, .travel-globe .globe-legend i),
+:root[data-theme="light"] .cs-index a.is-current::before {
+    box-shadow: none;
 }
 
 /* Tag pills and the pressed settings buttons go ink instead of pink */
@@ -44,7 +49,6 @@
 
 :root[data-theme="light"] .progress-bar {
     background-image: linear-gradient(90deg, var(--yellow-bar), var(--pink-soft), var(--yellow-bar));
-    box-shadow: 0 0 18px rgba(var(--pink-soft-rgb), 0.35);
 }
 
 :root[data-theme="light"] :focus-visible {
@@ -57,7 +61,6 @@
 
 :root[data-theme="light"] .btn:hover {
     border-color: rgba(var(--gold-rgb), 0.55);
-    box-shadow: 0 0 18px rgba(var(--gold-rgb), 0.18);
 }
 
 :root[data-theme="light"] .settings-tile input[type="range"] {
