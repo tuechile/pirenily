@@ -50,11 +50,11 @@
     --title-on-black: var(--c-title);
     --ease-wipe: cubic-bezier(0.7, 0, 0.2, 1);
 
-    /* Motion: one fast-out curve, three durations, no bounce */
+    /* Motion: one fast-out curve, three durations, no bounce (each ~0.1s unhurried; reduced motion zeroes them) */
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-    --dur-1: 150ms;
-    --dur-2: 250ms;
-    --dur-3: 450ms;
+    --dur-1: 250ms;
+    --dur-2: 350ms;
+    --dur-3: 550ms;
     --press: scale(0.97);
 
     /* Soft edges for unframed images: the picture dissolves into the black instead of ending on a hard line */
@@ -464,6 +464,11 @@ a.project-thumb:focus-visible{
     color: var(--c-strong);
     border: 1px solid transparent;
     text-decoration: none;
+}
+
+/* Hover states ease in instead of snapping; components with their own transition override this */
+a, button {
+    transition: color var(--dur-1) var(--ease-out), opacity var(--dur-1) var(--ease-out), filter var(--dur-1) var(--ease-out);
 }
 
 .nav-item:hover,

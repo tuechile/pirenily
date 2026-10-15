@@ -129,7 +129,7 @@
         </div>
     </div>
     <div class="bio-text">
-        <p class="bio-lead">I am a designer and an engineer and I love to make things more curious.</p>
+        <p class="bio-lead">I am a code-liking designer or an art-liking developer (whatever you wanna call it) based in Cambridge, MA and I LOVE to make things more curious.</p>
         <p>
             I am currently a junior at Harvard College, concentrating in <a class="ext" href="https://seas.harvard.edu/computer-science" target="_blank" rel="noopener">Computer Science</a>
             and <a class="ext" href="https://afvs.fas.harvard.edu/" target="_blank" rel="noopener">Art, Film, and Visual Studies</a> with a secondary in <a class="ext" href="https://www.math.harvard.edu/" target="_blank" rel="noopener">Mathematics</a>.
@@ -251,11 +251,15 @@
         const ctx = canvas.getContext('2d');
         const css = getComputedStyle(document.documentElement);
         const color = name => css.getPropertyValue(name).trim();
-        const C = {
+        const C = {};
+        // Re-read when the visitor switches theme or view, so the globe never keeps the old colors
+        const readColors = () => Object.assign(C, {
             accent: color('--accent'), land: color('--globe-land'), back: color('--globe-land-back'),
             wish: color('--globe-wish'), rim: color('--border'), home: color('--globe-home'),
             route: color('--globe-route'),
-        };
+        });
+        readColors();
+        document.addEventListener('pirenily:settings', () => { readColors(); draw(); });
         const rad = Math.PI / 180;
 
         const countries = new Set(BEEN.map(p => p[1]));

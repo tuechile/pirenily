@@ -46,12 +46,19 @@
     }
     apply();
 
+    var switchTimer = null;
+
     function set(changes) {
         Object.assign(s, changes);
         store(KEY, s);
+        // Swap the look in one go: hover transitions would otherwise fade every color across the switch
+        root.classList.add("is-switching");
         apply();
+        clearTimeout(switchTimer);
+        switchTimer = setTimeout(function () { root.classList.remove("is-switching"); }, 60);
         syncPanel();
         syncMusic();
+        document.dispatchEvent(new CustomEvent("pirenily:settings", { detail: s }));
     }
 
     // ---------- Music ----------
@@ -247,7 +254,7 @@
         ];
         if (backwards) frames.reverse().forEach(function (f, i, a) { if (f.offset != null) f.offset = 1 - f.offset; });
         el.classList.add("is-growing");
-        var a = el.animate(frames, { duration: backwards ? 260 : 520, easing: backwards ? "ease-in" : "cubic-bezier(0.22, 1, 0.36, 1)" });
+        var a = el.animate(frames, { duration: backwards ? 320 : 640, easing: backwards ? "ease-in" : "cubic-bezier(0.22, 1, 0.36, 1)" });
         a.onfinish = a.oncancel = function () { el.classList.remove("is-growing"); if (done) done(); };
         return a;
     }
@@ -351,6 +358,49 @@
             t.remove();
         });
     }
+
+    // ---------- Mail links copy the address instead of opening a mail app ----------
+    function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text).catch(function () { return copyByHand(text); });
+        }
+        return copyByHand(text);
+    }
+
+    // Older browsers, or when the clipboard API says no
+    function copyByHand(text) {
+        return new Promise(function (ok, fail) {
+            var t = document.createElement("textarea");
+            t.value = text;
+            t.setAttribute("readonly", "");
+            t.style.position = "fixed";
+            t.style.opacity = "0";
+            document.body.appendChild(t);
+            t.select();
+            var done = false;
+            try { done = document.execCommand("copy"); } catch (e) {}
+            t.remove();
+            done ? ok() : fail();
+        });
+    }
+
+    document.addEventListener("click", function (e) {
+        var link = e.target.closest('a[href^="mailto:"]');
+        if (!link) return;
+        e.preventDefault();
+        var address = decodeURIComponent(link.getAttribute("href").slice(7).split("?")[0]);
+        var r = link.getBoundingClientRect();
+        var note = document.createElement("span");
+        note.className = "mail-copied";
+        note.setAttribute("role", "status");
+        note.style.left = r.left + r.width / 2 + scrollX + "px";
+        note.style.top = r.top + scrollY + "px";
+        copyText(address).then(function () { note.textContent = "Copied " + address; },
+            function () { note.textContent = address; });
+        document.querySelectorAll(".mail-copied").forEach(function (n) { n.remove(); });
+        document.body.appendChild(note);
+        setTimeout(function () { note.remove(); }, 1800);
+    });
 
     // ---------- Wiring ----------
     function typing(el) {

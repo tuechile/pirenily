@@ -953,7 +953,7 @@
     border-radius: var(--r-pill);
     box-sizing: border-box;
     pointer-events: none;
-    transition: transform var(--dur-2) var(--ease-out), width var(--dur-2) var(--ease-out);
+    transition: transform var(--dur-3) var(--ease-out), width var(--dur-3) var(--ease-out);
 }
 
 /* Only the bio pic, and the picture on single-picture pages (layout.html sets .one-pic), get feathered edges */
@@ -1039,10 +1039,11 @@
     margin: -1.5rem auto 1.5rem;
 }
 
+/* Same links as the home page's feedback footer */
 .page-note a {
-    color: var(--lead);
+    color: var(--accent);
     text-decoration: none;
-    border-bottom: 1px solid var(--border);
+    transition: filter var(--dur-1) var(--ease-out);
 }
 
 .page-note a:hover {

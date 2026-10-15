@@ -19,8 +19,15 @@
     --yellow: #fdff85;                /* selection glow, link shimmer */
     --yellow-bar: #f4ff8f;            /* progress bar */
     --gold-rgb: 255, 208, 107;        /* button hover glow */
+    --footer-text: rgba(var(--fg-rgb), 0.5);
+    --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
     --light-icon: invert(0.85) sepia(0.2);
+}
+
+/* Ink bleed: a hair of ink-colored shadow on every letter (cheap, unlike filter: blur) */
+:root[data-theme="light"] body {
+    text-shadow: var(--ink-bleed);
 }
 
 /* No glows on paper: selected text is plain pink */
@@ -40,6 +47,28 @@
 :root[data-theme="light"] :is(.settings-views, .settings-seg) button[aria-pressed="true"] {
     color: var(--c-strong);
     border-color: var(--c-strong);
+}
+
+/* Footers on paper: no rule above them, and lighter text */
+:root[data-theme="light"] :is(.site-footer, .feedback-footer) {
+    border-top: 0;
+}
+
+:root[data-theme="light"] :is(footer, .feedback-footer) {
+    color: var(--footer-text);
+}
+
+/* Toggle panels (home Selected/Brand/UI/UX/All, Play filters): the hovered tab stays ink and the rest dim, like the nav */
+:root[data-theme="light"] .view-btn {
+    transition: opacity 400ms var(--ease-out);
+}
+
+:root[data-theme="light"] :is(.view-btn:hover, .view-btn:focus-visible) {
+    color: var(--title);
+}
+
+:root[data-theme="light"] .view-toggle:hover > .view-btn:not(:hover) {
+    opacity: 0.45;
 }
 
 /* Shimmering links and the poem run yellow through ink */
@@ -114,11 +143,32 @@
 
 :root[data-theme="light"] #video-container {
     position: absolute;
-    top: 0;
+    top: var(--landing-nav-h);
     left: 0;
     right: 0;
     width: auto;
-    height: 95vh;
+    height: calc(95vh - var(--landing-nav-h) - 5rem);
+    padding-bottom: 0;
+    /* Overlay blend: the video prints into the paper instead of sitting on it as a black block */
+    mix-blend-mode: overlay;
+}
+
+:root[data-theme="light"] #background-video {
+    width: auto;
+    max-width: 60%;
+    height: 100%;
+    max-height: none;
+    padding-bottom: 0;
+}
+
+/* The nav stays above the video and clear of it */
+:root[data-theme="light"] .landing {
+    --landing-nav-h: 8rem;
+}
+
+:root[data-theme="light"] .landing nav {
+    position: relative;
+    z-index: 1;
 }
 
 /* ---------- Easy to read ---------- */
@@ -175,7 +225,7 @@
 
 /* Hover: everything but the hovered item dims (no blur) */
 :root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .card-grid) > * {
-    transition: opacity 300ms var(--ease-out);
+    transition: opacity 400ms var(--ease-out);
 }
 
 :root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .card-grid):hover > :not(:hover) {
@@ -200,6 +250,13 @@
 /* ---------- Text size ---------- */
 :root[data-size="S"] { font-size: 87.5%; }
 :root[data-size="L"] { font-size: 118.75%; }
+
+/* While a setting switches, nothing animates, so the new look lands at once */
+:root.is-switching *,
+:root.is-switching *::before,
+:root.is-switching *::after {
+    transition: none !important;
+}
 
 /* ---------- Reduced motion ---------- */
 :root[data-motion="reduced"] {
@@ -283,9 +340,14 @@
     --bubble-bg: var(--bg);
 }
 
-/* Content appears once the shape has finished growing */
+/* Content fades in quickly once the shape has finished growing */
+.settings-bubble > * > * {
+    transition: opacity 180ms var(--ease-out);
+}
+
 .settings-bubble.is-growing > * > * {
-    visibility: hidden;
+    opacity: 0;
+    transition: none;
 }
 
 /* ========================================= Panel ========================================= */
@@ -486,8 +548,13 @@
     background: none;
 }
 
+.settings-hint-bubble > .settings-hint-open {
+    transition: color 180ms var(--ease-out);
+}
+
 .settings-hint-bubble.is-growing > * {
     color: transparent;
+    transition: none;
 }
 
 .settings-hint-open:hover {
@@ -523,6 +590,23 @@
     0% { opacity: 0.95; transform: translate(0, 0) scale(0.3); }
     45% { opacity: 0.8; }
     100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(var(--s)); }
+}
+
+/* ========================================= Mail copied note ========================================= */
+.mail-copied {
+    position: absolute;
+    z-index: 2200;
+    transform: translate(-50%, calc(-100% - 6px));
+    padding: 0.2rem 0.6rem;
+    font-family: var(--font-body);
+    font-size: var(--fs-note);
+    font-style: italic;
+    white-space: nowrap;
+    color: var(--c-title);
+    background: var(--bubble-bg);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-pill);
+    pointer-events: none;
 }
 
 /* ========================================= "See it my way?" tease ========================================= */
