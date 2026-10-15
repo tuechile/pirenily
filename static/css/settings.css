@@ -12,18 +12,68 @@
     color-scheme: light;
     --bg-rgb: 245, 241, 236;          /* beige paper */
     --fg-rgb: 42, 37, 32;             /* brown-black ink */
-    --accent: #12806f;                /* teal, darker so it reads on paper */
-    --accent-rgb: 18, 128, 111;
+    --accent: #ffa8c2;                /* on paper the teal becomes pink: text, dots, globe */
+    --accent-rgb: 255, 168, 194;
+    --pink-soft: #ffc9de;             /* focus ring, photo shadow, slider, panel tint */
+    --pink-soft-rgb: 255, 201, 222;
+    --yellow: #fdff85;                /* selection glow, link shimmer */
+    --yellow-bar: #f4ff8f;            /* progress bar */
+    --gold-rgb: 255, 208, 107;        /* button hover glow */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
     --light-icon: invert(0.85) sepia(0.2);
-    --select-bg: #f4ff8f;             /* neon pastel yellow highlighter */
 }
 
-/* Selected text: a highlighter stroke on paper, ink stays ink */
+/* Teal swap picks for paper: selected text is pink with a soft yellow glow */
 :root[data-theme="light"] ::selection {
+    color: var(--accent);
+    text-shadow: 0 0 2px var(--yellow), 0 0 5px var(--yellow);
+    background-color: transparent;
+}
+
+/* Tag pills and the pressed settings buttons go ink instead of pink */
+:root[data-theme="light"] .pill,
+:root[data-theme="light"] :is(.settings-views, .settings-seg) button[aria-pressed="true"] {
     color: var(--c-strong);
-    background-color: var(--select-bg);
-    text-shadow: none;
+    border-color: var(--c-strong);
+}
+
+/* Shimmering links and the poem run yellow through ink */
+:root[data-theme="light"] :is(.com-footer:hover, .bio-text a:hover, .gradient-poem) {
+    background-image: linear-gradient(45deg, var(--yellow), var(--c-strong), var(--yellow));
+}
+
+:root[data-theme="light"] .progress-bar {
+    background-image: linear-gradient(90deg, var(--yellow-bar), var(--pink-soft), var(--yellow-bar));
+    box-shadow: 0 0 18px rgba(var(--pink-soft-rgb), 0.35);
+}
+
+:root[data-theme="light"] :focus-visible {
+    outline-color: var(--pink-soft);
+}
+
+:root[data-theme="light"] .bio-image:hover {
+    box-shadow: -0.25rem 0.25rem 0.5rem 0.05rem var(--pink-soft);
+}
+
+:root[data-theme="light"] .btn:hover {
+    border-color: rgba(var(--gold-rgb), 0.55);
+    box-shadow: 0 0 18px rgba(var(--gold-rgb), 0.18);
+}
+
+:root[data-theme="light"] .settings-tile input[type="range"] {
+    accent-color: var(--pink-soft);
+}
+
+:root[data-theme="light"] .case-hero {
+    background:
+        radial-gradient(circle at 18% 20%, rgba(var(--pink-soft-rgb), 0.18), transparent 42%),
+        radial-gradient(circle at 82% 10%, rgba(var(--fg-rgb), 0.07), transparent 40%),
+        rgba(var(--bg-rgb), 0.18);
+}
+
+:root[data-theme="light"] .callout {
+    border-color: rgba(var(--pink-soft-rgb), 0.55);
+    background: rgba(var(--pink-soft-rgb), 0.06);
 }
 
 /* Easy mode in dark: a warm near-black instead of pure black */
