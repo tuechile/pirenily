@@ -611,6 +611,19 @@ footer {
 
 /* ===== Style Changes on Smaller Screen ===== */
 
+/* Below 881px the finder shows a picture instead of the video; these layers sit on top of it
+   (same size, set with --pic) and melt its edges into the page so it has no hard outline.
+   The picture is already gray, so the finder's grayscale filter comes off: it would tint these layers. */
+@media screen and (max-width: 880px) {
+    .header {
+        --pic-feather:
+            linear-gradient(to right, var(--bg), transparent 16%, transparent 84%, var(--bg)),
+            linear-gradient(to bottom, var(--bg), transparent 16%, transparent 84%, var(--bg));
+        filter: none;
+        border: 0;
+    }
+}
+
 /* ===== Tablet Styles ===== */
 @media screen and (min-width: 666px) and (max-width:880px) {
     .nav-header {
@@ -631,11 +644,11 @@ footer {
     }
 
     .header {
+        --pic: min(50vh, 90vw);
         font-size: 5rem;
         height: 50vh;
-        background-size: contain;
-        background-image: url(/static/asset/images/other/homebackground.jpg);
-
+        background-image: var(--pic-feather), url(/static/asset/images/other/homebackground.jpg);
+        background-size: var(--pic) var(--pic);
     }
 
 
@@ -746,11 +759,12 @@ footer {
     }
 
     .header {
+        --pic: 83vw;
         font-size: 3rem;
         padding: 0rem;
-        background-size: 85%;
         width: 98%;
-        background-image: url(/static/asset/images/other/homebackground.jpg);
+        background-image: var(--pic-feather), url(/static/asset/images/other/homebackground.jpg);
+        background-size: var(--pic) var(--pic);
     }
 
     footer {
