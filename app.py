@@ -34,15 +34,28 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "86"
+ASSET_VERSION = "89"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
 # Masonry photo galleries, all rendered by templates/gallery.html.
 # folder: IMAGE_FOLDERS key; section: page title suffix; sort: gallery_images()
-# sort mode; natural_height: show images at their own aspect ratio, uncropped.
+# sort mode, or a list of filenames for a hand-picked order (anything unlisted
+# follows, newest first); natural_height: show images at their own aspect ratio, uncropped.
+ILLUSTRATION_ORDER = [
+    "10.3.22.jpg", "30.10.23.jpg", "28.8.21.jpg", "26.8.22.jpg", "16.7.21.jpg",
+    "10.7.21.jpg", "9.7.20.jpg", "illustration-19.webp", "illustration-18.webp",
+    "illustration-04.webp", "illustration-02.webp", "illustration-06.webp",
+    "illustration-17.webp", "illustration-07.webp", "illustration-12.webp",
+    "22.5.20.jpg", "illustration-10.webp", "illustration-05.webp",
+    "illustration-08.webp", "15.4.20.jpg", "illustration-16.webp",
+    "illustration-13.png", "illustration-09.webp", "illustration-14.webp",
+    "illustration-20.webp", "illustration-03.webp", "illustration-01.webp",
+    "illustration-11.webp", "illustration-15.webp",
+]
+
 GALLERIES = {
-    "illustration": {"folder": "illustration", "section": "Personal", "sort": "date_desc"},
+    "illustration": {"folder": "illustration", "section": "Personal", "sort": ILLUSTRATION_ORDER},
     "portal": {"folder": "portal", "section": "Personal"},
     "street": {"folder": "street", "section": "Personal"},
     "superface": {"folder": "self", "section": "Personal"},
@@ -71,10 +84,15 @@ def render_sub_page(name, folder):
 
 def _date_sort_key(filename):
     # illustration/ files are named D.M.YY(YY).ext; sort newest first.
-    day, month, year = (int(p) for p in os.path.splitext(filename)[0].split("."))
+    # Undated files (e.g. illustration-01.webp) come first, in name order.
+    stem = os.path.splitext(filename)[0]
+    try:
+        day, month, year = (int(p) for p in stem.split("."))
+    except ValueError:
+        return (0, 0, stem)
     if year < 100:
         year += 2000
-    return datetime(year, month, day)
+    return (1, -datetime(year, month, day).toordinal(), stem)
 
 
 # Which top-nav item a page belongs to, so the nav can mark "you are here".
@@ -145,8 +163,11 @@ def inject_image_helper():
             f for f in os.listdir(dir_path)
             if os.path.splitext(f)[1].lower() in GALLERY_IMAGE_EXTENSIONS
         ]
+        if isinstance(sort, list):
+            listed = [f for f in sort if f in files]
+            return listed + sorted(set(files) - set(listed), key=_date_sort_key)
         if sort == "date_desc":
-            return sorted(files, key=_date_sort_key, reverse=True)
+            return sorted(files, key=_date_sort_key)
         return sorted(files)
 
     def previews(folder, files=None, limit=8):
