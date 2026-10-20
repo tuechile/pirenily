@@ -78,30 +78,18 @@
 
 
 {# Org line under a section heading: social icons, then a short fact line.
-   links: list of (kind, href). Instagram / Facebook / LinkedIn reuse the About page's logos;
-   the rest are drawn here in the same filled style. #}
-{% set org_logos = {"instagram": ("Instagram", "ig.png"), "facebook": ("Facebook", "fb.png"), "linkedin": ("LinkedIn", "linkedin.png")} %}
-{% set org_icons = {
-    "x": ("X", '<path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/>'),
-    "website": ("Website", '<mask id="org-globe"><rect width="24" height="24" fill="#fff"/><g fill="none" stroke="#000" stroke-width="1.6"><path d="M2 12h20M12 2c2.6 2.7 3.9 6 3.9 10s-1.3 7.3-3.9 10c-2.6-2.7-3.9-6-3.9-10S9.4 4.7 12 2z"/></g></mask><circle cx="12" cy="12" r="10" fill="currentColor" mask="url(#org-globe)"/>'),
-    "article": ("Article", '<mask id="org-article"><rect width="24" height="24" fill="#fff"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#000" stroke-width="1.8" stroke-linecap="round"/></mask><rect x="4" y="2" width="16" height="20" rx="2.5" fill="currentColor" mask="url(#org-article)"/>'),
-} %}
+   links: list of (kind, href); kinds are the icons in partials/icons.html. #}
+{% import "partials/icons.html" as icons %}
+{% set org_names = {"instagram": "Instagram", "facebook": "Facebook", "linkedin": "LinkedIn", "x": "X",
+                    "website": "Website", "article": "Article"} %}
 {% macro org(meta=None, links=[]) %}
 <div class="cs-org">
     {% if links %}
     <div class="cs-org-links">
         {% for kind, href in links %}
-        {% if kind in org_logos %}
-        {% set name, file = org_logos[kind] %}
-        <a href="{{ href }}" target="_blank" rel="noopener" aria-label="{{ name }}" title="{{ name }}">
-            <img src="{{ url_for('static', filename='asset/images/other/' ~ file) }}" alt="">
+        <a href="{{ href }}" target="_blank" rel="noopener" aria-label="{{ org_names[kind] }}" title="{{ org_names[kind] }}">
+            {{ icons.icon(kind, class="cs-org-icon") }}
         </a>
-        {% else %}
-        {% set name, paths = org_icons[kind] %}
-        <a href="{{ href }}" target="_blank" rel="noopener" aria-label="{{ name }}" title="{{ name }}">
-            <svg viewBox="0 0 24 24" aria-hidden="true">{{ paths|safe }}</svg>
-        </a>
-        {% endif %}
         {% endfor %}
     </div>
     {% endif %}

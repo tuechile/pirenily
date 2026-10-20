@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.security import check_password_hash
 import difflib
 import os
 import random
@@ -34,7 +35,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "97"
+ASSET_VERSION = "100"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -381,9 +382,26 @@ def hackharvard():
 def merch():
     return render_template("collab websites/merch.html")
 
-@app.route("/involvement")
+# /involvement is password-gated. The repo is public, so only a salted hash lives here.
+# The cookie keeps what the visitor typed and is re-checked on every visit, so it
+# can't be forged from the (also public) secret_key.
+INVOLVEMENT_PASSWORD_HASH = "pbkdf2:sha256:260000$AJMYAVeFscajv61Y$8ce834196318e38022c22e094b3e927fc255bdb1273e4a6fdc60816172b12b3c"
+INVOLVEMENT_COOKIE = "involvement_key"
+
+
+@app.route("/involvement", methods=["GET", "POST"])
 def involvement():
-    return render_template("involvement.html")
+    if request.method == "POST":
+        key = request.form.get("password", "")
+        if not check_password_hash(INVOLVEMENT_PASSWORD_HASH, key):
+            return render_template("involvement_gate.html", wrong=True), 401
+        response = redirect(url_for("involvement"))
+        response.set_cookie(INVOLVEMENT_COOKIE, key, max_age=60 * 60 * 24 * 30,
+                            httponly=True, secure=request.is_secure, samesite="Lax")
+        return response
+    if check_password_hash(INVOLVEMENT_PASSWORD_HASH, request.cookies.get(INVOLVEMENT_COOKIE, "")):
+        return render_template("involvement.html")
+    return render_template("involvement_gate.html")
 
 @app.route("/cs1710")
 def cs171():

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% import "partials/icons.html" as icons %}
 
 {% block title %}| Meet Chi{% endblock %}
 {% block extra_css %}
@@ -115,16 +116,16 @@
         <p class="bio-contact-text">Feel free to reach out to me via Instagram or email!</p>
         <div class="bio-contact-logos">
             <a href="https://www.instagram.com/pju_irza/" class="ext" target="_blank" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'ig.png') }}" alt="Instagram" class="contact-logo">
+                {{ icons.icon("instagram", "Instagram") }}
             </a>
             <a href="mailto:letuechi.2006@gmail.com" style="text-decoration: none">
-                <img src="{{ img('other', 'mail.png') }}" alt="Gmail" class="contact-logo">
+                {{ icons.icon("mail", "Gmail") }}
             </a>
             <a href="https://www.linkedin.com/in/chi-tue-le-214705320/" class="ext" target="_blank" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'linkedin.png') }}" alt="LinkedIn" class="contact-logo">
+                {{ icons.icon("linkedin", "LinkedIn") }}
             </a>
             <a href="https://github.com/tuechile" class="ext" target="_blank" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'github.webp') }}" alt="GitHub" class="contact-logo">
+                {{ icons.icon("github", "GitHub") }}
             </a>
         </div>
     </div>

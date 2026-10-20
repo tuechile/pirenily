@@ -22,7 +22,6 @@
     --footer-text: rgba(var(--fg-rgb), 0.5);
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
-    --light-icon: invert(0.85) sepia(0.2);
 }
 
 /* Ink bleed: a hair of ink-colored shadow on every letter (cheap, unlike filter: blur) */
@@ -112,11 +111,6 @@
 :root[data-mode="easy"][data-theme="dark"] {
     --bg-rgb: 18, 17, 16;
     --fg-rgb: 238, 234, 229;
-}
-
-/* White PNG icons (Instagram, mail, ...) turn dark on paper */
-:root[data-theme="light"] .contact-logo {
-    filter: var(--light-icon);
 }
 
 /* The home finder sits on the dark video: white text, inverted where it runs onto the paper.

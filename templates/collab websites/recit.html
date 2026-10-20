@@ -1,4 +1,5 @@
 {% extends "case_study.html" %}
+{% import "partials/icons.html" as icons %}
 {% import "partials/case_blocks.html" as cs %}
 
 {% block title %}| Recít Studio{% endblock %}
@@ -73,14 +74,14 @@
 
 {% block footer %}
 <a href="https://www.instagram.com/recit.stu/" target="_blank" rel="noopener" style="text-decoration: none">
-    <img src="{{ img('other', 'ig.png') }}" alt="Instagram" class="contact-logo">
+    {{ icons.icon("instagram", "Instagram") }}
 </a>
 
 <a href="mailto:recitfilmmaking@gmail.com" style="text-decoration: none">
-    <img src="{{ img('other', 'mail.png') }}" alt="Email" class="contact-logo">
+    {{ icons.icon("mail", "Email") }}
 </a>
 
 <a href="https://www.facebook.com/recit.stu" target="_blank" rel="noopener" style="text-decoration: none">
-    <img src="{{ img('other', 'fb.png') }}" alt="Facebook" class="contact-logo">
+    {{ icons.icon("facebook", "Facebook") }}
 </a>
 {% endblock %}

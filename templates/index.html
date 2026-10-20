@@ -1,3 +1,4 @@
+{% import "partials/icons.html" as icons %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,16 +73,16 @@
         <div class="home-footer-meta">Chi (Tue) Le | Pirenily | Updated {{ last_updated }}</div>
         <div class="home-footer-contacts">
             <a href="https://www.instagram.com/pju_irza/" class="ext" target="_blank" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'ig.png') }}" alt="Instagram" class="contact-logo">
+                {{ icons.icon("instagram", "Instagram") }}
             </a>
             <a href="mailto:letuechi.2006@gmail.com" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'mail.png') }}" alt="Gmail" class="contact-logo">
+                {{ icons.icon("mail", "Gmail") }}
             </a>
             <a href="https://www.linkedin.com/in/chi-tue-le-214705320/" class="ext" target="_blank" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'linkedin.png') }}" alt="LinkedIn" class="contact-logo">
+                {{ icons.icon("linkedin", "LinkedIn") }}
             </a>
             <a href="https://github.com/tuechile" class="ext" target="_blank" rel="noopener" style="text-decoration: none">
-                <img src="{{ img('other', 'github.webp') }}" alt="GitHub" class="contact-logo">
+                {{ icons.icon("github", "GitHub") }}
             </a>
         </div>
         <a class="scroll-mouse" href="#portfolio" aria-label="Scroll down to see my portfolio"></a>

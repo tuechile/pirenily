@@ -1,4 +1,5 @@
 {% extends "case_study.html" %}
+{% import "partials/icons.html" as icons %}
 {% import "partials/case_blocks.html" as cs %}
 
 {% block title %}| Highlander{% endblock %}
@@ -41,10 +42,10 @@
 
 {% block footer %}
 <a href="https://www.instagram.com/chuoichuoibuoibuoi/" target="_blank" rel="noopener" style="text-decoration: none">
-    <img src="{{ img('other', 'ig.png') }}" alt="Instagram" class="contact-logo">
+    {{ icons.icon("instagram", "Instagram") }}
 </a>
 
 <a href="mailto:nhomchuoicec@gmail.com" style="text-decoration: none">
-    <img src="{{ img('other', 'mail.png') }}" alt="Email" class="contact-logo">
+    {{ icons.icon("mail", "Email") }}
 </a>
 {% endblock %}

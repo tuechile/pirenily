@@ -202,6 +202,12 @@ body {
     -webkit-filter: grayscale(100%);
 }
 
+/* Icons from partials/icons.html: line drawings in the text color, so every view and theme recolors them */
+svg.contact-logo {
+    width: 1.5rem;
+    vertical-align: middle;
+}
+
 .contact-logo:hover,
 a:focus-visible .contact-logo {
     filter: var(--hover-blur) grayscale(100%);

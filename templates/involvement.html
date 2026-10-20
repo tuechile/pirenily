@@ -71,8 +71,7 @@
     {# ===== HPAIR ===== #}
     {% call cs.section("HPAIR", lead="Director of Internal Relations",
                        meta="Harvard Project for Asian and International Relations · previously Multimedia Associate",
-                       links=[("linkedin", "https://www.linkedin.com/company/harvard-project-for-asian-and-international-relations-hpair-"),
-                              ("instagram", "https://www.instagram.com/officialhpair/")]) %}
+                       links=[("instagram", "https://www.instagram.com/officialhpair/")]) %}
     <p>
         As Multimedia Associate for a year, I ran marketing campaigns and programming for a conference of
         nearly 2,000 attendees, and handled outreach and support for participants from 30+ countries.
@@ -97,34 +96,27 @@
     {# ===== Evidence ===== #}
     {{ cs.section("Evidence", lead="Where to see the work") }}
 
-    {# links: (text, href); internal links start with "/" #}
+    {# (org, title, description, link text, href); hrefs starting with "/" stay on this site #}
     {% set evidence = [
         ("HackHarvard", "Case study", "Brand, campaign, website and merch, with the full results.",
-         [("pirenily.com/hackharvard", "/hackharvard")]),
+         "pirenily.com/hackharvard", "/hackharvard"),
         ("HackHarvard", "Live 2026 site", "The event website the team built from the brand system.",
-         [("hhuh.io", "https://hhuh.io/")]),
+         "hhuh.io", "https://hhuh.io/"),
         ("Office for the Arts", "Instagram", "The campaigns and event coverage I create for.",
-         [("@harvard_arts", "https://www.instagram.com/harvard_arts/")]),
-        ("HPAIR", "LinkedIn and Instagram", "HPAIR's official pages.",
-         [("LinkedIn", "https://www.linkedin.com/company/harvard-project-for-asian-and-international-relations-hpair-"),
-          ("@officialhpair", "https://www.instagram.com/officialhpair/")]),
+         "@harvard_arts", "https://www.instagram.com/harvard_arts/"),
+        ("HPAIR", "Instagram", "HPAIR's official account.",
+         "@officialhpair", "https://www.instagram.com/officialhpair/"),
     ] %}
     <div class="cs-block">
         <ul class="evidence-grid">
-            {% for org, title, desc, links in evidence %}
-            <li class="evidence-card">
-                <p class="cs-label">{{ org }}</p>
-                <h3 class="evidence-title">{{ title }}</h3>
-                <p>{{ desc }}</p>
-                <div class="evidence-links">
-                    {% for text, href in links %}
-                    {% if href.startswith('/') %}
-                    <a class="evidence-link" href="{{ href }}">{{ text }} →</a>
-                    {% else %}
-                    <a class="evidence-link" href="{{ href }}" target="_blank" rel="noopener" aria-label="{{ org }} {{ text }} (opens in a new tab)">{{ text }} →</a>
-                    {% endif %}
-                    {% endfor %}
-                </div>
+            {% for org, title, desc, text, href in evidence %}
+            <li>
+                <a class="evidence-card" href="{{ href }}"{% if not href.startswith('/') %} target="_blank" rel="noopener"{% endif %}>
+                    <span class="cs-label">{{ org }}</span>
+                    <span class="evidence-title">{{ title }}</span>
+                    <span class="evidence-desc">{{ desc }}</span>
+                    <span class="evidence-link">{{ text }} →{% if not href.startswith('/') %}<span class="sr-only"> (opens in a new tab)</span>{% endif %}</span>
+                </a>
             </li>
             {% endfor %}
         </ul>
