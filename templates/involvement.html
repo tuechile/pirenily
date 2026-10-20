@@ -7,22 +7,21 @@
 {% block case %}
 
 {{ cs.hero("Campus Involvement",
-           "I'm active in three Harvard organizations. In each, I design for people who wouldn't normally show up, then measure whether it worked.",
            eyebrow="Overview",
-           tags=["HackHarvard: Director of Design", "Office for the Arts: Student Content Creator",
-                 "HPAIR: Director of Internal Relations"]) }}
+           tags=["Currently: HackHarvard (6 months) + HPAIR (1 year) + Office for the Arts (1 year) + Tech for Social Good (1 year)",
+                 "Previously: WorldMUN + HUDC"]) }}
 
 {% call cs.body() %}
 
     {# ===== HackHarvard ===== #}
     {% call cs.section("HackHarvard", lead="Director of Design", meta="April–October 2026") %}
     <p>
-        Led a 5-person design and engineering team to rebuild the brand of a hackathon with 500+ students
+        Led a 7-person design and engineering team to rebuild the brand of a hackathon with 500+ students
         from 30+ universities.
     </p>
     <p>
         Built the logo and identity from scratch, ran the promotional campaign, coordinated with
-        sponsorship, logistics and outreach, and produced 600 lanyards and 650 enamel pins.
+        sponsorship, logistics and outreach, and produced 600 merch sets.
     </p>
     {% endcall %}
 
@@ -45,7 +44,8 @@
 
     {# ===== Office for the Arts ===== #}
     {% call cs.section("Office for the Arts", lead="Student Content Creator",
-                       meta="Harvard Office for the Arts · September 2025–present") %}
+                       meta="Harvard Office for the Arts · September 2025–present",
+                       links=[("instagram", "https://www.instagram.com/harvard_arts/")]) %}
     <p>
         I launch campaigns for 10+ arts events a semester with 80+ artists. I use Instagram Insights data
         to tune when we post and which formats we use, and I survey attendees on how they found each
@@ -69,7 +69,9 @@
 
     {# ===== HPAIR ===== #}
     {% call cs.section("HPAIR", lead="Director of Internal Relations",
-                       meta="Harvard Project for International Relations · previously Multimedia Associate") %}
+                       meta="Harvard Project for Asian and International Relations · previously Multimedia Associate",
+                       links=[("linkedin", "https://www.linkedin.com/company/harvard-project-for-asian-and-international-relations-hpair-"),
+                              ("instagram", "https://www.instagram.com/officialhpair/")]) %}
     <p>
         As Multimedia Associate for a year, I ran marketing campaigns and programming for a conference of
         nearly 2,000 attendees, and handled outreach and support for participants from 30+ countries.
@@ -94,28 +96,36 @@
     {# ===== Evidence ===== #}
     {{ cs.section("Evidence", lead="Where to see the work") }}
 
+    {# links: (text, href); internal links start with "/" #}
     {% set evidence = [
-        ("HackHarvard", "Case study", "Brand, campaign, website and merch, with the full results.", "/hackharvard"),
-        ("HackHarvard", "Live 2026 site", "The event website the team built from the brand system.", "https://hackharvard2026prototype.vercel.app/"),
-        ("HackHarvard", "Merch", "Stickers, totes, lanyards and pins, among merch for other organizations.", "/merch"),
-        ("Office for the Arts", "Instagram Insights", "A screenshot of the account's Insights. The campaign posts are embedded above.", None),
-        ("HPAIR", "Conference and freshman events", "The conference page and a meet-and-greet flyer or post.", None),
+        ("HackHarvard", "Case study", "Brand, campaign, website and merch, with the full results.",
+         [("pirenily.com/hackharvard", "/hackharvard")]),
+        ("HackHarvard", "Live 2026 site", "The event website the team built from the brand system.",
+         [("hackharvard2026prototype.vercel.app", "https://hackharvard2026prototype.vercel.app/")]),
+        ("HackHarvard", "Merch", "Stickers, totes, lanyards and pins, among merch for other organizations.",
+         [("pirenily.com/merch", "/merch")]),
+        ("Office for the Arts", "Instagram", "The campaigns and event coverage I create for.",
+         [("@harvard_arts", "https://www.instagram.com/harvard_arts/")]),
+        ("HPAIR", "LinkedIn and Instagram", "HPAIR's official pages.",
+         [("LinkedIn", "https://www.linkedin.com/company/harvard-project-for-asian-and-international-relations-hpair-"),
+          ("@officialhpair", "https://www.instagram.com/officialhpair/")]),
     ] %}
     <div class="cs-block">
         <ul class="evidence-grid">
-            {% for org, title, desc, href in evidence %}
+            {% for org, title, desc, links in evidence %}
             <li class="evidence-card">
                 <p class="cs-label">{{ org }}</p>
                 <h3 class="evidence-title">{{ title }}</h3>
                 <p>{{ desc }}</p>
-                {% if href %}
-                {% set internal = href.startswith('/') %}
-                <a class="evidence-link" href="{{ href }}"{% if not internal %} target="_blank" rel="noopener" aria-label="{{ title }}, {{ href.split('/')[2] }} (opens in a new tab)"{% endif %}>
-                    {{ 'pirenily.com' ~ href if internal else href.split('/')[2] }} →
-                </a>
-                {% else %}
-                <span class="cs-todo">TODO: add link</span>
-                {% endif %}
+                <div class="evidence-links">
+                    {% for text, href in links %}
+                    {% if href.startswith('/') %}
+                    <a class="evidence-link" href="{{ href }}">{{ text }} →</a>
+                    {% else %}
+                    <a class="evidence-link" href="{{ href }}" target="_blank" rel="noopener" aria-label="{{ org }} {{ text }} (opens in a new tab)">{{ text }} →</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
             </li>
             {% endfor %}
         </ul>
