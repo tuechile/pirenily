@@ -1,0 +1,144 @@
+{% extends "case_study.html" %}
+{% import "partials/case_blocks.html" as cs %}
+
+{% block title %}| Campus Involvement{% endblock %}
+{% block rail_kicker %}Involvement{% endblock %}
+
+{% block case %}
+
+{{ cs.hero("Campus Involvement",
+           "I'm active in three Harvard organizations. In each, I design for people who wouldn't normally show up, then measure whether it worked.",
+           eyebrow="Overview",
+           tags=["HackHarvard: Director of Design", "Office for the Arts: Student Content Creator",
+                 "HPAIR: Director of Internal Relations"]) }}
+
+{% call cs.body() %}
+
+    {# ===== HackHarvard ===== #}
+    {% call cs.section("HackHarvard", lead="Director of Design", meta="April–October 2026") %}
+    <p>
+        Led a 5-person design and engineering team to rebuild the brand of a hackathon with 500+ students
+        from 30+ universities.
+    </p>
+    <p>
+        Built the logo and identity from scratch, ran the promotional campaign, coordinated with
+        sponsorship, logistics and outreach, and produced 600 lanyards and 650 enamel pins.
+    </p>
+    {% endcall %}
+
+    {{ cs.stats([
+        ("3×", "interactions per Instagram post"),
+        ("+30.3%", "Instagram followers, 3,663 → 4,772"),
+        ("2×", "total applications"),
+        ("1.45×", "submitted applications"),
+    ]) }}
+
+    {% call cs.row("fit", caption="The weekend: hackers picking up lanyards and pins at the merch table, the HACK marquee letters, and sponsor shirts at work.") %}
+        {{ cs.card(img('design', 'involvement/hh-merch-table.jpg'), "HackHarvard check-in table with organizers in teal Hack to the Moon shirts handing out lanyards, pins and red shirts to a hacker", ar=1.5) }}
+        {{ cs.card(img('design', 'involvement/hh-hack-sign.jpg'), "An organizer in a teal HackHarvard shirt and lanyard posing behind giant lit-up HACK marquee letters at night", ar=1.5) }}
+        {{ cs.card(img('design', 'involvement/hh-hacking.jpg'), "Hackers at laptops, one in a red HackHarvard 2026 shirt listing the sponsors on the back", ar=1.5) }}
+    {% endcall %}
+
+    {% call cs.section() %}
+    {{ cs.cta("/hackharvard", "Read the full case study") }}
+    {% endcall %}
+
+    {# ===== Office for the Arts ===== #}
+    {% call cs.section("Office for the Arts", lead="Student Content Creator",
+                       meta="Harvard Office for the Arts · September 2025–present") %}
+    <p>
+        I launch campaigns for 10+ arts events a semester with 80+ artists. I use Instagram Insights data
+        to tune when we post and which formats we use, and I survey attendees on how they found each
+        event to refine the strategy.
+    </p>
+    {% endcall %}
+
+    {{ cs.stats([
+        ("2×", "content engagement"),
+        ("+25.7%", "follower growth"),
+        ("10+", "events per semester"),
+        ("80+", "artists"),
+        ("+15%", "event turnout (projected)"),
+    ]) }}
+
+    {% call cs.row("equal", caption="Campaign posts for the Office for the Arts on Instagram.") %}
+        {% for post in ["Dee9VvhGxXa", "DYAxHelDNKl", "DXwtyJiAVza", "DTk0YYgDoph"] %}
+        {{ cs.embed("https://www.instagram.com/p/" ~ post ~ "/embed/", "Office for the Arts Instagram post " ~ loop.index, ar=0.72) }}
+        {% endfor %}
+    {% endcall %}
+
+    {# ===== HPAIR ===== #}
+    {% call cs.section("HPAIR", lead="Director of Internal Relations",
+                       meta="Harvard Project for International Relations · previously Multimedia Associate") %}
+    <p>
+        As Multimedia Associate for a year, I ran marketing campaigns and programming for a conference of
+        nearly 2,000 attendees, and handled outreach and support for participants from 30+ countries.
+    </p>
+    <p>
+        As Director of Internal Relations, I run logistics and programming for freshman meet-and-greets
+        and info sessions that drew 60 to 70 freshmen alongside about 20 existing members.
+    </p>
+    {% endcall %}
+
+    {{ cs.stats([
+        ("~2,000", "conference attendees"),
+        ("30+", "countries"),
+        ("60–70", "freshmen at meet-and-greets"),
+    ]) }}
+
+    {% call cs.row("fit", caption="HPAIR Asia Conference, <em>Rising with Resolve</em>, in Hanoi: delegates on stage, and two delegates in the lobby.") %}
+        {{ cs.card(img('design', 'involvement/hpair-aconf-stage.webp'), "Large group photo of HPAIR conference delegates waving on stage under a red Rising with Resolve, Hanoi, Vietnam banner", ar=1.779) }}
+        {{ cs.card(img('design', 'involvement/hpair-aconf-lobby.jpg'), "Two delegates wearing Rising with Resolve lanyards smiling together in a hotel lobby", ar=1.5) }}
+    {% endcall %}
+
+    {# ===== Evidence ===== #}
+    {{ cs.section("Evidence", lead="Where to see the work") }}
+
+    {% set evidence = [
+        ("HackHarvard", "Case study", "Brand, campaign, website and merch, with the full results.", "/hackharvard"),
+        ("HackHarvard", "Live 2026 site", "The event website the team built from the brand system.", "https://hackharvard2026prototype.vercel.app/"),
+        ("HackHarvard", "Merch", "Stickers, totes, lanyards and pins, among merch for other organizations.", "/merch"),
+        ("Office for the Arts", "Instagram Insights", "A screenshot of the account's Insights. The campaign posts are embedded above.", None),
+        ("HPAIR", "Conference and freshman events", "The conference page and a meet-and-greet flyer or post.", None),
+    ] %}
+    <div class="cs-block">
+        <ul class="evidence-grid">
+            {% for org, title, desc, href in evidence %}
+            <li class="evidence-card">
+                <p class="cs-label">{{ org }}</p>
+                <h3 class="evidence-title">{{ title }}</h3>
+                <p>{{ desc }}</p>
+                {% if href %}
+                {% set internal = href.startswith('/') %}
+                <a class="evidence-link" href="{{ href }}"{% if not internal %} target="_blank" rel="noopener" aria-label="{{ title }}, {{ href.split('/')[2] }} (opens in a new tab)"{% endif %}>
+                    {{ 'pirenily.com' ~ href if internal else href.split('/')[2] }} →
+                </a>
+                {% else %}
+                <span class="cs-todo">TODO: add link</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endcall %}
+
+{% endblock %}
+
+{% block case_scripts %}
+<script>
+    // Instagram embeds post their own height; size each frame to it so nothing is clipped
+    window.addEventListener("message", function (e) {
+        if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;
+        var data;
+        try { data = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+        if (!data || data.type !== "MEASURE" || !data.details) return;
+        document.querySelectorAll('iframe[src*="instagram.com"]').forEach(function (f) {
+            if (f.contentWindow === e.source) {
+                f.style.aspectRatio = "auto";
+                f.style.height = data.details.height + "px";
+            }
+        });
+    });
+</script>
+{% endblock %}

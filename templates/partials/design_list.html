@@ -1,13 +1,14 @@
-{# Design cards with the Selected / Brand / UI/UX / All toggle (home Projects section) #}
+{# Design cards with the Selected / Brand / UI/UX / Marketing / All toggle (home Projects section) #}
 <div class="view-toggle" role="group" aria-label="View mode">
     <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
     <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
     <button type="button" class="view-btn" data-view="uiux" aria-pressed="false">UI/UX</button>
+    <button type="button" class="view-btn" data-view="marketing" aria-pressed="false">Marketing</button>
     <button type="button" class="view-btn" data-view="all" aria-pressed="false">All</button>
 </div>
 <div class="design-list" id="designList">
-    <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux; the rest only show under All -->
-    <a class="project-thumb" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-featured>
+    <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux, Marketing = data-marketing; the rest only show under All -->
+    <a class="project-thumb" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-marketing data-featured>
         <img class="project-thumb-img project-thumb-img--cover" src="{{ img('design', 'hackharvard/logo-thumb.png') }}" alt="HackHarvard logo in red on black">
         <div class="project-thumb-meta">
             <div class="project-thumb-namebox">
@@ -27,7 +28,7 @@
         </div>
     </a>
 
-    <a class="project-thumb" href="merch" data-previews="{{ previews('design', ['merch/aconf-poster.png', 'merch/hconf-sketch.png', 'merch/ivmun-placards.webp', 'merch/hudc-the-game-shirt.webp']) }}" data-brand>
+    <a class="project-thumb" href="merch" data-previews="{{ previews('design', ['merch/aconf-poster.png', 'merch/hconf-sketch.png', 'merch/ivmun-placards.webp', 'merch/hudc-the-game-shirt.webp']) }}" data-brand data-marketing>
         <img class="project-thumb-img project-thumb-img--cover" src="{{ img('design', 'merch/hpair-crest.png') }}" alt="HCONF crest">
         <div class="project-thumb-meta">
             <div class="project-thumb-namebox">
@@ -42,6 +43,25 @@
                 <div class="project-thumb-sub">Case study</div>
             </div>
             <div class="project-thumb-desc">Crests, posters and goods for HPAIR, IVMUN and HUDC.</div>
+        </div>
+    </a>
+
+    <a class="project-thumb" href="/involvement" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'merch/hpair-crest.png', 'hackharvard/lanyard.webp']) }}" data-marketing>
+        <img class="project-thumb-img project-thumb-img--cover" src="{{ img('design', 'hackharvard/poster-apps.jpg') }}" alt="HackHarvard 2026 poster announcing that hacker applications are open">
+        <div class="project-thumb-meta">
+            <div class="project-thumb-namebox">
+                <div class="project-thumb-title">Campus Involvement</div>
+                <div class="project-thumb-tags">
+                    <span class="tag-chip">HackHarvard</span>
+                    <span class="tag-chip">Office for the Arts</span>
+                    <span class="tag-chip">HPAIR</span>
+                </div>
+            </div>
+            <div class="project-thumb-subrow">
+                <div class="project-thumb-sub">Campaigns and outreach</div>
+                <div class="project-thumb-date">2025–2026</div>
+            </div>
+            <div class="project-thumb-desc">Three Harvard organizations, with a measured result for each.</div>
         </div>
     </a>
 
@@ -214,7 +234,7 @@
 
         function setView(view) {
             cards.forEach(function (c) {
-                var show = view === "all" || c.hasAttribute("data-" + { selected: "featured", brand: "brand", uiux: "uiux" }[view]);
+                var show = view === "all" || c.hasAttribute("data-" + { selected: "featured", brand: "brand", uiux: "uiux", marketing: "marketing" }[view]);
                 c.style.display = show ? "" : "none";
             });
             btns.forEach(function (b) {
@@ -233,7 +253,7 @@
             });
         });
 
-        var fromHash = { "#brand": "brand", "#uiux": "uiux", "#all": "all" }[location.hash];
+        var fromHash = { "#brand": "brand", "#uiux": "uiux", "#marketing": "marketing", "#all": "all" }[location.hash];
         setView(fromHash || "selected");
         // /#all etc. has no element to jump to, so bring the list into view ourselves
         // (after load, once the browser has finished its own hash scroll)

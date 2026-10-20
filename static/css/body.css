@@ -938,6 +938,14 @@
     color: var(--accent);
 }
 
+/* Five tabs: tighten so the row fits a phone */
+@media screen and (max-width: 480px) {
+    .view-btn {
+        font-size: 0.95rem;
+        padding: 0.25rem 0.6rem;
+    }
+}
+
 /* No-JS fallback: the active button carries its own pill */
 .view-toggle:not(.has-pill) .view-btn.active {
     background: var(--glass-strong);

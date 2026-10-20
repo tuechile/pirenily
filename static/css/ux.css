@@ -1601,6 +1601,66 @@ html {
     color: var(--text-tertiary);
 }
 
+/* ----- Involvement: evidence cards, and visible TODO slots for missing numbers/links ----- */
+.evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: var(--s-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.evidence-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    padding: var(--s-4) var(--s-5);
+    border: 1px solid var(--hairline);
+    background: var(--glass);
+}
+
+.evidence-card p {
+    margin: 0;
+    font-size: var(--fs-body-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.evidence-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--text-primary);
+}
+
+.evidence-link {
+    margin-top: auto;
+    overflow-wrap: anywhere;
+    padding-top: var(--s-2);
+    font-size: var(--fs-body-sm);
+    font-style: italic;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: filter var(--dur-1) var(--ease-out);
+}
+
+.evidence-link:hover {
+    filter: var(--hover-blur);
+}
+
+.cs-todo {
+    display: inline-block;
+    width: fit-content;
+    margin-top: auto;
+    padding: var(--s-1) var(--s-2);
+    border: 1px dashed rgba(var(--fg-rgb), 0.3);
+    font-size: var(--fs-body-sm);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
 /* ----- Call to action: a panel link ----- */
 .cta-button {
     display: flex;

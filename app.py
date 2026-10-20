@@ -34,7 +34,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "89"
+ASSET_VERSION = "91"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -100,7 +100,7 @@ NAV_SECTIONS = {
     "about": ["about"],
     "code": ["code"],
     "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
-    "projects": ["hackharvard", "merch", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710"],
+    "projects": ["hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710"],
 }
 
 
@@ -198,6 +198,9 @@ SEARCH_INDEX = [
                "karaoke", "backtiming"]),
     ("/hackharvard", ["hackharvard", "hack harvard", "hackharvard 2026", "hack to the moon", "hackathon",
                       "harvard hackathon", "hhuh", "director of design"]),
+    ("/involvement", ["involvement", "campus involvement", "campus", "marketing", "office for the arts", "ofa",
+                      "harvard office for the arts", "content creator", "harvard project for international relations",
+                      "internal relations", "extracurriculars", "organizations"]),
     ("/merch", ["merch", "merchandise", "hpair", "hconf", "aconf", "hudc", "the game", "harvard yale", "tote", "tote bag", "crest", "notebook",
                 "stickers", "sticker", "pin", "t shirt", "shirt"]),
     ("/olympics", ["olympics", "cnn olympics", "olympic", "hoi thao", "cnn hoi thao", "team logos"]),
@@ -377,6 +380,10 @@ def hackharvard():
 @app.route("/merch")
 def merch():
     return render_template("collab websites/merch.html")
+
+@app.route("/involvement")
+def involvement():
+    return render_template("involvement.html")
 
 @app.route("/cs1710")
 def cs171():
