@@ -6,30 +6,7 @@
 {% block case %}
 
 {{ cs.hero("Merch", "Crests, logos and goods for student organizations.",
-           tags=["HPAIR", "IVMUN", "HUDC", "HHUH", "CNN Olympics"]) }}
-
-{# ===== HPAIR ===== #}
-{% call cs.section("HPAIR",
-        meta="HCONF: 400+ participants · ACONF: 292 participants",
-        links=[("instagram", "https://www.instagram.com/officialhpair/"),
-               ("facebook", "https://www.facebook.com/official.hpair"),
-               ("linkedin", "https://www.linkedin.com/company/harvard-project-for-asian-and-international-relations-hpair-/")]) %}
-<p>
-    Merch for the Harvard College Project for Asian and International Relations' two 2026 conferences:
-    HCONF, <em>Emerging Horizons: Truth at Dawn, Hope at Dusk</em>, and ACONF, <em>Rising with Resolve</em>.
-</p>
-{% endcall %}
-
-{% call cs.row("fit", caption="HCONF shirt design: early draft, then the final crest.") %}
-    {{ cs.card(img('design', 'merch/hconf-sketch.png'), "HCONF crest draft: the tower inside a shield, rising over a 2026 shadow", ar=0.71) }}
-    {{ cs.card(img('design', 'merch/hpair-crest.png'), "HCONF crest: a glowing tower inside a shield", ar=1.168) }}
-{% endcall %}
-
-{% call cs.row("fit", caption="ACONF notebook design: two sketches, then the final cover.") %}
-    {{ cs.card(img('design', 'merch/aconf-sketch-1.jpg'), "ACONF sketch built around the One Pillar Pagoda", ar=0.734) }}
-    {{ cs.card(img('design', 'merch/aconf-sketch-2.jpg'), "ACONF sketch: a gate framed by dragon curls", ar=0.707) }}
-    {{ cs.card(img('design', 'merch/aconf-poster.png'), "ACONF 2026 poster: a dragon wrapped around a gate, Rising with Resolve", ar=0.713) }}
-{% endcall %}
+           tags=["IVMUN", "CNN Olympics", "HUDC", "HPAIR", "HHUH"]) }}
 
 {# ===== IVMUN ===== #}
 {% call cs.section("International Vietnam Model United Nations", index="IVMUN",
@@ -47,46 +24,6 @@
 {% call cs.row("fit", caption="Secretariat badge and shirt; the welcome standee.") %}
     {{ cs.card(img('design', 'merch/ivmun-badge.jpg'), "Secretariat member showing an IVMUN badge and shirt", ar=1.498) }}
     {{ cs.card(img('design', 'merch/ivmun-standee.jpg'), "Delegates beside the Welcome to IVMUN 2023 standee", ar=1.5) }}
-{% endcall %}
-
-{# ===== HUDC ===== #}
-{% call cs.section("HUDC",
-        links=[("instagram", "https://www.instagram.com/hudcdesign/"),
-               ("website", "https://hudc.carrd.co/")]) %}
-<p>A shirt for The Game 2024, Harvard vs. Yale, on Saturday, November 23.</p>
-{% endcall %}
-
-{# match = the HCONF row's ar sum (0.71 + 1.168), so the shirt is the same height #}
-{% call cs.row("fit", caption="The Game 2024 shirt.", match=1.878) %}
-    {{ cs.card(img('design', 'merch/hudc-the-game-shirt.webp'), "Black tee for The Game 2024: a glowing Harvard player over rows of blue Yale runners, with flaming Harvard and Yale wordmarks", ar=0.864) }}
-{% endcall %}
-
-{# ===== HackHarvard ===== #}
-{% call cs.section("HHUH",
-        meta="HackHarvard 2026: 500+ hackers · 36 staff",
-        links=[("instagram", "https://www.instagram.com/hhuh.hackathon/"),
-               ("linkedin", "https://www.linkedin.com/company/hackharvard/"),
-               ("x", "https://x.com/Hack_Harvard"),
-               ("website", "https://hhuh.io/")]) %}
-<p>
-    Stickers, totes, lanyards and an enamel pin for HackHarvard 2026, <em>Hack to the Moon</em>. Each item
-    got its own version of the gradient monogram, sized to what the material could actually print.
-</p>
-{% endcall %}
-
-{% call cs.row("fit", caption="Sticker sheet; the two tote bags, theme artwork and monogram.") %}
-    {{ cs.card(img('design', 'hackharvard/stickers.png'), "Sticker sheet with six HackHarvard 2026 stickers", ar=0.75) }}
-    {{ cs.card(img('design', 'hackharvard/tote-theme.webp'), "Canvas tote with the Hack to the Moon artwork and the dates 10/16 to 10/18, 2026", ar=1) }}
-    {{ cs.card(img('design', 'hackharvard/tote-logo.png'), "Canvas tote with the gradient HA monogram over HackHarvard 2026 in pink", ar=1) }}
-{% endcall %}
-
-{% call cs.row("fit", caption="Production proofs: 600 full-color lanyards, printed on both sides; 650 soft enamel pins in five spot colors.") %}
-    {{ cs.card(img('design', 'hackharvard/lanyard.webp'), "Lanyard proof: a dark-to-pink strip with planets, HACKHARVARD2026 and Hack to the Moon, shown flat and folded", ar=2.232) }}
-    {{ cs.card(img('design', 'hackharvard/pin-proof.webp'), "Enamel pin proof: oval HackHarvard 2026 pin with a rocket, its brass back, the Pantone list and the pin placed on its backing card", ar=1.957) }}
-{% endcall %}
-
-{% call cs.section() %}
-{{ cs.cta("/hackharvard", "Want to read more? See the full case study") }}
 {% endcall %}
 
 {# ===== CNN Olympics ===== #}
@@ -112,6 +49,73 @@
 
 {% call cs.section() %}
 {{ cs.cta("/olympics", "See the design: team logos") }}
+{% endcall %}
+
+{# ===== HUDC ===== #}
+{% call cs.section("HUDC",
+        links=[("instagram", "https://www.instagram.com/hudcdesign/"),
+               ("website", "https://hudc.carrd.co/")]) %}
+<p>A shirt for The Game 2024, Harvard vs. Yale, on Saturday, November 23.</p>
+{% endcall %}
+
+{# match = the HCONF row's ar sum (0.71 + 1.168), so the shirt is the same height #}
+{% call cs.row("fit", caption="The Game 2024 shirt.", match=1.878) %}
+    {{ cs.card(img('design', 'merch/hudc-the-game-shirt.webp'), "Black tee for The Game 2024: a glowing Harvard player over rows of blue Yale runners, with flaming Harvard and Yale wordmarks", ar=0.864) }}
+{% endcall %}
+
+{# ===== HPAIR ===== #}
+{% call cs.section("HPAIR",
+        meta="HCONF: 400+ participants · ACONF: 292 participants",
+        links=[("instagram", "https://www.instagram.com/officialhpair/"),
+               ("facebook", "https://www.facebook.com/official.hpair"),
+               ("linkedin", "https://www.linkedin.com/company/harvard-project-for-asian-and-international-relations-hpair-/")]) %}
+<p>
+    Merch for the Harvard College Project for Asian and International Relations' two 2026 conferences:
+    HCONF, <em>Emerging Horizons: Truth at Dawn, Hope at Dusk</em>, and ACONF, <em>Rising with Resolve</em>.
+</p>
+{% endcall %}
+
+{% call cs.row("fit", caption="HCONF shirt design: early draft, then the final crest.") %}
+    {{ cs.card(img('design', 'merch/hconf-sketch.png'), "HCONF crest draft: the tower inside a shield, rising over a 2026 shadow", ar=0.71) }}
+    {{ cs.card(img('design', 'merch/hpair-crest.png'), "HCONF crest: a glowing tower inside a shield", ar=1.168) }}
+{% endcall %}
+
+{% call cs.row("fit", caption="ACONF notebook design: two sketches, then the final cover.") %}
+    {{ cs.card(img('design', 'merch/aconf-sketch-1.jpg'), "ACONF sketch built around the One Pillar Pagoda", ar=0.734) }}
+    {{ cs.card(img('design', 'merch/aconf-sketch-2.jpg'), "ACONF sketch: a gate framed by dragon curls", ar=0.707) }}
+    {{ cs.card(img('design', 'merch/aconf-poster.png'), "ACONF 2026 poster: a dragon wrapped around a gate, Rising with Resolve", ar=0.713) }}
+{% endcall %}
+
+{# ===== HackHarvard ===== #}
+{% call cs.section("HHUH",
+        meta="HackHarvard 2026: 500+ hackers · 36 staff",
+        links=[("instagram", "https://www.instagram.com/hhuh.hackathon/"),
+               ("linkedin", "https://www.linkedin.com/company/hackharvard/"),
+               ("x", "https://x.com/Hack_Harvard"),
+               ("website", "https://hhuh.io/")]) %}
+<p>
+    Stickers, totes, lanyards and an enamel pin for HackHarvard 2026, <em>Hack to the Moon</em>. Each item
+    got its own version of the gradient monogram, sized to what the material could actually print.
+</p>
+{% endcall %}
+
+{% call cs.row("fit", caption="Sticker sheet; production proof for 650 soft enamel pins in five spot colors.") %}
+    {{ cs.card(img('design', 'hackharvard/stickers.png'), "Sticker sheet with six HackHarvard 2026 stickers", ar=0.75) }}
+    {{ cs.card(img('design', 'hackharvard/pin-proof.webp'), "Enamel pin proof: oval HackHarvard 2026 pin with a rocket, its brass back, the Pantone list and the pin placed on its backing card", ar=1.957) }}
+{% endcall %}
+
+{% call cs.row("fit", caption="At the event: the check-in desk stacked with Hack to the Moon tees, and a monogram tote heading home.") %}
+    {{ cs.card(img('design', 'hackharvard/event-merch-desk.webp'), "A staffer in a teal shirt giving two thumbs up at the check-in desk beside stacks of red Hack to the Moon tees and boxes of lanyards", ar=1.5) }}
+    {{ cs.card(img('design', 'hackharvard/event-tote.webp'), "Two hackers posing with energy drinks and the canvas tote with the gradient monogram over HackHarvard 2026", ar=1.5) }}
+{% endcall %}
+
+{% call cs.row("fit", caption="Lanyards on hackers at the marquee letters; red tees at the demo tables.") %}
+    {{ cs.card(img('design', 'hackharvard/event-hack-letters.webp'), "Two hackers wearing HackHarvard lanyards giving thumbs up behind lit HACK marquee letters", ar=1.5) }}
+    {{ cs.card(img('design', 'hackharvard/event-demo-tees.webp'), "Hackers in red Hack to the Moon tees chatting at a demo table with a laptop showing Earth, Moon and Mars", ar=1.5) }}
+{% endcall %}
+
+{% call cs.section() %}
+{{ cs.cta("/hackharvard", "Want to read more? See the full case study") }}
 {% endcall %}
 
 {% endblock %}
