@@ -796,64 +796,51 @@ footer {
 
 /* ===== Projects password gate (home Projects + gated project pages) ===== */
 .gate-form {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    border: 1px solid var(--hairline);
-    background: var(--glass);
+    margin-top: 1.5rem;
 }
 
-.gate-label {
-    display: block;
-    margin-bottom: 0.75rem;
-    font-size: var(--fs-note);
-    text-transform: uppercase;
-    color: var(--c-dim);
-}
-
+/* No pill: just a blinking text cursor. While the field is empty a drawn line blinks
+   (so it shows before the field is focused too); once typing starts, the real caret takes over. */
 .gate-field {
-    display: flex;
-    border: 1px solid var(--hairline-strong);
-    border-radius: var(--r-pill);
-    background: var(--glass);
-}
-
-.gate-field:focus-within {
-    border-color: var(--accent);
+    position: relative;
 }
 
 .gate-field input {
-    flex: 1;
-    min-width: 0;
-    padding: 0.5rem 1.5rem;
+    display: block;
+    width: 100%;
+    padding: 0.25rem 0;
     font: inherit;
     font-size: 1.05rem;
     color: var(--c-title);
+    caret-color: var(--c-title);
     background: none;
     border: 0;
     outline: none;
 }
 
-.gate-field button {
-    padding: 0.5rem 1.5rem;
-    font: inherit;
-    font-style: italic;
-    font-size: 1.05rem;
-    color: var(--c-title);
-    background: var(--glass-strong);
-    border: 0;
-    border-left: 1px solid var(--hairline);
-    border-radius: 0 var(--r-pill) var(--r-pill) 0;
-    cursor: pointer;
-    transition: filter var(--dur-1) var(--ease-out);
+.gate-field input:placeholder-shown {
+    caret-color: transparent;
 }
 
-.gate-field button:hover,
-.gate-field button:focus-visible {
-    filter: var(--hover-blur);
+.gate-field:has(input:placeholder-shown)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1px;
+    height: 1.2em;
+    transform: translateY(-50%);
+    background: var(--c-title);
+    animation: gate-blink 1s steps(1) infinite;
+    pointer-events: none;
 }
 
-.gate-field button:active {
-    transform: var(--press);
+@keyframes gate-blink {
+    50% { visibility: hidden; }
+}
+
+:root[data-motion="reduced"] .gate-field::before {
+    animation: none;
 }
 
 .gate-error {
@@ -897,22 +884,11 @@ footer {
     margin: -4rem auto 0;
 }
 
-.home-gate-kicker {
-    margin: 0;
-    font-size: var(--fs-note);
-    text-transform: uppercase;
-    color: var(--c-dim);
-}
-
 .home-gate-title {
-    margin: 0.75rem 0 1rem;
+    margin: 0;
     font-size: 2rem;
     font-weight: 400;
     color: var(--c-title);
 }
 
-.home-gate-sub {
-    margin: 0;
-    color: var(--c-mid);
-}
 

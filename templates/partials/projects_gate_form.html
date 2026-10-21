@@ -1,11 +1,9 @@
-{# Password form for the gated projects; posts to /unlock, which sends the visitor on to `next`. #}
+{# Password form for the gated projects; Return posts it to /unlock, which sends the visitor on to `next`. #}
 <form class="gate-form" method="post" action="{{ url_for('unlock') }}">
     <input type="hidden" name="next" value="{{ next or '/#portfolio' }}">
-    <label class="gate-label" for="gatePassword">Password</label>
     <div class="gate-field">
-        <input id="gatePassword" name="password" type="password" autocomplete="current-password"
+        <input id="gatePassword" name="password" type="password" aria-label="Password" placeholder=" " autocomplete="current-password"
             required{% if autofocus or wrong %} autofocus{% endif %}{% if wrong %} aria-invalid="true" aria-describedby="gateError"{% endif %}>
-        <button type="submit">Enter →</button>
     </div>
     {% if wrong %}<p class="gate-error" id="gateError" role="alert">That's not it. Try again?</p>{% endif %}
 </form>
