@@ -24,11 +24,6 @@
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
 }
 
-/* Ink bleed: a hair of ink-colored shadow on every letter (cheap, unlike filter: blur) */
-:root[data-theme="light"] body {
-    text-shadow: var(--ink-bleed);
-}
-
 /* No glows on paper: selected text is plain pink */
 :root[data-theme="light"] ::selection {
     color: var(--accent);
@@ -235,6 +230,19 @@
 /* Text that never set a font (browser serif) gets the sans too */
 :root[data-font="sans"] body {
     font-family: var(--font-body);
+}
+
+/* Your view headers: Gowun Batang, thickened past its 700 with a hairline stroke */
+:root[data-mode="easy"] {
+    --font-head: "Gowun Batang", serif;
+    --head-stroke: 0.02em;
+}
+
+:root[data-mode="easy"] :is(h1, h2, h3, h4, .page-title, .case-title, .bio-name, .cs-heading, .cs-subheading,
+    .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title):not(.cs-label) {
+    font-family: var(--font-head);
+    font-weight: 700;
+    -webkit-text-stroke: var(--head-stroke) currentColor;
 }
 
 /* Italic labels read as plain text in the sans */

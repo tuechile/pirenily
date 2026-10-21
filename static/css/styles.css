@@ -33,6 +33,9 @@
     --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-body: var(--font-serif);
 
+    /* Every letter bleeds a hair into the page; light mode swaps in its own ink */
+    --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.35);
+
     /* The signature hover; easy mode and reduced motion turn it off */
     --hover-blur: blur(1px);
 
@@ -82,6 +85,7 @@
 body {
     background-color: var(--bg);
     color: var(--c-faint);
+    text-shadow: var(--ink-bleed);
     font-size: 1.5rem;
     line-height: 1.5;
     margin: 0;
