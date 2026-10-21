@@ -1109,8 +1109,17 @@
 }
 
 /* ===== Strip cards (Code page, home Projects) =====
-   A grayscale image strip, named underneath. Hovering brings the color back and drops the
-   stack in from the top, one chip after another (home Projects also pops a preview, popups.js). */
+   An image strip with its name and a smaller description underneath. At rest the picture is a soft,
+   grayscale, out-of-focus blur with no edges; hovering brings it into color and almost into focus,
+   its edges pull in to a rectangle (still a touch soft), and the stack drops in from the top,
+   one chip after another (home Projects also pops a preview, popups.js). */
+
+/* The fade at the picture's edges, registered so it can animate from a wide blur to a near-sharp rectangle */
+@property --strip-edge {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
 
 /* One column: each strip gets the full reading width */
 .strip-grid {
@@ -1131,7 +1140,7 @@
     outline: none;
 }
 
-/* No outline: the picture's edges dissolve into the page (the site's --feather-mask) */
+/* No outline: the picture's edges dissolve into the page */
 .strip {
     position: relative;
     aspect-ratio: 2 / 1;
@@ -1150,16 +1159,28 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: grayscale(100%);
-    transition: filter var(--dur-2) var(--ease-out);
-    -webkit-mask-image: var(--feather-mask);
+    --strip-edge: 56px;
+    filter: blur(6px) grayscale(100%);
+    transform: scale(0.96);
+    -webkit-mask-image:
+        linear-gradient(to right, transparent, #000 var(--strip-edge), #000 calc(100% - var(--strip-edge)), transparent),
+        linear-gradient(to bottom, transparent, #000 var(--strip-edge), #000 calc(100% - var(--strip-edge)), transparent);
     -webkit-mask-composite: source-in;
-    mask-image: var(--feather-mask);
+    mask-image:
+        linear-gradient(to right, transparent, #000 var(--strip-edge), #000 calc(100% - var(--strip-edge)), transparent),
+        linear-gradient(to bottom, transparent, #000 var(--strip-edge), #000 calc(100% - var(--strip-edge)), transparent);
     mask-composite: intersect;
+    transition:
+        --strip-edge var(--dur-3) var(--ease-out),
+        filter var(--dur-3) var(--ease-out),
+        transform var(--dur-3) var(--ease-out);
 }
 
+/* Not quite sharp: a hair of blur and a few pixels of soft edge keep it smooth */
 .strip-card:is(:hover, :focus-visible) .strip-art {
-    filter: grayscale(0);
+    --strip-edge: 8px;
+    filter: blur(0.6px) grayscale(0);
+    transform: none;
 }
 
 .strip-empty {
@@ -1209,10 +1230,12 @@
 .strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(6) { transition-delay: 250ms; }
 .strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(7) { transition-delay: 300ms; }
 
-/* No hover on touch screens: show the cards in color with their stack in place */
+/* No hover on touch screens: show the cards as if hovered, in color with their stack in place */
 @media (hover: none) {
     .strip-art {
-        filter: none;
+        --strip-edge: 8px;
+        filter: blur(0.6px);
+        transform: none;
     }
 
     .strip-stack .tag-chip {
@@ -1226,9 +1249,20 @@
     padding: 0 0.4rem;
     font-family: var(--font-body);
     font-style: italic;
-    font-size: var(--fs-body-sm);
-    line-height: 1.5;
+    font-size: 1.15rem;
+    line-height: 1.4;
     color: rgba(var(--fg-rgb), 0.894);
+}
+
+/* The old description, a smaller line under the name */
+.strip-desc {
+    margin: -0.55rem 0 0;
+    padding: 0 0.4rem;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--fs-note);
+    line-height: 1.5;
+    color: rgba(var(--fg-rgb), 0.533);
 }
 
 @media screen and (max-width: 880px) {
