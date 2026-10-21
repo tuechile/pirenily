@@ -129,6 +129,15 @@ body {
 }
 
 .home-footer-meta{ opacity: 0.9; }
+.home-footer-pitch{ opacity: 0.9; font-size: var(--fs-small); }
+.home-footer-pitch a{ color: inherit; }
+/* Separators are <i>; on phones they drop and each phrase takes its own line */
+:is(.home-footer-meta, .home-footer-pitch){ text-align: center; padding: 0 1rem; }
+:is(.home-footer-meta, .home-footer-pitch) > *{ white-space: pre; font-style: normal; }
+@media (max-width: 600px){
+    :is(.home-footer-meta, .home-footer-pitch) > i{ display: none; }
+    :is(.home-footer-meta, .home-footer-pitch) > :is(span, a){ display: block; }
+}
 
 /* Last line of the landing page */
 .feedback-footer {

@@ -1,5 +1,5 @@
 {# Design cards with the Selected / Brand / UI/UX / Collection / All toggle (home Projects section).
-   Strip cards, the same as the Code page: grayscale until hovered, then in color with the stack dropping in from the top. #}
+   Strip cards, the same as the Code page: in color at rest, sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
     <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
     <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <p class="strip-caption">HackHarvard 2026: Hack to the Moon</p>
-        <p class="strip-desc">Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon.</p>
+        <p class="strip-desc">Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.</p>
     </a>
 
     <a class="strip-card" href="merch" data-previews="{{ previews('design', ['merch/aconf-poster.png', 'merch/hconf-sketch.png', 'merch/ivmun-placards.webp', 'merch/hudc-the-game-shirt.webp']) }}" data-collection>
@@ -157,7 +157,7 @@
     <h2 class="home-gate-title" id="homeGateTitle">Projects</h2>
     <p class="home-gate-sub">Oops, it has a password!</p>
     {% include "partials/projects_gate_form.html" %}
-    <p class="gate-note">Don't have it? <a href="/about">Ask me!!</a></p>
+    <p class="gate-note">Don't have it? <a href="mailto:chile@college.harvard.edu?subject=Portfolio%20password">Ask me!!</a></p>
 </section>
 {% endif %}
 

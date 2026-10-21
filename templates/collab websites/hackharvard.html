@@ -17,7 +17,7 @@
 {{ cs.callout("TL;DR", points=[
     "I led a 7-person design and engineering team from April to the hackathon in October, owning promotional campaigns, brand and cross-team coordination.",
     "We rebuilt the brand around one theme and shipped it as a reusable component package for the website, social media and event materials.",
-    "Instagram posts drew 3× more interactions than prior posts, and followers grew 30.3%. Applications doubled year over year, and completed submissions rose 1.45×.",
+    "Our launch post drew 3.4× the interactions of last year's, and every campaign post after it beat last year's too. Followers grew 30.3%, applications doubled and completed submissions rose 1.45×, in our first year without MLH promoting us.",
 ]) }}
 
 {% call cs.body() %}
@@ -63,7 +63,7 @@
     {% endcall %}
 
     {# ===== Concept ===== #}
-    {% call cs.section("Idea", lead="An eco system drifting through deep space") %}
+    {% call cs.section("Idea", lead="An ecosystem drifting through deep space") %}
     <p>
         <em>Hack to the Moon</em> takes the campus's domes, cupolas, columns and stairs and rebuilds them
         as glowing gradient geometry among planets, moons and stars. The monogram itself became
@@ -94,9 +94,22 @@
     {% call cs.section("Campaign", lead="Redesigned content strategy") %}
     <p>
         Every post drew from the same set of towers, moons and rockets, so the feed read as one story
-        from announcement to applications. Each Instagram post drew 3× more interactions than prior posts,
-        and followers grew 30.3%, from 3,663 to 4,772.
+        from announcement to applications. Last year's whole campaign was a single launch post, and this
+        was our first year without MLH promoting the event, so our own feed was the main way hackers found us.
     </p>
+    <p>
+        Launch against launch, "HackHarvard is back" drew 3.4× the interactions of last year's post (670 →
+        2,254), with 4.2× the likes and 6.5× the saves. It wasn't a one-off: all three campaign posts beat
+        last year's on likes, comments, reposts, shares and saves, holding at 500+ likes and 400+ saves each.
+        Followers grew 30.3%, from 3,663 to 4,772.
+    </p>
+    {% endcall %}
+
+    {% call cs.row("fit", caption="Instagram insights. Left: last year's only post. Then this year's three, launch first. Each drew fewer viewers but far more of them acted: 2.4% of viewers interacted last year, 7.3–9.3% this year.") %}
+        {{ cs.card(img('design', 'hackharvard/insights-2025.jpg'), "Instagram insights for last year's launch post: 27,581 viewers, 222 likes, 0 comments, 1 repost, 351 shares, 96 saves, 93 follows", ar=0.591) }}
+        {{ cs.card(img('design', 'hackharvard/insights-back.jpg'), "Instagram insights for HackHarvard is back: 24,341 viewers, 934 likes, 6 comments, 23 reposts, 667 shares, 624 saves, 310 follows", ar=0.591) }}
+        {{ cs.card(img('design', 'hackharvard/insights-apps.jpg'), "Instagram insights for Hacker applications open: 23,242 viewers, 571 likes, 5 comments, 12 reposts, 823 shares, 428 saves, 146 follows", ar=0.591) }}
+        {{ cs.card(img('design', 'hackharvard/insights-moon.jpg'), "Instagram insights for Hack to the Moon: 20,776 viewers, 501 likes, 14 comments, 13 reposts, 541 shares, 443 saves, 112 follows", ar=0.591) }}
     {% endcall %}
 
     {% call cs.row("3", caption="Three campaign posts on Instagram.") %}
@@ -163,12 +176,13 @@
 
     {# ===== Results ===== #}
     {{ cs.stats([
-        ("3×", "more interactions per Instagram post"),
+        ("3.4×", "interactions on the launch post vs. last year's, 670 → 2,254"),
+        ("6.5×", "saves on the launch post, 96 → 624"),
         ("+30.3%", "Instagram followers, 3,663 → 4,772"),
         ("1.45×", "submitted applications, ~1,000 → 1,450"),
         ("2×", "total applications, ~1,300 → 2,660"),
     ], title="Results") }}
-    <p> I also got approached around 7 times throughout the hackathon to ask for another pin so I think hackers quite liked it!</p>
+    <p>Numbers come from Instagram insights and our application portal. They moved alongside the rebrand, but posting more often helped too, so I don't credit it all to the design. Less measurable: around 7 hackers came up during the weekend to ask for another pin, and others stopped me to praise the website.</p>
 
     {# ===== Leading the team ===== #}
     {% call cs.section("Legacy", lead="Built to outlast the year") %}
@@ -180,9 +194,9 @@
         without rebuilding the foundation.
     </p>
     <p>
-        I also rely on a lot of vibecoding to keep track of the system and best build reusable component so
-        I shipped an internal component tracker readable to both agents and my teammates so members from other
-        teams can also shipp graphics as fast as possible when in conversation with i.e sponsors.
+        I used AI coding tools to build an internal component tracker that both AI agents and teammates can
+        read. That let members of other teams ship on-brand graphics quickly, for example
+        mid-conversation with a sponsor.
     </p>
     {% endcall %}
 
