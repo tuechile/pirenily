@@ -24,7 +24,7 @@
 
     {% call cs.section("Context", lead="A Prosthetic Is Never Just One Thing") %}
     <p>
-        A prosthetic leg isn’t a single object — it’s a system. On average, nine separate components must come
+        A prosthetic leg handoff is a system. On average, nine separate components must come
         together for one fitting. If even one part is missing, delayed, or mislabeled, a patient goes home without
         a leg.
     </p>
@@ -36,13 +36,13 @@
     </p>
     <p>
         As the organization scaled, they realized their inventory system was not keeping up fast enough:
-        <br><em>The hardest part wasn’t getting donations. It was keeping track of them.</em>
+        <br><em>The hardest part was keeping track of them.</em>
     </p>
     {% endcall %}
 
     {{ cs.figure(img('ux', 't4sg/redes.webp'), "2ft inventory system redesign overview", zoom=False) }}
 
-    {% call cs.section("The Current Problem", lead="Good Intentions, Fragile Systems") %}
+    {% call cs.section("Problem", lead="Fragile Management Systems") %}
     <p>
         Inventory at 2ft Prosthetics lived in spreadsheets, Notion pages, and manual cross-checks. On paper,
         everything existed. In reality, volunteers struggled to answer basic questions:
@@ -61,7 +61,7 @@
         {{ cs.card(img('ux', 't4sg/sheet3.png'), "Spreadsheet: summary of requested components") }}
     {% endcall %}
 
-    {% call cs.section("Research") %}
+    {% call cs.section("Interview & User Research") %}
     <p>
         We conducted interviews with the 2ft Prosthetics <strong>President</strong>, <strong>Treasurer</strong>,
         and <strong>three volunteers</strong> who manage inventory updates in real conditions.
@@ -265,7 +265,7 @@
     {{ cs.callout("What we learned quickly", display=False,
                   text="Most existing tools failed in the same ways: assumed stable internet, visual density overload, unclear separation between logistics and technical data, and a steep learning curve for new volunteers.") }}
 
-    {% call cs.section("Design Goals", lead="What We Optimized For (and What We Didn’t)") %}
+    {% call cs.section("Idea", lead="Ideation & Affinity Mapping") %}
     <p>
         — Clarity over completeness<br>
         — Fast entry over perfect data<br>
@@ -288,7 +288,7 @@
     {% endcall %}
     {{ cs.img_caption("“We started with clarity + offline reliability, then added power features later.”") }}
 
-    {{ cs.section("Feature rollout (how it evolved)", index="Rollout") }}
+    {{ cs.section("Feature Rollout", index="Rollout") }}
 
     {{ cs.rollout([
         ("Phase 1", "Core Inventory Reliability", "Simple viewing, terminology, edit component."),
@@ -296,7 +296,7 @@
         ("Phase 3", "Scalability Features", "Add component flow, filters, helpers."),
     ]) }}
 
-    {% call cs.section("My Contribution", lead="View / Edit / Add Component Flow") %}
+    {% call cs.section("User Flow", lead="View / Edit / Add Component Flow") %}
     <p>
         I owned the end-to-end flow for how a volunteer <strong>views</strong> a component, makes a safe
         <strong>edit</strong>, and <strong>adds</strong> a new component without breaking traceability.
@@ -336,7 +336,7 @@
     {% call cs.section("What we learned, what we changed, and why it worked", index="Iteration") %}
     <p>
         Lo-fi helped us prove the hierarchy. But once stakeholders interacted with it, the feedback wasn’t about
-        visual design — it was about <strong>speed, trust, and reducing “I might break something” anxiety</strong>.
+        visual design but more about speed, trust, and reducing “I might break something” anxiety.
     </p>
     {% endcall %}
 
@@ -411,7 +411,7 @@
         Tip: Try editing a component to see how fields, history, and permissions are surfaced.
     </p>
     <p>
-        Permissions matter: stakeholders emphasized that changing fields can cause organization-wide
+        Permissions: stakeholders emphasized that changing fields can cause organization-wide
         mixups, so we needed clearer role-based privileges (e.g., who can edit fields vs. who can only edit
         values).
     </p>
@@ -419,15 +419,12 @@
 
     {% call cs.section("Reflection", lead="What This Project Taught Me") %}
     <p>
-        This is my first exposure to UX Design, so there were many new frameworks and mindsets to internalize.
-        Designing for social impact isn’t about adding features.
-        It’s about removing uncertainty as much as possible and box everything together.
+        This is my first exposure to UX Design as a CS major:), so there were many new frameworks and mindsets to internalize.
+        Designing for social impact isn’t about adding features but more removing uncertainty as much as possible and box everything together.
     </p>
     <p>
         As this is a work from scratch, we did experiment a lot with different flows and structures in an
-        entirely new field of expertise.
-        The biggest challenge was balancing complexity (lots of fields, edge cases, offline states) with
-        usability (clear flows, low cognitive load, fast entry).
+        entirely new field of expertise!
     </p>
     {% endcall %}
 

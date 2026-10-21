@@ -1458,6 +1458,29 @@ html {
     color: var(--text-secondary);
 }
 
+.cs-insights {
+    padding-left: var(--s-4);
+    border-left: 1px solid var(--hairline);
+}
+
+.cs-insights .cs-label {
+    margin-bottom: var(--s-3);
+}
+
+.cs-insights p {
+    max-width: 66ch;
+    margin: 0 0 var(--s-2);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: var(--lh);
+    color: var(--text-secondary);
+}
+
+.cs-insights strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
 .cs-prose strong {
     font-weight: 600;
     color: var(--text-primary);

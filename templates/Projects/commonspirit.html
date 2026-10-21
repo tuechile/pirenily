@@ -42,14 +42,23 @@
     </p>
     {% endcall %}
 
-    {{ cs.section("Ideation") }}
+    {{ cs.section("Idea", lead = "Ideation & Affinity Mapping") }}
+
+    {{ cs.insights("Pain points", [
+        ("Data extraction friction", "Staff read 50–60 CHNA PDFs a year by hand to pull out key insights."),
+        ("Poor usability", "No way to look up a priority across regions, and terms like \"access to care\" stay vague."),
+        ("Inflexible data cycles", "CHNAs update every three years, so the tool goes stale between cycles."),
+        ("No connection across entities", "Hospitals can't see who shares a priority or compare communities over time."),
+    ]) }}
 
     {% call cs.media_text(img('ux', 'commonspirit/impact-effort.png'),
                           "Impact x Effort prioritization board mapping feature ideas from research") %}
     <p>
-        Interview notes from board members and CIP staff kept surfacing the same tension: the tool
-        needed to support quick, visual comparisons across hospitals, regions, and time without
-        turning into another wall of text. We ran an impact-vs-effort pass on every feature idea
+        The tool needed to support quick, visual comparisons
+        across hospitals, regions, and time without turning into another wall of text, and stay
+        useful between CHNA cycles. 
+        </p>
+        <p> We ran an impact-vs-effort pass on every feature idea
         that came out of research — main KPI numbers, region maps, hospital comparison charts,
         batch upload, notes, and more — and used it to decide what shipped first, and what we'd
         explicitly avoid building for now.

@@ -203,6 +203,16 @@
 </div>
 {% endmacro %}
 
+{# Insights — a hairline-ruled list; items: list of (term, text) #}
+{% macro insights(title, items) %}
+<div class="cs-block cs-insights">
+    <h3 class="cs-label">{{ title|safe }}</h3>
+    {% for term, text in items %}
+    <p><strong>{{ term|safe }}:</strong> {{ text|safe }}</p>
+    {% endfor %}
+</div>
+{% endmacro %}
+
 {# boxes: two dicts with title, points, and optional display #}
 {% macro compare(boxes) %}
 <div class="cs-block">
