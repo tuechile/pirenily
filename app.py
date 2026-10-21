@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, Response, abort, render_template, request, redirect, url_for
 from werkzeug.security import check_password_hash
 import difflib
 import os
@@ -6,6 +6,8 @@ import random
 import re
 import subprocess
 import unicodedata
+import urllib.error
+import urllib.request
 from datetime import datetime
 
 app = Flask(__name__)
@@ -35,7 +37,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "129"
+ASSET_VERSION = "131"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -210,10 +212,10 @@ SEARCH_INDEX = [
                      "film", "matcha"]),
     ("https://www.facebook.com/official.ivmun", ["ivmun", "model un", "model united nations", "mun",
                                                  "vietnam model united nations", "conference"]),
-    ("/afvs", ["afvs", "afvs 97", "coding and interactivity", "interactivity", "interactive", "p5", "p5js",
-               "sketch", "pig", "a pigs death", "a pigs funeral", "pigs death", "pigs funeral", "sculpture",
-               "projection", "360"]),
-    ("/gifafvs", ["gifafvs", "what brings you here", "gif", "gifs"]),
+    ("/afvs", ["afvs", "afvs 97", "coding and interactivity", "interactivity", "interactive", "pig",
+               "a pigs death", "a pigs funeral", "pigs death", "pigs funeral", "sculpture", "projection", "360"]),
+    ("/gifafvs", ["gifafvs", "what brings you here", "gif", "gifs", "p5", "p5js", "sketch",
+                  "mind others business", "processing"]),
     ("/essays", ["essays", "essay", "video essays", "video essay", "video"]),
     ("/fysemr", ["fysemr", "fysemr 65r", "tea garden", "land of rivers", "the land of rivers", "rivers",
                  "clip studio", "indesign"]),
@@ -353,6 +355,31 @@ def afvs():
 @app.route("/gifafvs")
 def gifafvs():
     return render_template("personal websites/gifafvs.html")
+
+# Clips that live in Google Drive. Drive refuses <video> requests from other
+# sites, so they're streamed through here (Range passed along so seeking works).
+DRIVE_VIDEOS = {
+    "out": "13U7IrbJN1qK0IKDt2Yx1TfBlLNDJU5xp",
+}
+
+@app.route("/drive-video/<name>.mp4")
+def drive_video(name):
+    file_id = DRIVE_VIDEOS.get(name) or abort(404)
+    url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
+    headers = {"Range": request.headers["Range"]} if "Range" in request.headers else {}
+    try:
+        upstream = urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=20)
+    except urllib.error.HTTPError as e:
+        abort(e.code if e.code == 416 else 502)
+
+    def chunks():
+        with upstream:
+            while chunk := upstream.read(256 * 1024):
+                yield chunk
+
+    passed = {k: upstream.headers[k] for k in ("Content-Length", "Content-Range") if upstream.headers.get(k)}
+    passed.update({"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=86400"})
+    return Response(chunks(), status=upstream.status, mimetype="video/mp4", headers=passed)
 
 @app.route("/fysemr")
 def fysemr():

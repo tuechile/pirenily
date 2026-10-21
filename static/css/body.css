@@ -14,6 +14,9 @@
     --globe-wish: var(--c-text);
     --globe-home: rgba(var(--fg-rgb), 0.9);
     --globe-route: rgba(var(--accent-rgb), 0.4);
+    /* the p5 sketch paints its own white paper in every theme */
+    --sketch-paper: rgb(255, 255, 255);
+    --sketch-note: rgba(0, 0, 0, 0.55);
 }
 
 .progress-wrap {
@@ -457,6 +460,10 @@
     filter: grayscale(100%);
 }
 
+.gif-video {
+    width: min(40vw, 640px);
+}
+
 .gif-text {
     flex: 0 1 34rem;
     font-family: var(--font-body);
@@ -503,6 +510,39 @@
     .gif-image--gray {
         display: none; /* the color recording is enough when stacked */
     }
+}
+
+/* What Brings You Here: p5 sketch under the recordings */
+#sketch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: auto;
+    margin: auto;
+    padding: 2.5vh 0 5vh;
+    position: relative;
+}
+
+#sketch-container canvas {
+    width: 90%;
+    height: auto;
+    display: block;
+    background: var(--sketch-paper);
+}
+
+.sketch-note {
+    position: absolute;
+    bottom: 6vh; /* 1vh above the canvas edge, past the container's bottom padding */
+    left: 0;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
+    color: var(--sketch-note);
+    font-style: italic;
+    pointer-events: none;
 }
 
 /* Full-size pop-up styling */
@@ -808,17 +848,6 @@
 .loader-container img {
     width: 10rem;
     height: auto;
-}
-
-#sketch-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
 }
 
 @media screen and (min-width: 666px) and (max-width: 880px) {

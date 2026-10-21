@@ -218,7 +218,7 @@
 }
 
 /* Hover: everything but the hovered item dims (no blur) */
-:root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .strip-grid, .card-grid) > * {
+:root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .strip-grid, .card-grid, .cs-index) > * {
     transition: opacity 400ms var(--ease-out);
 }
 
