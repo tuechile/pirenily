@@ -303,6 +303,22 @@ html {
     border: 0;
 }
 
+.media-card--site {
+    position: relative;
+    aspect-ratio: var(--ar);
+}
+
+.media-card--site iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--site-w);
+    height: calc(var(--site-w) / var(--ar));
+    border: 0;
+    transform-origin: 0 0;
+    transform: scale(var(--site-scale, 0.5));
+}
+
 .media-card--placeholder {
     display: flex;
     align-items: center;

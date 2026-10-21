@@ -58,8 +58,8 @@
     {% endcall %}
 
     {% call cs.row("fit", caption="Logo sheet: wordmark studies, the monogram on its construction grid, lockups and usage notes; the off-season mark and how it turns into the 2026 logo.") %}
-        {{ cs.card(img('design', 'hackharvard/brand-sheet.png'), "Logo sheet with HackHarvard wordmark studies, the HA monogram on a construction grid, stacked lockups, a Hack to the Moon serif wordmark and usage instructions", ar=1.004) }}
-        {{ cs.card(img('design', 'hackharvard/brand-evolution.png'), "Off-season red HA monogram on navy next to the gradient 2026 logo, with keywords and gradient swatches", ar=1.149) }}
+        {{ cs.card(img('design', 'hackharvard/brand-sheet.png'), "Logo sheet with HackHarvard wordmark studies, the HA monogram on a construction grid, stacked lockups, a Hack to the Moon serif wordmark and usage instructions", ar=1.004, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/brand-evolution.png'), "Off-season red HA monogram on navy next to the gradient 2026 logo, with keywords and gradient swatches", ar=1.149, zoom=False) }}
     {% endcall %}
 
     {# ===== Concept ===== #}
@@ -72,8 +72,8 @@
     {% endcall %}
 
     {% call cs.row("fit", caption="Key art and the Hack to the Moon lockups, used on season only for the Instagram profile picture and the website header.") %}
-        {{ cs.card(img('design', 'hackharvard/keyart.jpg'), "HackHarvard key art: the monogram built from a tower and crescent moon", ar=1) }}
-        {{ cs.card(img('design', 'hackharvard/lockups.png'), "Four Hack to the Moon lockups pairing the tower-and-crescent monogram with serif and bold wordmarks, plus usage instructions", ar=0.993) }}
+        {{ cs.card(img('design', 'hackharvard/keyart.jpg'), "HackHarvard key art: the monogram built from a tower and crescent moon", ar=1, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/lockups.png'), "Four Hack to the Moon lockups pairing the tower-and-crescent monogram with serif and bold wordmarks, plus usage instructions", ar=0.993, zoom=False) }}
     {% endcall %}
 
     {# ===== System ===== #}
@@ -125,20 +125,20 @@
         materials. About sits inside a temple, Tracks floats on
         an island with a satellite you can spin, and each FAQ you open lights a lamp on the arch gate.
     </p>
-    <div class="video"><video src="{{ img('design', 'hackharvard/demo.webm') }}" data-rate="2" autoplay muted loop
-            playsinline></video></div>
-    <p class="cta-note">Played at 2× speed.</p>
-    {{ cs.cta("https://hhuh.io/", "Try the live site") }}
+    {% endcall %}
+
+    {% call cs.row("fit", caption="Visit us at <a href='https://hhuh.io/' target='_blank' rel='noopener'>hhuh.io</a>!") %}
+        {{ cs.site("https://hhuh.io/", "HackHarvard 2026 website, live") }}
     {% endcall %}
 
     {% call cs.row("fit", caption="About inside the temple; Tracks on a floating park with a draggable satellite.") %}
-        {{ cs.card(img('design', 'hackharvard/site-about.jpg'), "Website About section: copy set inside a glowing Greek temple with event stats", ar=1.6) }}
-        {{ cs.card(img('design', 'hackharvard/site-tracks.jpg'), "Website Tracks section: a floating island with five domed track modules", ar=1.6) }}
+        {{ cs.card(img('design', 'hackharvard/site-about.jpg'), "Website About section: copy set inside a glowing Greek temple with event stats", ar=1.6, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/site-tracks.jpg'), "Website Tracks section: a floating island with five domed track modules", ar=1.6, zoom=False) }}
     {% endcall %}
 
     {% call cs.row("fit", caption="FAQ beneath the arch gate; sponsor logos in a comet garden.") %}
-        {{ cs.card(img('design', 'hackharvard/site-faq.jpg'), "Website FAQ section with grouped questions and an arch gate framing the moon", ar=1.6) }}
-        {{ cs.card(img('design', 'hackharvard/site-sponsors.jpg'), "Website Sponsors section with logos in a grid under comets and fireworks", ar=1.6) }}
+        {{ cs.card(img('design', 'hackharvard/site-faq.jpg'), "Website FAQ section with grouped questions and an arch gate framing the moon", ar=1.6, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/site-sponsors.jpg'), "Website Sponsors section with logos in a grid under comets and fireworks", ar=1.6, zoom=False) }}
     {% endcall %}
 
     {# ===== Merch ===== #}
@@ -150,14 +150,15 @@
     </p>
     {% endcall %}
 
-    {% call cs.row("fit", caption="The two tote bags, theme artwork and monogram.") %}
-        {{ cs.card(img('design', 'hackharvard/tote-theme.webp'), "Canvas tote with the Hack to the Moon artwork and the dates 10/16 to 10/18, 2026", ar=1) }}
-        {{ cs.card(img('design', 'hackharvard/tote-logo.png'), "Canvas tote with the gradient HA monogram over HackHarvard 2026 in pink", ar=1) }}
+    {% call cs.row("fit", caption="Sticker sheet; the two tote bags, theme artwork and monogram.") %}
+        {{ cs.card(img('design', 'hackharvard/stickers.png'), "Sticker sheet with six HackHarvard 2026 stickers", ar=0.75, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/tote-theme.webp'), "Canvas tote with the Hack to the Moon artwork and the dates 10/16 to 10/18, 2026", ar=1, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/tote-logo.png'), "Canvas tote with the gradient HA monogram over HackHarvard 2026 in pink", ar=1, zoom=False) }}
     {% endcall %}
 
     {% call cs.row("fit", caption="Production proofs: 600 full-color lanyards, printed on both sides; 650 soft enamel pins in five spot colors.") %}
-        {{ cs.card(img('design', 'hackharvard/lanyard.webp'), "Lanyard proof: a dark-to-pink strip with planets, HACKHARVARD2026 and Hack to the Moon, shown flat and folded", ar=2.232) }}
-        {{ cs.card(img('design', 'hackharvard/pin-proof.webp'), "Enamel pin proof: oval HackHarvard 2026 pin with a rocket, its brass back, the Pantone list and the pin placed on its backing card", ar=1.957) }}
+        {{ cs.card(img('design', 'hackharvard/lanyard.webp'), "Lanyard proof: a dark-to-pink strip with planets, HACKHARVARD2026 and Hack to the Moon, shown flat and folded", ar=2.232, zoom=False) }}
+        {{ cs.card(img('design', 'hackharvard/pin-proof.webp'), "Enamel pin proof: oval HackHarvard 2026 pin with a rocket, its brass back, the Pantone list and the pin placed on its backing card", ar=1.957, zoom=False) }}
     {% endcall %}
 
     {# ===== Results ===== #}
@@ -187,7 +188,7 @@
 
     {{ cs.figure(img('design', 'hackharvard/site-team.jpg'),
                  "Website team section: directors shown as glowing planets above a carousel of organizers",
-                 size="lg", caption="The site's team section, with directors as planets and organizers as stars.") }}
+                 size="lg", zoom=False, caption="The site's team section, with directors as planets and organizers as stars.") }}
 
 {% endcall %}
 

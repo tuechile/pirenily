@@ -119,6 +119,12 @@
         });
     });
 
+    // Live sites render at their desktop width and scale to fit the card
+    document.querySelectorAll(".media-card--site").forEach(card => {
+        const fit = () => card.style.setProperty("--site-scale", card.clientWidth / card.dataset.siteWidth);
+        new ResizeObserver(fit).observe(card);
+    });
+
     // Instagram embeds post their own height; size each frame to it so nothing is clipped
     window.addEventListener("message", (e) => {
         if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;

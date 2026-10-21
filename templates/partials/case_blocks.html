@@ -144,6 +144,13 @@
 </div>
 {% endmacro %}
 
+{# A live website at desktop size (width px wide, ar shape), scaled down to the column so it keeps its full layout #}
+{% macro site(src, title, width=1440, ar=1.6) %}
+<div class="media-card media-card--site" style="--ar: {{ ar }}; --site-w: {{ width }}px" data-site-width="{{ width }}">
+    <iframe src="{{ src }}" title="{{ title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+</div>
+{% endmacro %}
+
 {% macro video_card(src, types=["video/mp4"]) %}
 <div class="media-card">
     <video autoplay loop muted playsinline>
