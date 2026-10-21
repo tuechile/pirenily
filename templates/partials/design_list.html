@@ -1,7 +1,7 @@
-{# Design cards with the Case Studies / Brand / UI/UX / Collection / All toggle (home Projects section).
+{# Design cards with the Selected / Brand / UI/UX / Collection / All toggle (home Projects section).
    Strip cards, the same as the Code page: grayscale until hovered, then in color with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
-    <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Case Studies</button>
+    <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
     <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
     <button type="button" class="view-btn" data-view="uiux" aria-pressed="false">UI/UX</button>
     <button type="button" class="view-btn" data-view="collection" aria-pressed="false">Collection</button>
@@ -12,7 +12,7 @@
 <div class="gated-peek" inert>
 {% endif %}
 <div class="design-list strip-grid" id="designList">
-    <!-- Case Studies = data-featured, Brand = data-brand, UI/UX = data-uiux, Collection = data-collection; the rest only show under All -->
+    <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux, Collection = data-collection; the rest only show under All -->
     <a class="strip-card" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-featured>
         <div class="strip">
             <img class="strip-art" src="{{ img('design', 'hackharvard/logo-thumb.png') }}" alt="HackHarvard logo in red on black">
@@ -27,7 +27,7 @@
         <p class="strip-desc">Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon.</p>
     </a>
 
-    <a class="strip-card" href="merch" data-previews="{{ previews('design', ['merch/aconf-poster.png', 'merch/hconf-sketch.png', 'merch/ivmun-placards.webp', 'merch/hudc-the-game-shirt.webp']) }}" data-brand data-collection>
+    <a class="strip-card" href="merch" data-previews="{{ previews('design', ['merch/aconf-poster.png', 'merch/hconf-sketch.png', 'merch/ivmun-placards.webp', 'merch/hudc-the-game-shirt.webp']) }}" data-collection>
         <div class="strip">
             <img class="strip-art" src="{{ img('design', 'merch/hpair-crest.png') }}" alt="HCONF crest">
             <div class="strip-stack">

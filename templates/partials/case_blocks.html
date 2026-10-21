@@ -110,8 +110,10 @@
 
 {# §4 Figure — a single media card #}
 {# ar: width / height, used by the "fit" row so every image shares one height #}
-{% macro card(src, alt, size=None, zoom=True, ar=None) %}
-<div class="media-card{% if size %} media-card--{{ size }}{% endif %}"{% if ar %} style="--ar: {{ ar }}"{% endif %}>
+{# still: no lightbox and no hover change #}
+{% macro card(src, alt, size=None, zoom=True, ar=None, still=False) %}
+{% if still %}{% set zoom = False %}{% endif %}
+<div class="media-card{% if size %} media-card--{{ size }}{% endif %}{% if still %} media-card--still{% endif %}"{% if ar %} style="--ar: {{ ar }}"{% endif %}>
     <img{% if zoom %} class="lightboxable"{% endif %} src="{{ src }}" alt="{{ alt }}" loading="lazy" decoding="async">
 </div>
 {% endmacro %}

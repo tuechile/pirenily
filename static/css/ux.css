@@ -283,6 +283,10 @@ html {
     filter: grayscale(0%);
 }
 
+.media-card--still:hover img {
+    filter: grayscale(18%);
+}
+
 .media-card--sm {
     max-width: 420px;
 }
