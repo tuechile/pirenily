@@ -236,16 +236,17 @@
     font-family: var(--font-body);
 }
 
-/* Your view headers and the Pirenily logo (nav + finder): Gowun Batang, thickened past its 700 with a hairline stroke */
+/* Your view headers and the Pirenily logo (nav + finder): IM Fell DW Pica, which only comes in 400,
+   thickened with a hairline stroke instead of a faux bold */
 :root[data-mode="easy"] {
-    --font-head: "Gowun Batang", serif;
+    --font-head: "IM Fell DW Pica", serif;
     --head-stroke: 0.02em;
 }
 
 :root[data-mode="easy"] :is(h1, h2, h3, h4, .page-title, .case-title, .bio-name, .cs-heading, .cs-subheading,
     .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title, .nav-header, .header):not(.cs-label) {
     font-family: var(--font-head);
-    font-weight: 700;
+    font-weight: 400;
     -webkit-text-stroke: var(--head-stroke) currentColor;
 }
 
