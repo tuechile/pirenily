@@ -99,6 +99,12 @@
     </p>
     {% endcall %}
 
+    {% call cs.row("3", caption="Three campaign posts on Instagram.") %}
+        {% for post in ["DbT1YnnSdhD", "DbESCpPSjyL", "Da9CDgEvOHG"] %}
+        {{ cs.embed("https://www.instagram.com/p/" ~ post ~ "/embed/", "HackHarvard Instagram post " ~ loop.index, ar=0.72) }}
+        {% endfor %}
+    {% endcall %}
+
     {% call cs.row("fit", caption="Launch and applications-open posters.") %}
         {{ cs.card(img('design', 'hackharvard/poster-moon.jpg'), "Hack to the Moon poster announcing Oct 16 to 18, 2026", ar=0.8) }}
         {{ cs.card(img('design', 'hackharvard/poster-apps.jpg'), "Hacker applications open poster", ar=0.8) }}
@@ -112,6 +118,10 @@
         materials. About sits inside a temple, Tracks floats on
         an island with a satellite you can spin, and each FAQ you open lights a lamp on the arch gate.
     </p>
+    <div class="video"><video src="{{ img('design', 'hackharvard/demo.webm') }}" data-rate="2" autoplay muted loop
+            playsinline></video></div>
+    <p class="cta-note">Played at 2× speed.</p>
+    {{ cs.cta("https://hhuh.io/", "Try the live site") }}
     {% endcall %}
 
     {% call cs.row("fit", caption="About inside the temple; Tracks on a floating park with a draggable satellite.") %}
@@ -172,14 +182,6 @@
     {{ cs.figure(img('design', 'hackharvard/site-team.jpg'),
                  "Website team section: directors shown as glowing planets above a carousel of organizers",
                  size="lg", caption="The site's team section, with directors as planets and organizers as stars.") }}
-
-    {# ===== Demo ===== #}
-    {% call cs.section("Demo", lead="The site in motion") %}
-    <div class="video"><video src="{{ img('design', 'hackharvard/demo.webm') }}" data-rate="2" autoplay muted loop
-            playsinline></video></div>
-    <p class="cta-note">Played at 2× speed.</p>
-    {{ cs.cta("https://hhuh.io/", "Try the live site") }}
-    {% endcall %}
 
 {% endcall %}
 

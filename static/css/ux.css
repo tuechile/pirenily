@@ -132,7 +132,7 @@
     --fs-display: clamp(2.2rem, 4.6vw, 3.4rem);
     --fs-heading: clamp(1.6rem, 3vw, 2.3rem);
     --fs-kicker: 0.7rem;
-    --rail-w: 11rem;
+    --rail-w: 10rem;
     --rail-track: rgba(var(--fg-rgb), 0.2);
     --rail-ring: rgba(var(--fg-rgb), 0.4);
     --rail-hole: var(--bg);
@@ -1155,7 +1155,7 @@ html {
 
 .cs-back {
     display: inline-block;
-    margin-bottom: var(--s-6);
+    margin-bottom: var(--s-5);
     font-size: var(--fs-1);
     font-style: italic;
     color: var(--text-tertiary);
@@ -1164,8 +1164,8 @@ html {
 }
 
 .cs-rail-title {
-    margin: var(--s-1) 0 var(--s-6);
-    font-size: 1.05rem;
+    margin: var(--s-1) 0 var(--s-5);
+    font-size: 0.95rem;
     line-height: 1.35;
     color: var(--text-primary);
 }
@@ -1173,12 +1173,12 @@ html {
 /* Progress rail: rings on a line that fills as you read; the section you're in
    lights up as a blurred blob, white at the core and teal around it */
 .cs-index {
-    --node: 14px;
+    --node: 11px;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 0 1 calc(var(--n, 6) * 4.5rem);
+    flex: 0 1 calc(var(--n, 6) * 3rem);
     min-height: 0;
     margin: 0;
     padding: 0;
@@ -1212,7 +1212,7 @@ html {
 .cs-index a {
     display: flex;
     align-items: center;
-    gap: var(--s-4);
+    gap: var(--s-3);
     height: var(--node);
     text-decoration: none;
     transition: filter var(--dur-1) var(--ease-out);
@@ -1224,7 +1224,7 @@ html {
     flex: 0 0 var(--node);
     height: var(--node);
     box-sizing: border-box;
-    border: 2px solid var(--rail-ring);
+    border: 1.5px solid var(--rail-ring);
     border-radius: 50%;
     background: var(--rail-hole);
     /* Same three layers as the lit state, at zero, so the glow can swell in */
@@ -1843,6 +1843,20 @@ html {
 @media screen and (min-width: 1001px) {
     .progress-wrap {
         display: none;
+    }
+
+    /* The rail sits in the middle of the space left of the reading column */
+    .cs-shell {
+        grid-template-columns: minmax(var(--rail-w), 1fr) minmax(0, 52rem) minmax(0, 1fr);
+    }
+
+    .cs-rail {
+        justify-self: center;
+        width: var(--rail-w);
+    }
+
+    .cs-main {
+        grid-column: 2;
     }
 }
 

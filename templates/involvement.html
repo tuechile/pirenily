@@ -125,21 +125,3 @@
 {% endcall %}
 
 {% endblock %}
-
-{% block case_scripts %}
-<script>
-    // Instagram embeds post their own height; size each frame to it so nothing is clipped
-    window.addEventListener("message", function (e) {
-        if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;
-        var data;
-        try { data = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (err) { return; }
-        if (!data || data.type !== "MEASURE" || !data.details) return;
-        document.querySelectorAll('iframe[src*="instagram.com"]').forEach(function (f) {
-            if (f.contentWindow === e.source) {
-                f.style.aspectRatio = "auto";
-                f.style.height = data.details.height + "px";
-            }
-        });
-    });
-</script>
-{% endblock %}

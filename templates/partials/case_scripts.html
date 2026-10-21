@@ -90,4 +90,18 @@
         v.defaultPlaybackRate = v.playbackRate = rate;
         v.addEventListener("loadedmetadata", () => { v.playbackRate = rate; });
     });
+
+    // Instagram embeds post their own height; size each frame to it so nothing is clipped
+    window.addEventListener("message", (e) => {
+        if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;
+        let data;
+        try { data = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+        if (!data || data.type !== "MEASURE" || !data.details) return;
+        document.querySelectorAll('iframe[src*="instagram.com"]').forEach(f => {
+            if (f.contentWindow === e.source) {
+                f.style.aspectRatio = "auto";
+                f.style.height = data.details.height + "px";
+            }
+        });
+    });
 </script>

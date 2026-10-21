@@ -24,6 +24,8 @@
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
     --view-bubble: rgba(255, 255, 255, 0.75);   /* a white bubble, lighter than the paper */
     --caramel-rgb: 190, 140, 90;      /* case study facts panel */
+    --rail-ink: #b3aca5;              /* case study rail at rest: a solid pale ink, so lines and rings don't stack */
+    --rail-ink-soft: #ddd7d0;         /* its track */
     --facts-tint: rgba(var(--caramel-rgb), 0.26);
     --facts-tint-fade: rgba(var(--caramel-rgb), 0.03);
 }
@@ -44,6 +46,27 @@
 :root[data-theme="light"] :is(.progress-bar, .btn:hover, .travel-globe .globe-legend i),
 :root[data-theme="light"] .cs-index a.is-current::before {
     box-shadow: none;
+}
+
+/* The case-study rail (and its kicker and title) rests in pale ink and goes full ink while hovered */
+:root[data-theme="light"] .cs-rail {
+    --rail-track: var(--rail-ink-soft);
+    --rail-ring: var(--rail-ink);
+    --highlight: var(--rail-ink);
+    --text-tertiary: var(--rail-ink);
+    --text-primary: var(--rail-ink);
+}
+
+:root[data-theme="light"] .cs-rail:hover {
+    --rail-track: var(--rail-ink-soft);
+    --rail-ring: var(--c-dim);
+    --highlight: var(--c-strong);
+    --text-tertiary: var(--c-dim);
+    --text-primary: var(--c-title);
+}
+
+:root[data-theme="light"] .cs-rail .cs-back {
+    color: var(--c-dim);
 }
 
 /* Tag pills go ink instead of pink */
