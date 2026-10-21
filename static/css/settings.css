@@ -22,6 +22,8 @@
     --footer-text: rgba(var(--fg-rgb), 0.5);
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
+    --facts-tint: rgba(var(--accent-rgb), 0.22);       /* case study facts panel */
+    --facts-tint-fade: rgba(var(--accent-rgb), 0.03);
 }
 
 /* No glows on paper: selected text is plain pink */
@@ -232,14 +234,14 @@
     font-family: var(--font-body);
 }
 
-/* Your view headers: Gowun Batang, thickened past its 700 with a hairline stroke */
+/* Your view headers and the Pirenily logo (nav + finder): Gowun Batang, thickened past its 700 with a hairline stroke */
 :root[data-mode="easy"] {
     --font-head: "Gowun Batang", serif;
     --head-stroke: 0.02em;
 }
 
 :root[data-mode="easy"] :is(h1, h2, h3, h4, .page-title, .case-title, .bio-name, .cs-heading, .cs-subheading,
-    .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title):not(.cs-label) {
+    .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title, .nav-header, .header):not(.cs-label) {
     font-family: var(--font-head);
     font-weight: 700;
     -webkit-text-stroke: var(--head-stroke) currentColor;
@@ -319,6 +321,16 @@
         height: 40px;
         padding: 0 6px;
         font-size: 1rem;
+    }
+}
+
+/* Home on phones and tablets: the links stack into a grid, so the switches sit in the
+   top-left corner, level with the first row, instead of trailing as a row of their own */
+@media screen and (max-width: 880px) {
+    .landing nav .settings-switches {
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
     }
 }
 

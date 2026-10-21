@@ -39,8 +39,6 @@
     /* The signature hover; easy mode and reduced motion turn it off */
     --hover-blur: blur(1px);
 
-    --mouse-line: rgba(var(--fg-rgb), 0.45);
-
     /* Frosted pills and panels */
     --glass: rgba(var(--fg-rgb), 0.03);
     --glass-strong: rgba(var(--fg-rgb), 0.08);
@@ -146,45 +144,6 @@ body {
 
 .feedback-footer a:hover {
     filter: var(--hover-blur);
-}
-/* Scroll cue: a mouse outline whose wheel slides down, then snaps back (no fade) */
-.scroll-mouse {
-    display: block;
-    position: relative;
-    width: 22px;
-    height: 34px;
-    margin-top: 0.6rem;
-    border: 1.5px solid var(--mouse-line);
-    border-radius: 12px;
-    transition: filter var(--dur-1) var(--ease-out);
-}
-
-.scroll-mouse:hover,
-.scroll-mouse:focus-visible {
-    filter: var(--hover-blur);
-}
-
-.scroll-mouse::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 6px;
-    width: 3px;
-    height: 7px;
-    margin-left: -1.5px;
-    border-radius: 2px;
-    background: var(--accent);
-    animation: mouseWheel 1.8s ease-in-out infinite;
-}
-
-@keyframes mouseWheel {
-    0% { transform: translateY(0); }
-    60%, 80% { transform: translateY(10px); }
-    80.01%, 100% { transform: translateY(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .scroll-mouse::before { animation: none; }
 }
 
 .home-footer-contacts {
