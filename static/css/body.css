@@ -994,9 +994,16 @@
     }
 }
 
-/* The sliding bubble stays, with corners that follow the bar's (its radius minus the bar's padding) */
+/* The sliding bubble stays, with corners that follow the bar's (its radius minus the bar's padding),
+   no outline and a lighter fill */
 :is(#portfolio, .filters) :is(.view-pill, .view-btn) {
     border-radius: calc(var(--r-sm) - 0.25rem);
+}
+
+:is(#portfolio, .filters) .view-pill,
+:is(#portfolio, .filters) .view-toggle:not(.has-pill) .view-btn.active {
+    background: var(--view-bubble);
+    border: 0;
 }
 
 /* Only the bio pic, and the picture on single-picture pages (layout.html sets .one-pic), get feathered edges */
@@ -1101,10 +1108,10 @@
     text-align: left;
 }
 
-/* ===== Code page: strip cards =====
-   At rest a bare 2:1 image strip with its description underneath. The strip is two squares;
-   the script in code.html cuts it into 12 × 6 tiles and flips the hovered square's tiles away
-   to show the facts (name, position, time, stack) sitting behind them. */
+/* ===== Strip cards (Code page, home Projects) =====
+   A grayscale image strip, named underneath. Hovering brings the color back and drops the
+   stack in from the top, one chip after another (home Projects also pops a preview, popups.js). */
+
 /* One column: each strip gets the full reading width */
 .strip-grid {
     display: grid;
@@ -1122,7 +1129,6 @@
     text-decoration: none;
     color: inherit;
     outline: none;
-    container-type: inline-size;
 }
 
 /* No outline: the picture's edges dissolve into the page (the site's --feather-mask) */
@@ -1130,15 +1136,6 @@
     position: relative;
     aspect-ratio: 2 / 1;
     overflow: hidden;
-}
-
-/* Only the picture layers are feathered (the tiles as one piece), never the facts */
-.strip > .strip-art,
-.strip-tiles {
-    -webkit-mask-image: var(--feather-mask);
-    -webkit-mask-composite: source-in;
-    mask-image: var(--feather-mask);
-    mask-composite: intersect;
 }
 
 .strip-card:focus-visible .strip {
@@ -1153,6 +1150,16 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    filter: grayscale(100%);
+    transition: filter var(--dur-2) var(--ease-out);
+    -webkit-mask-image: var(--feather-mask);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--feather-mask);
+    mask-composite: intersect;
+}
+
+.strip-card:is(:hover, :focus-visible) .strip-art {
+    filter: grayscale(0);
 }
 
 .strip-empty {
@@ -1170,139 +1177,62 @@
     background: var(--thumb-blank);
 }
 
-/* The facts: one square (half the strip), on whichever half is open */
-.strip-facts {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    box-sizing: border-box;
-    background: var(--bg);
-    padding: 1rem 1.1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    overflow-y: auto;
-}
-
-.strip-facts.is-right {
-    left: 50%;
-}
-
-.strip-name {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 1.2rem;
-    line-height: 1.25;
-    color: rgba(var(--fg-rgb), 0.894);
-}
-
-.strip-role {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: var(--fs-note);
-    line-height: 1.4;
-    color: rgba(var(--fg-rgb), 0.647);
-}
-
-.strip-time {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: var(--fs-1);
-    color: rgba(var(--fg-rgb), 0.431);
-}
-
+/* The stack waits above the strip's top edge (clipped out of sight) and drops in on hover.
+   Leaving snaps it straight back up: the transition only runs on the way in. */
 .strip-stack {
+    position: absolute;
+    top: 0.9rem;
+    left: 1rem;
+    right: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 0.3rem;
-    margin-top: 0.2rem;
+    pointer-events: none;
 }
 
-/* Each line rises out of its own mask when a square opens; it resets instantly when it closes */
-.strip-line {
-    clip-path: inset(0 0 100% 0);
-    transform: translateY(12px);
+.strip-stack .tag-chip {
+    background: rgba(var(--bg-rgb), 0.6);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transform: translateY(-10rem);
 }
 
-.strip-facts.is-in .strip-line {
-    clip-path: inset(0);
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip {
     transform: none;
-    transition: clip-path var(--dur-3) var(--ease-out), transform var(--dur-3) var(--ease-out);
-    transition-delay: 200ms;
+    transition: transform var(--dur-3) var(--ease-out);
 }
 
-.strip-facts.is-in .strip-line:nth-child(2) { transition-delay: 240ms; }
-.strip-facts.is-in .strip-line:nth-child(3) { transition-delay: 280ms; }
-.strip-facts.is-in .strip-line:nth-child(4) { transition-delay: 320ms; }
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(2) { transition-delay: 50ms; }
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(3) { transition-delay: 100ms; }
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(4) { transition-delay: 150ms; }
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(5) { transition-delay: 200ms; }
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(6) { transition-delay: 250ms; }
+.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(7) { transition-delay: 300ms; }
 
-/* The tiles: each shows its own piece of a full-size copy of the image and turns on its centre */
-.strip-tiles {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    z-index: 1;
+/* No hover on touch screens: show the cards in color with their stack in place */
+@media (hover: none) {
+    .strip-art {
+        filter: none;
+    }
+
+    .strip-stack .tag-chip {
+        transform: none;
+    }
 }
 
-.strip-tile {
-    position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
-    transform: perspective(400px) rotateY(0);
-    transition: transform 280ms var(--ease-out);
-}
-
-.strip-tile.is-flipped {
-    transform: perspective(400px) rotateY(90deg);
-    transition-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
-}
-
-.strip-tile > .strip-art {
-    width: 1200%;
-    height: 600%;
-    left: calc(var(--i) * -100%);
-    top: calc(var(--j) * -100%);
-    max-width: none;
-}
-
-.strip-desc {
+/* The project's name, as the subtitle under the strip */
+.strip-caption {
     margin: 0;
     padding: 0 0.4rem;
     font-family: var(--font-body);
     font-style: italic;
-    font-size: var(--fs-1);
+    font-size: var(--fs-body-sm);
     line-height: 1.5;
-    color: rgba(var(--fg-rgb), 0.533);
+    color: rgba(var(--fg-rgb), 0.894);
 }
 
 @media screen and (max-width: 880px) {
     .strip-grid {
         gap: 2.5rem;
-    }
-}
-
-/* When the facts don't fit in half the strip, the whole strip opens (set by the script) */
-.strip-facts.is-full {
-    width: 100%;
-}
-
-/* Narrow cards (phones, and two columns on small laptops): a deeper strip, so the facts fit when the whole strip opens */
-@container (max-width: 440px) {
-    .strip {
-        aspect-ratio: 3 / 2;
-    }
-}
-
-@media screen and (max-width: 520px) {
-    .strip-facts {
-        padding: 0.6rem 0.75rem;
-        gap: 0.2rem;
-    }
-
-    .strip-name {
-        font-size: 1.05rem;
     }
 }

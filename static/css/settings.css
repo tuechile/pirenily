@@ -22,6 +22,7 @@
     --footer-text: rgba(var(--fg-rgb), 0.5);
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
+    --view-bubble: rgba(255, 255, 255, 0.75);   /* a white bubble, lighter than the paper */
     --facts-tint: rgba(var(--accent-rgb), 0.22);       /* case study facts panel */
     --facts-tint-fade: rgba(var(--accent-rgb), 0.03);
 }

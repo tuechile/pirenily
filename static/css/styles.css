@@ -43,6 +43,7 @@
     /* Frosted pills and panels */
     --glass: rgba(var(--fg-rgb), 0.03);
     --glass-strong: rgba(var(--fg-rgb), 0.08);
+    --view-bubble: rgba(var(--fg-rgb), 0.16);   /* the selected option's bubble in the Projects / Play bars */
     --hairline: rgba(var(--fg-rgb), 0.08);
     --hairline-strong: rgba(var(--fg-rgb), 0.22);
     --pill-text: rgba(var(--fg-rgb), 0.647);

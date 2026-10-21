@@ -1,5 +1,5 @@
 {# Design cards with the Selected / Brand / UI/UX / Marketing / All toggle (home Projects section).
-   Strip cards, the same as the Code page: static/strips.js opens them. #}
+   Strip cards, the same as the Code page: grayscale until hovered, then in color with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
     <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
     <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
@@ -12,182 +12,127 @@
     <a class="strip-card" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-marketing data-featured>
         <div class="strip">
             <img class="strip-art" src="{{ img('design', 'hackharvard/logo-thumb.png') }}" alt="HackHarvard logo in red on black">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">HackHarvard 2026: Hack to the Moon</div>
-                <div class="strip-line strip-role">Director of Design</div>
-                <div class="strip-line strip-time">Apr–Oct 2026</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Brand</span>
-                    <span class="tag-chip">Campaign</span>
-                    <span class="tag-chip">Website</span>
-                    <span class="tag-chip">Merch</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Brand</span>
+                <span class="tag-chip">Campaign</span>
+                <span class="tag-chip">Website</span>
+                <span class="tag-chip">Merch</span>
             </div>
         </div>
-        <p class="strip-desc">Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon.</p>
+        <p class="strip-caption">HackHarvard 2026: Hack to the Moon</p>
     </a>
 
     <a class="strip-card" href="merch" data-previews="{{ previews('design', ['merch/aconf-poster.png', 'merch/hconf-sketch.png', 'merch/ivmun-placards.webp', 'merch/hudc-the-game-shirt.webp']) }}" data-brand data-marketing>
         <div class="strip">
             <img class="strip-art" src="{{ img('design', 'merch/hpair-crest.png') }}" alt="HCONF crest">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">Merch</div>
-                <div class="strip-line strip-role">Case study</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">HPAIR</span>
-                    <span class="tag-chip">IVMUN</span>
-                    <span class="tag-chip">HUDC</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">HPAIR</span>
+                <span class="tag-chip">IVMUN</span>
+                <span class="tag-chip">HUDC</span>
             </div>
         </div>
-        <p class="strip-desc">Crests, posters and goods for HPAIR, IVMUN and HUDC.</p>
+        <p class="strip-caption">Merch</p>
     </a>
 
     <a class="strip-card" href="/involvement" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'merch/hpair-crest.png', 'hackharvard/lanyard.webp']) }}" data-marketing>
         <div class="strip">
             <img class="strip-art" src="{{ img('design', 'hackharvard/poster-apps.jpg') }}" alt="HackHarvard 2026 poster announcing that hacker applications are open">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">Campus Involvement</div>
-                <div class="strip-line strip-role">Campaigns and outreach</div>
-                <div class="strip-line strip-time">2025–2026</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">HackHarvard</span>
-                    <span class="tag-chip">Office for the Arts</span>
-                    <span class="tag-chip">HPAIR</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">HackHarvard</span>
+                <span class="tag-chip">Office for the Arts</span>
+                <span class="tag-chip">HPAIR</span>
             </div>
         </div>
-        <p class="strip-desc">Three Harvard organizations, with a measured result for each.</p>
+        <p class="strip-caption">Campus Involvement</p>
     </a>
 
     <a class="strip-card" href="olympics" data-previews="{{ previews('olympics', ['2Sapphire.jpg', '4Ruby.jpg', '5Emerald.jpg', '3Amethyst.jpg']) }}" data-brand>
         <div class="strip">
             <img class="strip-art" src="{{ img('olympics', '6Artboard.jpg') }}" alt="CNN Olympics team logos">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">CNN Olympics</div>
-                <div class="strip-line strip-role">Contractor</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Logos</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Logos</span>
             </div>
         </div>
-        <p class="strip-desc">Commissioned team logos for CNN Hội Thao.</p>
+        <p class="strip-caption">CNN Olympics</p>
     </a>
 
     <a class="strip-card" href="/commonspirit" data-previews="{{ previews('ux', ['commonspirit/redes1.png', 'commonspirit/redes2.png', 'commonspirit/impact-effort.png']) }}" data-uiux data-featured>
         <div class="strip">
             <img class="strip-art" src="{{ img('ux', 'commonspirit/preview.webp') }}" alt="T4SG × CommonSpirit Health redesign preview">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">T4SG × CommonSpirit Health</div>
-                <div class="strip-line strip-role">Redesigning patient resource access at scale</div>
-                <div class="strip-line strip-time">Feb–May 2026</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Figma</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Figma</span>
             </div>
         </div>
-        <p class="strip-desc">12-week T4SG project improving CommonSpirit's internal resource tool (CIP).</p>
+        <p class="strip-caption">T4SG × CommonSpirit Health</p>
     </a>
 
     <a class="strip-card" href="/t4sg" data-previews="{{ previews('ux', ['t4sg/hifi view.png', 't4sg/hifi add.png', 't4sg/userflow.png', 't4sg/affmap.png']) }}" data-uiux data-featured>
         <div class="strip">
             <img class="strip-art" src="{{ img('ux', 't4sg/preview.webp') }}" alt="T4SG × 2ft inventory system preview">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">T4SG × 2ft Prosthetics</div>
-                <div class="strip-line strip-role">Offline-first inventory system</div>
-                <div class="strip-line strip-time">Sep–Dec 2025</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Figma</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Figma</span>
             </div>
         </div>
-        <p class="strip-desc">Figma flows for volunteers, coordinators, and prosthetists working across time zones and unreliable connections.</p>
+        <p class="strip-caption">T4SG × 2ft Prosthetics</p>
     </a>
 
     <!-- Source: https://github.com/precideer/cs-1710-unicode -->
     <a class="strip-card" href="/cs1710" data-previews="{{ previews('ux', ['cs171/hifi overview.png', 'cs171/hifi time.png', 'cs171/hifi emoji.png', 'cs171/map_q.png']) }}" data-featured>
         <div class="strip">
             <img class="strip-art" src="{{ img('ux', 'cs171/preview.gif') }}" alt="Visualization: A Unicode Story">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">Chi x Rain: An Essay on Unicode</div>
-                <div class="strip-line strip-role">Final Project for CS1710: Visualization</div>
-                <div class="strip-line strip-time">Oct–Dec 2025</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">D3.js</span>
-                    <span class="tag-chip">JavaScript</span>
-                    <span class="tag-chip">HTML</span>
-                    <span class="tag-chip">CSS</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">D3.js</span>
+                <span class="tag-chip">JavaScript</span>
+                <span class="tag-chip">HTML</span>
+                <span class="tag-chip">CSS</span>
             </div>
         </div>
-        <p class="strip-desc">Telling the history of Unicode as an animated, scroll-driven essay.</p>
+        <p class="strip-caption">Chi x Rain: An Essay on Unicode</p>
     </a>
 
     <a class="strip-card" href="recit" data-previews="{{ previews('recit', ['recitbanner.jpg', 'recitposter.jpg']) }}">
         <div class="strip">
             <img class="strip-art" src="{{ img('art_direction', 'recit.jpg') }}" alt="Recít Film Studio">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">Recít Film Studio</div>
-                <div class="strip-line strip-role">Art Director</div>
-            </div>
         </div>
-        <p class="strip-desc">Posters and banners for a student-run Hanoi film studio making short films about Vietnamese stories.</p>
+        <p class="strip-caption">Recít Film Studio</p>
     </a>
 
     <a class="strip-card" href="https://www.facebook.com/official.ivmun" target="_blank" rel="noopener" aria-label="International Vietnam Model United Nations, on Facebook (opens in a new tab)" data-previews="{{ previews('art_direction', ['ivmun-quarter.webp', 'ivmun-banner.webp', 'ivmun-header.webp', 'ivmun-storm.webp']) }}" data-brand>
         <div class="strip">
             <img class="strip-art project-thumb-img--focus-right" src="{{ img('art_direction', 'ivmun-cover.webp') }}" alt="IVMUN 2023 banner: the title over red-green mountains, a crescent moon and a geometric tower">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">International Vietnam Model United Nations</div>
-                <div class="strip-line strip-role">Co-head of Design</div>
-            </div>
         </div>
-        <p class="strip-desc">Led design with a team of 7 for a conference of over 1,000 people.</p>
+        <p class="strip-caption">International Vietnam Model United Nations</p>
     </a>
 
     <a class="strip-card" href="highlander" data-previews="{{ previews('art_direction', ['poster.jpg']) }}">
         <div class="strip">
             <img class="strip-art" src="{{ img('art_direction', 'highlander.jpg') }}" alt="Highlander short film">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">CNN English Club: Highlander</div>
-                <div class="strip-line strip-role">Director</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Short film</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Short film</span>
             </div>
         </div>
-        <p class="strip-desc">A short film production team for CEC Oscar, a film event of CNN English Club.</p>
+        <p class="strip-caption">CNN English Club: Highlander</p>
     </a>
 
-    <div class="strip-card" tabindex="0" aria-label="CNN English Club">
+    <div class="strip-card">
         <div class="strip">
             <img class="strip-art" src="{{ img('client', 'cec.png') }}" alt="CNN English Club posters">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">CNN English Club</div>
-                <div class="strip-line strip-role">Commission</div>
-                <div class="strip-line strip-time">2023</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Posters</span>
-                    <span class="tag-chip">Tickets</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Posters</span>
+                <span class="tag-chip">Tickets</span>
             </div>
         </div>
-        <p class="strip-desc">Commissioned posters and tickets for CNN English Club.</p>
+        <p class="strip-caption">CNN English Club</p>
     </div>
 
-    <div class="strip-card" tabindex="0" aria-label="CNN Dance Club: TeddeAh!">
+    <div class="strip-card">
         <div class="strip">
             <img class="strip-art" src="{{ img('client', 'teddeah!.png') }}" alt="TeddeAh! logo">
-            <div class="strip-facts">
-                <div class="strip-line strip-name">CNN Dance Club: TeddeAh!</div>
-                <div class="strip-line strip-role">Commission</div>
-                <div class="strip-line strip-time">Jul 2022</div>
-                <div class="strip-line strip-stack">
-                    <span class="tag-chip">Logo</span>
-                </div>
+            <div class="strip-stack">
+                <span class="tag-chip">Logo</span>
             </div>
         </div>
-        <p class="strip-desc">Commissioned logo for TeddeAh!, a competitive dance group from CNN Dance Club.</p>
+        <p class="strip-caption">CNN Dance Club: TeddeAh!</p>
     </div>
 </div>
 
