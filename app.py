@@ -37,7 +37,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "162"
+ASSET_VERSION = "164"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -101,7 +101,6 @@ def _date_sort_key(filename):
 # Which top-nav item a page belongs to, so the nav can mark "you are here".
 NAV_SECTIONS = {
     "about": ["about"],
-    "cv": ["cv"],
     "code": ["code"],
     "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
     "projects": ["hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710"],
@@ -190,7 +189,6 @@ SEARCH_INDEX = [
     ("/about", ["about", "about me", "chi", "chi le", "le tue chi", "tue", "chi tue le", "pirenily", "me",
                 "myself", "emily", "iron pig", "chi bell", "artist", "bio", "contact", "email", "instagram",
                 "linkedin", "github", "self photography"]),
-    ("/cv", ["cv", "resume", "résumé", "curriculum vitae"]),
     ("/#portfolio", ["projects", "project", "portfolio", "ux", "ui", "uiux", "ui ux", "case study", "case studies",
                      "work", "design", "graphic design", "collab", "collaboration", "collaborations",
                      "collaborative work", "commission", "commissions", "commissioned work", "client", "client work",
@@ -292,19 +290,46 @@ def find_page(query):
 # The repo is public, so only a salted hash lives here. The cookie keeps what the
 # visitor typed and is re-checked on every visit, so it can't be forged from the
 # (also public) secret_key.
+# Two passwords, two levels: the full one opens the projects and the CV tab; the projects-only one
+# opens just the projects. Make a hash with:
+#   python3 -c "from werkzeug.security import generate_password_hash as g; print(g('the password', method='pbkdf2:sha256:260000'))"
 PROJECTS_PASSWORD_HASH = "pbkdf2:sha256:260000$r6FhrBDArg4y0z98$dede3769175e5159df5b529a53de3efa2f9a5ce88ca3b20f8dbfe42638e299d7"
+PROJECTS_ONLY_PASSWORD_HASH = "pbkdf2:sha256:260000$c2RbUcTpqzZdzQbs$8326c2f79332a4230bbb7e17fea344a81006aa56a70483bec5ff5dd9e0ce01c3"
 PROJECTS_COOKIE = "projects_key"
 GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
                   "commonspirit", "cs171"}
 
+# Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
+# Empty shows a "coming soon" note in the CV tab instead of the embed.
+CV_DRIVE_URL = ""
+
+
+def access_level(key=None):
+    """'cv' for the full password, 'projects' for the projects-only one, else None."""
+    key = request.cookies.get(PROJECTS_COOKIE, "") if key is None else key
+    if not key:
+        return None
+    if check_password_hash(PROJECTS_PASSWORD_HASH, key):
+        return "cv"
+    if PROJECTS_ONLY_PASSWORD_HASH and check_password_hash(PROJECTS_ONLY_PASSWORD_HASH, key):
+        return "projects"
+    return None
+
 
 def projects_unlocked():
-    return check_password_hash(PROJECTS_PASSWORD_HASH, request.cookies.get(PROJECTS_COOKIE, ""))
+    return access_level() is not None
 
 
 @app.context_processor
 def inject_projects_unlocked():
-    return dict(projects_unlocked=projects_unlocked())
+    level = access_level()
+    cv = None
+    if level == "cv":
+        # A share link ends in /view?usp=sharing; Drive only embeds the /preview form
+        file_id = re.search(r"/d/([\w-]+)", CV_DRIVE_URL)
+        cv = {"url": CV_DRIVE_URL or None,
+              "preview": f"https://drive.google.com/file/d/{file_id.group(1)}/preview" if file_id else None}
+    return dict(projects_unlocked=level is not None, cv=cv)
 
 
 @app.before_request
@@ -319,7 +344,7 @@ def unlock():
     if not target.startswith("/") or target.startswith("//"):
         target = "/#portfolio"
     key = request.form.get("password", "")
-    if not check_password_hash(PROJECTS_PASSWORD_HASH, key):
+    if access_level(key) is None:
         if target.startswith("/#"):
             return render_template("index.html", wrong=True), 401
         return render_template("projects_gate.html", next=target, wrong=True), 401
@@ -349,19 +374,6 @@ def t4sg():
 @app.route("/commonspirit")
 def commonspirit():
     return render_template(PROJECT_TEMPLATES["commonspirit"])
-
-
-# Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
-# Empty shows a "coming soon" note instead of the embed.
-CV_DRIVE_URL = ""
-
-
-@app.route("/cv")
-def cv():
-    # A share link ends in /view?usp=sharing; Drive only embeds the /preview form
-    file_id = re.search(r"/d/([\w-]+)", CV_DRIVE_URL)
-    preview = f"https://drive.google.com/file/d/{file_id.group(1)}/preview" if file_id else None
-    return render_template("cv.html", cv_url=CV_DRIVE_URL or None, cv_preview=preview)
 
 
 # ---- your existing routes ----

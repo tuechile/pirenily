@@ -2,6 +2,7 @@
    Strip cards, the same as the Code page: in color at rest (black and white and blurred in My view), sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
     <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
+    {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="cv" aria-pressed="false"><span>CV</span></button>{% endif %}
     <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
     <button type="button" class="view-btn" data-view="uiux" aria-pressed="false">UI/UX</button>
     <button type="button" class="view-btn" data-view="collection" aria-pressed="false">Collection</button>
@@ -151,6 +152,21 @@
         <p class="strip-desc">Commissioned logo for TeddeAh!, a competitive dance group from CNN Dance Club.</p>
     </div>
 </div>
+{% if cv %}
+{# Only the full password gets here; the Drive link lives in CV_DRIVE_URL (app.py) #}
+<section class="cv-panel" id="cvPanel" aria-label="CV" hidden>
+    {% if cv.preview %}
+    <div class="cv-frame">
+        <iframe src="{{ cv.preview }}" title="Chi Le's CV" loading="lazy"></iframe>
+    </div>
+    {% endif %}
+    {% if cv.url %}
+    <p class="gate-note"><a href="{{ cv.url }}" target="_blank" rel="noopener">Open it in Google Drive ↗</a></p>
+    {% else %}
+    <p class="cv-soon">On its way. Until it's up, <a href="mailto:chile@college.harvard.edu?subject=CV">email me</a> and I'll send a copy.</p>
+    {% endif %}
+</section>
+{% endif %}
 {% if not projects_unlocked %}
 </div>
 <section class="home-gate" aria-labelledby="homeGateTitle">
@@ -179,11 +195,16 @@
             if (!animate) { pill.offsetWidth; pill.style.transition = ""; }
         }
 
+        var cvPanel = document.getElementById("cvPanel");
+        var cvBtn = toggle.querySelector(".view-btn--cv");
+
         function setView(view) {
+            if (view === "cv" && !cvPanel) view = "selected";
             cards.forEach(function (c) {
                 var show = view === "all" || c.hasAttribute("data-" + { selected: "featured", brand: "brand", uiux: "uiux", collection: "collection" }[view]);
                 c.style.display = show ? "" : "none";
             });
+            if (cvPanel) cvPanel.hidden = view !== "cv";
             btns.forEach(function (b) {
                 var on = b.dataset.view === view;
                 b.classList.toggle("active", on);
@@ -200,7 +221,7 @@
             });
         });
 
-        var fromHash = { "#brand": "brand", "#uiux": "uiux", "#collection": "collection", "#marketing": "collection", "#all": "all" }[location.hash];
+        var fromHash = { "#cv": "cv", "#brand": "brand", "#uiux": "uiux", "#collection": "collection", "#marketing": "collection", "#all": "all" }[location.hash];
         setView(fromHash || "selected");
         // /#all etc. has no element to jump to, so bring the list into view ourselves
         // (after load, once the browser has finished its own hash scroll)
@@ -212,5 +233,36 @@
         placePill(false);
         document.fonts.ready.then(function () { placePill(false); });
         window.addEventListener("resize", function () { placePill(false); });
+
+        // The CV tab unfolds next to Selected the first time it shows up in a visit. It waits folded
+        // until the page has loaded (the loader is gone) and the toggle is on screen, so it's seen.
+        // The pill follows along while the tabs to its right slide over.
+        if (cvBtn && fromHash !== "cv" && document.documentElement.dataset.motion !== "reduced" && "IntersectionObserver" in window) {
+            var seen = false;
+            try { seen = sessionStorage.getItem("pirenily-cv-tab") === "1"; } catch (e) {}
+            if (!seen) {
+                cvBtn.classList.add("is-folded");
+                placePill(false);
+                var follow = function () { placePill(false); if (cvBtn.classList.contains("is-entering")) requestAnimationFrame(follow); };
+                var unfold = function () {
+                    try { sessionStorage.setItem("pirenily-cv-tab", "1"); } catch (e) {}
+                    cvBtn.classList.remove("is-folded");
+                    cvBtn.classList.add("is-entering");
+                    requestAnimationFrame(follow);
+                    cvBtn.addEventListener("animationend", function () {
+                        cvBtn.classList.remove("is-entering");
+                        placePill(false);
+                    }, { once: true });
+                };
+                var watch = function () {
+                    var io = new IntersectionObserver(function (entries) {
+                        if (entries[0].isIntersecting) { io.disconnect(); unfold(); }
+                    }, { threshold: 1 });
+                    io.observe(toggle);
+                };
+                if (document.readyState === "complete") watch();
+                else window.addEventListener("load", watch, { once: true });
+            }
+        }
     })();
 </script>
