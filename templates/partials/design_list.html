@@ -7,6 +7,10 @@
     <button type="button" class="view-btn" data-view="marketing" aria-pressed="false">Marketing</button>
     <button type="button" class="view-btn" data-view="all" aria-pressed="false">All</button>
 </div>
+{% if not projects_unlocked %}
+{# Locked: the toggle still works, but the cards are a faded, untouchable peek above the password panel #}
+<div class="gated-peek" inert>
+{% endif %}
 <div class="design-list strip-grid" id="designList">
     <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux, Marketing = data-marketing; the rest only show under All -->
     <a class="strip-card" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-marketing data-featured>
@@ -147,6 +151,16 @@
         <p class="strip-desc">Commissioned logo for TeddeAh!, a competitive dance group from CNN Dance Club.</p>
     </div>
 </div>
+{% if not projects_unlocked %}
+</div>
+<section class="home-gate" aria-labelledby="homeGateTitle">
+    <p class="home-gate-kicker">Private</p>
+    <h2 class="home-gate-title" id="homeGateTitle">Projects</h2>
+    <p class="home-gate-sub">My projects are shared by password.</p>
+    {% include "partials/projects_gate_form.html" %}
+    <p class="gate-note">Don't have it? <a href="/about">Ask me</a>.</p>
+</section>
+{% endif %}
 
 <script>
     (function () {

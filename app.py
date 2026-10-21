@@ -37,7 +37,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "139"
+ASSET_VERSION = "144"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -286,6 +286,47 @@ def find_page(query):
     return None
 
 
+# Every project page is password-gated.
+# The repo is public, so only a salted hash lives here. The cookie keeps what the
+# visitor typed and is re-checked on every visit, so it can't be forged from the
+# (also public) secret_key.
+PROJECTS_PASSWORD_HASH = "pbkdf2:sha256:260000$r6FhrBDArg4y0z98$dede3769175e5159df5b529a53de3efa2f9a5ce88ca3b20f8dbfe42638e299d7"
+PROJECTS_COOKIE = "projects_key"
+GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
+                  "commonspirit", "cs171"}
+
+
+def projects_unlocked():
+    return check_password_hash(PROJECTS_PASSWORD_HASH, request.cookies.get(PROJECTS_COOKIE, ""))
+
+
+@app.context_processor
+def inject_projects_unlocked():
+    return dict(projects_unlocked=projects_unlocked())
+
+
+@app.before_request
+def gate_projects():
+    if request.endpoint in GATED_PROJECTS and not projects_unlocked():
+        return render_template("projects_gate.html", next=request.path), 401
+
+
+@app.route("/unlock", methods=["POST"])
+def unlock():
+    target = request.form.get("next", "")
+    if not target.startswith("/") or target.startswith("//"):
+        target = "/#portfolio"
+    key = request.form.get("password", "")
+    if not check_password_hash(PROJECTS_PASSWORD_HASH, key):
+        if target.startswith("/#"):
+            return render_template("index.html", wrong=True), 401
+        return render_template("projects_gate.html", next=target, wrong=True), 401
+    response = redirect(target)
+    response.set_cookie(PROJECTS_COOKIE, key, max_age=60 * 60 * 24 * 30,
+                        httponly=True, secure=request.is_secure, samesite="Lax")
+    return response
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "GET":
@@ -409,26 +450,9 @@ def hackharvard():
 def merch():
     return render_template("collab websites/merch.html")
 
-# /involvement is password-gated. The repo is public, so only a salted hash lives here.
-# The cookie keeps what the visitor typed and is re-checked on every visit, so it
-# can't be forged from the (also public) secret_key.
-INVOLVEMENT_PASSWORD_HASH = "pbkdf2:sha256:260000$AJMYAVeFscajv61Y$8ce834196318e38022c22e094b3e927fc255bdb1273e4a6fdc60816172b12b3c"
-INVOLVEMENT_COOKIE = "involvement_key"
-
-
-@app.route("/involvement", methods=["GET", "POST"])
+@app.route("/involvement")
 def involvement():
-    if request.method == "POST":
-        key = request.form.get("password", "")
-        if not check_password_hash(INVOLVEMENT_PASSWORD_HASH, key):
-            return render_template("involvement_gate.html", wrong=True), 401
-        response = redirect(url_for("involvement"))
-        response.set_cookie(INVOLVEMENT_COOKIE, key, max_age=60 * 60 * 24 * 30,
-                            httponly=True, secure=request.is_secure, samesite="Lax")
-        return response
-    if check_password_hash(INVOLVEMENT_PASSWORD_HASH, request.cookies.get(INVOLVEMENT_COOKIE, "")):
-        return render_template("involvement.html")
-    return render_template("involvement_gate.html")
+    return render_template("involvement.html")
 
 @app.route("/cs1710")
 def cs171():

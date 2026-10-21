@@ -1683,7 +1683,7 @@ html {
     white-space: nowrap;
 }
 
-/* ----- Involvement gate: password panel ----- */
+/* ----- Projects gate page (form styles live in styles.css) ----- */
 .gate {
     width: min(34rem, 100% - 2rem);
     margin: 0 auto;
@@ -1697,82 +1697,6 @@ html {
 
 .gate .case-title {
     margin: var(--s-3) 0 var(--s-4);
-}
-
-.gate-form {
-    margin-top: var(--s-6);
-    padding: var(--s-5);
-    border: 1px solid var(--hairline);
-    background: var(--glass);
-}
-
-.gate-form .cs-label {
-    display: block;
-    margin-bottom: var(--s-3);
-}
-
-.gate-field {
-    display: flex;
-    border: 1px solid var(--hairline-strong);
-    border-radius: var(--r-pill);
-    background: var(--glass);
-}
-
-.gate-field:focus-within {
-    border-color: var(--accent);
-}
-
-.gate-field input {
-    flex: 1;
-    min-width: 0;
-    padding: var(--s-2) var(--s-5);
-    font: inherit;
-    font-size: 1.05rem;
-    color: var(--text-primary);
-    background: none;
-    border: 0;
-    outline: none;
-}
-
-.gate-field button {
-    padding: var(--s-2) var(--s-5);
-    font: inherit;
-    font-style: italic;
-    font-size: 1.05rem;
-    color: var(--text-primary);
-    background: var(--glass-strong);
-    border: 0;
-    border-left: 1px solid var(--hairline);
-    border-radius: 0 var(--r-pill) var(--r-pill) 0;
-    cursor: pointer;
-    transition: filter var(--dur-1) var(--ease-out);
-}
-
-.gate-field button:hover,
-.gate-field button:focus-visible {
-    filter: var(--hover-blur);
-}
-
-.gate-field button:active {
-    transform: var(--press);
-}
-
-.gate-error {
-    margin: var(--s-3) 0 0;
-    font-size: var(--fs-body-sm);
-    font-style: italic;
-    color: var(--text-primary);
-}
-
-.gate-note {
-    margin-top: var(--s-5);
-    font-size: var(--fs-body-sm);
-    font-style: italic;
-    color: var(--text-tertiary);
-}
-
-.gate-note a {
-    color: var(--text-secondary);
 }
 
 /* ----- Call to action: a panel link ----- */

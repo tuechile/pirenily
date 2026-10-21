@@ -793,3 +793,126 @@ footer {
         margin-top: 0.4rem;
     }
 }
+
+/* ===== Projects password gate (home Projects + gated project pages) ===== */
+.gate-form {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--hairline);
+    background: var(--glass);
+}
+
+.gate-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: var(--fs-note);
+    text-transform: uppercase;
+    color: var(--c-dim);
+}
+
+.gate-field {
+    display: flex;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-pill);
+    background: var(--glass);
+}
+
+.gate-field:focus-within {
+    border-color: var(--accent);
+}
+
+.gate-field input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 1.5rem;
+    font: inherit;
+    font-size: 1.05rem;
+    color: var(--c-title);
+    background: none;
+    border: 0;
+    outline: none;
+}
+
+.gate-field button {
+    padding: 0.5rem 1.5rem;
+    font: inherit;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--c-title);
+    background: var(--glass-strong);
+    border: 0;
+    border-left: 1px solid var(--hairline);
+    border-radius: 0 var(--r-pill) var(--r-pill) 0;
+    cursor: pointer;
+    transition: filter var(--dur-1) var(--ease-out);
+}
+
+.gate-field button:hover,
+.gate-field button:focus-visible {
+    filter: var(--hover-blur);
+}
+
+.gate-field button:active {
+    transform: var(--press);
+}
+
+.gate-error {
+    margin: 0.75rem 0 0;
+    font-size: var(--fs-body-sm);
+    font-style: italic;
+    color: var(--c-title);
+}
+
+.gate-note {
+    margin-top: 1.5rem;
+    font-size: var(--fs-body-sm);
+    font-style: italic;
+    color: var(--c-dim);
+}
+
+.gate-note a {
+    color: var(--c-mid);
+}
+
+/* Home Projects while locked: the cards are a short peek that fades into the page
+   (black in My view, paper in Your view), with the password panel rising out of the fade */
+.gated-peek {
+    position: relative;
+    max-height: 14rem;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+}
+
+.gated-peek::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--bg) 0%, var(--bg) 8%, rgba(var(--bg-rgb), 0) 75%);
+}
+
+.home-gate {
+    position: relative;
+    width: min(34rem, 100% - 2rem);
+    margin: -4rem auto 0;
+}
+
+.home-gate-kicker {
+    margin: 0;
+    font-size: var(--fs-note);
+    text-transform: uppercase;
+    color: var(--c-dim);
+}
+
+.home-gate-title {
+    margin: 0.75rem 0 1rem;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--c-title);
+}
+
+.home-gate-sub {
+    margin: 0;
+    color: var(--c-mid);
+}
+
