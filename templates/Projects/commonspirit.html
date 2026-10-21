@@ -42,12 +42,7 @@
     </p>
     {% endcall %}
 
-    {% call cs.section("Research", lead = "Interviews & User Research") %}
-    <p>
-        We interviewed 6 CommonSpirit board members and CIP staff, then sorted the notes into an
-        affinity map.
-    </p>
-    {% endcall %}
+    {{ cs.section("Research", lead = "Interviews & User Research") }}
 
     {{ cs.insights("Pain points", [
         ("Data extraction friction", "Staff read 50–60 CHNA PDFs a year by hand to pull out key insights."),
@@ -56,7 +51,7 @@
         ("No connection across entities", "Hospitals can't see who shares a priority or compare communities over time."),
     ]) }}
 
-    {{ cs.section("Idea", lead = "Ideation & Prioritization") }}
+    {{ cs.section("Idea", lead = "Ideation & Affinity Mapping") }}
 
     {% call cs.media_text(img('ux', 'commonspirit/impact-effort.png'),
                           "Impact x Effort prioritization board mapping feature ideas from research") %}
