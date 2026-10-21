@@ -1,6 +1,7 @@
 from flask import Flask, Response, abort, render_template, request, redirect, url_for
 from werkzeug.security import check_password_hash
 import difflib
+import hmac
 import os
 import random
 import re
@@ -37,7 +38,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "165"
+ASSET_VERSION = "166"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -287,18 +288,33 @@ def find_page(query):
 
 
 # Every project page is password-gated.
-# The repo is public, so only a salted hash lives here. The cookie keeps what the
-# visitor typed and is re-checked on every visit, so it can't be forged from the
-# (also public) secret_key.
-# Two passwords, two levels: the full one opens the projects and the CV tab; the projects-only one
-# opens just the projects. Make a hash with:
+# The repo is public, so no password, hash or link lives in it. They come from the environment:
+# locally from .env (gitignored, read below), on Koyeb from its environment variables.
+#   PROJECTS_PASSWORD_HASH       the full password: projects and the CV tab
+#   PROJECTS_ONLY_PASSWORD_HASH  the projects-only password
+#   RECRUITER_LINK               pirenily.com/<this> opens the full level with no password
+# Make a hash with:
 #   python3 -c "from werkzeug.security import generate_password_hash as g; print(g('the password', method='pbkdf2:sha256:260000'))"
-PROJECTS_PASSWORD_HASH = "pbkdf2:sha256:260000$r6FhrBDArg4y0z98$dede3769175e5159df5b529a53de3efa2f9a5ce88ca3b20f8dbfe42638e299d7"
-PROJECTS_ONLY_PASSWORD_HASH = "pbkdf2:sha256:260000$c2RbUcTpqzZdzQbs$8326c2f79332a4230bbb7e17fea344a81006aa56a70483bec5ff5dd9e0ce01c3"
+# The cookie keeps what the visitor typed (or the link) and is re-checked on every visit, so it
+# can't be forged from the (public) secret_key, and changing a value retires old visits.
+def _load_env_file(path=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")):
+    try:
+        with open(path) as f:
+            lines = f.read().splitlines()
+    except FileNotFoundError:
+        return
+    for line in lines:
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            name, value = line.split("=", 1)
+            os.environ.setdefault(name.strip(), value.strip())
+
+
+_load_env_file()
+PROJECTS_PASSWORD_HASH = os.environ.get("PROJECTS_PASSWORD_HASH", "")
+PROJECTS_ONLY_PASSWORD_HASH = os.environ.get("PROJECTS_ONLY_PASSWORD_HASH", "")
+RECRUITER_LINK = os.environ.get("RECRUITER_LINK", "")
 PROJECTS_COOKIE = "projects_key"
-# The recruiter link (pirenily.com/hihihello) opens the full level with no password. Public on
-# purpose: it's stored in the cookie like a typed password, so changing it here retires old visits.
-RECRUITER_LINK = "hihihello"
 GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
                   "commonspirit", "cs171"}
 
@@ -312,7 +328,8 @@ def access_level(key=None):
     key = request.cookies.get(PROJECTS_COOKIE, "") if key is None else key
     if not key:
         return None
-    if key == RECRUITER_LINK or check_password_hash(PROJECTS_PASSWORD_HASH, key):
+    if (RECRUITER_LINK and hmac.compare_digest(key, RECRUITER_LINK)) or \
+            (PROJECTS_PASSWORD_HASH and check_password_hash(PROJECTS_PASSWORD_HASH, key)):
         return "cv"
     if PROJECTS_ONLY_PASSWORD_HASH and check_password_hash(PROJECTS_ONLY_PASSWORD_HASH, key):
         return "projects"
@@ -357,12 +374,16 @@ def unlock():
     return response
 
 
-@app.route("/" + RECRUITER_LINK)
 def recruiter_link():
     response = redirect("/#portfolio")
     response.set_cookie(PROJECTS_COOKIE, RECRUITER_LINK, max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
     return response
+
+
+# Only when it's set: an empty link would take over the home page
+if RECRUITER_LINK:
+    app.add_url_rule("/" + RECRUITER_LINK, "recruiter_link", recruiter_link)
 
 
 @app.route("/", methods=["GET", "POST"])
