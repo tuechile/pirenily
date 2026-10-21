@@ -17,6 +17,7 @@
     --pink-soft-rgb: 255, 201, 222;
     --yellow: #fdff85;                /* selection glow, link shimmer */
     --yellow-bar: #f4ff8f;            /* progress bar */
+    --yellow-select: #fdff85;         /* selected text that's already pink */
     --gold-rgb: 255, 208, 107;        /* button hover glow */
     --footer-text: rgba(var(--fg-rgb), 0.5);
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
@@ -33,6 +34,12 @@
     color: var(--accent);
     text-shadow: none;
     background-color: transparent;
+}
+
+/* Text that's already pink selects yellow, so it still reads as selected */
+:root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .cs-num, .gif-text .gif-kicker, .page-note a, .card__meta)::selection,
+:root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .cs-num, .gif-text .gif-kicker, .page-note a, .card__meta) ::selection {
+    color: var(--yellow-select);
 }
 
 :root[data-theme="light"] :is(.progress-bar, .btn:hover, .travel-globe .globe-legend i),
