@@ -60,7 +60,7 @@
     --press: scale(0.97);
 
     /* Soft edges for unframed images: the picture dissolves into the black instead of ending on a hard line */
-    --feather: 28px;
+    --feather: 14px;
     --feather-mask:
         linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
         linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
@@ -592,8 +592,8 @@ footer {
 @media screen and (max-width: 880px) {
     .header {
         --pic-feather:
-            linear-gradient(to right, var(--bg), transparent 16%, transparent 84%, var(--bg)),
-            linear-gradient(to bottom, var(--bg), transparent 16%, transparent 84%, var(--bg));
+            linear-gradient(to right, var(--bg), transparent 8%, transparent 92%, var(--bg)),
+            linear-gradient(to bottom, var(--bg), transparent 8%, transparent 92%, var(--bg));
         filter: none;
         border: 0;
     }

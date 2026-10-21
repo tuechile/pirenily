@@ -963,20 +963,40 @@
     transition: transform var(--dur-3) var(--ease-out), width var(--dur-3) var(--ease-out);
 }
 
-/* Home Projects: the toggle sticks to the top while the list scrolls, frosted over the cards,
-   and squared off (no pill rounding) to match the strip cards */
-#portfolio .view-toggle {
+/* Home Projects and Play filters: a frosted bar, sized to its options, that sticks to the top while the list scrolls.
+   The page shows through it blurred; no border, a soft shadow. */
+:is(#portfolio, .filters) .view-toggle {
     position: sticky;
-    top: 0.75rem;
+    top: 1.25rem;
     z-index: 10;
-    background: rgba(var(--bg-rgb), 0.55);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    border-radius: 0;
+    background: rgba(var(--bg-rgb), 0.4);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 0;
+    border-radius: var(--r-sm);
+    box-shadow: 0 4px 4px rgba(var(--shadow-rgb), 0.12);
 }
 
-#portfolio :is(.view-btn, .view-pill) {
-    border-radius: 0;
+/* Play has the sticky nav above it, so its bar sticks just under the nav (80px desktop, 146px tablet, 88px phone) */
+.filters #filterToggle {
+    top: 5.75rem;
+}
+
+@media screen and (min-width: 667px) and (max-width: 880px) {
+    .filters #filterToggle {
+        top: 9.9rem;
+    }
+}
+
+@media screen and (max-width: 666px) {
+    .filters #filterToggle {
+        top: 6.25rem;
+    }
+}
+
+/* The sliding bubble stays, with corners that follow the bar's (its radius minus the bar's padding) */
+:is(#portfolio, .filters) :is(.view-pill, .view-btn) {
+    border-radius: calc(var(--r-sm) - 0.25rem);
 }
 
 /* Only the bio pic, and the picture on single-picture pages (layout.html sets .one-pic), get feathered edges */
@@ -1085,11 +1105,12 @@
    At rest a bare 2:1 image strip with its description underneath. The strip is two squares;
    the script in code.html cuts it into 12 × 6 tiles and flips the hovered square's tiles away
    to show the facts (name, position, time, stack) sitting behind them. */
+/* One column: each strip gets the full reading width */
 .strip-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem 2rem;
-    width: min(1100px, 80vw);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+    width: min(720px, 86vw);
     margin: 3rem auto 0;
 }
 
@@ -1104,15 +1125,11 @@
     container-type: inline-size;
 }
 
-/* No outline: the picture's edges dissolve into the page (a wider feather than the site default) */
+/* No outline: the picture's edges dissolve into the page (the site's --feather-mask) */
 .strip {
     position: relative;
     aspect-ratio: 2 / 1;
     overflow: hidden;
-    --feather: 40px;
-    --feather-mask:
-        linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
-        linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
 }
 
 /* Only the picture layers are feathered (the tiles as one piece), never the facts */
@@ -1263,9 +1280,7 @@
 
 @media screen and (max-width: 880px) {
     .strip-grid {
-        grid-template-columns: 1fr;
         gap: 2.5rem;
-        width: min(720px, 86vw);
     }
 }
 
