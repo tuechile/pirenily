@@ -114,18 +114,14 @@
     line-height: 1.8;
 }
 
+/* Pictures and videos sit straight on the page: square corners, no panel, outline or shadow */
 .media-card {
     width: min(900px, 85vw);
     margin: 0 auto;
-    border-radius: var(--r-lg);
-    border: 1px solid var(--border);
-    background: var(--panel);
-    box-shadow: 0 10px 22px rgba(var(--shadow-rgb), 0.25);
 }
 
 .media-card img {
     width: 100%;
-    border-radius: var(--r-sm);
     display: block;
     filter: grayscale(20%);
     transition: filter var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
@@ -189,7 +185,6 @@
     width: 100%;
     display: block;
     border: 0;
-    border-radius: var(--r-sm);
     aspect-ratio: 16 / 9;
 }
 

@@ -197,13 +197,12 @@ html {
     opacity: 0.95;
 }
 
+/* Videos sit straight on the page: square corners, no frame or ring around them */
 .video {
   width: min(920px, 100%);
   margin: 1.5rem auto;
-  border-radius: var(--r-lg);
   overflow: hidden;
-  background: #000;
-  box-shadow: 0 20px 40px rgba(var(--shadow-rgb), 0.25), 0 0 0 1px rgba(var(--fg-rgb), 0.08);
+  background: var(--thumb-blank);
 }
 
 .video video {
@@ -266,11 +265,10 @@ html {
     align-items: stretch;
 }
 
+/* Pictures sit straight on the page: no panel or outline around them */
 .media-card {
     width: 100%;
     margin: 0 auto;
-    background: var(--bg-panel);
-    border: 1px solid var(--hairline);
     overflow: hidden;
 }
 
@@ -1760,6 +1758,15 @@ html {
     background: var(--glass);
     text-decoration: none;
     transition: filter var(--dur-1) var(--ease-out);
+}
+
+/* A video that is itself the link (the 2ft prototype) gets no panel around it */
+.cta-button:has(> .video) {
+    display: block;
+    max-width: none;
+    padding: 0;
+    border: 0;
+    background: none;
 }
 
 .cta-button .cs-label {

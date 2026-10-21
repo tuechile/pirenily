@@ -23,8 +23,9 @@
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
     --view-bubble: rgba(255, 255, 255, 0.75);   /* a white bubble, lighter than the paper */
-    --facts-tint: rgba(var(--accent-rgb), 0.22);       /* case study facts panel */
-    --facts-tint-fade: rgba(var(--accent-rgb), 0.03);
+    --caramel-rgb: 190, 140, 90;      /* case study facts panel */
+    --facts-tint: rgba(var(--caramel-rgb), 0.26);
+    --facts-tint-fade: rgba(var(--caramel-rgb), 0.03);
 }
 
 /* No glows on paper: selected text is plain pink */
@@ -73,9 +74,9 @@
     opacity: 0.45;
 }
 
-/* Shimmering links and the poem run yellow through ink */
+/* Shimmering links and the poem run yellow through pink to ink and back */
 :root[data-theme="light"] :is(.com-footer:hover, .bio-text a:hover, .gradient-poem) {
-    background-image: linear-gradient(45deg, var(--yellow), var(--c-strong), var(--yellow));
+    background-image: linear-gradient(45deg, var(--yellow), var(--accent), var(--c-strong), var(--accent), var(--yellow));
 }
 
 :root[data-theme="light"] .progress-bar {
