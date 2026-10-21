@@ -17,7 +17,7 @@
 {{ cs.callout("TL;DR", points=[
     "I led a 7-person design and engineering team from April to the hackathon in October, owning promotional campaigns, brand and cross-team coordination.",
     "We rebuilt the brand around one theme and shipped it as a reusable component package for the website, social media and event materials.",
-    "Our launch post drew 3.4× the interactions of last year's, and every campaign post after it beat last year's too. Followers grew 30.3%, applications doubled and completed submissions rose 1.45×, in our first year without MLH promoting us.",
+    "Our launch post drew 3.4× the interactions of last year's, and every campaign post after it beat last year's too. 84–85% of viewers didn't follow us yet, up from 64.1%. Followers grew 30.3%, applications doubled and completed submissions rose 1.45×, in our first year without MLH promoting us.",
 ]) }}
 
 {% call cs.body() %}
@@ -112,6 +112,21 @@
         {{ cs.card(img('design', 'hackharvard/insights-moon.jpg'), "Instagram insights for Hack to the Moon: 20,776 viewers, 501 likes, 14 comments, 13 reposts, 541 shares, 443 saves, 112 follows", ar=0.591) }}
     {% endcall %}
 
+    {% call cs.section() %}
+    <p>
+        The campaign also travelled past people who already knew us. 64.1% of last year's viewers didn't
+        follow HackHarvard; this year it was 84–85% on every post. About 20,600 non-followers saw the launch
+        post, against about 17,700 last year, even though it had fewer viewers overall.
+    </p>
+    {% endcall %}
+
+    {% call cs.row("fit", caption="Who viewed each post. Left: last year, 64.1% non-followers. Then this year's three: 84.6%, 84.2% and 85%.") %}
+        {{ cs.card(img('design', 'hackharvard/audience-2025.jpg'), "Audience for last year's launch post: 35.9% followers, 64.1% non-followers", ar=0.977) }}
+        {{ cs.card(img('design', 'hackharvard/audience-back.jpg'), "Audience for HackHarvard is back: 15.4% followers, 84.6% non-followers", ar=0.977) }}
+        {{ cs.card(img('design', 'hackharvard/audience-apps.jpg'), "Audience for Hacker applications open: 15.8% followers, 84.2% non-followers", ar=0.977) }}
+        {{ cs.card(img('design', 'hackharvard/audience-moon.jpg'), "Audience for Hack to the Moon: 15% followers, 85% non-followers", ar=0.977) }}
+    {% endcall %}
+
     {% call cs.row("3", caption="Three campaign posts on Instagram.") %}
         {% for post in ["DbT1YnnSdhD", "DbESCpPSjyL", "Da9CDgEvOHG"] %}
         {{ cs.embed("https://www.instagram.com/p/" ~ post ~ "/embed/", "HackHarvard Instagram post " ~ loop.index, ar=0.72) }}
@@ -178,6 +193,7 @@
     {{ cs.stats([
         ("3.4×", "interactions on the launch post vs. last year's, 670 → 2,254"),
         ("6.5×", "saves on the launch post, 96 → 624"),
+        ("84–85%", "of viewers on each post were non-followers, up from 64.1%"),
         ("+30.3%", "Instagram followers, 3,663 → 4,772"),
         ("1.45×", "submitted applications, ~1,000 → 1,450"),
         ("2×", "total applications, ~1,300 → 2,660"),

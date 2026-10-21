@@ -10,33 +10,32 @@
            tags=["Role: UX Designer",
                  "My scope: Add / Edit / View Component",
                  "Research: President + Treasurer + 3 Volunteers",
-                 "Constraint: Build from Scratch + Unreliable internet"]) }}
+                 "Constraint: Built from scratch + Unreliable internet"]) }}
 
 {{ cs.figure(img('ux', 't4sg/preview.webp'), "2ft inventory system preview", zoom=False) }}
 
 {{ cs.callout("TL;DR", points=[
-    "One prosthetic fitting requires 9+ components. One missing part means the patient goes home without a leg.",
-    "2ft’s inventory lived across spreadsheets and manual cross-checks, which can be fragile under turnover and low Wi-Fi.",
-    "We designed an offline-first system with clear logistics vs technical separation and low cognitive load.",
+    "One prosthetic fitting needs 9+ components. One missing part means the patient goes home without a leg.",
+    "2ft tracked those parts across spreadsheets and manual cross-checks, which break down with volunteer turnover and weak Wi-Fi.",
+    "We designed an offline-first inventory system that separates logistics from technical detail. I owned the view, edit and add component flows.",
+    "Delivered to 2ft as a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”",
 ]) }}
 
 {% call cs.body() %}
 
     {% call cs.section("Context", lead="A Prosthetic Is Never Just One Thing") %}
     <p>
-        A prosthetic leg handoff is a system. On average, nine separate components must come
-        together for one fitting. If even one part is missing, delayed, or mislabeled, a patient goes home without
-        a leg.
+        A prosthetic leg is a system. On average, nine separate components come together for one fitting.
+        If one part is missing, delayed or mislabeled, the patient goes home without a leg.
     </p>
     <p>
-        2ft Prosthetics works across 10 countries, redistributing donated prosthetic components from U.S.
-        manufacturers and clinics to underserved amputees worldwide. The work is powered largely by volunteers —
-        students, clinicians, and prosthetists — operating across time zones, languages, and unreliable internet
-        access.
+        2ft Prosthetics works across 10 countries, sending donated components from U.S. manufacturers and
+        clinics to amputees who can't otherwise get them. Most of the work is done by volunteers (students,
+        clinicians and prosthetists) across time zones, languages and patchy internet.
     </p>
     <p>
-        As the organization scaled, they realized their inventory system was not keeping up fast enough:
-        <br><em>The hardest part was keeping track of them.</em>
+        As 2ft grew, collecting parts stopped being the hard part.
+        <br><em>Keeping track of them was.</em>
     </p>
     {% endcall %}
 
@@ -44,8 +43,8 @@
 
     {% call cs.section("Problem", lead="Fragile Management Systems") %}
     <p>
-        Inventory at 2ft Prosthetics lived in spreadsheets, Notion pages, and manual cross-checks. On paper,
-        everything existed. In reality, volunteers struggled to answer basic questions:
+        Inventory lived in spreadsheets, Notion pages and manual cross-checks. On paper, everything was
+        recorded. In practice, volunteers couldn't answer basic questions:
     </p>
     <p>
         1. What do we actually have right now?<br>
@@ -63,9 +62,9 @@
 
     {% call cs.section("Interview & User Research") %}
     <p>
-        We conducted interviews with the 2ft Prosthetics <strong>President</strong>, <strong>Treasurer</strong>,
-        and <strong>three volunteers</strong> who manage inventory updates in real conditions.
-        Instead of hypotheticals, we focused on real workflows:
+        We interviewed 2ft's <strong>president</strong>, <strong>treasurer</strong> and
+        <strong>three volunteers</strong> who update inventory in the field.
+        Instead of hypotheticals, we asked them to show us real work:
     </p>
     <p>
         1. Screen-shared walkthroughs of current spreadsheets<br>
@@ -74,8 +73,7 @@
         4. What happens when Wi-Fi disappears
     </p>
     <p>
-        We also ran a competitive analysis across existing inventory tools (Airtable, Sortly, Notion, Odoo,
-        etc.).
+        We also compared existing inventory tools, including Airtable, Sortly, Notion and Odoo.
     </p>
     {% endcall %}
 
@@ -263,9 +261,9 @@
     {% endcall %}
 
     {{ cs.callout("What we learned quickly", display=False,
-                  text="Most existing tools failed in the same ways: assumed stable internet, visual density overload, unclear separation between logistics and technical data, and a steep learning curve for new volunteers.") }}
+                  text="Most existing tools failed in the same four ways: they assumed stable internet, crammed too much onto each screen, mixed logistics with technical data, and took new volunteers too long to learn.") }}
 
-    {% call cs.section("Idea", lead="Ideation & Affinity Mapping") %}
+    {% call cs.section("Idea", lead="Five principles from the affinity map") %}
     <p>
         — Clarity over completeness<br>
         — Fast entry over perfect data<br>
@@ -278,15 +276,14 @@
     {% call cs.media_text(img('ux', 't4sg/affmap.png'), "Impact vs effort matrix",
                           heading="Ideation", lead="Feature decisions by Impact × Effort") %}
     <p>
-        We prioritized what would reduce uncertainty the fastest. Using an impact × effort map, we shipped
-        “low-hanging fruit” first, then layered in more powerful features once the core flows worked.
+        We ranked every feature idea by how fast it would cut uncertainty. On an impact × effort map, the
+        quick wins went first, and more powerful features waited until the core flows worked.
     </p>
     <p>
-        This kept the product usable for new volunteers while still leaving space for advanced
-        functionality as 2ft scales.
+        That kept the product simple enough for a new volunteer, with room to grow as 2ft scales.
     </p>
     {% endcall %}
-    {{ cs.img_caption("“We started with clarity + offline reliability, then added power features later.”") }}
+    {{ cs.img_caption("Clarity and offline reliability first; power features later.") }}
 
     {{ cs.section("Feature Rollout", index="Rollout") }}
 
@@ -302,29 +299,29 @@
         <strong>edit</strong>, and <strong>adds</strong> a new component without breaking traceability.
     </p>
     <p>
-        Design decisions I focused on:
-        <br>— Keep primary actions always accessible (view history / edit / add)
-        <br>— Prevent accidental edits (inline popups, clear save states)
-        <br>— Standardize technical inputs (dropdowns + placeholders, not free text)
-        <br>— Make accountability visible (edit history + who/when)
+        The decisions I made, and why:
+        <br>— Primary actions (view history, edit, add) are always in reach, never buried in a menu
+        <br>— Edits open in inline popups with clear save states, because fear of breaking records kept people from updating them
+        <br>— Technical fields use dropdowns and placeholders, not free text, so the same part never gets three names
+        <br>— Every record shows who changed it and when, so "who changed this?" has an answer
     </p>
     {% endcall %}
 
     {% call cs.media_text(img('ux', 't4sg/userflow.png'), "User flow: View Component",
                           heading="Flow Breakdown", lead="View Component", flow=True) %}
     <p>
-        The component page is structured so volunteers understand the “state” first (logistics),
-        then drill into technical details only when needed. Collapsible sections reduce overload.
+        The component page answers "where is it and what state is it in?" first (logistics), and only
+        then the technical details. Collapsible sections keep the rest out of the way.
     </p>
-    <p><strong>Clear Flow Needed:</strong> 4 distinct areas of information are central to a cognitive flow:
-        sticky profile, logistics→technical→manufacturer.</p>
+    <p>The page reads in four zones, in the order a volunteer needs them: a sticky profile, then
+        logistics → technical → manufacturer.</p>
     {% endcall %}
 
     {% call cs.section("Lo-Fi Prototyping", lead="Stripping It Down Until It Made Sense") %}
     {{ cs.card(img('ux', 't4sg/lofi up.webp'), "Lo-fi ideation sketches", size="lg") }}
     <p>
-        The black & white prototypes focused purely on information hierarchy, navigation clarity,
-        and reducing visual density. If a field didn’t earn its place, it was removed.
+        The black and white prototypes tested only hierarchy, navigation and density. If a field didn’t
+        earn its place, it was cut.
     </p>
     {% endcall %}
 
@@ -333,36 +330,36 @@
         (img('ux', 't4sg/lofi add.webp'), "Lo-fi add component flow (B&W)"),
     ]) }}
 
-    {% call cs.section("What we learned, what we changed, and why it worked", index="Iteration") %}
+    {% call cs.section("Iteration", lead="The feedback was about trust, not looks") %}
     <p>
-        Lo-fi helped us prove the hierarchy. But once stakeholders interacted with it, the feedback wasn’t about
-        visual design but more about speed, trust, and reducing “I might break something” anxiety.
+        Lo-fi proved the hierarchy. But once stakeholders clicked through it, their feedback wasn’t about
+        visuals. It was about speed, trust and the fear of breaking something.
     </p>
     {% endcall %}
 
     {{ cs.compare([
         {"title": "What wasn’t working", "display": False, "points": [
-            "There is a hierarchy of information that wasn’t clearly represented",
-            "Too many fields visible at once",
-            "Edits felt risky (no clear confirmation)",
-            "Logistics + technical details blended together",
-            "Patient-centered categorization makes components' relationship complex",
+            "The information hierarchy wasn’t visible",
+            "Too many fields on screen at once",
+            "Edits felt risky, with no clear confirmation",
+            "Logistics and technical details blended together",
+            "Sorting by patient hid how components relate to each other",
         ]},
-        {"title": "What changed (Hi-Fi)", "display": False, "points": [
-            "Collapsible sections → reveal complexity only when needed",
+        {"title": "What changed (hi-fi)", "display": False, "points": [
+            "Collapsible sections → complexity only when it’s needed",
             "Clear save states → safer changes",
-            "Stronger separation: Logistics → Technical → Manufacturer",
-            "Dropdowns + defaults + helper text → less typing, fewer errors",
-            "Flow of work in Add Components established more properly",
+            "Firm separation: logistics → technical → manufacturer",
+            "Dropdowns, defaults and helper text → less typing, fewer errors",
+            "A clear step order for adding a component",
         ]},
     ]) }}
-    {{ cs.img_caption("<strong>Designer note:</strong> The goal wasn’t to add UI polish but to make the same work feel <em>lighter</em> and more reliable.") }}
+    {{ cs.img_caption("<strong>Designer note:</strong> the goal wasn’t polish. It was making the same work feel <em>lighter</em> and more reliable.") }}
 
     {% call cs.section("Hi-Fi Design", lead="Making Complexity Feel Calm") %}
     <p>
-        The blue/yellow design introduced structure without noise:
-        clear separation between <strong>logistics → technical → manufacturer details</strong>,
-        collapsible sections, inline edit popups, and visible history for trust.
+        The blue and yellow design adds structure without noise:
+        <strong>logistics → technical → manufacturer</strong> sections, collapsible panels, inline edit
+        popups and a visible history.
     </p>
     {% endcall %}
 
@@ -370,36 +367,37 @@
         (img('ux', 't4sg/hifi view.webp'), "Hi-fi view component (blue/yellow)"),
         (img('ux', 't4sg/hifi edit.webp'), "Hi-fi edit component inline popup (blue/yellow)"),
         (img('ux', 't4sg/hifi add.webp'), "Hi-fi add component (blue/yellow)"),
-    ], caption="(1) View component, (2) Edit Component, (3) Add Component") }}
+    ], caption="(1) View component, (2) Edit component, (3) Add component") }}
 
-    {% call cs.section("Testing & Feedback", lead="Where the Design Got Smarter (Fast)") %}
+    {% call cs.section("Testing & Feedback", lead="Where the design got smarter, fast") %}
     <p>
-        More speed with less typing: ideas like autofill, stock image autofill
-        (when no photo exists), and even <strong>adding fields</strong> on the fly came up as ways to reduce
-        friction.
-    </p>
-    <p class="lead"><strong>What stakeholders pushed us toward</strong></p>
-    <p>
-        A reality check on implementation: we flagged open questions about the backend —
-        like whether field management needs its own admin page, and what “autofill” would actually pull from
-        (model number? manufacturer database? past entries?).
+        <strong>What worked:</strong> starting from the component type. Each type has its own properties,
+        so picking the type first felt far more natural than showing every spreadsheet field and making
+        volunteers guess.
     </p>
     <p>
-        Type-first workflow was a win: starting from component types (since each type has its own
-        properties) felt far more natural than exposing every possible spreadsheet field and forcing volunteers
-        to guess.
+        <strong>What stakeholders asked for:</strong> less typing. Autofill, a stock image when a part has no
+        photo, and adding new fields on the fly all came up.
     </p>
     <p>
-        We were glad to hear the president say, after testing the prototype:
+        <strong>Permissions:</strong> changing a field can cause mix-ups across the whole organization, so
+        stakeholders wanted clear roles, for example who can edit fields and who can only edit values.
+    </p>
+    <p>
+        <strong>What we flagged for the build:</strong> open backend questions, such as whether field
+        management needs its own admin page, and what autofill would pull from (model number, a
+        manufacturer database or past entries).
+    </p>
+    <p>
+        After testing the prototype, the president told us:
         <br><em>“I don’t feel like I’m going to break anything.”</em>
     </p>
     {% endcall %}
 
     {% call cs.section("Try It Yourself", lead="Explore the prototype the way a volunteer would") %}
     <p>
-        This interactive prototype reflects the hi-fi design shown above.
-        It’s best experienced by clicking through the component workflow,
-        starting from type selection and moving into detailed edits.
+        This is the hi-fi prototype shown above. Start by picking a component type, then work your way
+        into a detailed edit.
     </p>
     <a href="https://www.figma.com/proto/dWSwmnPwX50N8TKSQIPS5S/Lo-fi---%3E-Hi-fi--Copy-?t=UO7WjHeEBFCJ3JlO-1"
         target="_blank" rel="noopener" class="cta-button">
@@ -408,23 +406,19 @@
     {{ cs.cta("https://www.figma.com/proto/dWSwmnPwX50N8TKSQIPS5S/Lo-fi---%3E-Hi-fi--Copy-?t=UO7WjHeEBFCJ3JlO-1",
               "Open Interactive Prototype →") }}
     <p class="cta-note">
-        Tip: Try editing a component to see how fields, history, and permissions are surfaced.
-    </p>
-    <p>
-        Permissions: stakeholders emphasized that changing fields can cause organization-wide
-        mixups, so we needed clearer role-based privileges (e.g., who can edit fields vs. who can only edit
-        values).
+        Tip: edit a component to see how fields, history and permissions show up.
     </p>
     {% endcall %}
 
-    {% call cs.section("Reflection", lead="What This Project Taught Me") %}
+    {% call cs.section("Reflection", lead="What this project taught me") %}
     <p>
-        This is my first exposure to UX Design as a CS major:), so there were many new frameworks and mindsets to internalize.
-        Designing for social impact isn’t about adding features but more removing uncertainty as much as possible and box everything together.
+        This was my first UX project as a CS major :), so I was learning the frameworks while using them.
+        The biggest lesson: designing for social impact is less about adding features and more about removing
+        uncertainty, so a volunteer always knows what's there and what's safe to change.
     </p>
     <p>
-        As this is a work from scratch, we did experiment a lot with different flows and structures in an
-        entirely new field of expertise!
+        We were building from scratch in a field none of us knew, so we tried a lot of flows and structures
+        before one held up.
     </p>
     <p>
         <strong>Status:</strong> delivered to 2ft as a hi-fi prototype. Their own team builds it from here,

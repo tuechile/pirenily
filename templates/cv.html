@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}| CV{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/ux.css?v={{ asset_v }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+{# The Drive link lives in CV_DRIVE_URL (app.py) #}
+<section class="cv-page" aria-labelledby="cvTitle">
+    <h1 class="case-title" id="cvTitle">CV</h1>
+    {% if cv_url %}
+    <p class="cs-hero-sub">Chi (Tue) Le · Designer and CS student at Harvard</p>
+    {% if cv_preview %}
+    <div class="cv-frame">
+        <iframe src="{{ cv_preview }}" title="Chi Le's CV" loading="lazy" allow="autoplay"></iframe>
+    </div>
+    {% endif %}
+    <p class="gate-note"><a href="{{ cv_url }}" target="_blank" rel="noopener">Open it in Google Drive ↗</a></p>
+    {% else %}
+    <p class="cs-hero-sub">On its way. Until it's up, <a href="mailto:chile@college.harvard.edu?subject=CV">email me</a> and I'll send a copy.</p>
+    {% endif %}
+</section>
+
+{% endblock %}

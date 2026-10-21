@@ -1296,6 +1296,19 @@
     }
 }
 
+/* My view keeps the original statement: black and white and properly blurred until reached for.
+   Touch screens skip it (no hover to bring the picture back). */
+@media (hover: hover) {
+    :root[data-mode="mine"] .strip-card:not(:hover, :focus-visible) .strip-art {
+        filter: blur(2px) grayscale(100%);
+    }
+
+    :root[data-mode="mine"] .strip-card:not(:hover, :focus-visible) .strip::after {
+        -webkit-backdrop-filter: blur(5.7px);
+        backdrop-filter: blur(5.7px);
+    }
+}
+
 /* The project's name, as the subtitle under the strip */
 .strip-caption {
     margin: 0;

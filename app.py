@@ -37,7 +37,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "160"
+ASSET_VERSION = "162"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -101,6 +101,7 @@ def _date_sort_key(filename):
 # Which top-nav item a page belongs to, so the nav can mark "you are here".
 NAV_SECTIONS = {
     "about": ["about"],
+    "cv": ["cv"],
     "code": ["code"],
     "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
     "projects": ["hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710"],
@@ -188,7 +189,8 @@ def inject_image_helper():
 SEARCH_INDEX = [
     ("/about", ["about", "about me", "chi", "chi le", "le tue chi", "tue", "chi tue le", "pirenily", "me",
                 "myself", "emily", "iron pig", "chi bell", "artist", "bio", "contact", "email", "instagram",
-                "linkedin", "github", "resume", "cv", "self photography"]),
+                "linkedin", "github", "self photography"]),
+    ("/cv", ["cv", "resume", "résumé", "curriculum vitae"]),
     ("/#portfolio", ["projects", "project", "portfolio", "ux", "ui", "uiux", "ui ux", "case study", "case studies",
                      "work", "design", "graphic design", "collab", "collaboration", "collaborations",
                      "collaborative work", "commission", "commissions", "commissioned work", "client", "client work",
@@ -347,6 +349,19 @@ def t4sg():
 @app.route("/commonspirit")
 def commonspirit():
     return render_template(PROJECT_TEMPLATES["commonspirit"])
+
+
+# Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
+# Empty shows a "coming soon" note instead of the embed.
+CV_DRIVE_URL = ""
+
+
+@app.route("/cv")
+def cv():
+    # A share link ends in /view?usp=sharing; Drive only embeds the /preview form
+    file_id = re.search(r"/d/([\w-]+)", CV_DRIVE_URL)
+    preview = f"https://drive.google.com/file/d/{file_id.group(1)}/preview" if file_id else None
+    return render_template("cv.html", cv_url=CV_DRIVE_URL or None, cv_preview=preview)
 
 
 # ---- your existing routes ----
