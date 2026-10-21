@@ -1,6 +1,6 @@
-// A small sound on every click of something interactive, following the sound settings (settings.js).
-// Synthesized with Web Audio, so there's no sound file: a fire crackle (filtered noise + a few pops)
-// for the music set, a soft tick for the formal set. Recorded clicks listed in settings.js play instead.
+// A small sound on every click of something interactive, while the nav sound switch is on (settings.js).
+// Synthesized with Web Audio, so there's no sound file: a fire crackle (filtered noise + a few pops).
+// Recorded clicks listed in settings.js play instead.
 (() => {
     const INTERACTIVE = 'a[href], button, input, select, textarea, label, summary, [role="button"], [onclick], [tabindex]:not([tabindex="-1"])';
     let ctx = null;
@@ -46,21 +46,6 @@
         return true;
     }
 
-    function tick() {
-        const t = ctx.currentTime + 0.005;
-        const osc = ctx.createOscillator();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1400, t);
-        osc.frequency.exponentialRampToValueAtTime(900, t + 0.06);
-        const env = ctx.createGain();
-        env.gain.setValueAtTime(0.0001, t);
-        env.gain.exponentialRampToValueAtTime(0.08, t + 0.005);
-        env.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
-        osc.connect(env).connect(out);
-        osc.start(t);
-        osc.stop(t + 0.08);
-    }
-
     function fire() {
         const t = ctx.currentTime + 0.005;
         // Soft whoosh of the flame catching
@@ -79,11 +64,9 @@
         if (!(el instanceof Element)) return;
         if (!el.closest(INTERACTIVE) && getComputedStyle(el).cursor !== 'pointer') return;
         const p = window.Pirenily;
-        const s = p ? p.settings : { sound: 'music', clicks: true, volume: 0.6 };
-        if (s.sound === 'off' || !s.clicks) return;
+        if (p && !p.settings.sound) return;
         if (p && p.playClickFile()) return;
-        if (!ready(s.volume)) return;
-        if (s.sound === 'formal') tick();
-        else fire();
+        if (!ready(p ? p.volume : 0.6)) return;
+        fire();
     }, { capture: true, passive: true });
 })();

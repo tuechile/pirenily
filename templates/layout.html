@@ -40,7 +40,10 @@
                 <a class="nav-item" href="/play"{% if nav_section == "play" %} aria-current="page"{% endif %}> Play </a>
                 <a class="nav-item" href="/#portfolio"{% if nav_section == "projects" %} aria-current="page"{% endif %}> Projects </a>
             </div>
-            <button class="nav-item settings-btn" type="button" data-settings-open aria-controls="settings-panel" aria-label="Settings: view, theme and sound">☾ ♪</button>
+            <span class="settings-switches">
+                <button class="nav-item settings-btn" type="button" data-switch="light" aria-label="Light">☀</button>
+                <button class="nav-item settings-btn" type="button" data-switch="sound" aria-label="Sound">♪</button>
+            </span>
         </nav>
         {% block content %}
         {% endblock %}
