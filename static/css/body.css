@@ -133,7 +133,6 @@
 .media-card:hover img,
 .media-card:focus-within img {
     filter: grayscale(0%);
-    transform: translateY(-2px);
 }
 
 .img-caption {

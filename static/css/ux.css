@@ -281,7 +281,6 @@ html {
 
 .media-card:hover img {
     filter: grayscale(0%);
-    transform: translateY(-2px);
 }
 
 .media-card--sm {
@@ -342,7 +341,6 @@ html {
 
 .lightboxable:hover {
     filter: grayscale(0%);
-    transform: translateY(-2px);
 }
 
 /* Split layout */
@@ -492,10 +490,6 @@ html {
     .split-seamless:hover {
         --merge: 1;
     }
-}
-
-.split-seamless>.media-card:hover img {
-    transform: none;
 }
 
 .split-seamless:hover img,
