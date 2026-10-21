@@ -320,7 +320,7 @@ GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "h
 
 # Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
 # Empty shows a "coming soon" note in the CV tab instead of the embed.
-CV_DRIVE_URL = ""
+CV_DRIVE_URL = "https://drive.google.com/file/d/1BkICDklLMM8e01PxCu9phby2AGNnapS_/view?usp=sharing"
 
 
 def access_level(key=None):
