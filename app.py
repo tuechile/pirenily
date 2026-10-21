@@ -37,7 +37,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "164"
+ASSET_VERSION = "165"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -296,6 +296,9 @@ def find_page(query):
 PROJECTS_PASSWORD_HASH = "pbkdf2:sha256:260000$r6FhrBDArg4y0z98$dede3769175e5159df5b529a53de3efa2f9a5ce88ca3b20f8dbfe42638e299d7"
 PROJECTS_ONLY_PASSWORD_HASH = "pbkdf2:sha256:260000$c2RbUcTpqzZdzQbs$8326c2f79332a4230bbb7e17fea344a81006aa56a70483bec5ff5dd9e0ce01c3"
 PROJECTS_COOKIE = "projects_key"
+# The recruiter link (pirenily.com/hihihello) opens the full level with no password. Public on
+# purpose: it's stored in the cookie like a typed password, so changing it here retires old visits.
+RECRUITER_LINK = "hihihello"
 GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
                   "commonspirit", "cs171"}
 
@@ -309,7 +312,7 @@ def access_level(key=None):
     key = request.cookies.get(PROJECTS_COOKIE, "") if key is None else key
     if not key:
         return None
-    if check_password_hash(PROJECTS_PASSWORD_HASH, key):
+    if key == RECRUITER_LINK or check_password_hash(PROJECTS_PASSWORD_HASH, key):
         return "cv"
     if PROJECTS_ONLY_PASSWORD_HASH and check_password_hash(PROJECTS_ONLY_PASSWORD_HASH, key):
         return "projects"
@@ -350,6 +353,14 @@ def unlock():
         return render_template("projects_gate.html", next=target, wrong=True), 401
     response = redirect(target)
     response.set_cookie(PROJECTS_COOKIE, key, max_age=60 * 60 * 24 * 30,
+                        httponly=True, secure=request.is_secure, samesite="Lax")
+    return response
+
+
+@app.route("/" + RECRUITER_LINK)
+def recruiter_link():
+    response = redirect("/#portfolio")
+    response.set_cookie(PROJECTS_COOKIE, RECRUITER_LINK, max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
     return response
 
