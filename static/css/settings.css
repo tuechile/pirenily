@@ -307,19 +307,9 @@
     filter: var(--hover-blur);
 }
 
-/* Tablets (pages with the logo and the 2 × 2 links): the switches sit centred at the top, above the nav row */
-@media screen and (min-width: 667px) and (max-width: 880px) {
-    .navigator .settings-switches {
-        position: absolute;
-        top: 0.25rem;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
-/* Phones (pages with the "=" menu): the switches get their own centred row under the centred logo,
-   inside the sticky nav so they stay in view (and above the open menu) */
-@media screen and (max-width: 666px) {
+/* Tablets and phones: the switches get their own centred row under the nav, above the page title,
+   inside the sticky nav so they stay in view (and, on phones, above the open menu) */
+@media screen and (max-width: 880px) {
     .navigator {
         flex-wrap: wrap;
     }
@@ -329,27 +319,33 @@
         z-index: 1001;
         flex-basis: 100%;
         justify-content: center;
-        height: 40px;
-        margin-top: -0.75rem;
         pointer-events: none;   /* the row spans the width; only the buttons take clicks */
     }
 
     .navigator .settings-btn {
         pointer-events: auto;
+    }
+}
+
+@media screen and (max-width: 666px) {
+    .navigator .settings-switches {
+        height: 40px;
+        margin-top: -0.75rem;
+    }
+
+    .navigator .settings-btn {
         height: 40px;
         padding: 0 6px;
         font-size: 1rem;
     }
 }
 
-/* Home on phones and tablets: the links stack into a grid, so the switches sit centred
-   at the top instead of trailing as a row of their own */
+/* Home on phones and tablets: the links stack into a grid; the switches take a centred row
+   of their own under it, above the Pirenily title */
 @media screen and (max-width: 880px) {
     .landing nav .settings-switches {
-        position: absolute;
-        top: 0.25rem;
-        left: 50%;
-        transform: translateX(-50%);
+        grid-column: 1 / -1;
+        justify-content: center;
     }
 }
 
