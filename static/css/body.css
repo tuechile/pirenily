@@ -963,6 +963,22 @@
     transition: transform var(--dur-3) var(--ease-out), width var(--dur-3) var(--ease-out);
 }
 
+/* Home Projects: the toggle sticks to the top while the list scrolls, frosted over the cards,
+   and squared off (no pill rounding) to match the strip cards */
+#portfolio .view-toggle {
+    position: sticky;
+    top: 0.75rem;
+    z-index: 10;
+    background: rgba(var(--bg-rgb), 0.55);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-radius: 0;
+}
+
+#portfolio :is(.view-btn, .view-pill) {
+    border-radius: 0;
+}
+
 /* Only the bio pic, and the picture on single-picture pages (layout.html sets .one-pic), get feathered edges */
 .bio-image,
 .one-pic main img:not(.contact-logo) {
@@ -1063,4 +1079,215 @@
     font-size: 1.15em;
     color: var(--lead);
     text-align: left;
+}
+
+/* ===== Code page: strip cards =====
+   At rest a bare 2:1 image strip with its description underneath. The strip is two squares;
+   the script in code.html cuts it into 12 × 6 tiles and flips the hovered square's tiles away
+   to show the facts (name, position, time, stack) sitting behind them. */
+.strip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 2rem;
+    width: min(1100px, 80vw);
+    margin: 3rem auto 0;
+}
+
+.strip-card {
+    display: grid;
+    align-content: start;
+    gap: 0.7rem;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+    container-type: inline-size;
+}
+
+/* No outline: the picture's edges dissolve into the page (a wider feather than the site default) */
+.strip {
+    position: relative;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    --feather: 40px;
+    --feather-mask:
+        linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+        linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+}
+
+/* Only the picture layers are feathered (the tiles as one piece), never the facts */
+.strip > .strip-art,
+.strip-tiles {
+    -webkit-mask-image: var(--feather-mask);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--feather-mask);
+    mask-composite: intersect;
+}
+
+.strip-card:focus-visible .strip {
+    outline: 1px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.strip-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.strip-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--fg-rgb), 0.05);
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(var(--fg-rgb), 0.475);
+}
+
+/* Pirenily's own thumb: solid black until the photobooth-camera image is ready */
+.strip-empty--blank {
+    background: var(--thumb-blank);
+}
+
+/* The facts: one square (half the strip), on whichever half is open */
+.strip-facts {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    box-sizing: border-box;
+    background: var(--bg);
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    overflow-y: auto;
+}
+
+.strip-facts.is-right {
+    left: 50%;
+}
+
+.strip-name {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    color: rgba(var(--fg-rgb), 0.894);
+}
+
+.strip-role {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--fs-note);
+    line-height: 1.4;
+    color: rgba(var(--fg-rgb), 0.647);
+}
+
+.strip-time {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--fs-1);
+    color: rgba(var(--fg-rgb), 0.431);
+}
+
+.strip-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+}
+
+/* Each line rises out of its own mask when a square opens; it resets instantly when it closes */
+.strip-line {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(12px);
+}
+
+.strip-facts.is-in .strip-line {
+    clip-path: inset(0);
+    transform: none;
+    transition: clip-path var(--dur-3) var(--ease-out), transform var(--dur-3) var(--ease-out);
+    transition-delay: 200ms;
+}
+
+.strip-facts.is-in .strip-line:nth-child(2) { transition-delay: 240ms; }
+.strip-facts.is-in .strip-line:nth-child(3) { transition-delay: 280ms; }
+.strip-facts.is-in .strip-line:nth-child(4) { transition-delay: 320ms; }
+
+/* The tiles: each shows its own piece of a full-size copy of the image and turns on its centre */
+.strip-tiles {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    z-index: 1;
+}
+
+.strip-tile {
+    position: relative;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transform: perspective(400px) rotateY(0);
+    transition: transform 280ms var(--ease-out);
+}
+
+.strip-tile.is-flipped {
+    transform: perspective(400px) rotateY(90deg);
+    transition-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+}
+
+.strip-tile > .strip-art {
+    width: 1200%;
+    height: 600%;
+    left: calc(var(--i) * -100%);
+    top: calc(var(--j) * -100%);
+    max-width: none;
+}
+
+.strip-desc {
+    margin: 0;
+    padding: 0 0.4rem;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--fs-1);
+    line-height: 1.5;
+    color: rgba(var(--fg-rgb), 0.533);
+}
+
+@media screen and (max-width: 880px) {
+    .strip-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        width: min(720px, 86vw);
+    }
+}
+
+/* When the facts don't fit in half the strip, the whole strip opens (set by the script) */
+.strip-facts.is-full {
+    width: 100%;
+}
+
+/* Narrow cards (phones, and two columns on small laptops): a deeper strip, so the facts fit when the whole strip opens */
+@container (max-width: 440px) {
+    .strip {
+        aspect-ratio: 3 / 2;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .strip-facts {
+        padding: 0.6rem 0.75rem;
+        gap: 0.2rem;
+    }
+
+    .strip-name {
+        font-size: 1.05rem;
+    }
 }

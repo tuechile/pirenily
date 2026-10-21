@@ -8,6 +8,7 @@
     --accent-rgb: 28, 165, 145;
     --shadow-rgb: 0, 0, 0;
     --on-dark: #fff;                         /* text on photos and video, any theme */
+    --thumb-blank: #000;                     /* empty thumbnail waiting for its image, any theme */
     --bg: rgb(var(--bg-rgb));
     --accent: #1ca591;
     --c-strong: rgb(var(--fg-rgb));          /* #fff */

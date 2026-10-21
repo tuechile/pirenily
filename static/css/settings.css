@@ -216,11 +216,11 @@
 }
 
 /* Hover: everything but the hovered item dims (no blur) */
-:root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .card-grid) > * {
+:root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .strip-grid, .card-grid) > * {
     transition: opacity 400ms var(--ease-out);
 }
 
-:root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .card-grid):hover > :not(:hover) {
+:root[data-mode="easy"] :is(.nav-item-big, .design-list, .project-grid, .strip-grid, .card-grid):hover > :not(:hover) {
     opacity: 0.45;
 }
 
@@ -307,30 +307,49 @@
     filter: var(--hover-blur);
 }
 
-/* Phones (pages with the "=" menu): the switches sit beside it, always visible */
-@media screen and (max-width: 666px) {
+/* Tablets (pages with the logo and the 2 × 2 links): the switches sit centred at the top, above the nav row */
+@media screen and (min-width: 667px) and (max-width: 880px) {
     .navigator .settings-switches {
-        position: fixed;
-        top: 10px;
-        right: 56px;
+        position: absolute;
+        top: 0.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* Phones (pages with the "=" menu): the switches get their own centred row under the centred logo,
+   inside the sticky nav so they stay in view (and above the open menu) */
+@media screen and (max-width: 666px) {
+    .navigator {
+        flex-wrap: wrap;
+    }
+
+    .navigator .settings-switches {
+        position: relative;
         z-index: 1001;
+        flex-basis: 100%;
+        justify-content: center;
         height: 40px;
+        margin-top: -0.75rem;
+        pointer-events: none;   /* the row spans the width; only the buttons take clicks */
     }
 
     .navigator .settings-btn {
+        pointer-events: auto;
         height: 40px;
         padding: 0 6px;
         font-size: 1rem;
     }
 }
 
-/* Home on phones and tablets: the links stack into a grid, so the switches sit in the
-   top-left corner, level with the first row, instead of trailing as a row of their own */
+/* Home on phones and tablets: the links stack into a grid, so the switches sit centred
+   at the top instead of trailing as a row of their own */
 @media screen and (max-width: 880px) {
     .landing nav .settings-switches {
         position: absolute;
-        top: 1.5rem;
-        left: 1.5rem;
+        top: 0.25rem;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 

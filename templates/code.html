@@ -11,216 +11,158 @@
     Hate my website? Pull an issue at <a href="https://github.com/tuechile/pirenily/issues" target="_blank" rel="noopener">github.com/tuechile/pirenily</a>
     or mail me at <a href="mailto:chile@college.harvard.edu">chile@college.harvard.edu</a>
 </p>
-<!-- Finished work first, newest → oldest; in-progress CineNode sits near the end, Pirenily (Dec 2024) last. -->
-<div class="project-grid code-grid">
-    <div class="project-cell">
-        <!-- thumbnail: screenshot of pirenily.com/ascii-simple-avatar/ -->
-        <a class="project-thumb" href="https://github.com/tuechile/ascii-simple-avatar" target="_blank" rel="noopener" aria-label="ASCII Avatar, on GitHub (opens in a new tab)">
-            <img class="project-thumb-img"
-                 src="{{ img('ux', 'ascii-avatar.webp') }}"
-                 alt="ASCII Avatar dress-up app screenshot">
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">ASCII Avatar</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">Python</span>
-                        <span class="tag-chip">HTML</span>
-                        <span class="tag-chip">Docker</span>
-                    </div>
+<!-- Finished work first, newest → oldest; in-progress CineNode sits near the end, Pirenily (Dec 2024) last.
+     Each strip is two squares; hovering one flips its tiles away to show the facts (static/strips.js). -->
+<div class="strip-grid">
+    <!-- thumbnail: screenshot of pirenily.com/ascii-simple-avatar/ -->
+    <a class="strip-card" href="https://github.com/tuechile/ascii-simple-avatar" target="_blank" rel="noopener" aria-label="ASCII Avatar, on GitHub (opens in a new tab)">
+        <div class="strip">
+            <img class="strip-art" src="{{ img('ux', 'ascii-avatar.webp') }}" alt="ASCII Avatar dress-up app screenshot">
+            <div class="strip-facts">
+                <div class="strip-line strip-name">ASCII Avatar</div>
+                <div class="strip-line strip-role">Inspired by my CS1710 project</div>
+                <div class="strip-line strip-time">May 2026</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">Python</span>
+                    <span class="tag-chip">HTML</span>
+                    <span class="tag-chip">Docker</span>
                 </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">Inspired by my CS1710 project</div>
-                    <div class="project-thumb-date">May 2026</div>
-                </div>
-                <div class="project-thumb-desc">A cute little fashion app that dresses you up as a tiny ASCII avatar.</div>
-            </div>
-        </a>
-    </div>
-
-
-    <div class="project-cell">
-        <!-- thumbnail: screenshot of pirenily.com/my-superface/ -->
-        <a class="project-thumb" href="https://github.com/tuechile/my-superface" target="_blank" rel="noopener" aria-label="my-superface, on GitHub (opens in a new tab)">
-            <img class="project-thumb-img"
-                 src="{{ img('ux', 'superface.webp') }}"
-                 alt="my-superface web app screenshot">
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">my-superface</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">Python</span>
-                        <span class="tag-chip">NumPy</span>
-                        <span class="tag-chip">FastAPI</span>
-                    </div>
-                </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">I love my face!</div>
-                    <div class="project-thumb-date">Jan 2026</div>
-                </div>
-                <div class="project-thumb-desc">Morphs any image into my face by rearranging its pixels — none are created or recolored — and animates them flying into place.</div>
-            </div>
-        </a>
-    </div>
-
-
-    <div class="project-cell">
-        <!-- thumbnail: screenshot of ukuraoke.onrender.com -->
-        <a class="project-thumb" href="https://github.com/tuechile/ukuraoke" target="_blank" rel="noopener" aria-label="Ukuraoke, on GitHub (opens in a new tab)">
-            <img class="project-thumb-img"
-                 src="{{ img('ux', 'ukuraoke.webp') }}"
-                 alt="Ukuraoke song search screenshot">
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">Ukuraoke</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">Node.js</span>
-                        <span class="tag-chip">JavaScript</span>
-                        <span class="tag-chip">HTML</span>
-                        <span class="tag-chip">CSS</span>
-                        <span class="tag-chip">Render</span>
-                    </div>
-                </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">Ultimate Guitar chords + LRCLIB lyrics + YouTube</div>
-                    <div class="project-thumb-date">Jul 2026 – Ongoing</div>
-                </div>
-                <div class="project-thumb-desc">Ukulele chord sheets with time-synced lyrics that follow the song, so I can play and sing along at home.</div>
-            </div>
-        </a>
-    </div>
-
-
-    <div class="project-cell">
-        <!-- no page yet — card isn't a link -->
-        <div class="project-thumb" aria-label="AeroTone">
-            <img class="project-thumb-img"
-                 src="{{ img('afvs', 'aerotone.webp') }}"
-                 alt="AeroTone gesture-based synth glove preview">
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">AeroTone</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">Arduino</span>
-                        <span class="tag-chip">C++</span>
-                        <span class="tag-chip">Embedded Systems</span>
-                        <span class="tag-chip">FSR Sensors</span>
-                    </div>
-                </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">Final Project for GenEd 1080: How Music Works: Engineering the Acoustical World</div>
-                    <div class="project-thumb-date">Apr–May 2026</div>
-                </div>
-                <div class="project-thumb-desc">A gesture-based wearable synth — a glove that maps finger pressure to pitch</div>
             </div>
         </div>
-    </div>
+        <p class="strip-desc">A cute little fashion app that dresses you up as a tiny ASCII avatar.</p>
+    </a>
 
-
-    <div class="project-cell">
-        <!-- Source: https://drive.google.com/file/d/1AQbjf6Tl89mz_BkEtFMzqODIJShruNFG/preview -->
-        <!-- no page for this one — card isn't a link -->
-        <div class="project-thumb" aria-label="Neural Reconstruction of Handwritten Curves">
-            <img class="project-thumb-img"
-                 src="{{ img('ux', 'chi111.webp') }}"
-                 alt="Neural Reconstruction of Handwritten Curves">
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">Neural Reconstruction of Handwritten Curves</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">Python</span>
-                        <span class="tag-chip">LLM Training</span>
-                    </div>
+    <!-- thumbnail: screenshot of pirenily.com/my-superface/ -->
+    <a class="strip-card" href="https://github.com/tuechile/my-superface" target="_blank" rel="noopener" aria-label="my-superface, on GitHub (opens in a new tab)">
+        <div class="strip">
+            <img class="strip-art" src="{{ img('ux', 'superface.webp') }}" alt="my-superface web app screenshot">
+            <div class="strip-facts">
+                <div class="strip-line strip-name">my-superface</div>
+                <div class="strip-line strip-role">I love my face!</div>
+                <div class="strip-line strip-time">Jan 2026</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">Python</span>
+                    <span class="tag-chip">NumPy</span>
+                    <span class="tag-chip">FastAPI</span>
                 </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">Final Project for AM111: Scientific Computing</div>
-                    <div class="project-thumb-date">Dec 2025</div>
-                </div>
-                <div class="project-thumb-desc">Training a small language model from scratch.</div>
             </div>
         </div>
-    </div>
+        <p class="strip-desc">Morphs any image into my face by rearranging its pixels — none are created or recolored — and animates them flying into place.</p>
+    </a>
 
-
-    <div class="project-cell">
-        <!-- no thumbnail yet — placeholder until one is ready -->
-        <a class="project-thumb" href="https://github.com/tuechile/backtiming" target="_blank" rel="noopener" aria-label="Backtiming (coming soon), on GitHub (opens in a new tab)">
-            <div class="project-thumb-img project-thumb-placeholder">Coming soon</div>
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">Backtiming</div>
-                    <div class="project-thumb-tags"></div>
+    <!-- thumbnail: screenshot of ukuraoke.onrender.com -->
+    <a class="strip-card" href="https://github.com/tuechile/ukuraoke" target="_blank" rel="noopener" aria-label="Ukuraoke, on GitHub (opens in a new tab)">
+        <div class="strip">
+            <img class="strip-art" src="{{ img('ux', 'ukuraoke.webp') }}" alt="Ukuraoke song search screenshot">
+            <div class="strip-facts">
+                <div class="strip-line strip-name">Ukuraoke</div>
+                <div class="strip-line strip-role">Ultimate Guitar chords + LRCLIB lyrics + YouTube</div>
+                <div class="strip-line strip-time">Jul 2026 – Ongoing</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">Node.js</span>
+                    <span class="tag-chip">JavaScript</span>
+                    <span class="tag-chip">HTML</span>
+                    <span class="tag-chip">CSS</span>
+                    <span class="tag-chip">Render</span>
                 </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">Personal project</div>
-                    <div class="project-thumb-date">Coming soon</div>
-                </div>
-                <div class="project-thumb-desc">Syncs with my calendars and works backwards from each event to maximize grwm time.</div>
-            </div>
-        </a>
-    </div>
-
-
-    <div class="project-cell">
-        <!-- no thumbnail or page yet — placeholder until one is ready -->
-        <div class="project-thumb" aria-label="CineNode (in progress)">
-            <div class="project-thumb-img project-thumb-placeholder">In progress</div>
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">CineNode</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">TypeScript</span>
-                        <span class="tag-chip">JavaScript</span>
-                        <span class="tag-chip">React</span>
-                        <span class="tag-chip">three.js</span>
-                        <span class="tag-chip">Vite</span>
-                        <span class="tag-chip">Supabase</span>
-                        <span class="tag-chip">Tailwind CSS</span>
-                    </div>
-                </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub">TekTrek</div>
-                    <div class="project-thumb-date">Jul 2026 - Ongoing</div>
-                </div>
-                <div class="project-thumb-desc">A node-based pipeline where you generate or arrange shots using modular nodes, then convert them into a shot list and storyboard.</div>
             </div>
         </div>
+        <p class="strip-desc">Ukulele chord sheets with time-synced lyrics that follow the song, so I can play and sing along at home.</p>
+    </a>
+
+    <!-- no page yet — card isn't a link (focusable so the facts still open from the keyboard) -->
+    <div class="strip-card" tabindex="0" aria-label="AeroTone">
+        <div class="strip">
+            <img class="strip-art" src="{{ img('afvs', 'aerotone.webp') }}" alt="AeroTone gesture-based synth glove preview">
+            <div class="strip-facts">
+                <div class="strip-line strip-name">AeroTone</div>
+                <div class="strip-line strip-role">Final Project for GenEd 1080: How Music Works: Engineering the Acoustical World</div>
+                <div class="strip-line strip-time">Apr–May 2026</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">Arduino</span>
+                    <span class="tag-chip">C++</span>
+                    <span class="tag-chip">Embedded Systems</span>
+                    <span class="tag-chip">FSR Sensors</span>
+                </div>
+            </div>
+        </div>
+        <p class="strip-desc">A gesture-based wearable synth — a glove that maps finger pressure to pitch</p>
     </div>
 
-
-    <div class="project-cell">
-        <!-- ISSUE: swap this placeholder for a photobooth-camera thumbnail (camera shutter button on the side) -->
-        <a class="project-thumb" href="https://github.com/tuechile/pirenily" target="_blank" rel="noopener" aria-label="Pirenily — this website, on GitHub (opens in a new tab)">
-            <div class="project-thumb-img project-thumb-placeholder project-thumb-placeholder--blank"></div>
-
-            <div class="project-thumb-meta">
-                <div class="project-thumb-namebox">
-                    <div class="project-thumb-title">Pirenily</div>
-                    <div class="project-thumb-tags">
-                        <span class="tag-chip">Python</span>
-                        <span class="tag-chip">Flask</span>
-                        <span class="tag-chip">Jinja2</span>
-                        <span class="tag-chip">HTML</span>
-                        <span class="tag-chip">CSS</span>
-                        <span class="tag-chip">JavaScript</span>
-                    </div>
+    <!-- Source: https://drive.google.com/file/d/1AQbjf6Tl89mz_BkEtFMzqODIJShruNFG/preview -->
+    <!-- no page for this one — card isn't a link -->
+    <div class="strip-card" tabindex="0" aria-label="Neural Reconstruction of Handwritten Curves">
+        <div class="strip">
+            <img class="strip-art" src="{{ img('ux', 'chi111.webp') }}" alt="Neural Reconstruction of Handwritten Curves">
+            <div class="strip-facts">
+                <div class="strip-line strip-name">Neural Reconstruction of Handwritten Curves</div>
+                <div class="strip-line strip-role">Final Project for AM111: Scientific Computing</div>
+                <div class="strip-line strip-time">Dec 2025</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">Python</span>
+                    <span class="tag-chip">LLM Training</span>
                 </div>
-                <div class="project-thumb-subrow">
-                    <div class="project-thumb-sub"> Final project for CS50: Introduction to Computer Science</div>
-                    
-                    <div class="project-thumb-date">December 2024</div>
-                    </div>
-                    
-                    <div class="project-thumb-desc">Fun fact: This website is hardcoded and all visual elements are drawn by me ^v^ (not the fonts)</div>
-
-                </div>
-        </a>
+            </div>
+        </div>
+        <p class="strip-desc">Training a small language model from scratch.</p>
     </div>
+
+    <!-- no thumbnail yet — placeholder until one is ready -->
+    <a class="strip-card" href="https://github.com/tuechile/backtiming" target="_blank" rel="noopener" aria-label="Backtiming (coming soon), on GitHub (opens in a new tab)">
+        <div class="strip">
+            <div class="strip-art strip-empty">Coming soon</div>
+            <div class="strip-facts">
+                <div class="strip-line strip-name">Backtiming</div>
+                <div class="strip-line strip-role">Personal project</div>
+                <div class="strip-line strip-time">Coming soon</div>
+            </div>
+        </div>
+        <p class="strip-desc">Syncs with my calendars and works backwards from each event to maximize grwm time.</p>
+    </a>
+
+    <!-- no thumbnail or page yet — placeholder until one is ready -->
+    <div class="strip-card" tabindex="0" aria-label="CineNode (in progress)">
+        <div class="strip">
+            <div class="strip-art strip-empty">In progress</div>
+            <div class="strip-facts">
+                <div class="strip-line strip-name">CineNode</div>
+                <div class="strip-line strip-role">TekTrek</div>
+                <div class="strip-line strip-time">Jul 2026 - Ongoing</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">TypeScript</span>
+                    <span class="tag-chip">JavaScript</span>
+                    <span class="tag-chip">React</span>
+                    <span class="tag-chip">three.js</span>
+                    <span class="tag-chip">Vite</span>
+                    <span class="tag-chip">Supabase</span>
+                    <span class="tag-chip">Tailwind CSS</span>
+                </div>
+            </div>
+        </div>
+        <p class="strip-desc">A node-based pipeline where you generate or arrange shots using modular nodes, then convert them into a shot list and storyboard.</p>
+    </div>
+
+    <!-- ISSUE: swap this placeholder for a photobooth-camera thumbnail (camera shutter button on the side) -->
+    <a class="strip-card" href="https://github.com/tuechile/pirenily" target="_blank" rel="noopener" aria-label="Pirenily — this website, on GitHub (opens in a new tab)">
+        <div class="strip">
+            <div class="strip-art strip-empty strip-empty--blank"></div>
+            <div class="strip-facts">
+                <div class="strip-line strip-name">Pirenily</div>
+                <div class="strip-line strip-role">Final project for CS50: Introduction to Computer Science</div>
+                <div class="strip-line strip-time">December 2024</div>
+                <div class="strip-line strip-stack">
+                    <span class="tag-chip">Python</span>
+                    <span class="tag-chip">Flask</span>
+                    <span class="tag-chip">Jinja2</span>
+                    <span class="tag-chip">HTML</span>
+                    <span class="tag-chip">CSS</span>
+                    <span class="tag-chip">JavaScript</span>
+                </div>
+            </div>
+        </div>
+        <p class="strip-desc">Fun fact: This website is hardcoded and all visual elements are drawn by me ^v^ (not the fonts)</p>
+    </a>
 </div>
+
+<script src="/static/strips.js?v={{ asset_v }}"></script>
 {% endblock %}
