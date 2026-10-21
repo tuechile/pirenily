@@ -448,6 +448,51 @@ html {
     }
 }
 
+/* Seamless strip: posts sit apart like any fit row, then slide together into one picture.
+   --k (set in case_scripts.html) is each card's steps from the middle; --merge runs 0 → 1
+   on hover, or follows a pinch on touch screens. Cards move instead of the gap shrinking,
+   so the images keep their size and nothing below shifts. */
+.split.split-seamless {
+    --seam-gap: 32px;
+    --merge: 0;
+    gap: var(--seam-gap);
+    touch-action: pan-x pan-y;
+}
+
+.split-seamless>.media-card {
+    transform: translateX(calc(var(--k, 0) * var(--seam-gap) * var(--merge)));
+    transition: transform var(--dur-2) var(--ease-out);
+}
+
+.split-seamless.is-pinching>.media-card {
+    transition: none;
+}
+
+.split-seamless.is-merged {
+    --merge: 1;
+}
+
+@media (hover: hover) {
+    .split-seamless:hover {
+        --merge: 1;
+    }
+}
+
+.split-seamless>.media-card:hover img {
+    transform: none;
+}
+
+.split-seamless:hover img,
+.split-seamless.is-merged img {
+    filter: grayscale(0%);
+}
+
+@media screen and (max-width: 480px) {
+    .split.split-seamless {
+        --seam-gap: var(--s-2);
+    }
+}
+
 /* =========================================================
    Accordion
    ========================================================= */

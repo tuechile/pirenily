@@ -91,6 +91,34 @@
         v.addEventListener("loadedmetadata", () => { v.playbackRate = rate; });
     });
 
+    // Seamless strips: each card slides toward the middle by its distance from it; on touch, a
+    // pinch drives the merge and lets go to whichever end is nearer (spread to pull them apart)
+    document.querySelectorAll(".split-seamless").forEach(row => {
+        const cards = [...row.children];
+        cards.forEach((c, i) => c.style.setProperty("--k", (cards.length - 1) / 2 - i));
+        let start = null;
+        const spread = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+        row.addEventListener("touchstart", (e) => {
+            if (e.touches.length !== 2) return;
+            start = { d: spread(e.touches), m: row.classList.contains("is-merged") ? 1 : 0 };
+            row.classList.add("is-pinching");
+        }, { passive: true });
+        row.addEventListener("touchmove", (e) => {
+            if (!start || e.touches.length !== 2) return;
+            e.preventDefault();
+            const m = Math.min(1, Math.max(0, start.m + (start.d - spread(e.touches)) / 120));
+            row.style.setProperty("--merge", m);
+        }, { passive: false });
+        row.addEventListener("touchend", () => {
+            if (!start) return;
+            const m = Number(row.style.getPropertyValue("--merge") || start.m);
+            start = null;
+            row.classList.remove("is-pinching");
+            row.style.removeProperty("--merge");
+            row.classList.toggle("is-merged", m > 0.5);
+        });
+    });
+
     // Instagram embeds post their own height; size each frame to it so nothing is clipped
     window.addEventListener("message", (e) => {
         if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;

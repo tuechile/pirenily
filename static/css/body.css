@@ -1171,6 +1171,29 @@
     overflow: hidden;
 }
 
+/* The picture itself is only lightly blurred; this frame blurs what's under it again near the edges,
+   so the outline stays as soft as before (6px total) while the middle reads clearer */
+.strip::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(5.7px);
+    backdrop-filter: blur(5.7px);
+    -webkit-mask-image:
+        linear-gradient(to right, #000, transparent 80px, transparent calc(100% - 80px), #000),
+        linear-gradient(to bottom, #000, transparent 64px, transparent calc(100% - 64px), #000);
+    mask-image:
+        linear-gradient(to right, #000, transparent 80px, transparent calc(100% - 80px), #000),
+        linear-gradient(to bottom, #000, transparent 64px, transparent calc(100% - 64px), #000);
+    transition: backdrop-filter var(--dur-3) var(--ease-out), -webkit-backdrop-filter var(--dur-3) var(--ease-out);
+}
+
+.strip-card:is(:hover, :focus-visible) .strip::after {
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+}
+
 .strip-card:focus-visible .strip {
     outline: 1px solid var(--accent);
     outline-offset: 3px;
@@ -1184,7 +1207,7 @@
     object-fit: cover;
     display: block;
     --strip-edge: 56px;
-    filter: blur(6px) grayscale(100%);
+    filter: blur(2px) grayscale(100%);
     transform: scale(0.96);
     -webkit-mask-image:
         linear-gradient(to right, transparent, #000 var(--strip-edge), #000 calc(100% - var(--strip-edge)), transparent),
@@ -1233,6 +1256,7 @@
     flex-wrap: wrap;
     gap: 0.3rem;
     pointer-events: none;
+    z-index: 1;
 }
 
 .strip-stack .tag-chip {
@@ -1260,6 +1284,11 @@
         --strip-edge: 8px;
         filter: blur(0.6px);
         transform: none;
+    }
+
+    .strip::after {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
     }
 
     .strip-stack .tag-chip {

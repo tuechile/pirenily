@@ -105,9 +105,16 @@
         {% endfor %}
     {% endcall %}
 
-    {% call cs.row("fit", caption="Launch and applications-open posters.") %}
-        {{ cs.card(img('design', 'hackharvard/poster-moon.jpg'), "Hack to the Moon poster announcing Oct 16 to 18, 2026", ar=0.8) }}
-        {{ cs.card(img('design', 'hackharvard/poster-apps.jpg'), "Hacker applications open poster", ar=0.8) }}
+    {% call cs.row("fit", caption="Recap posts, designed to run on as one strip across the feed. Hover, or pinch on a phone, to join them.", seamless=True) %}
+        {{ cs.card(img('design', 'hackharvard/recap-18.webp'), "Recap post: a ringed pink planet, a rainbow comet trail and a floating flower island, with the date 18", ar=0.75) }}
+        {{ cs.card(img('design', 'hackharvard/recap-temple.webp'), "Recap post: a domed temple with pagodas on a floating island under a moon-phase constellation", ar=0.75) }}
+        {{ cs.card(img('design', 'hackharvard/recap-16.webp'), "Recap post: ribbons of pink, cream and teal sweeping past a rocket and a small island, with the date 16", ar=0.75) }}
+    {% endcall %}
+
+    {% call cs.row("fit", caption="Countdown posts, built so the skyline carries on from one post to the next. Hover, or pinch on a phone, to join them.", seamless=True) %}
+        {{ cs.card(img('design', 'hackharvard/countdown-2days.webp'), "Countdown post: 2 days left, with a sponsor tag over a glowing podium", ar=0.752) }}
+        {{ cs.card(img('design', 'hackharvard/countdown-3days.webp'), "Countdown post: 3 days left, with a sponsor tag and a domed skyline on a pink shore", ar=0.75) }}
+        {{ cs.card(img('design', 'hackharvard/countdown-1week.webp'), "Countdown post: 1 week left, with an already accepted, register now tag beside a domed skyline", ar=0.75) }}
     {% endcall %}
 
     {# ===== Website ===== #}
@@ -143,8 +150,7 @@
     </p>
     {% endcall %}
 
-    {% call cs.row("fit", caption="Sticker sheet; the two tote bags, theme artwork and monogram.") %}
-        {{ cs.card(img('design', 'hackharvard/stickers.png'), "Sticker sheet with six HackHarvard 2026 stickers", ar=0.75) }}
+    {% call cs.row("fit", caption="The two tote bags, theme artwork and monogram.") %}
         {{ cs.card(img('design', 'hackharvard/tote-theme.webp'), "Canvas tote with the Hack to the Moon artwork and the dates 10/16 to 10/18, 2026", ar=1) }}
         {{ cs.card(img('design', 'hackharvard/tote-logo.png'), "Canvas tote with the gradient HA monogram over HackHarvard 2026 in pink", ar=1) }}
     {% endcall %}
