@@ -1127,7 +1127,7 @@
     border: 0;
 }
 
-/* Home Projects toggle comes in two groups (Selected / Collection / CV and Brand / UI/UX / All).
+/* Home Projects toggle comes in two groups (Selected / Compilations / CV and Brand / UI/UX / All).
    Your view melts them back into one bar, in its usual order */
 .view-side {
     display: contents;
@@ -1137,7 +1137,7 @@
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="cv"] { order: 2; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="brand"] { order: 3; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="uiux"] { order: 4; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="collection"] { order: 5; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="compilations"] { order: 5; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="all"] { order: 6; }
 
 /* Your view: the bar sits under the cards, floating at the bottom of the screen while the list scrolls by

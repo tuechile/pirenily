@@ -1,10 +1,10 @@
-{# Design cards with the Selected / Brand / UI/UX / Collection / All toggle (home Projects section).
+{# Design cards with the Selected / Brand / UI/UX / Compilations / All toggle (home Projects section).
    Strip cards, the same as the Code page: in color at rest (black and white and blurred in My view), sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
     {# Two groups so My view can pin them to either side of the list; Your view lays them out as one bar #}
     <span class="view-side view-side--left">
         <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
-        <button type="button" class="view-btn" data-view="collection" aria-pressed="false">Collection</button>
+        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false">Compilations</button>
         {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="cv" aria-pressed="false"><span>CV</span></button>{% endif %}
     </span>
     <span class="view-side view-side--right">
@@ -18,7 +18,7 @@
 <div class="gated-peek" inert>
 {% endif %}
 <div class="design-list strip-grid" id="designList">
-    <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux, Collection = data-collection; the rest only show under All -->
+    <!-- Selected = data-featured, Brand = data-brand, UI/UX = data-uiux, Compilations = data-collection; the rest only show under All -->
     <a class="strip-card" href="hackharvard" data-previews="{{ previews('design', ['hackharvard/poster-moon.jpg', 'hackharvard/site-about.jpg', 'hackharvard/site-tracks.jpg', 'hackharvard/stickers.png']) }}" data-brand data-featured>
         <div class="strip">
             <img class="strip-art" loading="lazy" decoding="async" src="{{ img('design', 'hackharvard/logo-thumb.png') }}" alt="HackHarvard logo in red on black">
@@ -381,7 +381,7 @@
         function setView(view) {
             if (view === "cv" && !cvPanel) view = "selected";
             cards.forEach(function (c) {
-                var show = view === "all" || c.hasAttribute("data-" + { selected: "featured", brand: "brand", uiux: "uiux", collection: "collection" }[view]);
+                var show = view === "all" || c.hasAttribute("data-" + { selected: "featured", brand: "brand", uiux: "uiux", compilations: "collection" }[view]);
                 c.style.display = show ? "" : "none";
             });
             if (cvPanel) cvPanel.hidden = view !== "cv";
@@ -401,7 +401,7 @@
             });
         });
 
-        var fromHash = { "#cv": "cv", "#brand": "brand", "#uiux": "uiux", "#collection": "collection", "#marketing": "collection", "#all": "all" }[location.hash];
+        var fromHash = { "#cv": "cv", "#brand": "brand", "#uiux": "uiux", "#compilations": "compilations", "#collection": "compilations", "#marketing": "compilations", "#all": "all" }[location.hash];
         setView(fromHash || "selected");
         // /#all etc. has no element to jump to, so bring the list into view ourselves
         // (after load, once the browser has finished its own hash scroll)
