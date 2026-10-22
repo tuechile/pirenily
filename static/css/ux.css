@@ -1129,6 +1129,17 @@ html {
     line-height: var(--lh);
 }
 
+/* Collapsed: only the three main pain points, no filters, until View all */
+.insights-card:not(.is-all) :is(.tabs, .chips, .insight:not([data-main])) {
+    display: none;
+}
+
+@media (min-width: 861px) {
+    .insights-card:not(.is-all) .insights-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
 /* Filtering + expand */
 .insight.is-hidden {
     opacity: 0;

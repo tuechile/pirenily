@@ -79,13 +79,13 @@
 
     {# §12 Bespoke: Interview Insights explorer #}
     {% call cs.block() %}
-    <div class="insights-card">
+    <div class="insights-card" id="insightsCard">
 
         <div class="insights-head">
             <div>
-                <h3 class="insights-title">Interview Highlights</h3>
+                <h3 class="insights-title">Three main pain points</h3>
             </div>
-            <button class="mini-btn" type="button" id="openAffinity">View raw</button>
+            <button class="mini-btn" type="button" id="insightsAll" aria-expanded="false">View all</button>
         </div>
 
         <div class="tabs" role="tablist" aria-label="Interview personas">
@@ -105,7 +105,7 @@
 
         <div class="insights-grid" id="insightsGrid">
 
-            <article class="insight" data-persona="president" data-theme="inventory">
+            <article class="insight" data-persona="president" data-theme="inventory" data-main>
                 <div class="meta">
                     <span class="pill">President</span>
                     <span class="tag-mini">Inventory</span>
@@ -156,7 +156,7 @@
                 </div>
             </article>
 
-            <article class="insight" data-persona="volunteer" data-theme="offline">
+            <article class="insight" data-persona="volunteer" data-theme="offline" data-main>
                 <div class="meta">
                     <span class="pill">Volunteer</span>
                     <span class="tag-mini">Offline</span>
@@ -173,7 +173,7 @@
                 </div>
             </article>
 
-            <article class="insight" data-persona="volunteer" data-theme="onboarding">
+            <article class="insight" data-persona="volunteer" data-theme="onboarding" data-main>
                 <div class="meta">
                     <span class="pill">Volunteer</span>
                     <span class="tag-mini">Edit anxiety</span>
@@ -395,6 +395,19 @@
     </p>
     {% endcall %}
 
+    {{ cs.stats([
+        ("~70%", "easier to update records than on the spreadsheets (projected)"),
+    ]) }}
+
+    {% call cs.section() %}
+    <p>
+        <strong>How we measured it:</strong> all 5 people we interviewed (the president, treasurer and three volunteers) ran the same set tasks on the old spreadsheets and on
+        the prototype, saying aloud what they saw and what they'd do next. We counted the clicks each task took
+        and asked a single ease rating after every task. Across clicks per task and those ease ratings, we
+        project updates about 70% easier than on the spreadsheets.
+    </p>
+    {% endcall %}
+
     {% call cs.section("Try It Yourself", lead="Explore the prototype the way a volunteer would") %}
     <p>
         This is the hi-fi prototype shown above. Start by picking a component type, then work your way
@@ -426,12 +439,6 @@
         so we weren't part of the rollout.
     </p>
     <p>
-        <strong>How we measured it:</strong> all 5 people we interviewed (the president, treasurer and three volunteers) ran the same set tasks on the old spreadsheets and on
-        the prototype, saying aloud what they saw and what they'd do next. We counted the clicks each task took
-        and asked a single ease rating after every task. Across clicks per task and those ease ratings, we
-        project updates about 70% easier than on the spreadsheets.
-    </p>
-    <p>
         <strong>What we'd track after launch:</strong> how long it takes a volunteer to answer "what do we have
         right now?", how many records new volunteers update in their first week, and how many duplicate entries
         remain.
@@ -449,7 +456,8 @@
         const tabs = document.querySelectorAll(".tab");
         const chips = document.querySelectorAll(".chip");
         const cards = document.querySelectorAll(".insight");
-        const openAffinity = document.getElementById("openAffinity");
+        const card = document.getElementById("insightsCard");
+        const viewAll = document.getElementById("insightsAll");
 
         let activePersona = "all";
         let activeTheme = "all";
@@ -481,16 +489,17 @@
             if (toggle) toggle.addEventListener("click", () => card.classList.toggle("open"));
         });
 
-        // Open the raw affinity board in the shared lightbox
-        if (openAffinity) {
-            openAffinity.addEventListener("click", () => {
-                const overlay = document.getElementById("lightbox");
-                const img = document.getElementById("lightboxImg");
-                img.src = "{{ img('ux', 't4sg/interview.png') }}";
-                img.alt = "Affinity mapping board (raw notes)";
-                overlay.style.display = "flex";
-            });
-        }
+        // Three main pain points first; View all opens every quote with the persona and theme filters
+        viewAll.addEventListener("click", () => {
+            const all = card.classList.toggle("is-all");
+            viewAll.textContent = all ? "Show less" : "View all";
+            viewAll.setAttribute("aria-expanded", all);
+            card.querySelector(".insights-title").textContent = all ? "Interview Highlights" : "Three main pain points";
+            if (!all) {
+                tabs[0].click();
+                chips[0].click();
+            }
+        });
 
         applyFilters();
     })();
