@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "248"
+ASSET_VERSION = "249"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -133,7 +133,7 @@ CASE_STUDIES = [
     ("t4sg", "T4SG × 2ft Prosthetics"),
     ("hackharvard", "HackHarvard 2026: Hack to the Moon"),
     ("commonspirit", "T4SG × CommonSpirit Health"),
-    ("cs171", "Chi x Rain: An Essay on Unicode"),
+    ("cs171", "The Story of Unicode"),
     ("pirenily", "Pirenily"),
     ("merch", "Merch"),
 ]

@@ -4,7 +4,7 @@
     // What every first-time visitor gets
     var DEFAULTS = {
         light: true,
-        sound: true
+        sound: false
     };
 
     // The look each light position switches to (see settings.css)

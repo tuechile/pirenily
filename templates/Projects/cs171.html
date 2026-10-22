@@ -1,15 +1,15 @@
 {% extends "case_study.html" %}
 {% import "partials/case_blocks.html" as cs %}
 
-{% block title %}| Unicode Data Story{% endblock %}
+{% block title %}| The Story of Unicode{% endblock %}
 
 {% block case %}
 
 {{ cs.hero("The Story of Unicode",
            "A scrollytelling website that turns “invisible infrastructure” into an interactive narrative: ASCII → Unicode → emoji → writing systems.",
-           eyebrow="Ongoing | CS 1710 · Final Project: Visualization",
+           eyebrow="Fall 2025 | CS 1710 · Final Project: Visualization",
            tags=["Role: UX / Game Design / Story Structure",
-                 "Team: The Typos",
+                 "Team: The Typos (Chi Le, Rain YeYang)",
                  "Deliverable: Interactive narrative site",
                  "Methods: Sketching · Prototyping · Think-aloud testing"]) }}
 
@@ -156,11 +156,31 @@
         ]},
     ]) }}
 
-    {% call cs.section("Outcome", lead="A narrative that makes infrastructure feel personal") %}
+    {% call cs.section("Outcome", lead="Live, and the message landed") %}
     <p>
-        The final story guides users from a familiar starting point (ASCII constraints) into scale (Unicode
-        growth), culture (emoji), and representation (writing systems). The goal is for users to leave with a
-        clearer mental model: Unicode isn’t just “code”—it shapes what can be expressed digitally.
+        The story went live as our CS 1710 final in fall 2025. It runs from ASCII constraints to Unicode's
+        growth, emoji and writing systems.
+    </p>
+    {% endcall %}
+
+    {{ cs.stats([
+        ("2 of 2", "think-aloud testers got the main message"),
+        ("7", "datasets I sourced and cleaned after we pivoted to Unicode"),
+    ]) }}
+
+    {% call cs.section() %}
+    <p>
+        One tester said everything was “extremely clear” and worked out every control on her own. The other got
+        the gist but stalled on terms like “version” and “code value”, and on the long text between charts.
+    </p>
+    <p>
+        That split shaped the final round: the text block became a clickable timeline, acronyms are spelled
+        out, toggles became radio buttons so they read as filters, and “Remove Outlier” switches off when
+        there's no outlier left to remove.
+    </p>
+    <p>
+        <strong>What I'd measure next:</strong> whether a first-time reader can say what Unicode is after one
+        pass, and where people stop scrolling.
     </p>
     {% endcall %}
 
