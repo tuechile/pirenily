@@ -127,7 +127,7 @@
         {{ cs.card(img('design', 'hackharvard/audience-moon.jpg'), "Audience for Hack to the Moon: 15% followers, 85% non-followers", ar=0.977) }}
     {% endcall %}
 
-    {% call cs.row("3", caption="Three campaign posts on Instagram.") %}
+    {% call cs.row("3", caption="Three campaign posts on Instagram.", seamless=True) %}
         {% for post in ["DbT1YnnSdhD", "DbESCpPSjyL", "Da9CDgEvOHG"] %}
         {{ cs.embed("https://www.instagram.com/p/" ~ post ~ "/embed/", "HackHarvard Instagram post " ~ loop.index, ar=0.72) }}
         {% endfor %}

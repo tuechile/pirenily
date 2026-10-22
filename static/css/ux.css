@@ -507,6 +507,13 @@ html {
     }
 }
 
+/* A three-up row stacks below 880px, so there is nothing to slide together */
+@media screen and (max-width: 880px) {
+    .split-3.split-seamless>.media-card {
+        transform: none;
+    }
+}
+
 /* =========================================================
    Accordion
    ========================================================= */

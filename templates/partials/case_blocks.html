@@ -128,7 +128,7 @@
 
 {# §5 Rows — layout: pair | equal | auto | 3 | quad | fit (cards need ar); cells are card / video_card / placeholder #}
 {# match (fit only): the ar sum of a two-card fit row to share its height with
-   seamless (fit only): posts designed to run together; apart at rest, they slide into one strip on hover or pinch #}
+   seamless (fit or 3): posts designed to run together; apart at rest, they slide into one strip on hover or pinch #}
 {% macro row(layout="pair", caption=None, match=None, seamless=False) %}
 <figure class="cs-figure">
     <div class="split{% if layout != 'auto' %} split-{{ layout }}{% endif %}{% if match %} split-fit--match{% endif %}{% if seamless %} split-seamless{% endif %}"{% if match %} style="--row-ar: {{ match }}"{% endif %}>
