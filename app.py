@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "238"
+ASSET_VERSION = "239"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -407,7 +407,7 @@ def cv_file_id():
 
 
 # The CV tab draws the PDF itself (design_list.html) instead of embedding Drive's viewer, which brings
-# its own gray backdrop and toolbar. The file is kept here for an hour so a new upload shows up soon.
+# its own gray backdrop and toolbar. The file is kept here for five minutes so a new upload shows up soon.
 _cv_pdf = {"data": None, "at": 0}
 
 @app.route("/cv.pdf")
@@ -415,7 +415,7 @@ def cv_pdf():
     if access_level() != "cv":
         abort(404)
     file_id = cv_file_id() or abort(404)
-    if not _cv_pdf["data"] or time.time() - _cv_pdf["at"] > 3600:
+    if not _cv_pdf["data"] or time.time() - _cv_pdf["at"] > 300:
         url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
         try:
             with urllib.request.urlopen(url, timeout=20) as r:
@@ -423,7 +423,7 @@ def cv_pdf():
         except (urllib.error.URLError, TimeoutError):
             if not _cv_pdf["data"]:
                 abort(502)
-    return Response(_cv_pdf["data"], mimetype="application/pdf", headers={"Cache-Control": "private, max-age=3600"})
+    return Response(_cv_pdf["data"], mimetype="application/pdf", headers={"Cache-Control": "private, max-age=300"})
 
 
 @app.before_request
