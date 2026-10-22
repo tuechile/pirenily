@@ -40,7 +40,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "170"
+ASSET_VERSION = "172"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -153,14 +153,17 @@ def inject_nav_section():
     return dict(nav_section=section)
 
 
-# Short content hash per static file, so an image's URL changes only when the image does
+# Short fingerprint per static file, so an image's URL changes only when the image does.
+# Size plus the first 64KB: reading whole photos and videos made first visits wait on the hashing.
 _file_hashes = {}
 
 
 def _file_hash(path):
     if path not in _file_hashes:
         with open(path, "rb") as f:
-            _file_hashes[path] = hashlib.md5(f.read()).hexdigest()[:8]
+            digest = hashlib.md5(str(os.path.getsize(path)).encode())
+            digest.update(f.read(64 * 1024))
+            _file_hashes[path] = digest.hexdigest()[:8]
     return _file_hashes[path]
 
 
@@ -385,23 +388,24 @@ def cv_file_id():
     return match.group(1) if match else None
 
 
-# The CV tab shows the page as a plain picture instead of Drive's viewer (gray backdrop, toolbar, zoom).
-# Drive renders it at 1024px wide at most; it's kept here for an hour so a new upload shows up soon.
-_cv_page = {"png": None, "at": 0}
+# The CV tab draws the PDF itself (design_list.html) instead of embedding Drive's viewer, which brings
+# its own gray backdrop and toolbar. The file is kept here for an hour so a new upload shows up soon.
+_cv_pdf = {"data": None, "at": 0}
 
-@app.route("/cv.png")
-def cv_page():
+@app.route("/cv.pdf")
+def cv_pdf():
     if access_level() != "cv":
         abort(404)
     file_id = cv_file_id() or abort(404)
-    if not _cv_page["png"] or time.time() - _cv_page["at"] > 3600:
+    if not _cv_pdf["data"] or time.time() - _cv_pdf["at"] > 3600:
+        url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
         try:
-            with urllib.request.urlopen(f"https://lh3.googleusercontent.com/d/{file_id}=w1024", timeout=20) as r:
-                _cv_page.update(png=r.read(), at=time.time())
+            with urllib.request.urlopen(url, timeout=20) as r:
+                _cv_pdf.update(data=r.read(), at=time.time())
         except (urllib.error.URLError, TimeoutError):
-            if not _cv_page["png"]:
+            if not _cv_pdf["data"]:
                 abort(502)
-    return Response(_cv_page["png"], mimetype="image/png", headers={"Cache-Control": "private, max-age=3600"})
+    return Response(_cv_pdf["data"], mimetype="application/pdf", headers={"Cache-Control": "private, max-age=3600"})
 
 
 @app.before_request

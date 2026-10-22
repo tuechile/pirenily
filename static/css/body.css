@@ -1004,24 +1004,80 @@
     }
 }
 
-/* The CV is a single sheet of paper on the page: no viewer chrome, no zoom, edges softly blurred out */
+/* The CV is a single sheet of paper on the page: no viewer chrome, edges blurred out into the page.
+   Zooming in (never out) happens inside the sheet, which then scrolls on its own. */
 .cv-panel {
     width: min(576px, 80vw);
     margin: 3rem auto 0;
 }
 
-.cv-frame {
-    aspect-ratio: 1024 / 1325;
-    background: var(--sheet);
-    box-shadow: 0 0 18px 4px rgba(var(--sheet-rgb), 0.22);
+.cv-open {
+    margin: 0 0 1.75rem;
+    text-align: center;
 }
 
-.cv-frame img {
+.cv-frame {
+    position: relative;
+    aspect-ratio: 8.5 / 11;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+    background: var(--sheet);
+    box-shadow:
+        0 0 10px 3px rgba(var(--sheet-rgb), 0.45),
+        0 0 48px 18px rgba(var(--sheet-rgb), 0.16);
+}
+
+.cv-frame::-webkit-scrollbar {
+    display: none;
+}
+
+.cv-sheet {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+}
+
+.cv-sheet canvas {
     display: block;
     width: 100%;
     height: 100%;
-    user-select: none;
-    -webkit-user-drag: none;
+}
+
+/* pdf.js lays transparent text over the drawing so it can be selected and copied */
+.cv-sheet .textLayer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    line-height: 1;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    forced-color-adjust: none;
+}
+
+.cv-sheet .textLayer :is(span, br) {
+    position: absolute;
+    color: transparent;
+    text-shadow: none;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0 0;
+}
+
+.cv-sheet .textLayer ::selection {
+    color: transparent;
+    text-shadow: none;
+    background: rgba(var(--accent-rgb), 0.3);
+}
+
+.cv-links a {
+    position: absolute;
+    z-index: 1;
+}
+
+.cv-frame.is-broken {
+    display: none;
 }
 
 .cv-soon {
