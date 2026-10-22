@@ -2,9 +2,9 @@
 {% import "partials/case_blocks.html" as cs %}
 
 {#
-    Template: how I built this website. Every section below is a first draft pulled from the code
-    (app.py, settings.js, the partials); rewrite in your own voice and swap each cs.placeholder()
-    for a screenshot, e.g. {{ cs.figure(img('ux', 'pirenily/finder.webp'), "alt text") }}.
+    How I built this website. Short on purpose: bits, not a life story.
+    Swap each cs.placeholder() for a screenshot, e.g. {{ cs.figure(img('ux', 'pirenily/finder.webp'), "alt text") }},
+    and each "#TODO" href or "TODO" line for the real thing.
 #}
 
 {% block title %}| Pirenily: How I Built This Website{% endblock %}
@@ -22,36 +22,72 @@
 {{ cs.placeholder("Cover: the landing page with the finder") }}
 
 {{ cs.callout("TL;DR", points=[
-    "A personal archive that feels like a quiet, dark film: serif type, one teal accent, blur instead of color on hover.",
+    "An archive of everything I make, because the idea of an archive fascinates me.",
     "Built by hand on Flask and plain HTML, CSS and JavaScript. No frameworks, no build tools, no database.",
-    "Two views from two switches: <em>My view</em> (dark, serif, cinematic) and <em>Your view</em> (light, sans, easier to read).",
+    "Two views from two switches: <em>My view</em> is for me, <em>Your view</em> is for everyone else.",
     "Every icon is my own line drawing, so the whole site recolors itself with each view.",
 ]) }}
 
 {% call cs.body() %}
 
-    {% call cs.section("Why", lead="A portfolio that feels like mine") %}
+    {% call cs.section("The Name", lead="Emily + Iron Pig") %}
     <p>
-        Templates made every portfolio look the same. I wanted a site that reads like a personal
-        archive: dark, quiet and a little dreamy, where the work sits in a frame I designed myself.
+        <strong>Emily</strong> is my English name. I picked it in sixth grade, my brother agreed, and then
+        nobody ever used it. I tried again in college and everyone said I don’t sound like an Emily.
+        It stayed mine anyway.
     </p>
     <p>
-        <!-- TODO: the moment you decided to build it yourself, and what Pirenily means -->
+        <strong>Iron Pig</strong> was my fan fiction author name: I loved Iron Man, and my middle school
+        classmates called me a pig because I eat too fast.
+    </p>
+    <p>
+        Emily + Iron Pig = <strong>Pirenily</strong>.
+    </p>
+    {% endcall %}
+
+    {% call cs.section("The Finder", lead="Every name I’ve been called") %}
+    <p>
+        The search bar on the landing page flashes through names: ones people call me, ones I call
+        myself, and ones nobody calls me at all. Chi Le, Emily, Iron Pig, Chi Chi Cha Cha, Le Le,
+        The Country (yes, like Chile).
+    </p>
+    <p>
+        Type anything into it and it finds the closest page, forgiving typos, accents and half-typed
+        words. If nothing matches, it opens a random page.
+    </p>
+    {% endcall %}
+
+    {{ cs.placeholder("Screen recording: the names flashing, then typing into the finder") }}
+
+    {% call cs.section("Why an Archive", lead="A niche, weird website") %}
+    <p>
+        Pirenily was my CS50 final project. I didn’t want to build something I’d never use again, and the
+        idea of an archive has always fascinated me, so I built a place to keep everything.
+    </p>
+    <p>
+        The highlight of my first semester was AFVS 55P, and by then I had a pile of interactive projects.
+        So: I want to be a niche artist, let’s build a niche, weird website.
+    </p>
+    <p>
+        I’m a maximalist, but I don’t want to be maximalist about one thing. I want to be everything at
+        once. So the frame stays minimal, and the work gets to be everything.
     </p>
     {% endcall %}
 
     {% call cs.section("First Website", lead="December 8, 2024") %}
     <p>
-        Pirenily started as my first ever website, built in one sitting on December 8, 2024: 32 commits
-        between 3:37 in the afternoon and 10:57 at night, starting from a Flask template. It was the
-        first time I wrote code for something of my own.
+        My first ever website, built in one sitting: 32 commits between 3:37 in the afternoon and 10:57
+        at night, starting from a Flask template.
     </p>
     <p>
-        Most of what defines the site now was already there that night: the search bar on the landing
-        page cycling through my names, the loader GIF between pages, BHN Cinema for the logo and Crimson
-        Text for everything else. What changed is everything around them.
+        AI was bad at design back then, which was perfect. It couldn’t make a single design decision
+        for me, so I planned everything myself and made ChatGPT build exactly what I described.
     </p>
-    <!-- TODO: what it felt like shipping it, and what made you keep going -->
+    <p>
+        Most of what defines the site was already there that night: the names in the finder, the loader
+        GIF between pages, BHN Cinema for the logo, Crimson Text for everything else. It hasn’t changed
+        that much, because it still says what I want it to say.
+    </p>
     {% endcall %}
 
     {{ cs.compare([
@@ -79,31 +115,21 @@
     {% endcall %}
 
     {{ cs.cta("https://pirenily.com/pirenily-2024/", "Visit the 2024 site", kicker="As of December 8, 2024") }}
+    {# TODO: the high school website's link #}
+    {{ cs.cta("#TODO", "Visit my high school website", kicker="Before Pirenily") }}
 
-    {% call cs.section("Stack", lead="Small on purpose") %}
+    {% call cs.section("How Ideas Happen", lead="Out loud, never written") %}
     <p>
-        The site is a Flask app with Jinja2 templates and vanilla HTML, CSS and JavaScript. There is no
-        database and no build step: pushing to <code>main</code> redeploys it on Koyeb.
+        Ideas show up all day: in class, looking at a poster, anywhere. I don’t write them down. Writing
+        cleans out the stuttering and the fast talking, and then I can’t remember what I meant.
     </p>
     <p>
-        — One base layout every page extends, plus case-study building blocks (hero, sections, rows,
-        callouts) shared as Jinja macros<br>
-        — Images go through one helper that picks a web-sized copy and fingerprints the URL<br>
-        — A version number on every stylesheet and script, bumped on each change, so browsers never
-        serve a stale one
-    </p>
-    {% endcall %}
-
-    {{ cs.placeholder("Diagram: request → Flask route → Jinja template → page") }}
-
-    {% call cs.section("Aesthetic", lead="Quiet, serif, a little dreamy") %}
-    <p>
-        Black background, gray text, near-white titles and a single teal accent. BHN Cinema only for
-        the Pirenily logo; Crimson Text, often italic, for everything else.
+        So I talk. Voice-to-text, and voice notes to my brother. When he replies, I have to defend the
+        idea, and I can feel what I felt when I said it.
     </p>
     <p>
-        Hovering blurs things slightly instead of changing their color. Panels are frosted glass with
-        hairline borders. Things appear and disappear instantly, with no fades.
+        Building happens later, when my brain is off. The thinking is already done, so I can hyperfixate
+        and just make it.
     </p>
     {% endcall %}
 
@@ -112,27 +138,53 @@
         {{ cs.placeholder("Your view (light, sans)") }}
     {% endcall %}
 
-    {% call cs.section("Two Views", lead="Two switches instead of a settings panel") %}
+    {% call cs.section("Two Views", lead="One for me, one for you") %}
     <p>
-        The nav has a light switch and a sound switch. Light on is <em>Your view</em>: a beige paper
-        theme, a system sans font and larger sizes, for anyone who just wants to read. Light off is
-        <em>My view</em>, the site as I see it.
+        <strong>My view</strong> (dark) is the site for me. It grew out of artists I love, especially
+        people from the School for Poetic Computation, and Chia Amisola most of all.
     </p>
     <p>
-        Every color comes from a small set of tokens, so one switch repaints the whole site, icons
-        included. The sound switch turns on music and click sounds.
+        <strong>Your view</strong> (light) is the accessible one, for recruiters or anyone who isn’t
+        comfortable reading in the dark. It borrows from industry UX: larger type, a plain sans font,
+        a warm paper background.
     </p>
-    {% endcall %}
-
-    {% call cs.section("The Finder", lead="Search instead of a menu") %}
     <p>
-        The landing page opens on a search bar that cycles through my names (Pirenily, Chi Le, Iron Pig,
-        Emily, Chi Bell). Type anything and it finds the closest page, forgiving accents, missing spaces,
-        half-typed words and typos. If nothing matches, it opens a random page.
+        The nav has two switches, ☀ light and ♪ sound, instead of a settings panel. Every color comes from
+        a small set of tokens, so one switch repaints the whole site, icons included.
     </p>
     {% endcall %}
 
-    {{ cs.placeholder("Screen recording: typing into the finder") }}
+    {# TODO: fill both lists, with links #}
+    {{ cs.compare([
+        {"title": "Inspo for My view", "points": [
+            "Chia Amisola",
+            "School for Poetic Computation",
+            "TODO",
+        ]},
+        {"title": "Inspo for Your view", "points": [
+            "TODO",
+            "TODO",
+            "TODO",
+        ]},
+    ]) }}
+
+    {% call cs.section("Too Vibe Coded", lead="Taking the design decisions back") %}
+    <p>
+        A friend, and my site’s biggest fan (he advertises it more than I do), told me it was starting to
+        look vibe coded. He was right: I’d let Claude make too many design decisions for me.
+    </p>
+    <p>
+        So I stepped back. Pinterest, my old art, websites I used to love. I asked what each template was
+        doing, what I could cut, and what would make it look like me again.
+    </p>
+    <p>
+        Then I wrote my decisions down as a token library,
+        <a href="https://github.com/tuechile/pirenily-ui" target="_blank" rel="noopener">Pirenily UI</a>,
+        so the next time I doubt one, I can see why I made it and change it on purpose.
+    </p>
+    {% endcall %}
+
+    {{ cs.placeholder("Pirenily UI: the token library") }}
 
     {% call cs.section("Drawn by Hand", lead="Every icon is a line drawing") %}
     <p>
@@ -143,16 +195,10 @@
 
     {{ cs.placeholder("Sheet of the hand-drawn icons") }}
 
-    {% call cs.section("Details", lead="Small things that took the longest") %}
+    {% call cs.section("Stack", lead="Small on purpose") %}
     <p>
-        <!-- TODO: pick your favorites, e.g. the loader GIF between pages, the teal progress bar,
-             the hover previews on project cards, the password gate on case studies -->
-    </p>
-    {% endcall %}
-
-    {% call cs.section("Reflection", lead="What building it taught me") %}
-    <p>
-        <!-- TODO: what you learned, what you'd change, what's next -->
+        A Flask app with Jinja2 templates and vanilla HTML, CSS and JavaScript. No database, no build
+        step: pushing to <code>main</code> redeploys it.
     </p>
     <p>
         Hate my website? Pull an issue at
