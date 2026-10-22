@@ -1175,9 +1175,9 @@
         text-align: left;
     }
 
-    /* At rest the column shows only shapes (star, square, circle, kiki, rectangle, bouba) on a fully round bar;
-       hovering it, or tabbing into it, slides each word out beside its shape and the bar's corners ease back
-       (the pill follows: design_list.html watches the tabs' size) */
+    /* At rest the column shows only solid shapes (star, square, circle, kiki, two bars, bouba) on a fully
+       round bar; hovering it, or tabbing into it, folds each shape away as its word slides out, so the open
+       column is plain text, and the bar's corners ease back (the pill follows: design_list.html watches the tabs' size) */
     :root:not([data-mode="mine"]) #portfolio .view-toggle {
         border-radius: 2rem;
         transition: border-radius var(--dur-3) var(--ease-out);
@@ -1195,11 +1195,20 @@
 
     :root:not([data-mode="mine"]) #portfolio .vb-i {
         display: flex;
+        max-width: 1.05em;
+        overflow: hidden;
+        transition: max-width var(--dur-3) var(--ease-out);
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within) .vb-i {
+        max-width: 0;
     }
 
     .vb-shape {
+        flex: none;
         width: 1.05em;
         height: 1.05em;
+        fill: currentColor;
     }
 
     :root:not([data-mode="mine"]) #portfolio .vb-rest {
@@ -1207,15 +1216,14 @@
         max-width: 0;
         overflow: hidden;
         white-space: nowrap;
-        transition: max-width var(--dur-3) var(--ease-out), padding var(--dur-3) var(--ease-out);
+        transition: max-width var(--dur-3) var(--ease-out);
     }
 
     :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within) .vb-rest {
         max-width: 9em;
-        padding-left: 0.55em;
     }
 
-    :root[data-motion="reduced"] #portfolio :is(.view-toggle, .vb-rest) {
+    :root[data-motion="reduced"] #portfolio :is(.view-toggle, .vb-i, .vb-rest) {
         transition: none;
     }
 }
