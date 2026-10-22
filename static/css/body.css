@@ -1385,9 +1385,8 @@
 
 .bio-where summary {
     display: inline-block;
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: var(--fs-1);
+    font-family: var(--font-cinema);
+    font-size: 1.05rem;
     color: var(--lead);
     list-style: none;
     cursor: pointer;
@@ -1399,7 +1398,7 @@
 
 .bio-where summary::after {
     content: " +";
-    font-style: normal;
+    font-family: var(--font-body);
     color: var(--c-dim);
 }
 
