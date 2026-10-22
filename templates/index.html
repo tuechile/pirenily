@@ -53,8 +53,7 @@
 
 <body>
     {% include "partials/loader.html" %}
-    <div class="landing">
-    <nav>
+    <nav class="home-nav">
         <div class="nav-item-big" align="center" text-align="right">
             <a class="nav-item" href="/about"> About </a>
             <a class="nav-item" href="/code"> Code </a>
@@ -66,6 +65,28 @@
             </span>
         </div>
     </nav>
+    <!-- Phones: once the list above scrolls away, an "=" takes its place and opens the same links full screen (nav.js) -->
+    <button class="nav-toggle home-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <div class="nav-item-big home-menu">
+        <a class="nav-item" href="/about"> About </a>
+        <a class="nav-item" href="/code"> Code </a>
+        <a class="nav-item" href="/play"> Play </a>
+        <a class="nav-item" href="#portfolio"> Projects </a>
+    </div>
+    <script>
+        // The nav sticks above everything, so the landing fills the rest of the first screen
+        (function () {
+            var nav = document.querySelector(".home-nav");
+            function measure() { document.documentElement.style.setProperty("--home-nav-h", nav.offsetHeight + "px"); }
+            measure();
+            if ("ResizeObserver" in window) new ResizeObserver(measure).observe(nav);
+            // On phones the nav scrolls away instead of sticking; the "=" shows up once it's gone
+            if ("IntersectionObserver" in window) new IntersectionObserver(function (entries) {
+                document.documentElement.classList.toggle("past-home-nav", !entries[0].isIntersecting);
+            }).observe(nav);
+        })();
+    </script>
+    <div class="landing">
 
     <div id="video-container">
         <video autoplay muted loop id="background-video">
@@ -104,6 +125,8 @@
     </main>
     <script src="/static/popups.js?v={{ asset_v }}"></script>
     <script src="/static/loading.js?v={{ asset_v }}"></script>
+    <script src="/static/nav.js?v={{ asset_v }}"></script>
+    <script src="/static/strips.js?v={{ asset_v }}"></script>
 
     <footer class="feedback-footer">
         Hate my website? Pull an issue at

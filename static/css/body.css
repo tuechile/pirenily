@@ -1140,6 +1140,24 @@
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="collection"] { order: 5; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="all"] { order: 6; }
 
+/* Your view: the bar sits under the cards, floating at the bottom of the screen while the list scrolls by
+   (still above the password panel while locked) */
+:root:not([data-mode="mine"]) .home-design {
+    display: flex;
+    flex-direction: column;
+}
+
+:root:not([data-mode="mine"]) #portfolio .view-toggle {
+    order: 1;
+    top: auto;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    margin: 3rem auto 0;
+}
+
+:root:not([data-mode="mine"]) #portfolio .home-gate {
+    order: 2;
+}
+
 /* My view: no bar. The groups pin to the far left and right of the list as plain italic words
    and stay put while it scrolls; hover blurs, the chosen one goes teal */
 :root[data-mode="mine"] #portfolio {
@@ -1494,7 +1512,7 @@
     transition: backdrop-filter var(--dur-3) var(--ease-out), -webkit-backdrop-filter var(--dur-3) var(--ease-out);
 }
 
-.strip-card:is(:hover, :focus-visible) .strip::after {
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip::after {
     -webkit-backdrop-filter: blur(0);
     backdrop-filter: blur(0);
 }
@@ -1530,7 +1548,7 @@
 }
 
 /* Not quite sharp: a hair of blur and a few pixels of soft edge keep it smooth */
-.strip-card:is(:hover, :focus-visible) .strip-art {
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-art {
     --strip-edge: 8px;
     filter: blur(0.6px) grayscale(0);
     transform: none;
@@ -1572,47 +1590,46 @@
     transform: translateY(-10rem);
 }
 
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip {
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip {
     transform: none;
     transition: transform var(--dur-3) var(--ease-out);
 }
 
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(2) { transition-delay: 50ms; }
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(3) { transition-delay: 100ms; }
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(4) { transition-delay: 150ms; }
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(5) { transition-delay: 200ms; }
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(6) { transition-delay: 250ms; }
-.strip-card:is(:hover, :focus-visible) .strip-stack .tag-chip:nth-child(7) { transition-delay: 300ms; }
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip:nth-child(2) { transition-delay: 50ms; }
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip:nth-child(3) { transition-delay: 100ms; }
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip:nth-child(4) { transition-delay: 150ms; }
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip:nth-child(5) { transition-delay: 200ms; }
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip:nth-child(6) { transition-delay: 250ms; }
+.strip-card:is(:hover, :focus-visible, .is-centered) .strip-stack .tag-chip:nth-child(7) { transition-delay: 300ms; }
 
-/* No hover on touch screens: show the cards as if hovered, in color with their stack in place */
+/* No hover on touch screens: Your view shows the cards as if hovered, in color with their stack in place.
+   My view keeps its blurred rest and wakes each card as it crosses the middle of the screen (strips.js) */
 @media (hover: none) {
-    .strip-art {
+    :root:not([data-mode="mine"]) .strip-art {
         --strip-edge: 8px;
         filter: blur(0.6px);
         transform: none;
     }
 
-    .strip::after {
+    :root:not([data-mode="mine"]) .strip::after {
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
     }
 
-    .strip-stack .tag-chip {
+    :root:not([data-mode="mine"]) .strip-stack .tag-chip {
         transform: none;
     }
 }
 
-/* My view keeps the original statement: black and white and properly blurred until reached for.
-   Touch screens skip it (no hover to bring the picture back). */
-@media (hover: hover) {
-    :root[data-mode="mine"] .strip-card:not(:hover, :focus-visible) .strip-art {
-        filter: blur(2px) grayscale(100%);
-    }
+/* My view keeps the original statement: black and white and properly blurred until reached for
+   (on touch screens, until the card reaches the middle of the screen) */
+:root[data-mode="mine"] .strip-card:not(:hover, :focus-visible, .is-centered) .strip-art {
+    filter: blur(2px) grayscale(100%);
+}
 
-    :root[data-mode="mine"] .strip-card:not(:hover, :focus-visible) .strip::after {
-        -webkit-backdrop-filter: blur(5.7px);
-        backdrop-filter: blur(5.7px);
-    }
+:root[data-mode="mine"] .strip-card:not(:hover, :focus-visible, .is-centered) .strip::after {
+    -webkit-backdrop-filter: blur(5.7px);
+    backdrop-filter: blur(5.7px);
 }
 
 /* The project's name, as the subtitle under the strip */
@@ -1637,54 +1654,51 @@
     color: rgba(var(--fg-rgb), 0.533);
 }
 
-/* Name and line together; it takes no space of its own, so Your view and touch screens
-   keep them under the strip */
+/* Name and line together; it takes no space of its own, so Your view keeps them under the strip */
 .strip-text {
     display: contents;
 }
 
 /* My view: the name (in the logo face) and line sit centered on the blurred strip, each letter
    traced with a black edge, and vanish the instant the card is reached for so the picture comes through */
-@media (hover: hover) {
-    :root[data-mode="mine"] .strip-card:has(.strip-text) {
-        grid-template-areas: "card";
-    }
+:root[data-mode="mine"] .strip-card:has(.strip-text) {
+    grid-template-areas: "card";
+}
 
-    :root[data-mode="mine"] .strip-card:has(.strip-text) .strip,
-    :root[data-mode="mine"] .strip-text {
-        grid-area: card;
-    }
+:root[data-mode="mine"] .strip-card:has(.strip-text) .strip,
+:root[data-mode="mine"] .strip-text {
+    grid-area: card;
+}
 
-    :root[data-mode="mine"] .strip-text {
-        position: relative;
-        z-index: 2;
-        display: grid;
-        gap: 0.2rem;
-        align-self: center;
-        justify-self: center;
-        max-width: min(28rem, 82%);
-        text-align: center;
-        pointer-events: none;
-    }
+:root[data-mode="mine"] .strip-text {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 0.2rem;
+    align-self: center;
+    justify-self: center;
+    max-width: min(28rem, 82%);
+    text-align: center;
+    pointer-events: none;
+}
 
-    :root[data-mode="mine"] .strip-text :is(.strip-caption, .strip-desc) {
-        margin: 0;
-        text-shadow:
-            1px 0 0 var(--bg), -1px 0 0 var(--bg), 0 1px 0 var(--bg), 0 -1px 0 var(--bg),
-            1px 1px 0 var(--bg), -1px -1px 0 var(--bg), 1px -1px 0 var(--bg), -1px 1px 0 var(--bg);
-    }
+:root[data-mode="mine"] .strip-text :is(.strip-caption, .strip-desc) {
+    margin: 0;
+    text-shadow:
+        1px 0 0 var(--bg), -1px 0 0 var(--bg), 0 1px 0 var(--bg), 0 -1px 0 var(--bg),
+        1px 1px 0 var(--bg), -1px -1px 0 var(--bg), 1px -1px 0 var(--bg), -1px 1px 0 var(--bg);
+}
 
-    :root[data-mode="mine"] .strip-text .strip-caption {
-        font-family: var(--font-cinema);
-        font-style: normal;
-        font-size: 1.7rem;
-        line-height: 1.15;
-        color: var(--c-title);
-    }
+:root[data-mode="mine"] .strip-text .strip-caption {
+    font-family: var(--font-cinema);
+    font-style: normal;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    color: var(--c-title);
+}
 
-    :root[data-mode="mine"] .strip-card:is(:hover, :focus-visible) .strip-text {
-        visibility: hidden;
-    }
+:root[data-mode="mine"] .strip-card:is(:hover, :focus-visible, .is-centered) .strip-text {
+    visibility: hidden;
 }
 
 @media screen and (max-width: 880px) {

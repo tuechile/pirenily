@@ -160,11 +160,11 @@
 
 :root[data-theme="light"] #video-container {
     position: absolute;
-    top: var(--landing-nav-h);
+    top: 0;
     left: 0;
     right: 0;
     width: auto;
-    height: calc(95vh - var(--landing-nav-h) - 5rem);
+    height: calc(95vh - var(--home-nav-h, 0px) - 5rem);
     padding-bottom: 0;
     /* Overlay blend: the video prints into the paper instead of sitting on it as a black block */
     mix-blend-mode: overlay;
@@ -176,16 +176,6 @@
     height: 100%;
     max-height: none;
     padding-bottom: 0;
-}
-
-/* The nav stays above the video and clear of it */
-:root[data-theme="light"] .landing {
-    --landing-nav-h: 8rem;
-}
-
-:root[data-theme="light"] .landing nav {
-    position: relative;
-    z-index: 1;
 }
 
 /* ---------- Easy to read ---------- */
@@ -369,7 +359,7 @@
 /* Home on phones and tablets: the links stack into a grid; the switches take a centred row
    of their own under it, above the Pirenily title */
 @media screen and (max-width: 880px) {
-    .landing nav .settings-switches {
+    .home-nav .settings-switches {
         grid-column: 1 / -1;
         justify-content: center;
     }

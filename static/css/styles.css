@@ -102,8 +102,16 @@ body {
 .landing{
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  min-height: 100svh; /* visible height on phones, minus browser toolbars */
+  min-height: calc(100vh - var(--home-nav-h, 0px));
+  min-height: calc(100svh - var(--home-nav-h, 0px)); /* visible height on phones, minus browser toolbars */
+}
+
+/* Home nav stays at the top while the page scrolls, fading into the page like the other pages' nav */
+.home-nav{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-image: linear-gradient(var(--nav-fade), transparent);
 }
 
 .landing form{
@@ -464,6 +472,11 @@ a, button {
     display: none;
 }
 
+/* Home's copy of the links for that menu, also phones only */
+.home-menu {
+    display: none;
+}
+
 .nav-header {
     padding: 1rem;
     font-family: 'BHN Cinema';
@@ -749,7 +762,16 @@ footer {
         transform: translateY(-4.5px) rotate(-45deg);
     }
 
-    .navigator .nav-item-big {
+    /* Home: the stacked list scrolls away with the landing; the "=" only appears once it's gone */
+    .home-nav {
+        position: static;
+    }
+
+    html:not(.past-home-nav):not(.menu-open) .home-toggle {
+        display: none;
+    }
+
+    :is(.navigator .nav-item-big, .home-menu) {
         position: fixed;
         inset: 0;
         z-index: 1000;
@@ -765,13 +787,13 @@ footer {
         transition: clip-path 700ms var(--ease-wipe), visibility 0s linear 700ms;
     }
 
-    .menu-open .navigator .nav-item-big {
+    .menu-open :is(.navigator .nav-item-big, .home-menu) {
         clip-path: circle(150% at calc(100% - 32px) 30px);
         visibility: visible;
         transition: clip-path 700ms var(--ease-wipe), visibility 0s;
     }
 
-    .navigator .nav-item-big .nav-item {
+    :is(.navigator .nav-item-big, .home-menu) .nav-item {
         font-size: 2.75rem;
         line-height: 1.1;
         padding: 0.15rem 0;
