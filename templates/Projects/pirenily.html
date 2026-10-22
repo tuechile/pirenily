@@ -48,8 +48,13 @@
     {% call cs.section("The Finder", lead="Every name I’ve been called") %}
     <p>
         The search bar on the landing page flashes through names: ones people call me, ones I call
-        myself, and ones nobody calls me at all. Chi Le, Emily, Iron Pig, Chi Chi Cha Cha, Le Le,
-        The Country (yes, like Chile).
+        myself, and ones nobody calls me at all. Chi Le, Emily, Iron Pig, Chi Chi Cha Cha, Le Le, and:
+    </p>
+    <p>
+        — <strong>Emily Tiles</strong>: Chi Le, but the Ch is a T. Also, I like tile textures<br>
+        — <strong>Chi Bell</strong>: what people call me a lot in Vietnam<br>
+        — <strong>Kai</strong>: how some people read my name. I’m not Greek<br>
+        — <strong>The Country</strong>: yes, like Chile
     </p>
     <p>
         Type anything into it and it finds the closest page, forgiving typos, accents and half-typed
@@ -65,8 +70,13 @@
         idea of an archive has always fascinated me, so I built a place to keep everything.
     </p>
     <p>
-        The highlight of my first semester was AFVS 55P, and by then I had a pile of interactive projects.
-        So: I want to be a niche artist, let’s build a niche, weird website.
+        I’ve always been a designer, but I didn’t know code before the US. In Vietnam, “IT” class meant
+        Microsoft Office certification tests. Finding out code could be used for art made AFVS 55P my
+        favorite class, and the best first class I could have asked for.
+    </p>
+    <p>
+        By the end of that semester I had a pile of interactive projects. So: I want to be a niche artist,
+        let’s build a niche, weird website.
     </p>
     <p>
         I’m a maximalist, but I don’t want to be maximalist about one thing. I want to be everything at
@@ -115,8 +125,7 @@
     {% endcall %}
 
     {{ cs.cta("https://pirenily.com/pirenily-2024/", "Visit the 2024 site", kicker="As of December 8, 2024") }}
-    {# TODO: the high school website's link #}
-    {{ cs.cta("#TODO", "Visit my high school website", kicker="Before Pirenily") }}
+    {{ cs.cta("https://github.com/tuechile/tuechile.github.io", "See my high school website on GitHub", kicker="Before Pirenily") }}
 
     {% call cs.section("How Ideas Happen", lead="Out loud, never written") %}
     <p>
@@ -141,7 +150,9 @@
     {% call cs.section("Two Views", lead="One for me, one for you") %}
     <p>
         <strong>My view</strong> (dark) is the site for me. It grew out of artists I love, especially
-        people from the School for Poetic Computation, and Chia Amisola most of all.
+        people from the <a href="https://sfpc.io/people/" target="_blank" rel="noopener">School for Poetic Computation</a>,
+        and <a href="https://everythingi.love/" target="_blank" rel="noopener">Chia Amisola</a> most of all: minimal, but still
+        a little overstimulating. Her old website is the most beautiful thing I’ve seen on the internet.
     </p>
     <p>
         <strong>Your view</strong> (light) is the accessible one, for recruiters or anyone who isn’t
@@ -154,24 +165,32 @@
     </p>
     {% endcall %}
 
-    {# TODO: fill both lists, with links #}
+    {% macro inspo(href, label) %}<a href="{{ href }}" target="_blank" rel="noopener">{{ label }}</a>{% endmacro %}
     {{ cs.compare([
         {"title": "Inspo for My view", "points": [
-            "Chia Amisola",
-            "School for Poetic Computation",
-            "TODO",
+            inspo("https://everythingi.love/", "Chia Amisola"),
+            inspo("https://sfpc.io/people/", "School for Poetic Computation"),
+            inspo("https://alicia-nguyen.com/", "alicia-nguyen.com"),
+            inspo("https://www.wyattroy.com/", "wyattroy.com") ~ " (2024)",
+            inspo("https://baku89.com/", "baku89.com"),
         ]},
         {"title": "Inspo for Your view", "points": [
-            "TODO",
-            "TODO",
-            "TODO",
+            inspo("https://baothiento.com/", "baothiento.com"),
+            inspo("https://williamle.design/", "williamle.design"),
+            inspo("https://www.ericsin.com/", "ericsin.com"),
+            inspo("https://www.bruce-cao.com/", "bruce-cao.com"),
+            inspo("https://hanluxi.com/", "hanluxi.com"),
+            inspo("https://www.madhurima.me/", "madhurima.me"),
+            inspo("https://www.clueperfumery.com/", "clueperfumery.com"),
+            inspo("https://www.leoparpeix.com/about", "leoparpeix.com"),
+            inspo("https://cyze.dev/", "cyze.dev"),
         ]},
     ]) }}
 
     {% call cs.section("Too Vibe Coded", lead="Taking the design decisions back") %}
     <p>
-        A friend, and my site’s biggest fan (he advertises it more than I do), told me it was starting to
-        look vibe coded. He was right: I’d let Claude make too many design decisions for me.
+        <a href="https://andydieu.com/" target="_blank" rel="noopener">Andy Dieu</a>, my site’s biggest
+        fan (he advertises it more than I do), told me it was starting to look vibe coded. He was right: I’d let Claude make too many design decisions for me.
     </p>
     <p>
         So I stepped back. Pinterest, my old art, websites I used to love. I asked what each template was
