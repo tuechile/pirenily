@@ -1501,6 +1501,22 @@ html {
     height: 1.75rem;
 }
 
+/* The speaker's copy in the nav, sized like ☀ and ♪ */
+.essay-nav-speaker .essay-speaker-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
+.essay-nav-speaker[hidden] {
+    display: none;
+}
+
+.has-voice .essay p[data-t] {
+    cursor: pointer;
+}
+
 /* The paragraph I'm reading right now */
 .essay p.is-speaking,
 .essay-activity.is-speaking .essay-notes {
