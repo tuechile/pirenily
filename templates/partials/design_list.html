@@ -1,12 +1,17 @@
 {# Design cards with the Selected / Brand / UI/UX / Collection / All toggle (home Projects section).
    Strip cards, the same as the Code page: in color at rest (black and white and blurred in My view), sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
-    <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
-    {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="cv" aria-pressed="false"><span>CV</span></button>{% endif %}
-    <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
-    <button type="button" class="view-btn" data-view="uiux" aria-pressed="false">UI/UX</button>
-    <button type="button" class="view-btn" data-view="collection" aria-pressed="false">Collection</button>
-    <button type="button" class="view-btn" data-view="all" aria-pressed="false">All</button>
+    {# Two groups so My view can pin them to either side of the list; Your view lays them out as one bar #}
+    <span class="view-side view-side--left">
+        <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
+        <button type="button" class="view-btn" data-view="collection" aria-pressed="false">Collection</button>
+        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="cv" aria-pressed="false"><span>CV</span></button>{% endif %}
+    </span>
+    <span class="view-side view-side--right">
+        <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
+        <button type="button" class="view-btn" data-view="uiux" aria-pressed="false">UI/UX</button>
+        <button type="button" class="view-btn" data-view="all" aria-pressed="false">All</button>
+    </span>
 </div>
 {% if not projects_unlocked %}
 {# Locked: the toggle still works, but the cards are a faded, untouchable peek above the password panel #}
@@ -433,7 +438,9 @@
                     var io = new IntersectionObserver(function (entries) {
                         if (entries[0].isIntersecting) { io.disconnect(); unfold(); }
                     }, { threshold: 1 });
-                    io.observe(toggle);
+                    // My view's toggle spans the whole section, so watch the CV tab's own group there
+                    var side = cvBtn.parentNode;
+                    io.observe(getComputedStyle(side).display === "contents" ? toggle : side);
                 };
                 if (document.readyState === "complete") watch();
                 else window.addEventListener("load", watch, { once: true });

@@ -778,12 +778,13 @@
     width: 100%;
     height: 20rem;
     object-fit: cover;
-    transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+    transition: transform var(--dur-2) var(--ease-out), filter var(--dur-2) var(--ease-out);
 }
 
+/* drop-shadow, not box-shadow: it follows a transparent PNG's outline instead of its rectangle */
 .item img:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(var(--shadow-rgb), 0.3);
+    filter: drop-shadow(0 4px 8px rgba(var(--shadow-rgb), 0.3));
 }
 
 /* Lightbox Overlay Styling */
@@ -803,7 +804,7 @@
 .lightbox-overlay img {
     max-width: 90%;
     max-height: 90%;
-    box-shadow: 0 4px 8px rgba(var(--shadow-rgb), 0.5);
+    filter: drop-shadow(0 4px 8px rgba(var(--shadow-rgb), 0.5));
 }
 
 /* ========================================= Other small items ========================================= */
@@ -1124,6 +1125,123 @@
 :is(#portfolio, .filters) .view-toggle:not(.has-pill) .view-btn.active {
     background: var(--view-bubble);
     border: 0;
+}
+
+/* Home Projects toggle comes in two groups (Selected / Collection / CV and Brand / UI/UX / All).
+   Your view melts them back into one bar, in its usual order */
+.view-side {
+    display: contents;
+}
+
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="selected"] { order: 1; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="cv"] { order: 2; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="brand"] { order: 3; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="uiux"] { order: 4; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="collection"] { order: 5; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="all"] { order: 6; }
+
+/* My view: no bar. The groups pin to the far left and right of the list as plain italic words
+   and stay put while it scrolls; hover blurs, the chosen one goes teal */
+:root[data-mode="mine"] #portfolio {
+    position: relative;
+}
+
+:root[data-mode="mine"] #portfolio .view-toggle {
+    position: absolute;
+    inset: 6rem 2.5rem 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+:root[data-mode="mine"] #portfolio .view-side {
+    position: sticky;
+    top: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: auto;
+}
+
+:root[data-mode="mine"] #portfolio .view-side--right {
+    align-items: flex-end;
+}
+
+:root[data-mode="mine"] #portfolio .view-pill {
+    display: none;
+}
+
+:root[data-mode="mine"] #portfolio .view-btn {
+    padding: 0.1rem 0;
+    color: var(--text);
+    background: none;
+}
+
+:root[data-mode="mine"] #portfolio :is(.view-btn:hover, .view-btn:focus-visible) {
+    color: var(--text);
+    filter: var(--hover-blur);
+}
+
+:root[data-mode="mine"] #portfolio .view-btn.active {
+    color: var(--accent);
+}
+
+/* The CV tab unfolds downward here, since the words are stacked */
+:root[data-mode="mine"] #portfolio .view-btn--cv.is-folded {
+    max-width: none;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+:root[data-mode="mine"] #portfolio .view-btn--cv.is-entering {
+    animation-name: cv-tab-down;
+}
+
+@keyframes cv-tab-down {
+    from {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    to {
+        max-height: 2.5rem;
+    }
+}
+
+/* Too narrow for side rails: both groups gather into one centered row above the list */
+@media screen and (max-width: 960px) {
+    :root[data-mode="mine"] #portfolio .view-toggle {
+        position: static;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0 1rem;
+        margin: -1rem 1rem 0;
+    }
+
+    :root[data-mode="mine"] #portfolio .view-side {
+        position: static;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    :root[data-mode="mine"] #portfolio .view-btn--cv.is-folded {
+        max-height: none;
+        max-width: 0;
+    }
+
+    :root[data-mode="mine"] #portfolio .view-btn--cv.is-entering {
+        animation-name: cv-tab-in;
+    }
 }
 
 /* Only the bio pic, and the picture on single-picture pages (layout.html sets .one-pic), get feathered edges */

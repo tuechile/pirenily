@@ -799,7 +799,7 @@ html {
 .lightbox-overlay img {
     max-width: 90%;
     max-height: 90%;
-    box-shadow: 0 6px 18px rgba(var(--shadow-rgb), 0.55);
+    filter: drop-shadow(0 6px 18px rgba(var(--shadow-rgb), 0.55));
 }
 
 .close-btn {
