@@ -195,6 +195,178 @@
         </div>
     </div>
 
+    {{ cs.callout("What we learned quickly", display=False,
+                  text="Most existing tools failed in the same four ways: they assumed stable internet, crammed too much onto each screen, mixed logistics with technical data, and took new volunteers too long to learn.") }}
+
+    {% call cs.section("Idea", lead="Five principles from the affinity map") %}
+    <p>
+        — Clarity over completeness<br>
+        — Fast entry over perfect data<br>
+        — Offline-first by default<br>
+        — Low cognitive load for new volunteers<br>
+        — Traceability without visual overload
+    </p>
+    {% endcall %}
+
+    {% call cs.media_text(img('ux', 't4sg/affmap.png'), "Impact vs effort matrix",
+                          heading="Ideation", lead="Feature decisions by Impact × Effort") %}
+    <p>
+        We ranked every feature idea by how fast it would cut uncertainty. On an impact × effort map, the
+        quick wins went first, and more powerful features waited until the core flows worked.
+    </p>
+    <p>
+        That kept the product simple enough for a new volunteer, with room to grow as 2ft scales.
+    </p>
+    {% endcall %}
+    {{ cs.img_caption("Clarity and offline reliability first; power features later.") }}
+
+    {{ cs.section("Feature Rollout", index="Rollout") }}
+
+    {{ cs.rollout([
+        ("Phase 1", "Core Inventory Reliability", "Simple viewing, terminology, edit component."),
+        ("Phase 2", "Deeper Traceability", "Edit history, comments, richer categorization."),
+        ("Phase 3", "Scalability Features", "Add component flow, filters, helpers."),
+    ]) }}
+
+    {% call cs.section("User Flow", lead="View / Edit / Add Component Flow") %}
+    <p>
+        I wrote the user journeys and owned the end-to-end flow for how a volunteer <strong>views</strong> a
+        component, makes a safe <strong>edit</strong>, and <strong>adds</strong> a new component without
+        breaking traceability.
+    </p>
+    <p>
+        The decisions I made, and why:
+        <br>— Primary actions (view history, edit, add) are always in reach, never buried in a menu
+        <br>— Edits open in inline popups with clear save states, because fear of breaking records kept people from updating them
+        <br>— Technical fields use dropdowns and placeholders, not free text, so the same part never gets three names
+        <br>— Every record shows who changed it and when, so "who changed this?" has an answer
+    </p>
+    {% endcall %}
+
+    {% call cs.media_text(img('ux', 't4sg/userflow.png'), "User flow: View Component",
+                          heading="Flow Breakdown", lead="View Component", flow=True) %}
+    <p>
+        The component page answers "where is it and what state is it in?" first (logistics), and only
+        then the technical details. Collapsible sections keep the rest out of the way.
+    </p>
+    <p>The page reads in four zones, in the order a volunteer needs them: a sticky profile, then
+        logistics → technical → manufacturer.</p>
+    {% endcall %}
+
+    {% call cs.section("Lo-Fi Prototyping", lead="Stripping It Down Until It Made Sense") %}
+    {{ cs.card(img('ux', 't4sg/lofi up.webp'), "Lo-fi ideation sketches", size="lg") }}
+    <p>
+        The black and white prototypes tested only hierarchy, navigation and density. If a field didn’t
+        earn its place, it was cut.
+    </p>
+    {% endcall %}
+
+    {{ cs.mockups([
+        (img('ux', 't4sg/lofi view.webp'), "Lo-fi view component screen (B&W)"),
+        (img('ux', 't4sg/lofi add.webp'), "Lo-fi add component flow (B&W)"),
+    ]) }}
+
+    {% call cs.section("Iteration", lead="The feedback was about trust, not looks") %}
+    <p>
+        Lo-fi proved the hierarchy. But once stakeholders clicked through it, their feedback wasn’t about
+        visuals. It was about speed, trust and the fear of breaking something.
+    </p>
+    {% endcall %}
+
+    {{ cs.compare([
+        {"title": "What wasn’t working", "display": False, "points": [
+            "The information hierarchy wasn’t visible",
+            "Too many fields on screen at once",
+            "Edits felt risky, with no clear confirmation",
+            "Logistics and technical details blended together",
+            "Sorting by patient hid how components relate to each other",
+        ]},
+        {"title": "What changed (hi-fi)", "display": False, "points": [
+            "Collapsible sections → complexity only when it’s needed",
+            "Clear save states → safer changes",
+            "Firm separation: logistics → technical → manufacturer",
+            "Dropdowns, defaults and helper text → less typing, fewer errors",
+            "A clear step order for adding a component",
+        ]},
+    ]) }}
+    {{ cs.img_caption("<strong>Designer note:</strong> the goal wasn’t polish. It was making the same work feel <em>lighter</em> and more reliable.") }}
+
+    {% call cs.section("Hi-Fi Design", lead="Making Complexity Feel Calm") %}
+    <p>
+        The blue and yellow design adds structure without noise:
+        <strong>logistics → technical → manufacturer</strong> sections, collapsible panels, inline edit
+        popups and a visible history.
+    </p>
+    {% endcall %}
+
+    {{ cs.mockups([
+        (img('ux', 't4sg/hifi view.webp'), "Hi-fi view component (blue/yellow)"),
+        (img('ux', 't4sg/hifi edit.webp'), "Hi-fi edit component inline popup (blue/yellow)"),
+        (img('ux', 't4sg/hifi add.webp'), "Hi-fi add component (blue/yellow)"),
+    ], caption="(1) View component, (2) Edit component, (3) Add component") }}
+
+    {% call cs.section("Testing & Feedback", lead="Where the design got smarter, fast") %}
+    <p>
+        <strong>What worked:</strong> starting from the component type. Each type has its own properties,
+        so picking the type first felt far more natural than showing every spreadsheet field and making
+        volunteers guess.
+    </p>
+    <p>
+        <strong>What stakeholders asked for:</strong> less typing. Autofill, a stock image when a part has no
+        photo, and adding new fields on the fly all came up.
+    </p>
+    <p>
+        <strong>Permissions:</strong> changing a field can cause mix-ups across the whole organization, so
+        stakeholders wanted clear roles, for example who can edit fields and who can only edit values.
+    </p>
+    <p>
+        <strong>What we flagged for the build:</strong> open backend questions, such as whether field
+        management needs its own admin page, and what autofill would pull from (model number, a
+        manufacturer database or past entries).
+    </p>
+    <p>
+        After testing the prototype, the president told us:
+        <br><em>“I don’t feel like I’m going to break anything.”</em>
+    </p>
+    {% endcall %}
+
+    {% call cs.section("Try It Yourself", lead="Explore the prototype the way a volunteer would") %}
+    <p>
+        This is the hi-fi prototype shown above. Start by picking a component type, then work your way
+        into a detailed edit.
+    </p>
+    <a href="https://www.figma.com/proto/dWSwmnPwX50N8TKSQIPS5S/Lo-fi---%3E-Hi-fi--Copy-?t=UO7WjHeEBFCJ3JlO-1"
+        target="_blank" rel="noopener" class="cta-button">
+        <div class="video"><video src="{{ img('ux', 't4sg/preview.mp4') }}" autoplay muted loop playsinline></video></div>
+    </a>
+    {{ cs.cta("https://www.figma.com/proto/dWSwmnPwX50N8TKSQIPS5S/Lo-fi---%3E-Hi-fi--Copy-?t=UO7WjHeEBFCJ3JlO-1",
+              "Open Interactive Prototype →") }}
+    <p class="cta-note">
+        Tip: edit a component to see how fields, history and permissions show up.
+    </p>
+    {% endcall %}
+
+    {% call cs.section("Reflection", lead="What this project taught me") %}
+    <p>
+        This was my first UX project as a CS major :), so I was learning the frameworks while using them.
+        The biggest lesson: designing for social impact is less about adding features and more about removing
+        uncertainty, so a volunteer always knows what's there and what's safe to change.
+    </p>
+    <p>
+        We were building from scratch in a field none of us knew, so we tried a lot of flows and structures
+        before one held up.
+    </p>
+    <p>
+        <strong>Status:</strong> delivered to 2ft as a hi-fi prototype. Their own team builds it from here,
+        so we weren't part of the rollout.
+    </p>
+    <p>
+        <strong>How we'd measure it:</strong> how long it takes a volunteer to answer "what do we have right
+        now?", how many records new volunteers update in their first week, and how many duplicate entries remain.
+        Our projection, before any build: about 70% less cognitive load for volunteers on each update.
+    </p>
+    {% endcall %}
+
 {% endcall %}
 
 {% endblock %}
