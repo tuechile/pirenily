@@ -9,6 +9,8 @@
     --shadow-rgb: 0, 0, 0;
     --on-dark: #fff;                         /* text on photos and video, any theme */
     --thumb-blank: #000;                     /* empty thumbnail waiting for its image, any theme */
+    --sheet-rgb: 255, 255, 255;             /* a sheet of white paper (the CV), any theme */
+    --sheet: rgb(var(--sheet-rgb));
     --bg: rgb(var(--bg-rgb));
     --accent: #1ca591;
     --c-strong: rgb(var(--fg-rgb));          /* #fff */

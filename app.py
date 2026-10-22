@@ -1,11 +1,13 @@
 from flask import Flask, Response, abort, render_template, request, redirect, url_for
 from werkzeug.security import check_password_hash
 import difflib
+import hashlib
 import hmac
 import os
 import random
 import re
 import subprocess
+import time
 import unicodedata
 import urllib.error
 import urllib.request
@@ -38,7 +40,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "167"
+ASSET_VERSION = "170"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -151,11 +153,40 @@ def inject_nav_section():
     return dict(nav_section=section)
 
 
+# Short content hash per static file, so an image's URL changes only when the image does
+_file_hashes = {}
+
+
+def _file_hash(path):
+    if path not in _file_hashes:
+        with open(path, "rb") as f:
+            _file_hashes[path] = hashlib.md5(f.read()).hexdigest()[:8]
+    return _file_hashes[path]
+
+
+@app.after_request
+def cache_static(response):
+    # Versioned URLs (?v= on CSS/JS, the content hash on images) never change, so they keep for a year.
+    # Anything else (images named in CSS) keeps for a day.
+    if request.endpoint == "static" and response.status_code in (200, 206, 304):
+        response.cache_control.no_cache = None
+        response.cache_control.public = True
+        if "v" in request.args:
+            response.cache_control.max_age = 60 * 60 * 24 * 365
+            response.cache_control.immutable = True
+        else:
+            response.cache_control.max_age = 60 * 60 * 24
+    return response
+
+
 @app.context_processor
 def inject_image_helper():
     def img(folder, filename=""):
         real_folder = IMAGE_FOLDERS.get(folder, folder)
         path = f"asset/images/{real_folder}/{filename}".rstrip("/")
+        full = os.path.join(app.static_folder, path)
+        if filename and os.path.isfile(full):
+            return url_for("static", filename=path, v=_file_hash(full))
         return url_for("static", filename=path)
 
     def gallery_images(folder, sort="name"):
@@ -345,11 +376,32 @@ def inject_projects_unlocked():
     level = access_level()
     cv = None
     if level == "cv":
-        # A share link ends in /view?usp=sharing; Drive only embeds the /preview form
-        file_id = re.search(r"/d/([\w-]+)", CV_DRIVE_URL)
-        cv = {"url": CV_DRIVE_URL or None,
-              "preview": f"https://drive.google.com/file/d/{file_id.group(1)}/preview" if file_id else None}
+        cv = {"url": CV_DRIVE_URL or None, "page": cv_file_id() is not None}
     return dict(projects_unlocked=level is not None, cv=cv)
+
+
+def cv_file_id():
+    match = re.search(r"/d/([\w-]+)", CV_DRIVE_URL)
+    return match.group(1) if match else None
+
+
+# The CV tab shows the page as a plain picture instead of Drive's viewer (gray backdrop, toolbar, zoom).
+# Drive renders it at 1024px wide at most; it's kept here for an hour so a new upload shows up soon.
+_cv_page = {"png": None, "at": 0}
+
+@app.route("/cv.png")
+def cv_page():
+    if access_level() != "cv":
+        abort(404)
+    file_id = cv_file_id() or abort(404)
+    if not _cv_page["png"] or time.time() - _cv_page["at"] > 3600:
+        try:
+            with urllib.request.urlopen(f"https://lh3.googleusercontent.com/d/{file_id}=w1024", timeout=20) as r:
+                _cv_page.update(png=r.read(), at=time.time())
+        except (urllib.error.URLError, TimeoutError):
+            if not _cv_page["png"]:
+                abort(502)
+    return Response(_cv_page["png"], mimetype="image/png", headers={"Cache-Control": "private, max-age=3600"})
 
 
 @app.before_request

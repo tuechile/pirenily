@@ -7,7 +7,9 @@
     layer.className = "pop-layer";
     document.body.appendChild(layer);
 
-    document.querySelectorAll("[data-previews]").forEach(function (card) {
+    function bind(card) {
+        if (card.dataset.popBound) return;
+        card.dataset.popBound = "1";
         var urls = card.dataset.previews.split("|").filter(Boolean);
         if (!urls.length) return;
         var pics = null, hovering = false, last = -1, shown = null, leftAt = 0;
@@ -62,5 +64,11 @@
         // Tabbing onto a card pops a picture, the same as hovering it
         card.addEventListener("focus", function () { if (card.matches(":focus-visible")) enter(); });
         card.addEventListener("blur", leave);
+    }
+
+    document.querySelectorAll("[data-previews]").forEach(bind);
+    // Cards swapped in after an unlock (design_list.html) get theirs too
+    window.addEventListener("pirenily:cards", function () {
+        document.querySelectorAll("[data-previews]").forEach(bind);
     });
 })();
