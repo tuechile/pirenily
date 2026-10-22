@@ -1463,16 +1463,48 @@ html {
     margin-bottom: var(--s-6);
 }
 
-.essay-listen {
-    margin: 0 0 var(--s-6);
+/* Title with the speaker beside it: off is dimmed, like the nav switches */
+.essay-title {
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+    margin-bottom: var(--s-6);
 }
 
-.essay-listen .img-caption {
-    margin: 0 0 var(--s-2);
+.essay .essay-title .case-title {
+    margin-bottom: 0;
 }
 
-.essay-listen audio {
-    width: 100%;
+.essay-speaker {
+    flex: none;
+    padding: var(--s-2);
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--text-primary);
+    opacity: 0.45;
+    cursor: pointer;
+}
+
+.essay-speaker[aria-pressed="true"] {
+    opacity: 1;
+}
+
+.essay-speaker:hover,
+.essay-speaker:focus-visible {
+    filter: var(--hover-blur);
+}
+
+.essay-speaker-icon {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+}
+
+/* The paragraph I'm reading right now */
+.essay p.is-speaking,
+.essay-activity.is-speaking .essay-notes {
+    color: var(--text-primary);
 }
 
 .essay-loader {
