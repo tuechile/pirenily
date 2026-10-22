@@ -1176,22 +1176,35 @@
     align-items: flex-end;
 }
 
-:root[data-mode="mine"] #portfolio .view-pill {
+/* Play's filter gets the same plain words, in one centered row that scrolls away with the page */
+:root[data-mode="mine"] .filters #filterToggle {
+    position: static;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 1.25rem;
+    padding: 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
+:root[data-mode="mine"] :is(#portfolio, #filterToggle) .view-pill {
     display: none;
 }
 
-:root[data-mode="mine"] #portfolio .view-btn {
+:root[data-mode="mine"] :is(#portfolio, #filterToggle) .view-btn {
     padding: 0.1rem 0;
     color: var(--text);
     background: none;
 }
 
-:root[data-mode="mine"] #portfolio :is(.view-btn:hover, .view-btn:focus-visible) {
+:root[data-mode="mine"] :is(#portfolio, #filterToggle) :is(.view-btn:hover, .view-btn:focus-visible) {
     color: var(--text);
     filter: var(--hover-blur);
 }
 
-:root[data-mode="mine"] #portfolio .view-btn.active {
+:root[data-mode="mine"] :is(#portfolio, #filterToggle) .view-btn.active {
     color: var(--accent);
 }
 
