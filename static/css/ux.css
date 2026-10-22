@@ -1587,7 +1587,8 @@ html {
 }
 
 .essay-notes li::marker {
-    color: var(--accent);
+    color: rgba(var(--accent-rgb), 0.55);
+    font-size: 0.8em;
     font-style: normal;
 }
 
