@@ -35,6 +35,7 @@
     --font-serif: "Crimson Text", serif;
     --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-body: var(--font-serif);
+    --font-cinema: "BHN Cinema", var(--font-serif);   /* the logo face; also the My view card names */
 
     /* Every letter bleeds a hair into the page; light mode swaps in its own ink */
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.35);
@@ -929,6 +930,11 @@ footer {
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, var(--bg) 0%, var(--bg) 8%, rgba(var(--bg-rgb), 0) 75%);
+}
+
+/* My view's card names would sit right where the panel rises, so the glimpse goes without them */
+.gated-peek .strip-text {
+    visibility: hidden;
 }
 
 .home-gate {

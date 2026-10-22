@@ -1506,6 +1506,56 @@
     color: rgba(var(--fg-rgb), 0.533);
 }
 
+/* Name and line together; it takes no space of its own, so Your view and touch screens
+   keep them under the strip */
+.strip-text {
+    display: contents;
+}
+
+/* My view: the name (in the logo face) and line sit centered on the blurred strip, each letter
+   traced with a black edge, and vanish the instant the card is reached for so the picture comes through */
+@media (hover: hover) {
+    :root[data-mode="mine"] .strip-card:has(.strip-text) {
+        grid-template-areas: "card";
+    }
+
+    :root[data-mode="mine"] .strip-card:has(.strip-text) .strip,
+    :root[data-mode="mine"] .strip-text {
+        grid-area: card;
+    }
+
+    :root[data-mode="mine"] .strip-text {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        gap: 0.2rem;
+        align-self: center;
+        justify-self: center;
+        max-width: min(28rem, 82%);
+        text-align: center;
+        pointer-events: none;
+    }
+
+    :root[data-mode="mine"] .strip-text :is(.strip-caption, .strip-desc) {
+        margin: 0;
+        text-shadow:
+            1px 0 0 var(--bg), -1px 0 0 var(--bg), 0 1px 0 var(--bg), 0 -1px 0 var(--bg),
+            1px 1px 0 var(--bg), -1px -1px 0 var(--bg), 1px -1px 0 var(--bg), -1px 1px 0 var(--bg);
+    }
+
+    :root[data-mode="mine"] .strip-text .strip-caption {
+        font-family: var(--font-cinema);
+        font-style: normal;
+        font-size: 1.7rem;
+        line-height: 1.15;
+        color: var(--c-title);
+    }
+
+    :root[data-mode="mine"] .strip-card:is(:hover, :focus-visible) .strip-text {
+        visibility: hidden;
+    }
+}
+
 @media screen and (max-width: 880px) {
     .strip-grid {
         gap: 2.5rem;
