@@ -866,8 +866,9 @@ footer {
     }
 }
 
-/* ===== Home on tablets and phones: the stacked list scrolls away with the landing, and once it's gone
-   the same "=" as the other pages' phone menu takes its place (the Projects filter row sticks instead) ===== */
+/* ===== Home on tablets and phones: the stacked list scrolls away with the landing and the Projects filter
+   bar sticks instead, carrying the "=" (.view-menu, body.css). The fixed button here is only the menu's
+   close button, and the menu wipes open from wherever the bar's "=" was tapped (nav.js sets --wipe-at) ===== */
 @media screen and (max-width: 880px) {
     .home-nav {
         position: static;
@@ -890,7 +891,7 @@ footer {
         cursor: pointer;
     }
 
-    html:not(.past-home-nav):not(.menu-open) .home-toggle {
+    html:not(.menu-open) .home-toggle {
         display: none;
     }
 
@@ -921,13 +922,13 @@ footer {
         padding: 120px 16px 40px;
         text-align: left;
         background: var(--menu-bg);
-        clip-path: circle(0% at calc(100% - 32px) 30px);
+        clip-path: circle(0% at var(--wipe-at, calc(100% - 32px) 30px));
         visibility: hidden;
         transition: clip-path 700ms var(--ease-wipe), visibility 0s linear 700ms;
     }
 
     .menu-open .nav-item-big.home-menu {
-        clip-path: circle(150% at calc(100% - 32px) 30px);
+        clip-path: circle(150% at var(--wipe-at, calc(100% - 32px) 30px));
         visibility: visible;
         transition: clip-path 700ms var(--ease-wipe), visibility 0s;
     }

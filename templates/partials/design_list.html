@@ -1,20 +1,23 @@
 {% import "partials/icons.html" as icons %}
-{# Design cards with the Selected / Brand / UI/UX / Compilations / All toggle (home Projects section).
+{# Design cards with the Selected / Résumé / Compilations / Brand / UI/UX / All toggle (home Projects section).
+   Each tab is its initial plus the rest of the word, so Your view's desktop column can rest on initials.
    Strip cards, the same as the Code page: in color at rest (black and white and blurred in My view), sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
     {# Phones: only the current choice shows; tapping it unrolls the bar into the full list #}
     <button type="button" class="view-current" aria-haspopup="true" aria-expanded="false"><span class="view-current-label">Selected</span>{{ icons.icon("chevron", None, "view-current-icon") }}</button>
     {# Two groups so My view can pin them to either side of the list; Your view lays them out as one bar #}
     <span class="view-side view-side--left">
-        <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
-        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="resume" aria-pressed="false"><span>Résumé</span></button>{% endif %}
-        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false">Compilations</button>
+        <button type="button" class="view-btn active" data-view="selected" aria-pressed="true"><span class="vb-i">S</span><span class="vb-rest">elected</span></button>
+        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="resume" aria-pressed="false"><span class="vb-i">R</span><span class="vb-rest">ésumé</span></button>{% endif %}
+        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false"><span class="vb-i">C</span><span class="vb-rest">ompilations</span></button>
     </span>
     <span class="view-side view-side--right">
-        <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
-        <button type="button" class="view-btn" data-view="uiux" aria-pressed="false">UI/UX</button>
-        <button type="button" class="view-btn" data-view="all" aria-pressed="false">All</button>
+        <button type="button" class="view-btn" data-view="brand" aria-pressed="false"><span class="vb-i">B</span><span class="vb-rest">rand</span></button>
+        <button type="button" class="view-btn" data-view="uiux" aria-pressed="false"><span class="vb-i">U</span><span class="vb-rest">I/UX</span></button>
+        <button type="button" class="view-btn" data-view="all" aria-pressed="false"><span class="vb-i">A</span><span class="vb-rest">ll</span></button>
     </span>
+    {# Tablets and phones: the home menu's "=" lives on the bar, so it travels and sticks with it (nav.js) #}
+    <button type="button" class="view-menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
 </div>
 {% if not projects_unlocked %}
 {# Locked: the toggle still works, but the cards are a faded, untouchable peek above the password panel #}
@@ -462,6 +465,11 @@
         placePill(false);
         document.fonts.ready.then(function () { placePill(false); });
         window.addEventListener("resize", function () { placePill(false); });
+        // the tabs change size as Your view's desktop column opens from initials, so the pill rides along
+        if ("ResizeObserver" in window) {
+            var resized = new ResizeObserver(function () { placePill(false); });
+            btns.forEach(function (b) { resized.observe(b); });
+        }
 
         // The Resume tab unfolds next to Selected the first time it shows up in a visit. It waits folded
         // until the page has loaded (the loader is gone) and the toggle is on screen, so it's seen.

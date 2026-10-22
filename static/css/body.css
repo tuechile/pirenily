@@ -1174,12 +1174,39 @@
     :root:not([data-mode="mine"]) #portfolio .view-btn {
         text-align: left;
     }
+
+    /* At rest the column shows initials (S, R, C, B, U, A); hovering it, or tabbing into it,
+       slides the rest of each word out (the pill follows: design_list.html watches the bar's size) */
+    :root:not([data-mode="mine"]) #portfolio .vb-rest {
+        display: inline-block;
+        max-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: top;
+        transition: max-width var(--dur-3) var(--ease-out);
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within) .vb-rest {
+        max-width: 8em;
+    }
+
+    :root[data-motion="reduced"] #portfolio .vb-rest {
+        transition: none;
+    }
 }
 
-/* Tablets and phones: the bar sticks at the top (home's nav doesn't there), just under the "=" */
+/* Tablets and phones: the bar sticks at the top (home's nav doesn't there), as wide as the thumbnails,
+   with the tabs and the "=" spread evenly across it */
 @media screen and (max-width: 880px) {
     :root:not([data-mode="mine"]) #portfolio .view-toggle {
-        top: 3.75rem;
+        top: 8px;
+        width: min(720px, 86vw);
+        max-width: none;
+        box-sizing: border-box;
+        justify-content: space-between;
+        align-items: center;
+        margin: -1rem auto 0;
+        padding: 0.25rem;
     }
 }
 
@@ -1306,9 +1333,43 @@
     }
 }
 
-/* The current-choice button only exists on phones (below) */
-.view-current {
+/* The current-choice button only exists on phones, and the bar's "=" on tablets and phones (below) */
+.view-current,
+.view-menu {
     display: none;
+}
+
+/* The home menu's "=", drawn like the other pages' phone menu button, riding on the filter bar */
+@media screen and (max-width: 880px) {
+    #portfolio .view-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 7.5px;
+        flex: none;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+    #portfolio .view-menu span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--title);
+    }
+
+    /* My view's row: the "=" sits at the right end of the band */
+    :root[data-mode="mine"] #portfolio .view-menu {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+    }
 }
 
 /* Phones: a floating bar that shows only the current choice and a chevron, with the "=" sitting at its right.
@@ -1347,12 +1408,19 @@
         gap: 0.4em;
         width: 100%;
         height: 44px;
+        margin-bottom: 8px;        /* the choices start below the row, so none peeks in while they settle */
         padding: 0 52px 0 14px;    /* clear of the "=" */
         font: inherit;
         color: inherit;
         background: none;
         border: 0;
         cursor: pointer;
+    }
+
+    :root[data-mode] #portfolio .view-menu {
+        position: absolute;
+        top: 2px;
+        right: 4px;
     }
 
     .view-current-icon {
@@ -1416,6 +1484,8 @@
 
     /* Your view: the frosted bar, closed and open */
     :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        width: min(720px, 86vw);
+        margin: -1rem auto 0;
         background: rgba(var(--bg-rgb), 0.8);
         box-shadow: 0 4px 6px rgba(var(--shadow-rgb), 0.12);
     }

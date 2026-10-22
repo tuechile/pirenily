@@ -65,7 +65,8 @@
             </span>
         </div>
     </nav>
-    <!-- Phones: once the list above scrolls away, an "=" takes its place and opens the same links full screen (nav.js) -->
+    <!-- Tablets and phones: the "=" on the Projects filter bar opens these links full screen (nav.js);
+         this fixed one only shows while the menu is open, as its close button -->
     <button class="nav-toggle home-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
     <div class="nav-item-big home-menu">
         <a class="nav-item" href="/about"> About </a>
@@ -80,10 +81,6 @@
             function measure() { document.documentElement.style.setProperty("--home-nav-h", nav.offsetHeight + "px"); }
             measure();
             if ("ResizeObserver" in window) new ResizeObserver(measure).observe(nav);
-            // On phones the nav scrolls away instead of sticking; the "=" shows up once it's gone
-            if ("IntersectionObserver" in window) new IntersectionObserver(function (entries) {
-                document.documentElement.classList.toggle("past-home-nav", !entries[0].isIntersecting);
-            }).observe(nav);
         })();
     </script>
     <div class="landing">

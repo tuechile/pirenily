@@ -257,9 +257,17 @@
 }
 
 :root[data-mode="easy"] :is(h1, h2, h3, h4, .page-title, .case-title, .bio-name, .cs-heading, .cs-subheading,
-    .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title, .nav-header, .header):not(.cs-label) {
+    .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title, .strip-caption, .nav-header, .header):not(.cs-label) {
     font-family: var(--font-head);
     font-weight: 400;
+    -webkit-text-stroke: var(--head-stroke) currentColor;
+}
+
+/* The nav links (About · Code · Play · Projects, and the phone menu) and the home Projects filter
+   (bar, desktop column, phone panel) take the header face too; the ☀ ♪ switches keep theirs */
+:root[data-mode="easy"] .nav-item:not(.settings-btn),
+:root[data-mode="easy"] #portfolio :is(.view-btn, .view-current) {
+    font-family: var(--font-head);
     -webkit-text-stroke: var(--head-stroke) currentColor;
 }
 
