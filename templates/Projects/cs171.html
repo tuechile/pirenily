@@ -6,7 +6,7 @@
 {% block case %}
 
 {{ cs.hero("The Story of Unicode",
-           "A scrollytelling website that turns “invisible infrastructure” into an interactive narrative: ASCII → Unicode → emoji → writing systems.",
+           "Why does the same emoji look different on your iPhone and your friend’s Android? A scroll-driven story about Unicode, the standard behind every letter and emoji you type.",
            eyebrow="Fall 2025 | CS 1710 · Final Project: Visualization",
            tags=["Role: UX / Game Design / Story Structure",
                  "Team: The Typos (Chi Le, Rain YeYang)",
@@ -17,9 +17,9 @@
              "Final project preview showing the Unicode data story interface with interactive sections", zoom=False) }}
 
 {{ cs.callout("TL;DR", points=[
-    "Built a data story from scratch and converged from broad typography ideas into a clear Unicode narrative for non-technical audiences.",
-    "Designed each section around a “learn by exploring” interaction (filters, hover details, timelines, and guided views).",
-    "Testing showed the biggest UX risks were terminology + cognitive load, so we simplified copy, standardized UI patterns, and added micro-definitions/tooltips.",
+    "We started out making a typography story for designers. The data didn’t hold up, so halfway through we pivoted to Unicode, for everyone in CS 1710.",
+    "I owned the emoji half: seven datasets, a bubble chart of how one emoji’s design drifts across platforms and years, and the “What emoji are you (right now)?” game.",
+    "Two think-aloud tests showed the problem was our words, not the data, so the last round was mostly relabelling.",
 ]) }}
 
 {{ cs.callout("Goals & Success Criteria", points=[
@@ -30,38 +30,30 @@
 
 {% call cs.body() %}
 
-    {% call cs.section("Context", lead="Unicode is everywhere—so why does it feel invisible?") %}
+    {% call cs.section("Context", lead="Nobody notices Unicode until a letter turns into a box") %}
     <p>
-        Unicode is the standard that allows text, symbols, and emoji to display consistently across devices and
-        platforms. Because it’s “always on,” most people never think about it—until something breaks or a character
-        can’t be represented.
-    </p>
-    <p>
-        Our project goal was to make Unicode legible and interesting through a narrative that people can explore
-        without prior knowledge.
+        Unicode is why a letter typed on one phone arrives as the same letter on another. When it fails, you get
+        an empty box (□) instead. It works so well that most people never think about it, so our job was to make
+        them notice.
     </p>
     {% endcall %}
 
-    {% call cs.section("Design Challenge", lead="How do you visualize a technical standard without losing people?") %}
+    {% call cs.section("Design Challenge", lead="Too technical and people leave. Too simple and it’s a Wikipedia page.") %}
     <p>
-        The hard part wasn’t only the data—it was the UX: terminology, pacing, and motivation.
-        If the story felt too technical, users would bounce. If it was too simplified, it would feel shallow.
-    </p>
-    <p>
-        We designed for clarity-first onboarding, low-friction exploration, and a consistent interaction
-        language across sections.
+        Our audience was everyone in CS 1710, not designers or engineers. Every chart had to make sense to
+        someone who had never heard the word “encoding”, without boring the people who had.
     </p>
     {% endcall %}
 
-    {% call cs.section("Exploration", lead="Starting from scratch meant testing the question before the interface") %}
+    {% call cs.section("Exploration", lead="We started with fonts, and the data said no") %}
     <p>
-        We began with wide exploration—possible audiences, datasets, and story angles. Early concepts leaned
-        toward typography and fonts, but we kept asking what a general reader would actually want to learn and
-        explore.
+        Our first proposal was about typefaces in the digital age, aimed at graphic and UI/UX designers. My
+        storyboard asked whether typography is drifting into a monoculture, since our early research found about
+        ten fonts behind over 60% of web text.
     </p>
     <p>
-        The exploration phase helped us identify which ideas were “cool” versus which ones could become a
-        coherent narrative experience.
+        The datasets didn’t hold up. Web font numbers from 2015 to 2024 were rich, but there was almost nothing
+        solid on how people feel about fonts. The idea was more “visual” than “visualization”.
     </p>
     {% endcall %}
 
@@ -74,52 +66,45 @@
     {% call cs.media_text(img('ux', 'cs171/outline.png'),
                           "Storyboard sketch showing the narrative arc and planned interactive slides for the data story",
                           heading="Convergence",
-                          lead="We narrowed to Unicode to create clearer stakes and stronger interactions") %}
+                          lead="So we pivoted to Unicode") %}
     <p>
-        Unicode gave us a strong arc (ASCII → Unicode → emoji → writing systems) and a built-in reason to
-        care: representation and interoperability.
-    </p>
-    <p>
-        The storyboard let us plan pacing and “interaction beats” so users would learn by doing, not just
-        reading.
+        After a check-in with the course staff, we kept the part of the idea that had real data behind it: how
+        text encoding grew. ASCII → Unicode → emoji → writing systems gave us a start, a twist (emoji are
+        Unicode too!) and an ending anyone could relate to.
     </p>
     {% endcall %}
 
-    {% call cs.section("Research", lead="Translating technical history into usable story units") %}
+    {% call cs.section("Research", lead="Seven datasets, one sentence each") %}
     <p>
-        We collected sources and datasets around ASCII limitations, Unicode growth, emoji adoption, and the
-        diversity of writing systems. Then we translated that research into sections with clear takeaways and
-        lightweight interactions.
+        For my half I gathered seven datasets, from World Bank literacy rates to Emojipedia’s record of the first
+        emoji set and Unicode’s own publication history. Cleaning them meant filling or dropping pre-1990 gaps,
+        fixing non-standard country codes and lining up release dates.
     </p>
     <p>
-        Our guiding rule: if we can’t explain a concept in one sentence, we need a better label, a better
-        visual, or both.
-    </p>
-    {% endcall %}
-
-    {% call cs.section("My Contribution", lead="Game / Emoji / Interactions") %}
-    <p>
-        I owned the end-to-end flow for how users can interact with the data more playfully, mainly
-        on Game Design / Quiz aspects and datasets on Emoji.
-    </p>
-    <p>
-        Design decisions I focused on:
-        <br>— Clean and easy interactions/instructions for legends and filters        <br>— Hooks to keep users engaged (fun wordplays, lessened word count)
-        <br>— Animations to guide attention (hover states, transitions)
+        Our rule: if we couldn’t explain a chart in one sentence, it needed a better label, a better visual, or
+        both.
     </p>
     {% endcall %}
 
-    {{ cs.callout("Design Principles", wide=True, points=[
-        "Define jargon in context (micro-definitions, tooltips, examples).",
-        "One main interaction per section (reduce cognitive load).",
-        "Reuse UI patterns (filters, toggles, hover details) so users don’t relearn controls.",
-    ]) }}
-
-    {% call cs.section("Prototyping", lead="We prototyped early to find what “clicks”") %}
+    {% call cs.section("My Contribution", lead="The emoji half: data, a bubble chart and a game") %}
     <p>
-        We created quick prototypes to validate both narrative flow and interaction design.
-        The focus was less “pixel perfect” and more: can a user understand what to do next, and does the
-        interaction teach something?
+        Rain took the story up to 2010: ASCII, the Unicode timeline and the Sankey of Unicode’s growth. I took
+        everything after, which is mostly emoji.
+    </p>
+    <p>
+        The decisions I made, and why:
+        <br>— Each emoji is a bubble; click one to see how its design differs across platforms and years. It
+        comes after the simpler charts, so readers already know the toggles and filters it uses.
+        <br>— Filters look like radio buttons, so it’s obvious from the start that the emoji can be filtered.
+        <br>— A slider sets how many emoji float on screen at once, so the chart never turns into soup.
+        <br>— “What emoji are you (right now)?” gets people clicking before the heavier charts.
+    </p>
+    {% endcall %}
+
+    {% call cs.section("Prototyping", lead="Games on paper before charts in code") %}
+    <p>
+        We sketched quiz and sorting games before building any charts, to see which interactions taught
+        something and which only moved.
     </p>
     {% endcall %}
 
@@ -127,32 +112,33 @@
         (img('ux', 'cs171/idea1.png'), "Game idea sketch 1"),
         (img('ux', 'cs171/idea2.png'), "Game idea sketch 2"),
         (img('ux', 'cs171/idea3.png'), "Game idea sketch 3"),
-    ], caption="Possible games included quizzes and sorting challenges to reinforce key concepts.") }}
+    ], caption="Quiz and sorting game sketches.") }}
 
     {{ cs.mockups([
         (img('ux', 'cs171/lofi emoji.png'), "Lo-fi emoji section"),
         (img('ux', 'cs171/lofi idea 1.png'), "Lo-fi interaction idea"),
         (img('ux', 'cs171/lofi conclusion.png'), "Lo-fi conclusion section"),
-    ], caption="These snapshots show our iteration focus: consistent controls, clearer labels, and interactions that teach one idea at a time.") }}
+    ], caption="Lo-fi emoji, interaction and conclusion screens.") }}
 
-    {% call cs.section("Testing & Iteration", lead="Think-aloud sessions helped us reduce friction fast") %}
+    {% call cs.section("Testing & Iteration", lead="The data wasn’t the problem. Our words were.") %}
     <p>
-        We ran think-aloud testing to see where users hesitated, misunderstood labels, or lost the story thread.
-        The most common issue wasn’t “the data is too hard”—it was UI clarity: what does this control do, what
-        does this term mean, and why is this section here?
+        We ran two think-aloud tests on the second prototype. Apart from one missing y-axis, the charts held up.
+        Our words didn’t: a “version” of what? What does “sort by code value” mean? Why is there a wall of text here?
     </p>
     {% endcall %}
 
     {{ cs.compare([
         {"title": "What we observed", "points": [
-            "Users skimmed long paragraphs and missed key definitions.",
-            "Some terms felt technical without examples.",
-            "When sections changed interaction styles, users slowed down.",
+            "“Version” and “code value” meant nothing without context.",
+            "Long text between charts got skimmed, and the definitions with it.",
+            "One tester assumed emoji were part of ASCII, because the transition never said otherwise.",
+            "The floating emoji looked random at first glance.",
         ]},
         {"title": "What we changed", "points": [
-            "Shorter copy + stronger headings per section.",
-            "Micro-definitions/tooltips near charts.",
-            "Standardized controls (filters/toggles/hover details) across views.",
+            "Acronyms spelled out, labels rewritten in plain words.",
+            "The big text block became a clickable timeline.",
+            "A transition slide that says it plainly: emoji are Unicode too.",
+            "Radio-style filters and a slider for how many emoji are on screen.",
         ]},
     ]) }}
 
@@ -172,11 +158,6 @@
     <p>
         One tester said everything was “extremely clear” and worked out every control on her own. The other got
         the gist but stalled on terms like “version” and “code value”, and on the long text between charts.
-    </p>
-    <p>
-        That split shaped the final round: the text block became a clickable timeline, acronyms are spelled
-        out, toggles became radio buttons so they read as filters, and “Remove Outlier” switches off when
-        there's no outlier left to remove.
     </p>
     <p>
         <strong>What I'd measure next:</strong> whether a first-time reader can say what Unicode is after one
