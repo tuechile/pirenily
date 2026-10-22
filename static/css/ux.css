@@ -817,28 +817,6 @@ html {
     opacity: 0.75;
 }
 
-/* Loader */
-.loader-container {
-    position: fixed;
-    inset: 0;
-    background: rgba(var(--bg-rgb), 0.82);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    /* appears and disappears instantly, no fade */
-}
-
-.loader-container.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.loader-container img {
-    width: 10rem;
-    height: auto;
-}
-
 /* Sketch */
 #sketch-container {
     display: flex;

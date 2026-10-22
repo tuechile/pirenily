@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash
 import difflib
 import hashlib
 import hmac
+import json
 import os
 import random
 import re
@@ -40,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "172"
+ASSET_VERSION = "173"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -167,6 +168,14 @@ def _file_hash(path):
     return _file_hashes[path]
 
 
+# Photos that have a web-sized copy, with the original's size when the copy was made
+try:
+    with open(os.path.join(app.static_folder, "asset", "images", "_web", "manifest.json")) as f:
+        WEB_IMAGES = json.load(f)
+except (OSError, ValueError):
+    WEB_IMAGES = {}
+
+
 @app.after_request
 def cache_static(response):
     # Versioned URLs (?v= on CSS/JS, the content hash on images) never change, so they keep for a year.
@@ -184,13 +193,18 @@ def cache_static(response):
 
 @app.context_processor
 def inject_image_helper():
-    def img(folder, filename=""):
+    def img(folder, filename="", original=False):
         real_folder = IMAGE_FOLDERS.get(folder, folder)
-        path = f"asset/images/{real_folder}/{filename}".rstrip("/")
+        rel = f"{real_folder}/{filename}"
+        path = f"asset/images/{rel}".rstrip("/")
         full = os.path.join(app.static_folder, path)
-        if filename and os.path.isfile(full):
-            return url_for("static", filename=path, v=_file_hash(full))
-        return url_for("static", filename=path)
+        if not filename or not os.path.isfile(full):
+            return url_for("static", filename=path)
+        # Big photos have a web-sized copy (tools/web_images.py); a replaced original skips its stale copy
+        if not original and WEB_IMAGES.get(rel) == os.path.getsize(full):
+            path = f"asset/images/_web/{rel}"
+            full = os.path.join(app.static_folder, path)
+        return url_for("static", filename=path, v=_file_hash(full))
 
     def gallery_images(folder, sort="name"):
         real_folder = IMAGE_FOLDERS.get(folder, folder)

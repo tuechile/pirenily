@@ -13,7 +13,7 @@
 <div class="masonry{% if natural_height %} masonry--natural{% endif %}">
     {% for filename in gallery_images(folder, sort=sort) %}
     <div class="item">
-        <a href="{{ img(folder, filename) }}" class="lightbox">
+        <a href="{{ img(folder, filename, original=True) }}" class="lightbox">
             <img src="{{ img(folder, filename) }}" alt="{{ filename.rsplit('.', 1)[0] }}" loading="lazy">
         </a>
     </div>

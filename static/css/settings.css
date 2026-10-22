@@ -43,7 +43,7 @@
     color: var(--yellow-select);
 }
 
-:root[data-theme="light"] :is(.progress-bar, .btn:hover, .travel-globe .globe-legend i),
+:root[data-theme="light"] :is(.progress-bar, .load-bar span, .btn:hover, .travel-globe .globe-legend i),
 :root[data-theme="light"] .cs-index a.is-current::before {
     box-shadow: none;
 }
@@ -102,7 +102,7 @@
     background-image: linear-gradient(45deg, var(--yellow), var(--accent), var(--c-strong), var(--accent), var(--yellow));
 }
 
-:root[data-theme="light"] .progress-bar {
+:root[data-theme="light"] :is(.progress-bar, .load-bar span) {
     background-image: linear-gradient(90deg, var(--yellow-bar), var(--pink-soft), var(--yellow-bar));
 }
 
