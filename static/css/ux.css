@@ -1377,7 +1377,7 @@ html {
 
 .cs-facts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
     gap: var(--s-5) var(--s-6);
     margin: var(--s-7) 0 0;
     padding: var(--s-5);
@@ -1631,7 +1631,7 @@ html {
 
 .cs-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
     gap: var(--s-5);
     margin: var(--s-4) 0 0;
 }
@@ -1847,6 +1847,10 @@ html {
     .cs-facts {
         grid-template-columns: 1fr 1fr;
         margin-top: var(--s-6);
+    }
+
+    .cs-stats {
+        grid-template-columns: 1fr 1fr;
     }
 
     .callout {

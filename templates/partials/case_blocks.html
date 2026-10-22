@@ -50,7 +50,7 @@
     </div>
     {% endif %}
     {% if facts %}
-    <dl class="cs-facts">
+    <dl class="cs-facts" style="--cols: {{ grid_cols(facts|length) }}">
         {% for fact in facts %}
         {% set label, value = fact.split(": ", 1) %}
         <div>
@@ -235,11 +235,15 @@
 {% endmacro %}
 
 
+{# Columns for a fact or stat grid: at most 4 a row, rows kept even (5 → 3 + 2, 7 → 4 + 3) #}
+{% macro grid_cols(n) %}{% set rows = (n + 3) // 4 %}{{ (n + rows - 1) // rows }}{% endmacro %}
+
+
 {# Stat row — items: list of (number, label) #}
 {% macro stats(items, title=None) %}
 <div class="cs-block">
     {% if title %}<h3 class="cs-label">{{ title|safe }}</h3>{% endif %}
-    <dl class="cs-stats">
+    <dl class="cs-stats" style="--cols: {{ grid_cols(items|length) }}">
         {% for number, label in items %}
         <div>
             <dt>{{ number|safe }}</dt>
