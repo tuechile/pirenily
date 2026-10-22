@@ -94,7 +94,7 @@
         </div>
         <div class="strip-text">
             <p class="strip-caption">T4SG × CommonSpirit Health</p>
-            <p class="strip-desc">12-week T4SG project improving CommonSpirit's internal resource tool (CIP).</p>
+            <p class="strip-desc">12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Handed off to engineering.</p>
         </div>
     </a>
 
@@ -107,7 +107,7 @@
         </div>
         <div class="strip-text">
             <p class="strip-caption">T4SG × 2ft Prosthetics</p>
-            <p class="strip-desc">Figma flows for volunteers, coordinators, and prosthetists working across time zones and unreliable connections.</p>
+            <p class="strip-desc">An offline-first inventory system for 2ft Prosthetics' volunteers across 10 countries. Delivered as a tested hi-fi prototype.</p>
         </div>
     </a>
 
@@ -387,6 +387,20 @@
             pill.style.height = on.offsetHeight + "px";
             pill.style.transform = "translate(" + on.offsetLeft + "px, " + on.offsetTop + "px)";
             if (!animate) { pill.offsetWidth; pill.style.transition = ""; }
+        }
+
+        // Your view's desktop column starts open with its words on a first visit. Once the pointer has
+        // been over it and left, it rests on shapes for good (stored, so later visits start folded)
+        var introSeen = false;
+        try { introSeen = localStorage.getItem("pirenily-rail-seen") === "1"; } catch (e) {}
+        if (!introSeen) {
+            toggle.classList.add("is-intro");
+            toggle.addEventListener("mouseenter", function () {
+                toggle.addEventListener("mouseleave", function () {
+                    toggle.classList.remove("is-intro");
+                    try { localStorage.setItem("pirenily-rail-seen", "1"); } catch (e) {}
+                }, { once: true });
+            }, { once: true });
         }
 
         var cvPanel = document.getElementById("cvPanel");

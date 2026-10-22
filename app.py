@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "206"
+ASSET_VERSION = "207"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -445,7 +445,11 @@ def unlock():
 
 
 def recruiter_link():
-    response = redirect("/#portfolio")
+    # ?next=/t4sg lets the CV link straight to a case study and unlock it on the way
+    target = request.args.get("next", "")
+    if not target.startswith("/") or target[1:2] in ("/", "\\"):
+        target = "/#portfolio"
+    response = redirect(target)
     response.set_cookie(PROJECTS_COOKIE, RECRUITER_LINK, max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
     return response
