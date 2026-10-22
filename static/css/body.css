@@ -1175,24 +1175,54 @@
         text-align: left;
     }
 
-    /* At rest the column shows initials (S, R, C, B, U, A); hovering it, or tabbing into it,
-       slides the rest of each word out (the pill follows: design_list.html watches the bar's size) */
+    /* At rest the column shows only shapes (star, square, circle, kiki, rectangle, bouba) on a fully round bar;
+       hovering it, or tabbing into it, slides each word out beside its shape and the bar's corners ease back
+       (the pill follows: design_list.html watches the tabs' size) */
+    :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        border-radius: 2rem;
+        transition: border-radius var(--dur-3) var(--ease-out);
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within) {
+        border-radius: var(--r-sm);
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-btn {
+        display: flex;
+        align-items: center;
+        padding: 0.4rem 0.6rem;
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .vb-i {
+        display: flex;
+    }
+
+    .vb-shape {
+        width: 1.05em;
+        height: 1.05em;
+    }
+
     :root:not([data-mode="mine"]) #portfolio .vb-rest {
-        display: inline-block;
+        box-sizing: border-box;
         max-width: 0;
         overflow: hidden;
         white-space: nowrap;
-        vertical-align: top;
-        transition: max-width var(--dur-3) var(--ease-out);
+        transition: max-width var(--dur-3) var(--ease-out), padding var(--dur-3) var(--ease-out);
     }
 
     :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within) .vb-rest {
-        max-width: 8em;
+        max-width: 9em;
+        padding-left: 0.55em;
     }
 
-    :root[data-motion="reduced"] #portfolio .vb-rest {
+    :root[data-motion="reduced"] #portfolio :is(.view-toggle, .vb-rest) {
         transition: none;
     }
+}
+
+/* The shapes only belong to Your view's desktop column; everywhere else the tabs are words */
+.vb-i {
+    display: none;
 }
 
 /* Tablets and phones: the bar sticks at the top (home's nav doesn't there), as wide as the thumbnails,

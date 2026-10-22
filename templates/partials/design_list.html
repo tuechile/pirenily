@@ -1,20 +1,21 @@
 {% import "partials/icons.html" as icons %}
 {# Design cards with the Selected / Résumé / Compilations / Brand / UI/UX / All toggle (home Projects section).
-   Each tab is its initial plus the rest of the word, so Your view's desktop column can rest on initials.
+   Each tab is a shape plus its word, so Your view's desktop column can rest on shapes (star, square, circle,
+   kiki, rectangle, bouba); everywhere else only the word shows.
    Strip cards, the same as the Code page: in color at rest (black and white and blurred in My view), sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
     {# Phones: only the current choice shows; tapping it unrolls the bar into the full list #}
     <button type="button" class="view-current" aria-haspopup="true" aria-expanded="false"><span class="view-current-label">Selected</span>{{ icons.icon("chevron", None, "view-current-icon") }}</button>
     {# Two groups so My view can pin them to either side of the list; Your view lays them out as one bar #}
     <span class="view-side view-side--left">
-        <button type="button" class="view-btn active" data-view="selected" aria-pressed="true"><span class="vb-i">S</span><span class="vb-rest">elected</span></button>
-        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="resume" aria-pressed="false"><span class="vb-i">R</span><span class="vb-rest">ésumé</span></button>{% endif %}
-        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false"><span class="vb-i">C</span><span class="vb-rest">ompilations</span></button>
+        <button type="button" class="view-btn active" data-view="selected" aria-pressed="true"><span class="vb-i">{{ icons.icon("star", None, "vb-shape") }}</span><span class="vb-rest">Selected</span></button>
+        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="resume" aria-pressed="false"><span class="vb-i">{{ icons.icon("square", None, "vb-shape") }}</span><span class="vb-rest">Résumé</span></button>{% endif %}
+        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false"><span class="vb-i">{{ icons.icon("circle", None, "vb-shape") }}</span><span class="vb-rest">Compilations</span></button>
     </span>
     <span class="view-side view-side--right">
-        <button type="button" class="view-btn" data-view="brand" aria-pressed="false"><span class="vb-i">B</span><span class="vb-rest">rand</span></button>
-        <button type="button" class="view-btn" data-view="uiux" aria-pressed="false"><span class="vb-i">U</span><span class="vb-rest">I/UX</span></button>
-        <button type="button" class="view-btn" data-view="all" aria-pressed="false"><span class="vb-i">A</span><span class="vb-rest">ll</span></button>
+        <button type="button" class="view-btn" data-view="brand" aria-pressed="false"><span class="vb-i">{{ icons.icon("kiki", None, "vb-shape") }}</span><span class="vb-rest">Brand</span></button>
+        <button type="button" class="view-btn" data-view="uiux" aria-pressed="false"><span class="vb-i">{{ icons.icon("rectangle", None, "vb-shape") }}</span><span class="vb-rest">UI/UX</span></button>
+        <button type="button" class="view-btn" data-view="all" aria-pressed="false"><span class="vb-i">{{ icons.icon("bouba", None, "vb-shape") }}</span><span class="vb-rest">All</span></button>
     </span>
     {# Tablets and phones: the home menu's "=" lives on the bar, so it travels and sticks with it (nav.js) #}
     <button type="button" class="view-menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
