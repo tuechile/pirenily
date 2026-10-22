@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "242"
+ASSET_VERSION = "243"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -128,13 +128,14 @@ def _last_updated():
 
 LAST_UPDATED = _last_updated()
 
-# Case studies in reading order; each one's footer links to the previous and next (wrapping around).
+# Case studies in the home Selected order (then Merch); each one's footer links to the previous and next (wrapping around).
 CASE_STUDIES = [
+    ("t4sg", "T4SG × 2ft Prosthetics"),
     ("hackharvard", "HackHarvard 2026: Hack to the Moon"),
-    ("merch", "Merch"),
+    ("pirenily", "Pirenily"),
     ("commonspirit", "T4SG × CommonSpirit Health"),
     ("cs171", "Chi x Rain: An Essay on Unicode"),
-    ("t4sg", "T4SG × 2ft Prosthetics"),
+    ("merch", "Merch"),
 ]
 
 

@@ -1928,6 +1928,16 @@
     color: rgba(var(--fg-rgb), 0.533);
 }
 
+/* Your view only: the role, one more line under the description */
+.strip-role {
+    margin: -0.55rem 0 0;
+    padding: 0 0.4rem;
+    font-family: var(--font-body);
+    font-size: var(--fs-note);
+    line-height: 1.5;
+    color: rgba(var(--fg-rgb), 0.75);
+}
+
 /* Name and line together; it takes no space of its own, so Your view keeps them under the strip */
 .strip-text {
     display: contents;

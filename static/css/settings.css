@@ -178,6 +178,12 @@
     padding-bottom: 0;
 }
 
+/* Content that belongs to one view: .easy-only shows in Your view, .mine-only in My view */
+:root[data-mode="mine"] .easy-only,
+:root:not([data-mode="mine"]) .mine-only {
+    display: none !important;
+}
+
 /* ---------- Easy to read ---------- */
 :root[data-mode="easy"] {
     /* Grays lift so body text is comfortable to read */
