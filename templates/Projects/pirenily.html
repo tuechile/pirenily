@@ -1,231 +1,189 @@
 {% extends "case_study.html" %}
 {% import "partials/case_blocks.html" as cs %}
+{% import "partials/icons.html" as icons %}
 
-{#
-    How I built this website. Short on purpose: bits, not a life story.
-    Swap each cs.placeholder() for a screenshot, e.g. {{ cs.figure(img('ux', 'pirenily/finder.webp'), "alt text") }},
-    and each "#TODO" href or "TODO" line for the real thing.
-#}
+{# How I built this website: an essay, not a case study. No rail, no numbered sections;
+   the case-study shell is kept only for its embeds, lightbox and progress bar. #}
 
-{% block title %}| Pirenily: How I Built This Website{% endblock %}
+{% block title %}| How I Built This Website{% endblock %}
+{% block shell_class %} cs-shell--essay{% endblock %}
 
 {% block case %}
+<div class="essay cs-prose">
+    <a class="cs-back" href="/#portfolio">← Projects</a>
+    <h1 class="case-title">How I Built This Website</h1>
 
-{{ cs.hero("Pirenily",
-           "How I built this website: <strong>hardcoded</strong>, and every visual element drawn by me.",
-           eyebrow="Case study · this website",
-           tags=["Role: Designer + Developer",
-                 "Stack: Python + Flask + Jinja2 + HTML · CSS · JavaScript",
-                 "Started: Dec 2024",
-                 "Constraint: No frameworks + No build step"]) }}
-
-{{ cs.placeholder("Cover: the landing page with the finder") }}
-
-{{ cs.callout("TL;DR", points=[
-    "An archive of everything I make, because the idea of an archive fascinates me.",
-    "Built by hand on Flask and plain HTML, CSS and JavaScript. No frameworks, no build tools, no database.",
-    "Two views from two switches: <em>My view</em> is for me, <em>Your view</em> is for everyone else.",
-    "Every icon is my own line drawing, so the whole site recolors itself with each view.",
-]) }}
-
-{% call cs.body() %}
-
-    {% call cs.section("The Name", lead="Emily + Iron Pig") %}
     <p>
-        <strong>Emily</strong> is my English name. I picked it in sixth grade, my brother agreed, and then
-        nobody ever used it. I tried again in college and everyone said I don’t sound like an Emily.
-        It stayed mine anyway.
+        Emily is my English name. I picked it in sixth grade, my brother agreed, and then nobody ever used
+        it. I tried again in college and everyone said I don’t sound like an Emily. It stayed mine anyway.
+        Iron Pig was my fan fiction author name: I loved Iron Man, and my middle school classmates called
+        me a pig because I eat too fast. Emily + Iron Pig = Pirenily.
     </p>
-    <p>
-        <strong>Iron Pig</strong> was my fan fiction author name: I loved Iron Man, and my middle school
-        classmates called me a pig because I eat too fast.
-    </p>
-    <p>
-        Emily + Iron Pig = <strong>Pirenily</strong>.
-    </p>
-    {% endcall %}
 
-    {% call cs.section("The Finder", lead="Every name I’ve been called") %}
     <p>
-        The search bar on the landing page flashes through names: ones people call me, ones I call
-        myself, and ones nobody calls me at all. Chi Le, Emily, Iron Pig, Chi Chi Cha Cha, Le Le, and:
+        The search bar on the landing page flashes through the rest of my names: ones people call me, ones
+        I call myself, and ones nobody calls me at all. Chi Le, Chi Chi Cha Cha, Le Le. Emily Tiles, which
+        is Chi Le with the Ch as a T (also, I like tile textures). Chi Bell, which is what people call me a
+        lot in Vietnam. Kai, which is how some people read my name; I’m not Greek. And The Country, yes,
+        like Chile. Type anything into it and it finds the closest page, typos and all. If nothing matches,
+        it opens a random one.
     </p>
-    <p>
-        — <strong>Emily Tiles</strong>: Chi Le, but the Ch is a T. Also, I like tile textures<br>
-        — <strong>Chi Bell</strong>: what people call me a lot in Vietnam<br>
-        — <strong>Kai</strong>: how some people read my name. I’m not Greek<br>
-        — <strong>The Country</strong>: yes, like Chile
-    </p>
-    <p>
-        Type anything into it and it finds the closest page, forgiving typos, accents and half-typed
-        words. If nothing matches, it opens a random page.
-    </p>
-    {% endcall %}
+</div>
 
-    {{ cs.placeholder("Screen recording: the names flashing, then typing into the finder") }}
+{{ cs.site("/", "Pirenily’s landing page, live", ar=1.6) }}
 
-    {% call cs.section("Why an Archive", lead="A niche, weird website") %}
-    <p>
-        Pirenily was my CS50 final project. I didn’t want to build something I’d never use again, and the
-        idea of an archive has always fascinated me, so I built a place to keep everything.
-    </p>
+<div class="essay cs-prose">
     <p>
         I’ve always been a designer, but I didn’t know code before the US. In Vietnam, “IT” class meant
-        Microsoft Office certification tests. Finding out code could be used for art made AFVS 55P my
-        favorite class, and the best first class I could have asked for.
+        Microsoft Office certification tests. Finding out code could be used for art made
+        <a href="/afvs">AFVS 55P</a> my favorite class, and the best first class I could have asked for.
     </p>
+</div>
+
+{% call cs.row("equal", caption="From AFVS 55P: <em>Kill the Pig</em>, and the doll from <em>Heart Room</em> in the dark.") %}
+    {{ cs.card(img('afvs', 'p1-final.jpg'), "Kill the Pig: the finished sculpture with a face projected onto it") }}
+    {{ cs.video_card(img('afvs', 'chud darkmode.mp4')) }}
+{% endcall %}
+
+<div class="essay cs-prose">
     <p>
-        By the end of that semester I had a pile of interactive projects. So: I want to be a niche artist,
-        let’s build a niche, weird website.
+        By the end of that semester I had a pile of interactive projects, and a CS50 final project to make.
+        I didn’t want to build something I’d never use again, and the idea of an archive has always
+        fascinated me. So: I want to be a niche artist, let’s build a niche, weird website, and keep
+        everything in it.
     </p>
+
     <p>
         I’m a maximalist, but I don’t want to be maximalist about one thing. I want to be everything at
         once. So the frame stays minimal, and the work gets to be everything.
     </p>
-    {% endcall %}
 
-    {% call cs.section("First Website", lead="December 8, 2024") %}
     <p>
-        My first ever website, built in one sitting: 32 commits between 3:37 in the afternoon and 10:57
-        at night, starting from a Flask template.
+        The first version went up on December 8, 2024, built in one sitting: 32 commits between 3:37 in
+        the afternoon and 10:57 at night. AI was bad at design back then, which was perfect. It couldn’t
+        make a single design decision for me, so I planned everything myself and made ChatGPT build exactly
+        what I described. Most of what defines the site was already there that night: the names, the loader
+        between pages, the fonts. This is it, still up as it was:
     </p>
+</div>
+
+{{ cs.site("https://pirenily.com/pirenily-2024/", "The first Pirenily, December 2024", ar=1.6) }}
+{{ cs.img_caption("The 2024 site, live. Before it, there was <a href=\"https://github.com/tuechile/tuechile.github.io\" target=\"_blank\" rel=\"noopener\">my high school one</a>.") }}
+
+<div class="essay cs-prose">
     <p>
-        AI was bad at design back then, which was perfect. It couldn’t make a single design decision
-        for me, so I planned everything myself and made ChatGPT build exactly what I described.
+        It hasn’t changed that much, because it still says what I want it to say. Even the loader is the
+        same one.
     </p>
-    <p>
-        Most of what defines the site was already there that night: the names in the finder, the loader
-        GIF between pages, BHN Cinema for the logo, Crimson Text for everything else. It hasn’t changed
-        that much, because it still says what I want it to say.
-    </p>
-    {% endcall %}
+</div>
 
-    {{ cs.compare([
-        {"title": "Then · Dec 2024", "points": [
-            "Four tabs: About, Collaborative Work, Personal Work, Commissions",
-            "The finder matched exact words only; anything else opened a random page",
-            "A looping background video on the landing page",
-            "One stylesheet, one dark look",
-            "Galleries of images, no writing about the work",
-        ]},
-        {"title": "Now", "points": [
-            "Four tabs: About, Code, Play, Projects",
-            "The finder forgives typos, accents and half-typed words",
-            "Two views, <em>My view</em> and <em>Your view</em>, from two switches",
-            "Color, type and icons all run on shared tokens",
-            "Case studies that explain the process, not only the result",
-        ]},
-    ]) }}
+<figure class="essay-loader">
+    <img src="{{ img('other', 'loader.gif') }}" alt="The loader that plays between pages">
+</figure>
 
-    {% call cs.section() %}
-    <p>
-        The first version is still up as it was that night, and its code is on
-        <a href="https://github.com/tuechile/pirenily-2024" target="_blank" rel="noopener">GitHub</a>.
-    </p>
-    {% endcall %}
-
-    {{ cs.cta("https://pirenily.com/pirenily-2024/", "Visit the 2024 site", kicker="As of December 8, 2024") }}
-    {{ cs.cta("https://github.com/tuechile/tuechile.github.io", "See my high school website on GitHub", kicker="Before Pirenily") }}
-
-    {% call cs.section("How Ideas Happen", lead="Out loud, never written") %}
+<div class="essay cs-prose">
     <p>
         Ideas show up all day: in class, looking at a poster, anywhere. I don’t write them down. Writing
-        cleans out the stuttering and the fast talking, and then I can’t remember what I meant.
+        cleans out the stuttering and the fast talking, and then I can’t remember what I meant. So I talk:
+        voice-to-text, and voice notes to my brother. When he replies, I have to defend the idea, and I can
+        feel what I felt when I said it. Building happens later, when my brain is off. The thinking is
+        already done, so I can hyperfixate and just make it.
     </p>
-    <p>
-        So I talk. Voice-to-text, and voice notes to my brother. When he replies, I have to defend the
-        idea, and I can feel what I felt when I said it.
-    </p>
-    <p>
-        Building happens later, when my brain is off. The thinking is already done, so I can hyperfixate
-        and just make it.
-    </p>
-    {% endcall %}
 
-    {% call cs.row("pair", caption="My view and Your view, side by side.") %}
-        {{ cs.placeholder("My view (dark, serif)") }}
-        {{ cs.placeholder("Your view (light, sans)") }}
-    {% endcall %}
+    <p>
+        There are two views, and you switch between them with the ☀ in the nav. Try it now. The dark one is
+        mine. It grew out of artists I love, people from the
+        <a href="https://sfpc.io/people/" target="_blank" rel="noopener">School for Poetic Computation</a>,
+        <a href="https://alicia-nguyen.com/" target="_blank" rel="noopener">Alicia Nguyen</a>,
+        <a href="https://wyattroy.com/" target="_blank" rel="noopener">Wyatt Roy</a>’s 2024 site,
+        <a href="https://baku89.com/" target="_blank" rel="noopener">Baku89</a>, and
+        <a href="https://everythingi.love/" target="_blank" rel="noopener">Chia Amisola</a> most of all:
+        minimal, but still a little overstimulating. Her old website is the most beautiful thing I’ve seen
+        on the internet.
+    </p>
+</div>
 
-    {% call cs.section("Two Views", lead="One for me, one for you") %}
-    <p>
-        <strong>My view</strong> (dark) is the site for me. It grew out of artists I love, especially
-        people from the <a href="https://sfpc.io/people/" target="_blank" rel="noopener">School for Poetic Computation</a>,
-        and <a href="https://everythingi.love/" target="_blank" rel="noopener">Chia Amisola</a> most of all: minimal, but still
-        a little overstimulating. Her old website is the most beautiful thing I’ve seen on the internet.
-    </p>
-    <p>
-        <strong>Your view</strong> (light) is the accessible one, for recruiters or anyone who isn’t
-        comfortable reading in the dark. It borrows from industry UX: larger type, a plain sans font,
-        a warm paper background.
-    </p>
-    <p>
-        The nav has two switches, ☀ light and ♪ sound, instead of a settings panel. Every color comes from
-        a small set of tokens, so one switch repaints the whole site, icons included.
-    </p>
-    {% endcall %}
+{{ cs.site("https://everythingi.love/", "Chia Amisola’s website", ar=1.6) }}
 
-    {% macro inspo(href, label) %}<a href="{{ href }}" target="_blank" rel="noopener">{{ label }}</a>{% endmacro %}
-    {{ cs.compare([
-        {"title": "Inspo for My view", "points": [
-            inspo("https://everythingi.love/", "Chia Amisola"),
-            inspo("https://sfpc.io/people/", "School for Poetic Computation"),
-            inspo("https://alicia-nguyen.com/", "alicia-nguyen.com"),
-            inspo("https://www.wyattroy.com/", "wyattroy.com") ~ " (2024)",
-            inspo("https://baku89.com/", "baku89.com"),
-        ]},
-        {"title": "Inspo for Your view", "points": [
-            inspo("https://baothiento.com/", "baothiento.com"),
-            inspo("https://williamle.design/", "williamle.design"),
-            inspo("https://www.ericsin.com/", "ericsin.com"),
-            inspo("https://www.bruce-cao.com/", "bruce-cao.com"),
-            inspo("https://hanluxi.com/", "hanluxi.com"),
-            inspo("https://www.madhurima.me/", "madhurima.me"),
-            inspo("https://www.clueperfumery.com/", "clueperfumery.com"),
-            inspo("https://www.leoparpeix.com/about", "leoparpeix.com"),
-            inspo("https://cyze.dev/", "cyze.dev"),
-        ]},
-    ]) }}
-
-    {% call cs.section("Too Vibe Coded", lead="Taking the design decisions back") %}
-    <p>
-        <a href="https://andydieu.com/" target="_blank" rel="noopener">Andy Dieu</a>, my site’s biggest
-        fan (he advertises it more than I do), told me it was starting to look vibe coded. He was right: I’d let Claude make too many design decisions for me.
-    </p>
-    <p>
-        So I stepped back. Pinterest, my old art, websites I used to love. I asked what each template was
-        doing, what I could cut, and what would make it look like me again.
-    </p>
-    <p>
-        Then I wrote my decisions down as a token library,
-        <a href="https://github.com/tuechile/pirenily-ui" target="_blank" rel="noopener">Pirenily UI</a>,
-        so the next time I doubt one, I can see why I made it and change it on purpose.
-    </p>
-    {% endcall %}
-
-    {{ cs.placeholder("Pirenily UI: the token library") }}
-
-    {% call cs.section("Drawn by Hand", lead="Every icon is a line drawing") %}
-    <p>
-        No icon libraries or logo files. Each icon is one of my own line drawings, stroked in the
-        current text color, so it follows every theme without a second version.
-    </p>
-    {% endcall %}
-
-    {{ cs.placeholder("Sheet of the hand-drawn icons") }}
-
-    {% call cs.section("Stack", lead="Small on purpose") %}
-    <p>
-        A Flask app with Jinja2 templates and vanilla HTML, CSS and JavaScript. No database, no build
-        step: pushing to <code>main</code> redeploys it.
-    </p>
-    <p>
-        Hate my website? Pull an issue at
-        <a href="https://github.com/tuechile/pirenily/issues" target="_blank" rel="noopener">github.com/tuechile/pirenily</a>.
-    </p>
-    {{ cs.cta("https://github.com/tuechile/pirenily", "See the code on GitHub") }}
-    {% endcall %}
-
+{% call cs.row("equal", caption="Alicia Nguyen, Wyatt Roy, Baku89 and SFPC, live.") %}
+    {{ cs.site("https://alicia-nguyen.com/", "Alicia Nguyen’s website") }}
+    {{ cs.site("https://wyattroy.com/", "Wyatt Roy’s website") }}
+    {{ cs.site("https://baku89.com/", "Baku89’s website") }}
+    {{ cs.site("https://sfpc.io/people/", "School for Poetic Computation, people") }}
 {% endcall %}
 
+<div class="essay cs-prose">
+    <p>
+        The light one is yours, for recruiters or anyone who isn’t comfortable reading in the dark. It
+        borrows from people who make clear, careful things:
+        <a href="https://baothiento.com/" target="_blank" rel="noopener">baothiento.com</a>,
+        <a href="https://williamle.design/" target="_blank" rel="noopener">williamle.design</a>,
+        <a href="https://www.ericsin.com/" target="_blank" rel="noopener">ericsin.com</a>,
+        <a href="https://www.bruce-cao.com/" target="_blank" rel="noopener">bruce-cao.com</a>,
+        <a href="https://hanluxi.com/" target="_blank" rel="noopener">hanluxi.com</a>,
+        <a href="https://www.madhurima.me/" target="_blank" rel="noopener">madhurima.me</a>,
+        <a href="https://www.clueperfumery.com/" target="_blank" rel="noopener">Clue Perfumery</a>,
+        <a href="https://www.leoparpeix.com/about" target="_blank" rel="noopener">leoparpeix.com</a> and
+        <a href="https://cyze.dev/" target="_blank" rel="noopener">cyze.dev</a>.
+    </p>
+</div>
+
+{# baothiento.com refuses to be framed, so it stays a link #}
+{% call cs.row("3", caption="Some of them, live.") %}
+    {{ cs.site("https://williamle.design/", "William Le’s website") }}
+    {{ cs.site("https://www.ericsin.com/", "Eric Sin’s website") }}
+    {{ cs.site("https://www.bruce-cao.com/", "Bruce Cao’s website") }}
+    {{ cs.site("https://hanluxi.com/", "hanluxi.com") }}
+    {{ cs.site("https://www.madhurima.me/", "madhurima.me") }}
+    {{ cs.site("https://www.clueperfumery.com/", "Clue Perfumery") }}
+    {{ cs.site("https://www.leoparpeix.com/about", "leoparpeix.com") }}
+    {{ cs.site("https://cyze.dev/", "cyze.dev") }}
+{% endcall %}
+
+<div class="essay cs-prose">
+    <p>
+        <a href="https://andydieu.com/" target="_blank" rel="noopener">Andy Dieu</a> is this site’s biggest
+        fan; he advertises it more than I do.
+    </p>
+</div>
+
+{{ cs.site("https://andydieu.com/", "Andy Dieu’s website", ar=1.6) }}
+
+<div class="essay cs-prose">
+    <p>
+        At some point he told me it was starting to look vibe coded. He was right: I’d let Claude make too
+        many design decisions for me. So I stepped back. Pinterest, my old art, websites I used to love.
+        I asked what each template was doing, what I could cut, and what would make it look like me again.
+        Then I wrote my decisions down in
+        <a href="https://pirenily.com/pirenily-ui/" target="_blank" rel="noopener">Pirenily UI</a>,
+        so the next time I doubt one, I can see why I made it and change it on purpose.
+    </p>
+</div>
+
+{% call cs.row("equal", caption="Pirenily UI: the docs, and the Storybook with every hover and motion effect.") %}
+    {{ cs.site("https://pirenily.com/pirenily-ui/", "Pirenily UI docs") }}
+    {{ cs.site("https://pirenily.com/pirenily-ui/storybook/", "Pirenily UI Storybook") }}
+{% endcall %}
+
+<div class="essay cs-prose">
+    <p>
+        Every icon here is one of my own line drawings, drawn in whatever color the text is, so they follow
+        both views:
+    </p>
+</div>
+
+<div class="essay-icons" aria-label="The site’s hand-drawn icons">
+    {% for kind in ["star", "square", "circle", "triangle", "kiki", "bouba", "mail", "instagram",
+                    "linkedin", "github", "facebook", "x", "website", "article", "chevron"] %}
+    {{ icons.icon(kind, kind, "essay-icon") }}
+    {% endfor %}
+</div>
+
+<div class="essay cs-prose">
+    <p>
+        The rest is Flask and plain HTML, CSS and JavaScript, written by hand. Hate my website? Pull an
+        issue at
+        <a href="https://github.com/tuechile/pirenily/issues" target="_blank" rel="noopener">github.com/tuechile/pirenily</a>.
+    </p>
+</div>
 {% endblock %}

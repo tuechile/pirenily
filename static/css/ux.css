@@ -1410,6 +1410,50 @@ html {
 }
 
 .cs-hero,
+/* Pirenily: an essay inside the case-study shell, with the rail gone and embeds between paragraphs */
+.cs-shell--essay {
+    grid-template-columns: minmax(0, 1fr);
+    padding-bottom: var(--s-7);
+}
+
+.cs-shell--essay .cs-rail {
+    display: none;
+}
+
+.essay {
+    margin: var(--s-6) 0;
+}
+
+.essay p:last-child {
+    margin-bottom: 0;
+}
+
+.essay .case-title {
+    margin-bottom: var(--s-6);
+}
+
+.essay-loader {
+    margin: var(--s-6) 0;
+    text-align: center;
+}
+
+.essay-loader img {
+    width: min(240px, 60%);
+}
+
+.essay-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5);
+    margin: var(--s-6) 0;
+    color: var(--text-primary);
+}
+
+.essay-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
 .cs-chapter {
     scroll-margin-top: 6rem;
 }

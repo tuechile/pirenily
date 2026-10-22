@@ -17,7 +17,7 @@
     <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<div class="cs-shell">
+<div class="cs-shell{% block shell_class %}{% endblock %}">
     {# Section index: filled by case_scripts.html from every section with a heading #}
     <aside class="cs-rail" aria-label="Sections">
         {% if nav_section == "projects" %}
