@@ -1228,6 +1228,84 @@
     text-align: left;
 }
 
+/* About: "Where am I?" opens in place under the bio, instantly */
+.bio-where {
+    margin-top: 1.4rem;
+    text-align: left;
+}
+
+.bio-where summary {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--fs-1);
+    color: var(--lead);
+    list-style: none;
+    cursor: pointer;
+}
+
+.bio-where summary::-webkit-details-marker {
+    display: none;
+}
+
+.bio-where summary::after {
+    content: " +";
+    font-style: normal;
+    color: var(--c-dim);
+}
+
+.bio-where[open] summary::after {
+    content: " \2212";
+}
+
+.bio-where summary:hover {
+    filter: var(--hover-blur);
+}
+
+.bio-where summary:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.bio-where ul {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 1px solid var(--border);
+    display: grid;
+    gap: 0.35rem;
+}
+
+.bio-where li {
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
+    line-height: 1.6;
+    color: var(--c-text);
+}
+
+.bio-where li strong {
+    font-weight: 400;
+    color: var(--title);
+}
+
+.bio-where li em {
+    color: var(--lead);
+}
+
+.bio-text .bio-where-more {
+    margin: 0.6rem 0 0 0.9rem;
+    font-size: var(--fs-note);
+}
+
+.bio-where-more a {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.bio-where-more span {
+    color: var(--c-faint);
+}
+
 /* ===== Strip cards (Code page, home Projects) =====
    An image strip with its name and a smaller description underneath. At rest the picture is a soft,
    grayscale, out-of-focus blur with no edges; hovering brings it into color and almost into focus,
