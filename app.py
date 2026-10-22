@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "208"
+ASSET_VERSION = "209"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -368,7 +368,7 @@ GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "h
 
 # Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
 # Empty shows a "coming soon" note in the CV tab instead of the embed.
-CV_DRIVE_URL = "https://drive.google.com/file/d/1BkICDklLMM8e01PxCu9phby2AGNnapS_/view?usp=sharing"
+CV_DRIVE_URL = "https://drive.google.com/file/d/1OD9F_altGOjGhBZb4YsQQI-oJJ-oT6YL/view?usp=sharing"
 
 
 def access_level(key=None):
