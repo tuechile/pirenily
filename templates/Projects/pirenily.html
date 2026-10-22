@@ -1,0 +1,166 @@
+{% extends "case_study.html" %}
+{% import "partials/case_blocks.html" as cs %}
+
+{#
+    Template: how I built this website. Every section below is a first draft pulled from the code
+    (app.py, settings.js, the partials); rewrite in your own voice and swap each cs.placeholder()
+    for a screenshot, e.g. {{ cs.figure(img('ux', 'pirenily/finder.webp'), "alt text") }}.
+#}
+
+{% block title %}| Pirenily: How I Built This Website{% endblock %}
+
+{% block case %}
+
+{{ cs.hero("Pirenily",
+           "How I built this website: <strong>hardcoded</strong>, and every visual element drawn by me.",
+           eyebrow="Case study · this website",
+           tags=["Role: Designer + Developer",
+                 "Stack: Python + Flask + Jinja2 + HTML · CSS · JavaScript",
+                 "Started: Dec 2024",
+                 "Constraint: No frameworks + No build step"]) }}
+
+{{ cs.placeholder("Cover: the landing page with the finder") }}
+
+{{ cs.callout("TL;DR", points=[
+    "A personal archive that feels like a quiet, dark film: serif type, one teal accent, blur instead of color on hover.",
+    "Built by hand on Flask and plain HTML, CSS and JavaScript. No frameworks, no build tools, no database.",
+    "Two views from two switches: <em>My view</em> (dark, serif, cinematic) and <em>Your view</em> (light, sans, easier to read).",
+    "Every icon is my own line drawing, so the whole site recolors itself with each view.",
+]) }}
+
+{% call cs.body() %}
+
+    {% call cs.section("Why", lead="A portfolio that feels like mine") %}
+    <p>
+        Templates made every portfolio look the same. I wanted a site that reads like a personal
+        archive: dark, quiet and a little dreamy, where the work sits in a frame I designed myself.
+    </p>
+    <p>
+        <!-- TODO: the moment you decided to build it yourself, and what Pirenily means -->
+    </p>
+    {% endcall %}
+
+    {% call cs.section("First Website", lead="December 8, 2024") %}
+    <p>
+        Pirenily started as my first ever website, built in one sitting on December 8, 2024: 32 commits
+        between 3:37 in the afternoon and 10:57 at night, starting from a Flask template. It was the
+        first time I wrote code for something of my own.
+    </p>
+    <p>
+        Most of what defines the site now was already there that night: the search bar on the landing
+        page cycling through my names, the loader GIF between pages, BHN Cinema for the logo and Crimson
+        Text for everything else. What changed is everything around them.
+    </p>
+    <!-- TODO: what it felt like shipping it, and what made you keep going -->
+    {% endcall %}
+
+    {{ cs.compare([
+        {"title": "Then · Dec 2024", "points": [
+            "Four tabs: About, Collaborative Work, Personal Work, Commissions",
+            "The finder matched exact words only; anything else opened a random page",
+            "A looping background video on the landing page",
+            "One stylesheet, one dark look",
+            "Galleries of images, no writing about the work",
+        ]},
+        {"title": "Now", "points": [
+            "Four tabs: About, Code, Play, Projects",
+            "The finder forgives typos, accents and half-typed words",
+            "Two views, <em>My view</em> and <em>Your view</em>, from two switches",
+            "Color, type and icons all run on shared tokens",
+            "Case studies that explain the process, not only the result",
+        ]},
+    ]) }}
+
+    {% call cs.section() %}
+    <p>
+        The first version is still up as it was that night, and its code is on
+        <a href="https://github.com/tuechile/pirenily-2024" target="_blank" rel="noopener">GitHub</a>.
+    </p>
+    {% endcall %}
+
+    {{ cs.cta("https://pirenily.com/pirenily-2024/", "Visit the 2024 site", kicker="As of December 8, 2024") }}
+
+    {% call cs.section("Stack", lead="Small on purpose") %}
+    <p>
+        The site is a Flask app with Jinja2 templates and vanilla HTML, CSS and JavaScript. There is no
+        database and no build step: pushing to <code>main</code> redeploys it on Koyeb.
+    </p>
+    <p>
+        — One base layout every page extends, plus case-study building blocks (hero, sections, rows,
+        callouts) shared as Jinja macros<br>
+        — Images go through one helper that picks a web-sized copy and fingerprints the URL<br>
+        — A version number on every stylesheet and script, bumped on each change, so browsers never
+        serve a stale one
+    </p>
+    {% endcall %}
+
+    {{ cs.placeholder("Diagram: request → Flask route → Jinja template → page") }}
+
+    {% call cs.section("Aesthetic", lead="Quiet, serif, a little dreamy") %}
+    <p>
+        Black background, gray text, near-white titles and a single teal accent. BHN Cinema only for
+        the Pirenily logo; Crimson Text, often italic, for everything else.
+    </p>
+    <p>
+        Hovering blurs things slightly instead of changing their color. Panels are frosted glass with
+        hairline borders. Things appear and disappear instantly, with no fades.
+    </p>
+    {% endcall %}
+
+    {% call cs.row("pair", caption="My view and Your view, side by side.") %}
+        {{ cs.placeholder("My view (dark, serif)") }}
+        {{ cs.placeholder("Your view (light, sans)") }}
+    {% endcall %}
+
+    {% call cs.section("Two Views", lead="Two switches instead of a settings panel") %}
+    <p>
+        The nav has a light switch and a sound switch. Light on is <em>Your view</em>: a beige paper
+        theme, a system sans font and larger sizes, for anyone who just wants to read. Light off is
+        <em>My view</em>, the site as I see it.
+    </p>
+    <p>
+        Every color comes from a small set of tokens, so one switch repaints the whole site, icons
+        included. The sound switch turns on music and click sounds.
+    </p>
+    {% endcall %}
+
+    {% call cs.section("The Finder", lead="Search instead of a menu") %}
+    <p>
+        The landing page opens on a search bar that cycles through my names (Pirenily, Chi Le, Iron Pig,
+        Emily, Chi Bell). Type anything and it finds the closest page, forgiving accents, missing spaces,
+        half-typed words and typos. If nothing matches, it opens a random page.
+    </p>
+    {% endcall %}
+
+    {{ cs.placeholder("Screen recording: typing into the finder") }}
+
+    {% call cs.section("Drawn by Hand", lead="Every icon is a line drawing") %}
+    <p>
+        No icon libraries or logo files. Each icon is one of my own line drawings, stroked in the
+        current text color, so it follows every theme without a second version.
+    </p>
+    {% endcall %}
+
+    {{ cs.placeholder("Sheet of the hand-drawn icons") }}
+
+    {% call cs.section("Details", lead="Small things that took the longest") %}
+    <p>
+        <!-- TODO: pick your favorites, e.g. the loader GIF between pages, the teal progress bar,
+             the hover previews on project cards, the password gate on case studies -->
+    </p>
+    {% endcall %}
+
+    {% call cs.section("Reflection", lead="What building it taught me") %}
+    <p>
+        <!-- TODO: what you learned, what you'd change, what's next -->
+    </p>
+    <p>
+        Hate my website? Pull an issue at
+        <a href="https://github.com/tuechile/pirenily/issues" target="_blank" rel="noopener">github.com/tuechile/pirenily</a>.
+    </p>
+    {{ cs.cta("https://github.com/tuechile/pirenily", "See the code on GitHub") }}
+    {% endcall %}
+
+{% endcall %}
+
+{% endblock %}

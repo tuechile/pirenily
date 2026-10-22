@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "209"
+ASSET_VERSION = "214"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -75,6 +75,7 @@ PROJECT_TEMPLATES = {
     "cs171": "Projects/cs171.html",
     "t4sg": "Projects/2ft.html",
     "commonspirit": "Projects/commonspirit.html",
+    "pirenily": "Projects/pirenily.html",
 }
 
 
@@ -107,7 +108,8 @@ NAV_SECTIONS = {
     "about": ["about"],
     "code": ["code"],
     "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
-    "projects": ["hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710"],
+    "projects": ["hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710",
+                 "pirenily"],
 }
 
 
@@ -133,6 +135,7 @@ CASE_STUDIES = [
     ("commonspirit", "T4SG × CommonSpirit Health"),
     ("cs171", "Chi x Rain: An Essay on Unicode"),
     ("t4sg", "T4SG × 2ft Prosthetics"),
+    ("pirenily", "Pirenily: How I Built This Website"),
 ]
 
 
@@ -279,6 +282,8 @@ SEARCH_INDEX = [
                        "health", "dashboard"]),
     ("/cs1710", ["cs171", "cs1710", "cs 171", "unicode", "chi x rain", "rain", "typos", "the typos",
                  "data visualization", "data vis", "dataviz", "visualization"]),
+    ("/pirenily", ["this website", "this site", "website", "how i built this", "how i built this website",
+                   "how this website was built", "pirenily com", "flask", "jinja", "jinja2"]),
 ]
 
 
@@ -364,7 +369,7 @@ PROJECTS_ONLY_PASSWORD_HASH = os.environ.get("PROJECTS_ONLY_PASSWORD_HASH", "")
 RECRUITER_LINK = os.environ.get("RECRUITER_LINK", "")
 PROJECTS_COOKIE = "projects_key"
 GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
-                  "commonspirit", "cs171"}
+                  "commonspirit", "cs171", "pirenily"}
 
 # Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
 # Empty shows a "coming soon" note in the CV tab instead of the embed.
@@ -590,6 +595,19 @@ def involvement():
 @app.route("/cs1710")
 def cs171():
     return render_template(PROJECT_TEMPLATES["cs171"])
+
+@app.route("/pirenily")
+def pirenily():
+    return render_template(PROJECT_TEMPLATES["pirenily"])
+
+
+# Any address that isn't a page goes to the landing page. Only when no route matched, so a missing
+# static file or an abort(404) inside a real route (cv.pdf, drive-video) still answers 404.
+@app.errorhandler(404)
+def not_found(error):
+    if request.endpoint is None:
+        return redirect("/")
+    return error
 
 if __name__ == "__main__":
     app.run(debug=True)

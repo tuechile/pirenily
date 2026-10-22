@@ -1131,13 +1131,45 @@ html {
     display: block;
 }
 
+/* 2ft: the three quotes that drove decisions sit in the page; .open shows their implication outright */
+.insights-grid--key {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0 auto;
+}
+
+.insights-grid--key .more {
+    border-top: 0;
+    padding-top: 0;
+}
+
+/* The original eight-card board, popped up over the page (the raw image lightbox opens above it) */
+.board-overlay {
+    z-index: 999;
+    align-items: flex-start;
+    overflow-y: auto;
+    /* top room keeps the close × on the dim backdrop, clear of the panel */
+    padding: calc(var(--s-7) + var(--s-6)) var(--s-4) var(--s-6);
+}
+
+.board-panel {
+    width: min(1200px, 100%);
+    margin: auto;
+    background: rgba(var(--bg-rgb), 0.92);
+}
+
 @media (max-width: 860px) {
     .so-what {
         grid-template-columns: 1fr;
     }
 
-    .insights-grid {
+    .insights-grid,
+    .insights-grid--key {
         grid-template-columns: 1fr;
+    }
+
+    .board-overlay {
+        padding-left: var(--s-2);
+        padding-right: var(--s-2);
     }
 
     .insights-head .mini-btn {
