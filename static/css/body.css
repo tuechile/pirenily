@@ -1127,20 +1127,13 @@
     border: 0;
 }
 
-/* Home Projects toggle comes in two groups (Selected / Compilations / Resume and Brand / UI/UX / All).
-   Your view melts them back into one bar, in its usual order */
+/* Home Projects toggle comes in two groups (Selected / Résumé / Compilations and Brand / UI/UX / All).
+   Your view melts them back into one bar */
 .view-side {
     display: contents;
 }
 
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="selected"] { order: 1; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="resume"] { order: 2; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="brand"] { order: 3; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="uiux"] { order: 4; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="compilations"] { order: 5; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="all"] { order: 6; }
-
-/* Its pill is placed by both offsets (design_list.html), since the bar can wrap */
+/* Its pill is placed by both offsets (design_list.html), since the bar can wrap or stand as a column */
 #portfolio .view-pill {
     top: 0;
     bottom: auto;
@@ -1156,22 +1149,38 @@
     }
 }
 
-/* Your view: the bar sits under the cards, floating at the bottom of the screen while the list scrolls by
-   (still above the password panel while locked) */
-:root:not([data-mode="mine"]) .home-design {
-    display: flex;
-    flex-direction: column;
+/* Your view on laptops and up: the bar stands as a column on the left of the list, words left-aligned,
+   and stays put while the list scrolls (the list and password panel keep the middle column) */
+@media screen and (min-width: 881px) {
+    :root:not([data-mode="mine"]) .home-design {
+        display: grid;
+        grid-template-columns: minmax(11rem, 1fr) minmax(0, 720px) minmax(11rem, 1fr);
+        align-items: start;
+    }
+
+    :root:not([data-mode="mine"]) .home-design > :not(.view-toggle) {
+        grid-column: 2;
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        grid-column: 1;
+        grid-row: 1 / span 4;
+        justify-self: start;
+        top: 30vh;
+        flex-direction: column;
+        margin: 3rem 0 0 2.5rem;
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-btn {
+        text-align: left;
+    }
 }
 
-:root:not([data-mode="mine"]) #portfolio .view-toggle {
-    order: 1;
-    top: auto;
-    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
-    margin: 3rem auto 0;
-}
-
-:root:not([data-mode="mine"]) #portfolio .home-gate {
-    order: 2;
+/* Tablets and phones: the bar sticks at the top (home's nav doesn't there), just under the "=" */
+@media screen and (max-width: 880px) {
+    :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        top: 3.75rem;
+    }
 }
 
 /* My view: no bar. The groups pin to the far left and right of the list as plain italic words
@@ -1242,16 +1251,19 @@
     color: var(--accent);
 }
 
-/* The Resume tab unfolds downward here, since the words are stacked */
-:root[data-mode="mine"] #portfolio .view-btn--cv.is-folded {
-    max-width: none;
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-}
+/* On laptops and up the words are stacked in both views (rails, or Your view's column),
+   so the Résumé tab unfolds downward there */
+@media screen and (min-width: 881px) {
+    #portfolio .view-btn--cv.is-folded {
+        max-width: none;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 
-:root[data-mode="mine"] #portfolio .view-btn--cv.is-entering {
-    animation-name: cv-tab-down;
+    #portfolio .view-btn--cv.is-entering {
+        animation-name: cv-tab-down;
+    }
 }
 
 @keyframes cv-tab-down {
@@ -1272,14 +1284,19 @@
     }
 }
 
-/* Too narrow for side rails (tablets and phones): both groups gather into one centered row above the list */
+/* Too narrow for side rails (tablets and phones): both groups gather into one centered row above the list.
+   Home's nav doesn't stick at these sizes, so the row does: on a band that fades into the page like the
+   nav's, with room either side for the "=" */
 @media screen and (max-width: 880px) {
     :root[data-mode="mine"] #portfolio .view-toggle {
-        position: static;
+        position: sticky;
+        top: 0;
         flex-wrap: wrap;
         justify-content: center;
         gap: 0 1rem;
-        margin: -1rem 1rem 0;
+        margin: -1rem 0 0;
+        padding: 0.85rem 3.5rem 1.25rem;
+        background-image: linear-gradient(var(--nav-fade) 65%, transparent);
     }
 
     :root[data-mode="mine"] #portfolio .view-side {
@@ -1287,14 +1304,140 @@
         flex-direction: row;
         gap: 1rem;
     }
+}
 
-    :root[data-mode="mine"] #portfolio .view-btn--cv.is-folded {
-        max-height: none;
-        max-width: 0;
+/* The current-choice button only exists on phones (below) */
+.view-current {
+    display: none;
+}
+
+/* Phones: a floating bar that shows only the current choice and a chevron, with the "=" sitting at its right.
+   Tapping the choice unrolls the bar into the full list, the way Clue Perfumery's menu opens: about half a
+   second, slow start, quick middle, soft landing, nothing fading; the list drifts the last few px into place.
+   design_list.html sets the open height. */
+@media screen and (max-width: 666px) {
+    :root[data-mode] #portfolio .view-toggle {
+        --unroll: 520ms cubic-bezier(0.76, 0, 0.24, 1);
+        position: sticky;
+        inset: 8px auto auto;
+        display: block;
+        width: auto;
+        max-width: none;
+        box-sizing: border-box;
+        height: 44px;
+        margin: -1rem 12px 0;
+        padding: 0 0 1rem;
+        overflow: hidden;
+        border-radius: 12px;
+        pointer-events: auto;
+        transition: height var(--unroll), background-color var(--dur-1) var(--ease-out);
     }
 
-    :root[data-mode="mine"] #portfolio .view-btn--cv.is-entering {
-        animation-name: cv-tab-in;
+    :root[data-mode] #portfolio .view-side {
+        display: contents;
+    }
+
+    :root[data-mode] #portfolio .view-pill {
+        display: none;
+    }
+
+    #portfolio .view-current {
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+        width: 100%;
+        height: 44px;
+        padding: 0 52px 0 14px;    /* clear of the "=" */
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .view-current-icon {
+        width: 0.9em;
+        height: 0.9em;
+        transition: transform var(--unroll);
+    }
+
+    .view-toggle.is-open .view-current-icon {
+        transform: rotate(180deg);
+    }
+
+    /* The choices, stacked in large type under the row; they settle 8px as the bar lands */
+    :root[data-mode] #portfolio .view-toggle .view-btn {
+        display: block;
+        width: 100%;
+        padding: 0.1rem 14px;
+        text-align: left;
+        line-height: 1.2;
+        border-radius: 0;
+        transform: translateY(-8px);
+        transition: transform 900ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    :root[data-mode] #portfolio .view-toggle.is-open .view-btn {
+        transform: none;
+    }
+
+    /* Phones don't fold the Résumé tab in; it waits inside the closed bar anyway */
+    :root[data-mode] #portfolio .view-btn--cv.is-folded {
+        max-width: none;
+        max-height: none;
+        padding: 0.1rem 14px;
+    }
+
+    :root[data-mode] #portfolio .view-btn--cv.is-entering {
+        animation: none;
+    }
+
+    /* My view: the teal italic choice on a light veil of the page; the open panel goes dark and frosted */
+    :root[data-mode="mine"] #portfolio .view-toggle {
+        background: rgba(var(--bg-rgb), 0.55);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+
+    :root[data-mode="mine"] #portfolio .view-toggle.is-open {
+        background-color: rgba(var(--bg-rgb), 0.82);
+        box-shadow: inset 0 0 0 1px var(--hairline);
+    }
+
+    :root[data-mode="mine"] #portfolio .view-current {
+        font-style: italic;
+        font-size: 1.1rem;
+        color: var(--accent);
+    }
+
+    :root[data-mode="mine"] #portfolio .view-toggle .view-btn {
+        font-size: 2.1rem;
+    }
+
+    /* Your view: the frosted bar, closed and open */
+    :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        background: rgba(var(--bg-rgb), 0.8);
+        box-shadow: 0 4px 6px rgba(var(--shadow-rgb), 0.12);
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-current {
+        font-size: 1rem;
+        color: var(--title);
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-toggle .view-btn {
+        font-size: 1.85rem;
+        font-style: normal;
+        color: var(--text);
+        background: none;
+    }
+
+    :root:not([data-mode="mine"]) #portfolio .view-toggle .view-btn.active {
+        color: var(--title);
+    }
+
+    :root[data-motion="reduced"] #portfolio :is(.view-toggle, .view-btn, .view-current-icon) {
+        transition: none;
     }
 }
 

@@ -142,15 +142,8 @@ body {
 .home-footer-meta{ opacity: 0.9; }
 .home-footer-pitch{ opacity: 0.9; font-size: var(--fs-small); }
 .home-footer-pitch a{ color: inherit; }
-/* Projects (and, with the full password, Résumé): side-by-side pills in the tag style */
-.home-footer-pitch:has(.pitch-btn){ display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.15rem; }
-.pitch-btn{
-  text-decoration: none;
-  background: var(--glass);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--r-pill);
-  padding: 0.15rem 0.85rem;
-}
+/* Projects (and, with the full password, Résumé): two underlined links side by side */
+.home-footer-pitch:has(.pitch-btn){ display: flex; justify-content: center; gap: 1.25rem; }
 .pitch-btn:hover,
 .pitch-btn:focus-visible{ filter: var(--hover-blur); }
 /* Separators are <i>; on phones they drop and each phrase takes its own line */
@@ -478,12 +471,12 @@ a, button {
     filter: var(--hover-blur);
 }
 
-/* "=" menu button: phones only (see the max-width: 666px block and nav.js) */
+/* "=" menu button: phones only, and on home tablets too (see the max-width blocks and nav.js) */
 .nav-toggle {
     display: none;
 }
 
-/* Home's copy of the links for that menu, also phones only (two classes, so the tablet
+/* Home's copy of the links for that menu (two classes, so the tablet
    .nav-item-big grid can't bring it back as a second nav) */
 .nav-item-big.home-menu {
     display: none;
@@ -774,16 +767,7 @@ footer {
         transform: translateY(-4.5px) rotate(-45deg);
     }
 
-    /* Home: the stacked list scrolls away with the landing; the "=" only appears once it's gone */
-    .home-nav {
-        position: static;
-    }
-
-    html:not(.past-home-nav):not(.menu-open) .home-toggle {
-        display: none;
-    }
-
-    :is(.navigator .nav-item-big, .home-menu) {
+    .navigator .nav-item-big {
         position: fixed;
         inset: 0;
         z-index: 1000;
@@ -799,13 +783,13 @@ footer {
         transition: clip-path 700ms var(--ease-wipe), visibility 0s linear 700ms;
     }
 
-    .menu-open :is(.navigator .nav-item-big, .home-menu) {
+    .menu-open .navigator .nav-item-big {
         clip-path: circle(150% at calc(100% - 32px) 30px);
         visibility: visible;
         transition: clip-path 700ms var(--ease-wipe), visibility 0s;
     }
 
-    :is(.navigator .nav-item-big, .home-menu) .nav-item {
+    .navigator .nav-item-big .nav-item {
         font-size: 2.75rem;
         line-height: 1.1;
         padding: 0.15rem 0;
@@ -879,6 +863,84 @@ footer {
     .project-thumb-subrow .project-thumb-date{
         order: 5;
         margin-top: 0.4rem;
+    }
+}
+
+/* ===== Home on tablets and phones: the stacked list scrolls away with the landing, and once it's gone
+   the same "=" as the other pages' phone menu takes its place (the Projects filter row sticks instead) ===== */
+@media screen and (max-width: 880px) {
+    .home-nav {
+        position: static;
+    }
+
+    .home-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7.5px;
+        position: fixed;
+        top: 10px;
+        right: 12px;
+        z-index: 1001;
+        width: 40px;
+        height: 40px;
+        padding: 0 9px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    html:not(.past-home-nav):not(.menu-open) .home-toggle {
+        display: none;
+    }
+
+    .home-toggle span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--pill-text-on);
+        transition: transform 400ms var(--ease-out);
+    }
+
+    .menu-open .home-toggle span:first-child {
+        transform: translateY(4.5px) rotate(45deg);
+    }
+
+    .menu-open .home-toggle span:last-child {
+        transform: translateY(-4.5px) rotate(-45deg);
+    }
+
+    .nav-item-big.home-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+        padding: 120px 16px 40px;
+        text-align: left;
+        background: var(--menu-bg);
+        clip-path: circle(0% at calc(100% - 32px) 30px);
+        visibility: hidden;
+        transition: clip-path 700ms var(--ease-wipe), visibility 0s linear 700ms;
+    }
+
+    .menu-open .nav-item-big.home-menu {
+        clip-path: circle(150% at calc(100% - 32px) 30px);
+        visibility: visible;
+        transition: clip-path 700ms var(--ease-wipe), visibility 0s;
+    }
+
+    .home-menu .nav-item {
+        font-size: 2.75rem;
+        line-height: 1.1;
+        padding: 0.15rem 0;
+        color: var(--title-on-black);
+    }
+
+    html.menu-open {
+        overflow: hidden;
     }
 }
 
@@ -975,6 +1037,16 @@ footer {
     position: relative;
     width: min(34rem, 100% - 2rem);
     margin: -4rem auto 0;
+    text-align: center;
+}
+
+/* Centered panel: the typed text and the blinking line sit in the middle too */
+.home-gate .gate-field input {
+    text-align: center;
+}
+
+.home-gate .gate-field:has(input:placeholder-shown)::before {
+    left: 50%;
 }
 
 .home-gate-sub {

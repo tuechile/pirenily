@@ -19,6 +19,8 @@
     document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") setOpen(false);
     });
-    // back on a wider screen the menu is just the normal nav again
-    window.matchMedia("(max-width: 666px)").addEventListener("change", function () { setOpen(false); });
+    // back on a wider screen the menu is just the normal nav again (home keeps the menu up to 880px)
+    ["(max-width: 666px)", "(max-width: 880px)"].forEach(function (q) {
+        window.matchMedia(q).addEventListener("change", function () { setOpen(false); });
+    });
 })();

@@ -1,11 +1,14 @@
+{% import "partials/icons.html" as icons %}
 {# Design cards with the Selected / Brand / UI/UX / Compilations / All toggle (home Projects section).
    Strip cards, the same as the Code page: in color at rest (black and white and blurred in My view), sharpening on hover with the stack dropping in from the top. #}
 <div class="view-toggle" role="group" aria-label="View mode">
+    {# Phones: only the current choice shows; tapping it unrolls the bar into the full list #}
+    <button type="button" class="view-current" aria-haspopup="true" aria-expanded="false"><span class="view-current-label">Selected</span>{{ icons.icon("chevron", None, "view-current-icon") }}</button>
     {# Two groups so My view can pin them to either side of the list; Your view lays them out as one bar #}
     <span class="view-side view-side--left">
         <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
-        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false">Compilations</button>
         {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="resume" aria-pressed="false"><span>Résumé</span></button>{% endif %}
+        <button type="button" class="view-btn" data-view="compilations" aria-pressed="false">Compilations</button>
     </span>
     <span class="view-side view-side--right">
         <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
@@ -385,6 +388,25 @@
         var cvPanel = document.getElementById("cvPanel");
         var cvBtn = toggle.querySelector(".view-btn--cv");
 
+        // Phones: the bar shows only the current choice; tapping it unrolls the bar to its full height
+        var current = toggle.querySelector(".view-current");
+        var phone = window.matchMedia("(max-width: 666px)");
+
+        function setOpen(open) {
+            open = open && phone.matches;
+            toggle.classList.toggle("is-open", open);
+            current.setAttribute("aria-expanded", String(open));
+            toggle.style.height = open ? toggle.scrollHeight + "px" : "";
+        }
+
+        current.addEventListener("click", function (e) {
+            e.stopPropagation();
+            setOpen(!toggle.classList.contains("is-open"));
+        });
+        document.addEventListener("click", function (e) { if (!toggle.contains(e.target)) setOpen(false); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+        phone.addEventListener("change", function () { setOpen(false); });
+
         function setView(view) {
             if (view === "resume" && !cvPanel) view = "selected";
             cards.forEach(function (c) {
@@ -396,8 +418,10 @@
                 var on = b.dataset.view === view;
                 b.classList.toggle("active", on);
                 b.setAttribute("aria-pressed", on);
+                if (on) current.querySelector(".view-current-label").textContent = b.textContent.trim();
             });
             placePill(true);
+            setOpen(false);
         }
 
         btns.forEach(function (b) {
@@ -408,16 +432,23 @@
             });
         });
 
-        // The landing's Résumé button opens the tab here (a plain #resume link does nothing once it's the hash already)
-        document.querySelectorAll('.home-footer-pitch a[href="#resume"]').forEach(function (a) {
-            a.addEventListener("click", function (e) {
+        // Projects links (nav, menu, landing) bring the list down on Selected; the landing's Résumé opens that tab.
+        // One listener for the page, pointed at the newest toggle (this script runs again after the gate unlocks)
+        window.pirenilyOpenView = function (view) {
+            if (view === "resume" && cvBtn) cvBtn.classList.remove("is-folded");
+            setView(view);
+            history.replaceState(null, "", view === "selected" ? location.pathname : "#" + view);
+            document.getElementById("portfolio").scrollIntoView();
+        };
+        if (!window.pirenilyViewLinks) {
+            window.pirenilyViewLinks = true;
+            document.addEventListener("click", function (e) {
+                var a = e.target.closest('a[href="#portfolio"], a[href="#resume"]');
+                if (!a) return;
                 e.preventDefault();
-                if (cvBtn) cvBtn.classList.remove("is-folded");
-                setView("resume");
-                history.replaceState(null, "", "#resume");
-                document.getElementById("portfolio").scrollIntoView();
+                window.pirenilyOpenView(a.getAttribute("href") === "#resume" ? "resume" : "selected");
             });
-        });
+        }
 
         var fromHash = { "#resume": "resume", "#cv": "resume", "#brand": "brand", "#uiux": "uiux", "#compilations": "compilations", "#collection": "compilations", "#marketing": "compilations", "#all": "all" }[location.hash];
         setView(fromHash || "selected");
