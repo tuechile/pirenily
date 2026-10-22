@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "220"
+ASSET_VERSION = "224"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -595,9 +595,18 @@ def involvement():
 def cs171():
     return render_template(PROJECT_TEMPLATES["cs171"])
 
+@app.route("/find")
+def find():
+    # The Pirenily essay's finder demo: where a query would land, without leaving the page
+    return {"url": find_page(request.args.get("q", ""))}
+
+
 @app.route("/pirenily")
 def pirenily():
-    return render_template(PROJECT_TEMPLATES["pirenily"])
+    # Reading mode: a recording of the essay, shown only once the file exists
+    path = os.path.join(app.static_folder, "asset", "audio", "pirenily-essay.mp3")
+    narration = url_for("static", filename="asset/audio/pirenily-essay.mp3", v=_file_hash(path)) if os.path.isfile(path) else None
+    return render_template(PROJECT_TEMPLATES["pirenily"], narration=narration)
 
 
 # Any address that isn't a page goes to the landing page. Only when no route matched, so a missing

@@ -146,15 +146,18 @@
 </div>
 {% endmacro %}
 
-{# A live website at desktop size (width px wide, ar shape), scaled down to the column so it keeps its full layout #}
-{% macro site(src, title, width=1440, ar=1.6) %}
-<div class="media-card media-card--site" style="--ar: {{ ar }}; --site-w: {{ width }}px" data-site-width="{{ width }}">
-    <iframe src="{{ src }}" title="{{ title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+{# A live website at desktop size (width px wide, ar shape), scaled down to the column so it keeps its full layout.
+   hover: shows only the site's name until it's hovered, focused or tapped, then loads it (case_scripts.html) #}
+{% macro site(src, title, width=1440, ar=1.6, hover=False) %}
+<div class="media-card media-card--site{% if hover %} is-idle{% endif %}" style="--ar: {{ ar }}; --site-w: {{ width }}px" data-site-width="{{ width }}"
+    {%- if hover %} tabindex="0" role="button" aria-label="Load {{ title }}"{% endif %}>
+    {% if hover %}<span class="site-label">{{ title }}</span>{% endif %}
+    <iframe {% if hover %}data-src{% else %}src{% endif %}="{{ src }}" title="{{ title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 </div>
 {% endmacro %}
 
-{% macro video_card(src, types=["video/mp4"]) %}
-<div class="media-card">
+{% macro video_card(src, types=["video/mp4"], ar=None) %}
+<div class="media-card"{% if ar %} style="--ar: {{ ar }}"{% endif %}>
     <video autoplay loop muted playsinline>
         {% for type in types %}<source src="{{ src }}" type="{{ type }}">{% endfor %}
     </video>

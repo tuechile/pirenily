@@ -125,6 +125,21 @@
         new ResizeObserver(fit).observe(card);
     });
 
+    // Hover-loaded sites: only the name shows until the card is hovered, focused or tapped
+    document.querySelectorAll(".media-card--site.is-idle").forEach(card => {
+        const frame = card.querySelector("iframe");
+        const load = () => {
+            if (!card.classList.contains("is-idle")) return;
+            frame.src = frame.dataset.src;
+            card.classList.remove("is-idle");
+            card.removeAttribute("role");
+            card.removeAttribute("aria-label");
+        };
+        card.addEventListener("pointerenter", load);
+        card.addEventListener("click", load);
+        card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); load(); } });
+    });
+
     // Instagram embeds post their own height; size each frame to it so nothing is clipped
     window.addEventListener("message", (e) => {
         if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;

@@ -322,6 +322,32 @@ html {
     transform: scale(var(--site-scale, 0.5));
 }
 
+/* Hover-loaded site: a hairline frame with its name until it's hovered or tapped, then the live page */
+.media-card--site.is-idle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--hairline);
+    cursor: pointer;
+}
+
+.media-card--site.is-idle iframe {
+    visibility: hidden;
+}
+
+.site-label {
+    padding: var(--s-3);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--fs-small);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.media-card--site:not(.is-idle) .site-label {
+    display: none;
+}
+
 .media-card--placeholder {
     display: flex;
     align-items: center;
@@ -400,6 +426,11 @@ html {
     width: auto;
     max-width: none;
     margin: 0;
+}
+
+.split-fit>.media-card video {
+    display: block;
+    width: 100%;
 }
 
 /* Sized as if in a two-card fit row whose ratios sum to --row-ar, so it shares that row's height */
@@ -1432,6 +1463,18 @@ html {
     margin-bottom: var(--s-6);
 }
 
+.essay-listen {
+    margin: 0 0 var(--s-6);
+}
+
+.essay-listen .img-caption {
+    margin: 0 0 var(--s-2);
+}
+
+.essay-listen audio {
+    width: 100%;
+}
+
 .essay-loader {
     margin: var(--s-6) 0;
     text-align: center;
@@ -1439,6 +1482,81 @@ html {
 
 .essay-loader img {
     width: min(240px, 60%);
+}
+
+.essay-demo {
+    margin: var(--s-5) 0 var(--s-6);
+}
+
+.essay-demo-input {
+    width: 100%;
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--hairline);
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.essay-demo-input:focus {
+    outline: none;
+    border-color: var(--hairline-strong);
+}
+
+.essay-blur {
+    color: var(--text-primary);
+    cursor: default;
+}
+
+.essay-blur:hover {
+    filter: var(--hover-blur);
+}
+
+:root[data-mode="easy"] .essay-blur {
+    transition: opacity 400ms var(--ease-out);
+}
+
+:root[data-mode="easy"] .essay-blur:hover {
+    opacity: 0.45;
+}
+
+/* Commits per month: bars scaled to the busiest month (104) */
+.essay-commits {
+    display: grid;
+    grid-template-columns: repeat(23, minmax(0, 1fr));
+    align-items: end;
+    gap: 3px;
+    height: 180px;
+}
+
+.essay-commit {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    min-width: 0;
+}
+
+.essay-commit-bar {
+    width: 100%;
+    height: calc(var(--n) / 104 * 120px);
+    min-height: 1px;
+    background: rgba(var(--fg-rgb), 0.35);
+}
+
+.essay-commit:last-child .essay-commit-bar {
+    background: var(--accent);
+}
+
+.essay-commit-n,
+.essay-commit-month {
+    font-family: var(--font-body);
+    font-size: var(--fs-tiny);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    line-height: 1.6;
 }
 
 .essay-icons {
@@ -1662,6 +1780,18 @@ html {
     font-style: normal;
     text-transform: uppercase;
     color: var(--accent);
+}
+
+.img-caption a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--hairline-strong);
+    text-underline-offset: 3px;
+}
+
+/* The Pirenily essay is not a case study: captions without figure numbers */
+.cs-shell--essay .img-caption--fig::before {
+    content: none;
 }
 
 /* ----- Panels: overview, results, comparisons ----- */
