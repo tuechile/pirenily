@@ -22,6 +22,54 @@
     {% endif %}
 
     <p>
+        Hey, sorry if I say “niche” or “chic” a lot. Those are my vocal stims right now, and as you’ll
+        notice, this whole website is full of them.
+    </p>
+
+    <p>
+        One thing first: I don’t think AI restricts design. I think it makes it more accessible. I started
+        this site with no idea how to build a website, and an AI that couldn’t design at all. Now Claude writes
+        most of the code, and I spend my time on the part that’s mine: the decisions. You can see it in my
+        commits. The early ones say “help me with the dimensions huhu” and “im sleeping.” The recent ones say
+        “Centralize image paths behind a Jinja img() helper.”
+    </p>
+</div>
+
+{% set notes = {"2024-12-08": "CS50 final project due",
+                "2025-07-09": "Free in Venice: and a phone layout",
+                "2026-01-02": "Just finished my first semester at T4SG, and I knew I wanted to do UX design",
+                "2026-08-17": "Finished my fellowship, so I added CommonSpirit. As a CS major I figured I should tinker, so I added a bunch of dumb coding projects, and rearranged the UX of a site I hadn’t touched in a long time",
+                "2026-10-21": "A lot more of my own taste. Claude Code got really good, so I could make things right away instead of writing them in my notes and waiting for a free day"} %}
+{% if commit_weeks %}
+<figure class="cs-figure essay-activity">
+    {# Two rows, like GitHub's year rows, so the squares stay big enough to see #}
+    {% set half = (commit_weeks|length + 1) // 2 %}
+    {% set ns = namespace(note=0) %}
+    <div class="essay-grid-scroll" role="img"
+        aria-label="My commits per day since December 2024, in five bursts: December 2024, July 2025, January 2026, August 2026 and October 2026">
+        {% for row in commit_weeks|batch(half) %}
+        <div class="essay-grid" style="--weeks: {{ half }}">
+            {% for week in row %}
+            <div class="essay-week">
+                <span class="essay-week-note">{% for d, n in week.days if d in notes %}{% set ns.note = ns.note + 1 %}{{ ns.note }}{% endfor %}</span>
+                {% for d, n in week.days %}
+                <span class="essay-day" data-level="{{ 0 if n == 0 else 1 if n < 4 else 2 if n < 10 else 3 if n < 20 else 4 }}"
+                    title="{{ d }}: {{ n }} commit{{ '' if n == 1 else 's' }}"></span>
+                {% endfor %}
+                <span class="essay-week-month">{{ week.month or (week.first if loop.first else '') }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <ol class="essay-notes">
+        {% for d, note in notes|dictsort %}<li>{{ note }}</li>{% endfor %}
+    </ol>
+</figure>
+{% endif %}
+
+<div class="essay cs-prose">
+    <p>
         Pirenily is two of my names put together. Emily is my English name. I picked it in sixth grade, my
         brother approved, and then nobody ever called me that. In college I tried to finally be an Emily,
         and everyone told me I don’t look like one or sound like one. So nobody uses it, but it’s been mine
@@ -237,29 +285,8 @@
 <div class="essay cs-prose">
     <p>
         The code is Flask and plain HTML, CSS and JavaScript, and most of it was written by Claude, from my
-        decisions. This is every month I’ve worked on it:
+        decisions.
     </p>
-</div>
-
-{# My commits per month (git log --author="Chi"), counted Oct 22, 2026. Koyeb has no git history, so it's written in here. #}
-{% set commits = [("Dec ’24", 32), ("Jan", 0), ("Feb", 0), ("Mar", 0), ("Apr", 0), ("May", 0), ("Jun", 0),
-                  ("Jul", 39), ("Aug", 0), ("Sep", 0), ("Oct", 0), ("Nov", 1), ("Dec", 0),
-                  ("Jan ’26", 26), ("Feb", 3), ("Mar", 0), ("Apr", 0), ("May", 0), ("Jun", 3), ("Jul", 0),
-                  ("Aug", 27), ("Sep", 1), ("Oct", 104)] %}
-<figure class="cs-figure">
-    <div class="essay-commits" role="img" aria-label="Commits per month, December 2024 to October 2026: 32 the first month, 39 in July 2025, 26 in January 2026, 27 in August 2026 and 104 in October 2026">
-        {% for month, n in commits %}
-        <div class="essay-commit" style="--n: {{ n }}" title="{{ month }}: {{ n }} commits">
-            {% if n >= 20 %}<span class="essay-commit-n">{{ n }}</span>{% endif %}
-            <span class="essay-commit-bar"></span>
-            {% if n >= 20 %}<span class="essay-commit-month">{{ month }}</span>{% endif %}
-        </div>
-        {% endfor %}
-    </div>
-    {{ cs.img_caption("Commits per month. It comes in bursts: the first 40 hours, a summer, a winter break, another summer, and this October.") }}
-</figure>
-
-<div class="essay cs-prose">
     <p>
         If you’re making your own: talk your ideas out. Decide before AI can decide for you. Write down why
         you made every choice, and why you said no to the others, because you won’t remember, no matter how

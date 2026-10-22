@@ -12,7 +12,7 @@ import time
 import unicodedata
 import urllib.error
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "change-this-to-a-long-random-string"  # required for sessions
@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "224"
+ASSET_VERSION = "230"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -601,12 +601,45 @@ def find():
     return {"url": find_page(request.args.get("q", ""))}
 
 
+def commit_weeks():
+    """GitHub-style activity grid: weeks (Sunday first) from the first commit's week to the last,
+    each a list of (date, commits). Counts come from tools/commit_grid.py."""
+    try:
+        with open(os.path.join(app.static_folder, "asset", "data", "commits.json")) as f:
+            counts = json.load(f)
+    except (OSError, ValueError):
+        return []
+    if not counts:
+        return []
+    first, last = (datetime.strptime(d, "%Y-%m-%d").date() for d in (min(counts), max(counts)))
+    day = first - timedelta(days=(first.weekday() + 1) % 7)
+    weeks = []
+    labelled = -99
+    while day <= last:
+        week = []
+        for _ in range(7):
+            week.append((day.isoformat(), counts.get(day.isoformat(), 0)))
+            day += timedelta(days=1)
+        # Label the first week and the week each quarter (Jan, Apr, Jul, Oct) starts in,
+        # skipping one that would sit on top of the label before it
+        starts = next((d for d, _ in week if d.endswith("-01") and int(d[5:7]) in (1, 4, 7, 10)), None)
+        month = None
+        if not weeks or (starts and len(weeks) - labelled >= 6):
+            when = datetime.strptime(starts or week[0][0], "%Y-%m-%d")
+            month = when.strftime("%b ’%y") if when.month == 1 or not weeks else when.strftime("%b")
+            labelled = len(weeks)
+        # For a week that opens a new row of the grid
+        first = datetime.strptime(week[0][0], "%Y-%m-%d").strftime("%b ’%y")
+        weeks.append({"days": week, "month": month, "first": first})
+    return weeks
+
+
 @app.route("/pirenily")
 def pirenily():
     # Reading mode: a recording of the essay, shown only once the file exists
     path = os.path.join(app.static_folder, "asset", "audio", "pirenily-essay.mp3")
     narration = url_for("static", filename="asset/audio/pirenily-essay.mp3", v=_file_hash(path)) if os.path.isfile(path) else None
-    return render_template(PROJECT_TEMPLATES["pirenily"], narration=narration)
+    return render_template(PROJECT_TEMPLATES["pirenily"], narration=narration, commit_weeks=commit_weeks())
 
 
 # Any address that isn't a page goes to the landing page. Only when no route matched, so a missing

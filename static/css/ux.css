@@ -1521,42 +1521,74 @@ html {
     opacity: 0.45;
 }
 
-/* Commits per month: bars scaled to the busiest month (104) */
-.essay-commits {
-    display: grid;
-    grid-template-columns: repeat(23, minmax(0, 1fr));
-    align-items: end;
-    gap: 3px;
-    height: 180px;
+/* Commits per day, GitHub style: a column per week, a square per day, shaded by how many */
+.essay-activity {
+    margin: var(--s-5) 0 var(--s-6);
 }
 
-.essay-commit {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100%;
+.essay-grid-scroll {
+    overflow-x: auto;
+}
+
+.essay-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--weeks), minmax(0, 1fr));
+    gap: 2px;
+    min-width: 420px;
+}
+
+.essay-grid + .essay-grid {
+    margin-top: var(--s-3);
+}
+
+.essay-week {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 1.2em repeat(7, auto) 1.4em;
+    gap: 2px;
     min-width: 0;
 }
 
-.essay-commit-bar {
-    width: 100%;
-    height: calc(var(--n) / 104 * 120px);
-    min-height: 1px;
-    background: rgba(var(--fg-rgb), 0.35);
+.essay-day {
+    aspect-ratio: 1;
+    background: rgba(var(--fg-rgb), 0.07);
 }
 
-.essay-commit:last-child .essay-commit-bar {
-    background: var(--accent);
-}
+.essay-day[data-level="1"] { background: rgba(var(--accent-rgb), 0.3); }
+.essay-day[data-level="2"] { background: rgba(var(--accent-rgb), 0.55); }
+.essay-day[data-level="3"] { background: rgba(var(--accent-rgb), 0.8); }
+.essay-day[data-level="4"] { background: var(--accent); }
 
-.essay-commit-n,
-.essay-commit-month {
+.essay-week-note,
+.essay-week-month {
     font-family: var(--font-body);
     font-size: var(--fs-tiny);
+    line-height: 1.2;
     color: var(--text-tertiary);
     white-space: nowrap;
+    /* Zero width: labels spill over the next weeks instead of widening their own */
+    width: 0;
+    overflow: visible;
+}
+
+.essay-week-note {
+    color: var(--accent);
+    align-self: end;
+}
+
+.essay-notes {
+    margin: var(--s-3) 0 0;
+    padding-left: 1.4em;
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    font-style: italic;
     line-height: 1.6;
+    color: var(--text-tertiary);
+}
+
+.essay-notes li::marker {
+    color: var(--accent);
+    font-style: normal;
 }
 
 .essay-icons {
