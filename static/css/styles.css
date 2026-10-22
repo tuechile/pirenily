@@ -142,10 +142,21 @@ body {
 .home-footer-meta{ opacity: 0.9; }
 .home-footer-pitch{ opacity: 0.9; font-size: var(--fs-small); }
 .home-footer-pitch a{ color: inherit; }
+/* Projects (and, with the full password, Résumé): side-by-side pills in the tag style */
+.home-footer-pitch:has(.pitch-btn){ display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.15rem; }
+.pitch-btn{
+  text-decoration: none;
+  background: var(--glass);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-pill);
+  padding: 0.15rem 0.85rem;
+}
+.pitch-btn:hover,
+.pitch-btn:focus-visible{ filter: var(--hover-blur); }
 /* Separators are <i>; on phones they drop and each phrase takes its own line */
 :is(.home-footer-meta, .home-footer-pitch){ text-align: center; padding: 0 1rem; }
 :is(.home-footer-meta, .home-footer-pitch) > *{ white-space: pre; font-style: normal; }
-@media (max-width: 600px){
+@media (max-width: 666px){
     :is(.home-footer-meta, .home-footer-pitch) > i{ display: none; }
     :is(.home-footer-meta, .home-footer-pitch) > :is(span, a){ display: block; }
 }
@@ -472,8 +483,9 @@ a, button {
     display: none;
 }
 
-/* Home's copy of the links for that menu, also phones only */
-.home-menu {
+/* Home's copy of the links for that menu, also phones only (two classes, so the tablet
+   .nav-item-big grid can't bring it back as a second nav) */
+.nav-item-big.home-menu {
     display: none;
 }
 
@@ -668,7 +680,7 @@ footer {
 }
 
 /* ===== Tablet Styles ===== */
-@media screen and (min-width: 666px) and (max-width:880px) {
+@media screen and (min-width: 667px) and (max-width: 880px) {
     .nav-header {
         padding: 2rem;
         font-size: 4vw;

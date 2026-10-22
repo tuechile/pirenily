@@ -824,7 +824,7 @@
     opacity: 0.7;
 }
 
-@media screen and (min-width: 666px) and (max-width: 880px) {
+@media screen and (min-width: 667px) and (max-width: 880px) {
     .masonry {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -893,7 +893,7 @@
     border: 0;
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 880px) {
     .iframe-wrapper {
       max-width: 100%;
       aspect-ratio: 17 / 22;
@@ -943,7 +943,7 @@
     }
 }
 
-/* Six tabs once the CV tab is in: tighten again so the row still fits a phone */
+/* Six tabs once the Resume tab is in: tighten again so the row still fits a phone */
 @media screen and (max-width: 480px) {
     .view-toggle:has(.view-btn--cv) .view-btn {
         font-size: var(--fs-body-sm);
@@ -951,7 +951,7 @@
     }
 }
 
-/* The CV tab (full password only) unfolds from nothing next to Selected: its width opens and
+/* The Resume tab (full password only) unfolds from nothing next to Selected: its width opens and
    the label is uncovered as it goes, so the tabs to its right slide over rather than jump */
 .view-btn--cv {
     overflow: hidden;
@@ -975,7 +975,7 @@
         padding-right: 0;
     }
     to {
-        max-width: 5rem;
+        max-width: 7rem;
     }
 }
 
@@ -1127,18 +1127,34 @@
     border: 0;
 }
 
-/* Home Projects toggle comes in two groups (Selected / Compilations / CV and Brand / UI/UX / All).
+/* Home Projects toggle comes in two groups (Selected / Compilations / Resume and Brand / UI/UX / All).
    Your view melts them back into one bar, in its usual order */
 .view-side {
     display: contents;
 }
 
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="selected"] { order: 1; }
-:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="cv"] { order: 2; }
+:root:not([data-mode="mine"]) #portfolio .view-btn[data-view="resume"] { order: 2; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="brand"] { order: 3; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="uiux"] { order: 4; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="compilations"] { order: 5; }
 :root:not([data-mode="mine"]) #portfolio .view-btn[data-view="all"] { order: 6; }
+
+/* Its pill is placed by both offsets (design_list.html), since the bar can wrap */
+#portfolio .view-pill {
+    top: 0;
+    bottom: auto;
+    transition: transform var(--dur-3) var(--ease-out), width var(--dur-3) var(--ease-out), height var(--dur-3) var(--ease-out);
+}
+
+/* Six tabs don't fit a phone in one row: Your view's bar wraps to a second, centered row */
+@media screen and (max-width: 480px) {
+    :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100% - 2rem);
+    }
+}
 
 /* Your view: the bar sits under the cards, floating at the bottom of the screen while the list scrolls by
    (still above the password panel while locked) */
@@ -1226,7 +1242,7 @@
     color: var(--accent);
 }
 
-/* The CV tab unfolds downward here, since the words are stacked */
+/* The Resume tab unfolds downward here, since the words are stacked */
 :root[data-mode="mine"] #portfolio .view-btn--cv.is-folded {
     max-width: none;
     max-height: 0;
@@ -1249,8 +1265,15 @@
     }
 }
 
-/* Too narrow for side rails: both groups gather into one centered row above the list */
-@media screen and (max-width: 960px) {
+/* With the rails on either side, the list leaves them room on smaller laptops */
+@media screen and (min-width: 881px) {
+    :root[data-mode="mine"] #portfolio .strip-grid {
+        width: min(720px, 100% - 20rem);
+    }
+}
+
+/* Too narrow for side rails (tablets and phones): both groups gather into one centered row above the list */
+@media screen and (max-width: 880px) {
     :root[data-mode="mine"] #portfolio .view-toggle {
         position: static;
         flex-wrap: wrap;

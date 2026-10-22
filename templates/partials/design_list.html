@@ -5,7 +5,7 @@
     <span class="view-side view-side--left">
         <button type="button" class="view-btn active" data-view="selected" aria-pressed="true">Selected</button>
         <button type="button" class="view-btn" data-view="compilations" aria-pressed="false">Compilations</button>
-        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="cv" aria-pressed="false"><span>CV</span></button>{% endif %}
+        {% if cv %}<button type="button" class="view-btn view-btn--cv" data-view="resume" aria-pressed="false"><span>Résumé</span></button>{% endif %}
     </span>
     <span class="view-side view-side--right">
         <button type="button" class="view-btn" data-view="brand" aria-pressed="false">Brand</button>
@@ -183,12 +183,12 @@
 </div>
 {% if cv %}
 {# Only the full password gets here; the Drive link lives in CV_DRIVE_URL (app.py) #}
-<section class="cv-panel" id="cvPanel" aria-label="CV" hidden>
+<section class="cv-panel" id="cvPanel" aria-label="Résumé" hidden>
     {% if cv.url %}
     <p class="gate-note cv-open"><a href="{{ cv.url }}" target="_blank" rel="noopener">Open it in Google Drive ↗</a></p>
     {% endif %}
     {% if cv.page %}
-    <div class="cv-frame" aria-label="Chi Le's CV">
+    <div class="cv-frame" aria-label="Chi Le's résumé">
         <div class="cv-sheet"><canvas aria-hidden="true"></canvas><div class="textLayer"></div><div class="cv-links"></div></div>
     </div>
     <script>
@@ -311,7 +311,7 @@
         })();
     </script>
     {% elif not cv.url %}
-    <p class="cv-soon">On its way. Until it's up, <a href="mailto:chile@college.harvard.edu?subject=CV">email me</a> and I'll send a copy.</p>
+    <p class="cv-soon">On its way. Until it's up, <a href="mailto:chile@college.harvard.edu?subject=R%C3%A9sum%C3%A9">email me</a> and I'll send a copy.</p>
     {% endif %}
 </section>
 {% endif %}
@@ -334,11 +334,16 @@
             fetch(form.action, { method: "POST", body: new FormData(form) })
                 .then(function (r) { return r.text(); })
                 .then(function (html) {
-                    var fresh = new DOMParser().parseFromString(html, "text/html").getElementById("portfolio");
+                    var doc = new DOMParser().parseFromString(html, "text/html");
+                    var fresh = doc.getElementById("portfolio");
                     var main = document.getElementById("portfolio");
                     if (!fresh || !main) { form.submit(); return; }
                     var top = main.getBoundingClientRect().top;
                     main.innerHTML = fresh.innerHTML;
+                    // the landing's Projects / Résumé buttons also depend on the access level
+                    // (swapped before the scripts run, so the toggle can wire up the new Résumé button)
+                    var pitch = document.querySelector(".home-footer-pitch"), freshPitch = doc.querySelector(".home-footer-pitch");
+                    if (pitch && freshPitch) pitch.innerHTML = freshPitch.innerHTML;
                     // innerHTML leaves scripts inert, so run the new ones (the toggle, and this gate on a wrong try)
                     main.querySelectorAll("script").forEach(function (old) {
                         var s = document.createElement("script");
@@ -370,8 +375,10 @@
         function placePill(animate) {
             var on = toggle.querySelector(".view-btn.active");
             if (!animate) pill.style.transition = "none";
+            // the bar can wrap to two rows on phones, so the pill follows the button down as well as across
             pill.style.width = on.offsetWidth + "px";
-            pill.style.transform = "translateX(" + on.offsetLeft + "px)";
+            pill.style.height = on.offsetHeight + "px";
+            pill.style.transform = "translate(" + on.offsetLeft + "px, " + on.offsetTop + "px)";
             if (!animate) { pill.offsetWidth; pill.style.transition = ""; }
         }
 
@@ -379,12 +386,12 @@
         var cvBtn = toggle.querySelector(".view-btn--cv");
 
         function setView(view) {
-            if (view === "cv" && !cvPanel) view = "selected";
+            if (view === "resume" && !cvPanel) view = "selected";
             cards.forEach(function (c) {
                 var show = view === "all" || c.hasAttribute("data-" + { selected: "featured", brand: "brand", uiux: "uiux", compilations: "collection" }[view]);
                 c.style.display = show ? "" : "none";
             });
-            if (cvPanel) cvPanel.hidden = view !== "cv";
+            if (cvPanel) cvPanel.hidden = view !== "resume";
             btns.forEach(function (b) {
                 var on = b.dataset.view === view;
                 b.classList.toggle("active", on);
@@ -401,7 +408,18 @@
             });
         });
 
-        var fromHash = { "#cv": "cv", "#brand": "brand", "#uiux": "uiux", "#compilations": "compilations", "#collection": "compilations", "#marketing": "compilations", "#all": "all" }[location.hash];
+        // The landing's Résumé button opens the tab here (a plain #resume link does nothing once it's the hash already)
+        document.querySelectorAll('.home-footer-pitch a[href="#resume"]').forEach(function (a) {
+            a.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (cvBtn) cvBtn.classList.remove("is-folded");
+                setView("resume");
+                history.replaceState(null, "", "#resume");
+                document.getElementById("portfolio").scrollIntoView();
+            });
+        });
+
+        var fromHash = { "#resume": "resume", "#cv": "resume", "#brand": "brand", "#uiux": "uiux", "#compilations": "compilations", "#collection": "compilations", "#marketing": "compilations", "#all": "all" }[location.hash];
         setView(fromHash || "selected");
         // /#all etc. has no element to jump to, so bring the list into view ourselves
         // (after load, once the browser has finished its own hash scroll)
@@ -414,10 +432,10 @@
         document.fonts.ready.then(function () { placePill(false); });
         window.addEventListener("resize", function () { placePill(false); });
 
-        // The CV tab unfolds next to Selected the first time it shows up in a visit. It waits folded
+        // The Resume tab unfolds next to Selected the first time it shows up in a visit. It waits folded
         // until the page has loaded (the loader is gone) and the toggle is on screen, so it's seen.
         // The pill follows along while the tabs to its right slide over.
-        if (cvBtn && fromHash !== "cv" && document.documentElement.dataset.motion !== "reduced" && "IntersectionObserver" in window) {
+        if (cvBtn && fromHash !== "resume" && document.documentElement.dataset.motion !== "reduced" && "IntersectionObserver" in window) {
             var seen = false;
             try { seen = sessionStorage.getItem("pirenily-cv-tab") === "1"; } catch (e) {}
             if (!seen) {
@@ -438,7 +456,7 @@
                     var io = new IntersectionObserver(function (entries) {
                         if (entries[0].isIntersecting) { io.disconnect(); unfold(); }
                     }, { threshold: 1 });
-                    // My view's toggle spans the whole section, so watch the CV tab's own group there
+                    // My view's toggle spans the whole section, so watch the Resume tab's own group there
                     var side = cvBtn.parentNode;
                     io.observe(getComputedStyle(side).display === "contents" ? toggle : side);
                 };
