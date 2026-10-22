@@ -139,6 +139,13 @@ body {
   z-index: 5;
 }
 
+/* Name on its own line above the role, so the first screen says who this is */
+.home-footer-name{
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--c-strong);
+}
 .home-footer-meta{ opacity: 0.9; }
 .home-footer-pitch{ opacity: 0.9; font-size: var(--fs-small); }
 .home-footer-pitch a{ color: inherit; }

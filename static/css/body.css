@@ -1720,12 +1720,18 @@
     font-size: var(--fs-note);
 }
 
-.bio-where-more a {
+.bio-text .bio-built {
+    margin: 0.4rem 0 1rem;
+    font-size: var(--fs-note);
+    text-align: left;
+}
+
+:is(.bio-where-more, .bio-built) a {
     font-style: italic;
     color: var(--accent);
 }
 
-.bio-where-more span {
+:is(.bio-where-more, .bio-built) span {
     color: var(--c-faint);
 }
 
