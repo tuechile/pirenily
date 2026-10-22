@@ -290,7 +290,7 @@
             function open() {
                 var lib = window.pdfjsLib;
                 lib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js";
-                lib.getDocument("{{ url_for('cv_pdf') }}").promise
+                lib.getDocument("{{ url_for('cv_pdf', v=asset_v) }}").promise
                     .then(function (doc) { return doc.getPage(1); })
                     .then(function (p) {
                         page = p;

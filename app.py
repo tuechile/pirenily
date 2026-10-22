@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "241"
+ASSET_VERSION = "242"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -423,7 +423,7 @@ def cv_pdf():
         except (urllib.error.URLError, TimeoutError):
             if not _cv_pdf["data"]:
                 abort(502)
-    return Response(_cv_pdf["data"], mimetype="application/pdf", headers={"Cache-Control": "private, max-age=300"})
+    return Response(_cv_pdf["data"], mimetype="application/pdf", headers={"Cache-Control": "private, no-cache"})
 
 
 @app.before_request
