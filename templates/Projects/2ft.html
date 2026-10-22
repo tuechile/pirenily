@@ -77,61 +77,7 @@
     </p>
     {% endcall %}
 
-    {# §12 Bespoke: Interview highlights. The page keeps the three quotes that drove decisions;
-       "View all" opens the original board (all eight, with persona and theme filters). #}
-    {% set interviews = [
-        ("parts", "president", "inventory", "President", "Inventory",
-         "“The same part exists in three different places.”",
-         "Inventory lives across multiple spreadsheets, tabs, and naming conventions, making it hard to know whether a component is available, used, or misplaced.",
-         "one canonical inventory source with consistent component IDs and clear status states (in storage, on trip, fitted, returned)."),
-        ("labels", "president", "onboarding", "President", "Labeling",
-         "“You have to already know the system to use it.”",
-         "Status labels and categories are inconsistent, undocumented, and difficult for new volunteers to understand without direct guidance.",
-         "standardized terminology, inline definitions, and guardrails that prevent mislabeling during data entry."),
-        ("now", "president", "visibility", "President", "Operations",
-         "“I just want to know what we have right now.”",
-         "There is no reliable real-time snapshot of inventory — checking availability means digging through spreadsheets and asking people directly.",
-         "a default dashboard showing current inventory counts with last-updated timestamps and editor attribution."),
-        ("offline", "volunteer", "offline", "Volunteer", "Offline",
-         "“I usually write it down and update it later.”",
-         "Clinics, travel days, and storage sites often lack reliable internet, forcing volunteers to track parts on paper or in personal notes.",
-         "offline-first data entry with visible sync states and safe conflict resolution when reconnecting."),
-        ("anxiety", "volunteer", "onboarding", "Volunteer", "Edit anxiety",
-         "“I’m worried I’ll mess something up.”",
-         "Volunteers hesitate to update records because it’s unclear who edited what last, or whether changes can be undone.",
-         "edit history, change previews, and clear save confirmation to support confident collaboration."),
-        ("navigation", "volunteer", "usability", "Volunteer", "Navigation",
-         "“I never know where to look.”",
-         "Information is spread across tabs and columns with no clear hierarchy, making even simple lookups slow.",
-         "task-oriented navigation (search, add, move, review) instead of spreadsheet-style layouts."),
-        ("reports", "treasurer", "reporting", "Treasurer", "Reporting",
-         "“We rebuild reports every year.”",
-         "Donor and inventory reports are assembled manually because fields aren’t consistent or comparable across years.",
-         "normalized donor fields, timestamps, and export-ready reports for year-over-year comparison."),
-        ("accountability", "treasurer", "accountability", "Treasurer", "Accountability",
-         "“I don’t directly manage inventory — but I’m responsible for it.”",
-         "Components represent real financial value, yet inventory tracking doesn’t clearly support auditing or accountability.",
-         "traceability from donor → component → usage to support financial oversight without extra manual work."),
-    ] %}
-    {# The three behind the shipped decisions: dropdowns over free text, offline-first, save states + history #}
-    {% set key_interviews = ["parts", "offline", "anxiety"] %}
-
-    {% macro insight(item, open=False) %}
-    {% set key, persona, theme, who, tag, quote, text, implication = item %}
-    <article class="insight{% if open %} open{% endif %}" data-persona="{{ persona }}" data-theme="{{ theme }}">
-        <div class="meta">
-            <span class="pill">{{ who }}</span>
-            <span class="tag-mini">{{ tag }}</span>
-        </div>
-        <h4>{{ quote }}</h4>
-        <p>{{ text }}</p>
-        {% if not open %}<button class="expand" type="button">Why this mattered</button>{% endif %}
-        <div class="more">
-            <p><strong>Design implication:</strong> {{ implication }}</p>
-        </div>
-    </article>
-    {% endmacro %}
-
+    {# §12 Bespoke: Interview Insights explorer #}
     {% call cs.block() %}
     <div class="insights-card">
 
@@ -139,7 +85,162 @@
             <div>
                 <h3 class="insights-title">Interview Highlights</h3>
             </div>
-            <button class="mini-btn" type="button" id="openBoard" aria-haspopup="dialog">View all 8</button>
+            <button class="mini-btn" type="button" id="openAffinity">View raw</button>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Interview personas">
+            <button class="tab active" type="button" data-persona="all" role="tab">All</button>
+            <button class="tab" type="button" data-persona="president" role="tab">President</button>
+            <button class="tab" type="button" data-persona="treasurer" role="tab">Treasurer</button>
+            <button class="tab" type="button" data-persona="volunteer" role="tab">Volunteers</button>
+        </div>
+
+        <div class="chips" aria-label="Theme filters">
+            <button class="chip active" type="button" data-theme="all">All themes</button>
+            <button class="chip" type="button" data-theme="offline">Offline reality</button>
+            <button class="chip" type="button" data-theme="onboarding">Onboarding + language</button>
+            <button class="chip" type="button" data-theme="inventory">Inventory clarity</button>
+            <button class="chip" type="button" data-theme="reporting">Reporting</button>
+        </div>
+
+        <div class="insights-grid" id="insightsGrid">
+
+            <article class="insight" data-persona="president" data-theme="inventory">
+                <div class="meta">
+                    <span class="pill">President</span>
+                    <span class="tag-mini">Inventory</span>
+                </div>
+                <h4>“The same part exists in three different places.”</h4>
+                <p>
+                    Inventory lives across multiple spreadsheets, tabs, and naming conventions, making it hard to
+                    know whether a component is available, used, or misplaced.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> one canonical inventory source with consistent component
+                        IDs and clear status states (in storage, on trip, fitted, returned).</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="president" data-theme="onboarding">
+                <div class="meta">
+                    <span class="pill">President</span>
+                    <span class="tag-mini">Labeling</span>
+                </div>
+                <h4>“You have to already know the system to use it.”</h4>
+                <p>
+                    Status labels and categories are inconsistent, undocumented, and difficult for new volunteers to
+                    understand without direct guidance.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> standardized terminology, inline definitions, and
+                        guardrails that prevent mislabeling during data entry.</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="president" data-theme="visibility">
+                <div class="meta">
+                    <span class="pill">President</span>
+                    <span class="tag-mini">Operations</span>
+                </div>
+                <h4>“I just want to know what we have right now.”</h4>
+                <p>
+                    There is no reliable real-time snapshot of inventory — checking availability means digging
+                    through spreadsheets and asking people directly.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> a default dashboard showing current inventory counts
+                        with last-updated timestamps and editor attribution.</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="volunteer" data-theme="offline">
+                <div class="meta">
+                    <span class="pill">Volunteer</span>
+                    <span class="tag-mini">Offline</span>
+                </div>
+                <h4>“I usually write it down and update it later.”</h4>
+                <p>
+                    Clinics, travel days, and storage sites often lack reliable internet, forcing volunteers to
+                    track parts on paper or in personal notes.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> offline-first data entry with visible sync states and
+                        safe conflict resolution when reconnecting.</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="volunteer" data-theme="onboarding">
+                <div class="meta">
+                    <span class="pill">Volunteer</span>
+                    <span class="tag-mini">Edit anxiety</span>
+                </div>
+                <h4>“I’m worried I’ll mess something up.”</h4>
+                <p>
+                    Volunteers hesitate to update records because it’s unclear who edited what last, or whether
+                    changes can be undone.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> edit history, change previews, and clear save
+                        confirmation to support confident collaboration.</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="volunteer" data-theme="usability">
+                <div class="meta">
+                    <span class="pill">Volunteer</span>
+                    <span class="tag-mini">Navigation</span>
+                </div>
+                <h4>“I never know where to look.”</h4>
+                <p>
+                    Information is spread across tabs and columns with no clear hierarchy, making even simple
+                    lookups slow.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> task-oriented navigation (search, add, move, review)
+                        instead of spreadsheet-style layouts.</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="treasurer" data-theme="reporting">
+                <div class="meta">
+                    <span class="pill">Treasurer</span>
+                    <span class="tag-mini">Reporting</span>
+                </div>
+                <h4>“We rebuild reports every year.”</h4>
+                <p>
+                    Donor and inventory reports are assembled manually because fields aren’t consistent or
+                    comparable across years.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> normalized donor fields, timestamps, and export-ready
+                        reports for year-over-year comparison.</p>
+                </div>
+            </article>
+
+            <article class="insight" data-persona="treasurer" data-theme="accountability">
+                <div class="meta">
+                    <span class="pill">Treasurer</span>
+                    <span class="tag-mini">Accountability</span>
+                </div>
+                <h4>“I don’t directly manage inventory — but I’m responsible for it.”</h4>
+                <p>
+                    Components represent real financial value, yet inventory tracking doesn’t clearly support
+                    auditing or accountability.
+                </p>
+                <button class="expand" type="button">Why this mattered</button>
+                <div class="more">
+                    <p><strong>Design implication:</strong> traceability from donor → component → usage to support
+                        financial oversight without extra manual work.</p>
+                </div>
+            </article>
+
         </div>
 
         <div class="so-what">
@@ -156,44 +257,8 @@
                 <div class="big">“Who changed this?” must be obvious</div>
             </div>
         </div>
-
-        <div class="insights-grid insights-grid--key">
-            {% for item in interviews if item[0] in key_interviews %}{{ insight(item, open=True) }}{% endfor %}
-        </div>
     </div>
     {% endcall %}
-
-    {# The original board, in a pop-up #}
-    <div class="lightbox-overlay board-overlay" id="interviewBoard" role="dialog" aria-modal="true" aria-label="All interview highlights">
-        <div class="close-btn" id="boardClose" role="button" tabindex="0" aria-label="Close">&times;</div>
-        <div class="insights-card board-panel">
-            <div class="insights-head">
-                <div>
-                    <h3 class="insights-title">All Interview Highlights</h3>
-                </div>
-                <button class="mini-btn" type="button" id="openAffinity">View raw</button>
-            </div>
-
-            <div class="tabs" role="tablist" aria-label="Interview personas">
-                <button class="tab active" type="button" data-persona="all" role="tab">All</button>
-                <button class="tab" type="button" data-persona="president" role="tab">President</button>
-                <button class="tab" type="button" data-persona="treasurer" role="tab">Treasurer</button>
-                <button class="tab" type="button" data-persona="volunteer" role="tab">Volunteers</button>
-            </div>
-
-            <div class="chips" aria-label="Theme filters">
-                <button class="chip active" type="button" data-theme="all">All themes</button>
-                <button class="chip" type="button" data-theme="offline">Offline reality</button>
-                <button class="chip" type="button" data-theme="onboarding">Onboarding + language</button>
-                <button class="chip" type="button" data-theme="inventory">Inventory clarity</button>
-                <button class="chip" type="button" data-theme="reporting">Reporting</button>
-            </div>
-
-            <div class="insights-grid" id="insightsGrid">
-                {% for item in interviews %}{{ insight(item) }}{% endfor %}
-            </div>
-        </div>
-    </div>
 
     {{ cs.callout("What we learned quickly", display=False,
                   text="Most existing tools failed in the same four ways: they assumed stable internet, crammed too much onto each screen, mixed logistics with technical data, and took new volunteers too long to learn.") }}
@@ -373,13 +438,12 @@
 
 {% block case_scripts %}
 <script>
-    // ===== Interview board (pop-up with all eight) =====
+    // ===== Interview Insights Explorer =====
     (function () {
-        const board = document.getElementById("interviewBoard");
-        const tabs = board.querySelectorAll(".tab");
-        const chips = board.querySelectorAll(".chip");
-        const cards = board.querySelectorAll(".insight");
-        const lightbox = document.getElementById("lightbox");
+        const tabs = document.querySelectorAll(".tab");
+        const chips = document.querySelectorAll(".chip");
+        const cards = document.querySelectorAll(".insight");
+        const openAffinity = document.getElementById("openAffinity");
 
         let activePersona = "all";
         let activeTheme = "all";
@@ -411,30 +475,16 @@
             if (toggle) toggle.addEventListener("click", () => card.classList.toggle("open"));
         });
 
-        function openBoard() {
-            board.style.display = "flex";
-            document.documentElement.style.overflow = "hidden";
+        // Open the raw affinity board in the shared lightbox
+        if (openAffinity) {
+            openAffinity.addEventListener("click", () => {
+                const overlay = document.getElementById("lightbox");
+                const img = document.getElementById("lightboxImg");
+                img.src = "{{ img('ux', 't4sg/interview.png') }}";
+                img.alt = "Affinity mapping board (raw notes)";
+                overlay.style.display = "flex";
+            });
         }
-        function shutBoard() {
-            board.style.display = "none";
-            document.documentElement.style.overflow = "";
-        }
-        document.getElementById("openBoard").addEventListener("click", openBoard);
-        document.getElementById("boardClose").addEventListener("click", shutBoard);
-        board.addEventListener("click", (e) => { if (e.target === board) shutBoard(); });
-        // Capture phase, so with the raw board open on top, Escape closes only that first
-        window.addEventListener("keydown", (e) => {
-            if (e.key !== "Escape" || board.style.display !== "flex") return;
-            if (lightbox.style.display !== "flex") shutBoard();
-        }, true);
-
-        // The raw affinity board opens in the shared lightbox, above this pop-up
-        document.getElementById("openAffinity").addEventListener("click", () => {
-            const img = document.getElementById("lightboxImg");
-            img.src = "{{ img('ux', 't4sg/interview.png') }}";
-            img.alt = "Affinity mapping board (raw notes)";
-            lightbox.style.display = "flex";
-        });
 
         applyFilters();
     })();
