@@ -1127,7 +1127,7 @@
     border: 0;
 }
 
-/* Home Projects toggle comes in two groups (Selected / Résumé / Compilations and Brand / UI/UX / All).
+/* Home Projects toggle comes in two groups (Selected / Résumé / Compilations and UI/UX / Brand / All).
    Your view melts them back into one bar */
 .view-side {
     display: contents;
@@ -1175,7 +1175,7 @@
         text-align: left;
     }
 
-    /* At rest the column shows only solid shapes (star, square, circle, kiki, two bars, bouba) on a fully
+    /* At rest the column shows only solid shapes (star, square, circle, triangle, kiki, bouba) on a fully
        round bar; hovering it, or tabbing into it, folds each shape away as its word slides out, so the open
        column is plain text, and the bar's corners ease back (the pill follows: design_list.html watches the tabs' size) */
     :root:not([data-mode="mine"]) #portfolio .view-toggle {
