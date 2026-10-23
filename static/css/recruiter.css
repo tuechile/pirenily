@@ -978,8 +978,14 @@ body.rc,
     line-height: 1.4;
 }
 
-.rc :is(.rc-name, .rc-project-head h2, .rc-bio .rc-bio-lead, .rc-bio-head, .rc-card-head h2, .rc-locked h1) {
+.rc :is(.rc-name, .rc-project-head h2, .rc-card-head h2, .rc-locked h1) {
     font-size: var(--rc-fs-title);
+    line-height: 1.3;
+}
+
+/* The About title lines stay a step bigger */
+.rc :is(.rc-bio .rc-bio-lead, .rc-bio-head) {
+    font-size: var(--fs-tiny);
     line-height: 1.3;
 }
 
