@@ -16,6 +16,7 @@
     --pink-soft: #ffc9de;             /* focus ring, photo shadow, slider, panel tint */
     --pink-soft-rgb: 255, 201, 222;
     --yellow: #fdff85;                /* selection glow, link shimmer */
+    --yellow-pastel: #fff7c2;         /* the softer yellow in the link shimmer */
     --yellow-bar: #f4ff8f;            /* progress bar */
     --yellow-select: #fdff85;         /* selected text that's already pink */
     --gold-rgb: 255, 208, 107;        /* button hover glow */
@@ -104,7 +105,7 @@
 
 /* ---------- Text links ----------
    Every link inside a line of text (not the recruiter pages) shimmers on hover: teal through white in
-   the dark, yellow through pink on paper. Your view also sets them in the IM Fell header face */
+   the dark, yellow through pink and pastel yellow on paper */
 :where(body:not(.rc) p) a {
     color: inherit;
     text-decoration: none;
@@ -117,17 +118,14 @@ body:not(.rc) p a:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke-color: transparent;
+    /* The gray ink bleed would show through the clear letters and muddy the colors, so it bleeds pink here */
+    text-shadow: 0 0 0.7px rgba(var(--accent-rgb), 0.5);
     filter: none;
     animation: gradientHover 2s infinite linear;
 }
 
 :root[data-theme="light"] :is(body:not(.rc) p a:hover, .com-footer:hover) {
-    background-image: linear-gradient(45deg, var(--yellow), var(--accent), var(--yellow));
-}
-
-:root[data-mode="easy"] body:not(.rc) p a {
-    font-family: var(--font-head);
-    -webkit-text-stroke: var(--head-stroke) currentColor;
+    background-image: linear-gradient(45deg, var(--yellow), var(--accent), var(--yellow-pastel), var(--accent), var(--yellow));
 }
 
 @keyframes gradientHover {
