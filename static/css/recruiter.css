@@ -13,7 +13,7 @@
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
     --rc-col: 640px;                               /* the middle column and the home thumbnails */
-    --rc-gutter: 48px;
+    --rc-gutter: 32px;
     --rc-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -22,8 +22,8 @@ body.rc {
     height: auto;
     margin: 0;
     font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: var(--fs-tiny);
+    line-height: 1.45;
     color: var(--c-lead);
     background: var(--bg);
 }
@@ -87,7 +87,7 @@ body.rc {
 }
 
 .rc-logo {
-    font-size: 1.375rem;
+    font-size: 2rem;
     color: var(--c-title);
     text-decoration: none;
 }
@@ -96,13 +96,13 @@ body.rc {
     margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 28px;
 }
 
 .rc-sound {
     width: 44px;
     height: 44px;
-    font-size: 1.125rem;
+    font-size: 1rem;
 }
 
 .rc-sound[aria-pressed="false"] {
@@ -112,8 +112,8 @@ body.rc {
 
 .rc-links {
     display: flex;
-    gap: 28px;
-    font-size: 1.0625rem;
+    gap: 48px;
+    font-size: 1rem;
 }
 
 .rc-links a {
@@ -136,7 +136,7 @@ body.rc {
     height: 100%;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr) 140px;
+    grid-template-columns: 240px minmax(0, 1fr) 120px;
     grid-template-rows: minmax(0, 1fr);
     align-items: center;
     column-gap: 24px;
@@ -204,13 +204,13 @@ body.rc {
     grid-row: 1;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
 }
 
 .rc-card {
     position: relative;
-    width: 186px;
-    height: 225px;
+    width: 150px;
+    height: 181px;
     perspective: 1200px;
 }
 
@@ -307,10 +307,10 @@ body.rc {
 
 .rc-name {
     margin: 0;
-    width: 192px;
+    width: 180px;
     font-weight: 400;
-    font-size: 1.5rem;
-    line-height: 1.25;
+    font-size: 1.25rem;
+    line-height: 1.2;
     color: var(--c-title);
 }
 
@@ -338,9 +338,9 @@ body.rc {
 .rc-sub,
 .rc-line {
     margin: 0;
-    width: 195px;
-    font-size: 1.0625rem;
-    line-height: 1.6;
+    width: 180px;
+    font-size: var(--fs-tiny);
+    line-height: 1.45;
 }
 
 .rc-sub {
@@ -382,9 +382,9 @@ body.rc {
 }
 
 .rc-word {
-    min-height: 44px;
+    min-height: 30px;
     padding: 0 2px;
-    font-size: 1.05rem;
+    font-size: var(--fs-tiny);
     text-align: right;
     transition: opacity 400ms var(--rc-ease);
 }
@@ -440,7 +440,7 @@ body.rc {
     flex-grow: 1;
     min-width: 0;
     font-weight: 400;
-    font-size: 1.625rem;
+    font-size: 1.3rem;
     line-height: 1.2;
     color: var(--c-title);
 }
@@ -450,14 +450,14 @@ body.rc {
     flex-shrink: 0;
     max-width: 45%;
     text-align: right;
-    font-size: var(--fs-note);
+    font-size: var(--fs-tiny);
     color: var(--c-lead);
 }
 
 .rc-project-desc {
     margin: 8px 0 0;
-    font-size: var(--fs-note);
-    line-height: 1.5;
+    font-size: var(--fs-tiny);
+    line-height: 1.4;
 }
 
 /* Phones and no-script: the plain list */
@@ -468,7 +468,7 @@ body.rc {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 36px;
 }
 
 .rc-project,
@@ -549,8 +549,8 @@ body.rc {
     }
 
     .rc-card {
-        width: 150px;
-        height: 181px;
+        width: 124px;
+        height: 150px;
     }
 }
 
@@ -576,7 +576,7 @@ body.rc {
 .rc-bio-emoji span {
     position: absolute;
     transform: translate(-50%, -50%);
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     line-height: 1;
 }
 
@@ -588,12 +588,12 @@ body.rc {
 
 .rc-bio p {
     margin: 0;
-    font-size: 1.0625rem;
+    font-size: var(--fs-tiny);
     line-height: 1.7;
 }
 
 .rc-bio .rc-bio-lead {
-    font-size: 1.625rem;
+    font-size: 1.3rem;
     line-height: 1.35;
     color: var(--c-title);
 }
@@ -601,7 +601,7 @@ body.rc {
 .rc-bio-head {
     margin: 14px 0 0;
     font-weight: 400;
-    font-size: 1.375rem;
+    font-size: 1.125rem;
     color: var(--c-title);
 }
 
@@ -615,7 +615,7 @@ body.rc {
     gap: 24px;
     padding: 12px 0;
     border-top: 1px solid var(--hairline);
-    font-size: var(--fs-note);
+    font-size: var(--fs-tiny);
     line-height: 1.5;
 }
 
@@ -704,7 +704,7 @@ body.rc {
     flex-grow: 1;
     min-width: 0;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: var(--fs-note);
     line-height: 1.25;
     color: var(--c-title);
 }
@@ -743,7 +743,7 @@ body.rc {
 .rc-locked h1 {
     margin: 0;
     font-weight: 400;
-    font-size: 1.625rem;
+    font-size: 1.3rem;
     line-height: 1.3;
     color: var(--c-title);
 }
@@ -751,7 +751,7 @@ body.rc {
 .rc-locked p,
 .rc-locked a {
     margin: 0;
-    font-size: 1.0625rem;
+    font-size: var(--fs-tiny);
     line-height: 1.6;
 }
 
@@ -798,7 +798,7 @@ body.rc {
     top: 3px;
     opacity: 0;
     color: var(--rc-page);
-    font-size: var(--fs-note);
+    font-size: var(--fs-tiny);
     line-height: 1.2;
     white-space: nowrap;
 }
@@ -928,7 +928,7 @@ body.rc {
 
     .rc-name {
         width: auto;
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
 
     .rc-name-btn {
@@ -938,7 +938,7 @@ body.rc {
     .rc-sub,
     .rc-line {
         width: auto;
-        font-size: var(--fs-note);
+        font-size: var(--fs-tiny);
     }
 
     .rc-contacts {
@@ -950,7 +950,7 @@ body.rc {
     }
 
     .rc-word {
-        font-size: var(--fs-note);
+        font-size: var(--fs-tiny);
     }
 
     .rc-project-head {
@@ -959,7 +959,7 @@ body.rc {
     }
 
     .rc-project-head h2 {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
 
     .rc-project-role {
