@@ -69,10 +69,7 @@
         linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
         linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
 
-    /* Radii: images, panels, pills */
-    --r-sm: 10px;
-    --r-lg: 20px;
-    --r-pill: 999px;
+    /* No radii: every corner on the site is square (only true circles are round) */
 }
 
 /* Press feedback shared by every pill-like control */
@@ -311,7 +308,6 @@ a:focus-visible .contact-logo {
   width: min(720px, 86vw);
   display: block;
   text-decoration: none;
-  border-radius: var(--r-lg);
   overflow: hidden;
   border: 1px solid rgba(var(--fg-rgb), 0.247);
   background: rgba(var(--bg-rgb), 0.25);
@@ -370,19 +366,24 @@ a:focus-visible .contact-logo {
   flex-shrink: 0;
 }
 
-/* One chip style for every tag on the site (project cards and case-study heroes) */
+/* One chip style for every tag on the site (strip cards and case-study heroes): square, with a solid
+   line in the text color. Tags in a row join side by side, each overlapping the next by 1px so neighbours
+   share one line (.tag-row, .strip-stack) */
 .tag, .tag-chip{
   font-family: var(--font-body);
   font-style: italic;
   font-size: var(--fs-tiny);
   line-height: 1.4;
-  color: var(--pill-text);
-  background: var(--glass);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--r-pill);
+  color: var(--c-strong);
+  background: none;
+  border: 1px solid var(--c-strong);
   padding: 0.2rem 0.65rem;
   white-space: nowrap;
   user-select: none;
+}
+
+:is(.tag-row, .strip-stack) > :is(.tag, .tag-chip){
+  margin: 0 -1px -1px 0;
 }
 
 .project-thumb-date{
@@ -509,7 +510,6 @@ footer {
     font-family: var(--font-body);
     font-weight: 800;
     font-style: italic;
-    border-radius: 0.25rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;

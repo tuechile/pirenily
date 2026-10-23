@@ -153,22 +153,10 @@ body:not(.rc) p a:hover {
     border-color: rgba(var(--gold-rgb), 0.55);
 }
 
-:root[data-theme="light"] .case-hero {
-    background:
-        radial-gradient(circle at 18% 20%, rgba(var(--pink-soft-rgb), 0.18), transparent 42%),
-        radial-gradient(circle at 82% 10%, rgba(var(--fg-rgb), 0.07), transparent 40%),
-        rgba(var(--bg-rgb), 0.18);
-}
 
 :root[data-theme="light"] .callout {
     border-color: rgba(var(--pink-soft-rgb), 0.55);
     background: rgba(var(--pink-soft-rgb), 0.06);
-}
-
-/* Easy mode in dark: a warm near-black instead of pure black */
-:root[data-mode="easy"][data-theme="dark"] {
-    --bg-rgb: 18, 17, 16;
-    --fg-rgb: 238, 234, 229;
 }
 
 /* The home finder sits on the dark video: white text, inverted where it runs onto the paper.
@@ -181,10 +169,6 @@ body:not(.rc) p a:hover {
 @media (min-width: 881px) {
     :root[data-theme="light"] .header {
         mix-blend-mode: difference;
-    }
-
-    :root[data-theme="light"] #background-video {
-        border-radius: var(--r-sm);
     }
 }
 
@@ -431,7 +415,6 @@ body:not(.rc) p a:hover {
     color: var(--c-title);
     background: var(--bubble-bg);
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--r-pill);
     pointer-events: none;
 }
 

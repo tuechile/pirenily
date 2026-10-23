@@ -546,56 +546,6 @@ html {
 }
 
 /* =========================================================
-   Accordion
-   ========================================================= */
-.accordion {
-    width: 100%;
-    max-width: 920px;
-    margin: 0 auto;
-    overflow: hidden;
-    background: rgba(var(--bg-rgb), 0.12);
-}
-
-.acc-btn {
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    padding: var(--s-4) var(--s-4);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s-4);
-}
-
-.acc-btn span {
-    font-size: var(--fs-3);
-    font-weight: 600;
-}
-
-.acc-btn .chev {
-    opacity: 0.75;
-    transition: transform var(--dur-1) var(--ease-out);
-}
-
-.acc-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height var(--dur-3) var(--ease-out);
-}
-
-.acc-inner {
-    padding: var(--s-4);
-    color: var(--text-secondary);
-    font-family: var(--font-body);
-    font-size: var(--fs-2);
-    line-height: var(--lh);
-}
-
-/* =========================================================
    Contact icons
    ========================================================= */
 .contact-logo {
@@ -1676,7 +1626,6 @@ html {
     padding: var(--s-5);
     background: linear-gradient(135deg, var(--facts-tint), var(--facts-tint-fade));
     border: 1px solid var(--hairline);
-    border-radius: var(--r-sm);
 }
 
 .cs-facts dt {

@@ -55,20 +55,6 @@
     transform: translateY(0px);
 }
 
-.case-hero {
-    width: 100%;
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 2rem;
-    border: 1px solid var(--border);
-    border-radius: var(--r-lg);
-    background:
-        radial-gradient(circle at 18% 20%, rgba(var(--accent-rgb), 0.18), transparent 42%),
-        radial-gradient(circle at 82% 10%, rgba(var(--fg-rgb), 0.07), transparent 40%),
-        rgba(var(--bg-rgb), 0.18);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 12px 30px rgba(var(--shadow-rgb), 0.25);
-}
 
 .case-title {
     font-family: var(--font-body);
@@ -88,13 +74,12 @@
 .tag-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    padding: 0 1px 1px 0;
     margin-top: 0.75rem;
 }
 
 .callout {
     border: 1px dashed rgba(var(--accent-rgb), 0.55);
-    border-radius: var(--r-lg);
     padding: 1rem 1.25rem;
     background: rgba(var(--accent-rgb), 0.06);
     max-width: 920px;
@@ -188,57 +173,6 @@
     display: block;
     border: 0;
     aspect-ratio: 16 / 9;
-}
-
-/* Accordion receipts */
-.accordion {
-    width: 100%;
-    max-width: 920px;
-    margin: 0 auto;
-    border: 1px solid var(--border);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-    background: rgba(var(--bg-rgb), 0.12);
-}
-
-.acc-btn {
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border: none;
-    color: var(--c-soft);
-    font-family: var(--font-body);
-    padding: 0.9rem 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.acc-btn span {
-    font-style: italic;
-    font-size: var(--fs-body-sm);
-}
-
-.acc-btn .chev {
-    opacity: 0.7;
-    transition: transform var(--dur-1) var(--ease-out);
-}
-
-.acc-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height var(--dur-3) var(--ease-out);
-    border-top: 1px solid var(--border);
-}
-
-.acc-inner {
-    padding: 1rem;
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: var(--fs-1);
-    line-height: 1.8;
 }
 
 .contact-logo {
@@ -407,7 +341,6 @@
 }
 
 .travel-globe .globe-legend i.home {
-    border-radius: 1px;
     background: var(--globe-home);
     box-shadow: none;
 }
@@ -915,7 +848,6 @@
     font-style: italic;
     background: var(--glass);
     border: 1px solid var(--hairline);
-    border-radius: var(--r-pill);
 }
 
 .view-btn {
@@ -926,7 +858,6 @@
     color: var(--text);
     background: none;
     border: none;
-    border-radius: var(--r-pill);
     padding: 0.25rem 1rem;
     cursor: pointer;
 }
@@ -1083,7 +1014,6 @@
     left: 0;
     background: var(--glass-strong);
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--r-pill);
     box-sizing: border-box;
     pointer-events: none;
     transition: transform var(--dur-3) var(--ease-out), width var(--dur-3) var(--ease-out);
@@ -1099,7 +1029,6 @@
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border: 0;
-    border-radius: var(--r-sm);
     box-shadow: 0 4px 4px rgba(var(--shadow-rgb), 0.12);
 }
 
@@ -1118,12 +1047,6 @@
     .filters #filterToggle {
         top: 6.25rem;
     }
-}
-
-/* The sliding bubble stays, with corners that follow the bar's (its radius minus the bar's padding),
-   no outline and a lighter fill */
-:is(#portfolio, .filters) :is(.view-pill, .view-btn) {
-    border-radius: calc(var(--r-sm) - 0.25rem);
 }
 
 :is(#portfolio, .filters) .view-pill,
@@ -1183,18 +1106,8 @@
     }
 
     /* A first visit sees the column open, words showing (.is-intro, design_list.html), until the pointer
-       has been over it once. After that, at rest the column shows only solid shapes (star, square, circle, triangle, kiki, bouba) on a fully
-       round bar; hovering it, or tabbing into it, folds each shape away as its word slides out, so the open
-       column is plain text, and the bar's corners ease back (the pill follows: design_list.html watches the tabs' size) */
-    :root:not([data-mode="mine"]) #portfolio .view-toggle {
-        border-radius: 2rem;
-        transition: border-radius var(--dur-3) var(--ease-out);
-    }
-
-    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within, .is-intro) {
-        border-radius: var(--r-sm);
-    }
-
+       has been over it once. After that, at rest the column shows only solid shapes (star, square, circle,
+       triangle, kiki, bouba); hovering it, or tabbing into it, folds each shape away as its word slides out */
     :root:not([data-mode="mine"]) #portfolio .view-btn {
         display: flex;
         align-items: center;
@@ -1447,7 +1360,6 @@
         margin: -1rem 12px 0;
         padding: 0 0 1rem;
         overflow: hidden;
-        border-radius: 12px;
         pointer-events: auto;
         transition: height var(--unroll), background-color var(--dur-1) var(--ease-out);
     }
@@ -1871,7 +1783,7 @@
     right: 1rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3rem;
+    padding: 0 1px 1px 0;
     pointer-events: none;
     z-index: 1;
 }
@@ -2008,4 +1920,39 @@
     .strip-grid {
         gap: 2.5rem;
     }
+}
+
+/* Your view's filters (home Projects, Play), like the kit's view toggle: square options with no outlines,
+   the chosen one a solid block of ink. No frosted bar and no sliding bubble */
+:root:not([data-mode="mine"]) :is(#portfolio, .filters) .view-toggle {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
+:root:not([data-mode="mine"]) :is(#portfolio, .filters) .view-btn {
+    color: var(--title);
+}
+
+/* .view-toggle in the selector so this also beats the phone panel's own colors: the chosen word stays white */
+:root:not([data-mode="mine"]) :is(#portfolio, .filters) .view-toggle .view-btn.active {
+    color: var(--bg);
+    background: var(--c-strong);
+}
+
+/* No padding around the options, so the bar is exactly as big as the black block and nothing frames it.
+   (The phone Projects panel keeps its own padding, which makes room for it to unroll) */
+:root:not([data-mode="mine"]) .filters .view-toggle {
+    padding: 0;
+}
+
+@media screen and (min-width: 667px) {
+    :root:not([data-mode="mine"]) #portfolio .view-toggle {
+        padding: 0;
+    }
+}
+
+:root:not([data-mode="mine"]) :is(#portfolio, .filters) .view-pill {
+    display: none;
 }
