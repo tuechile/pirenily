@@ -515,7 +515,8 @@ body.rc {
         position: absolute;
         left: 50%;
         top: 50%;
-        width: var(--rc-col);
+        /* never wider than the column, even at the 4% swell in the middle */
+        width: min(var(--rc-col), calc(100% / 1.04));
         cursor: pointer;
         will-change: transform;
     }
@@ -538,6 +539,18 @@ body.rc {
 
     .rc-slot .rc-project-desc {
         margin-top: 18px;
+    }
+}
+
+/* Short desktop windows: a smaller photo and tighter panel, so it clears the logo above it */
+@media (min-width: 881px) and (max-height: 760px) {
+    .rc-panel {
+        gap: 12px;
+    }
+
+    .rc-card {
+        width: 150px;
+        height: 181px;
     }
 }
 
