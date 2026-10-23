@@ -9,6 +9,9 @@
     --rc-page: var(--sheet);                       /* the white page area */
     --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
     --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
+    --rc-sub: rgba(var(--fg-rgb), 0.42);           /* "Design @ Harvard": grayer than the text around it */
+    --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
+    --rc-head-stroke: 0.02em;
     --rc-col: 640px;                               /* the middle column and the home thumbnails */
     --rc-gutter: 48px;
     --rc-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -182,6 +185,15 @@ body.rc {
     color: var(--c-title);
 }
 
+/* The header face on the nav, the veil, the name and the card titles; the rest stays sans.
+   Setting --font-head here too beats body.rc's sans for the h2s that settings.css styles */
+.rc :is(.rc-logo, .rc-links a, .rc-veil, .rc-name, .rc-name-btn, .rc-name-input, .rc-project-head h2, .rc-card-head h2) {
+    --font-head: var(--rc-font-head);
+    --head-stroke: var(--rc-head-stroke);
+    font-family: var(--rc-font-head);
+    -webkit-text-stroke: var(--rc-head-stroke) currentColor;
+}
+
 .rc-veil[hidden] {
     display: none;
 }
@@ -332,7 +344,7 @@ body.rc {
 }
 
 .rc-sub {
-    color: var(--c-faint);
+    color: var(--rc-sub);
 }
 
 .rc-line a {
@@ -749,21 +761,16 @@ body.rc {
     border: 1px solid var(--hairline);
 }
 
-/* The page draws its own cursor on mouse screens (recruiter.js adds .rc-own-cursor) */
-.rc-own-cursor,
-.rc-own-cursor * {
-    cursor: none !important;
-}
-
+/* The trailing ink square (recruiter.js sizes and moves it; the arrow itself stays) */
 .rc-cursor {
     position: fixed;
     left: 0;
     top: 0;
     z-index: 50;
     pointer-events: none;
-    box-sizing: border-box;
-    width: 14px;
-    height: 14px;
+    overflow: hidden;
+    width: 10px;
+    height: 10px;
     background: var(--c-title);
 }
 
@@ -771,16 +778,15 @@ body.rc {
     display: none;
 }
 
-/* Over a project picture it becomes a white square holding a note, hugging the text */
-.rc-cursor.has-note {
-    width: auto;
-    height: auto;
-    padding: 0;
-    background: var(--rc-page);
-    color: var(--c-title);
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1;
+/* Over a project picture it grows into an ink label; the words fade in */
+.rc-cursor span {
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    opacity: 0;
+    color: var(--rc-page);
+    font-size: var(--fs-note);
+    line-height: 1.2;
     white-space: nowrap;
 }
 

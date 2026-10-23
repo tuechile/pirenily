@@ -54,9 +54,9 @@
 {% block scripts %}
 <script>
     // The roll: the project in the middle is full size and in color; the ones above and below shrink
-    // toward the centre, go black and white and soften at the edges, and only peek in. The wheel moves
-    // it smoothly, one project per gesture at most, and it always finishes on the next one (no springing
-    // back). Clicking a peek or the arrow keys glide one project. It wraps forever.
+    // toward the centre, go black and white and soften at the edges, and only peek in. The wheel scrolls
+    // it freely like frankxu.ca: no snapping, it stops wherever the scroll leaves it and eases out with a
+    // long soft tail. Clicking a peek or the arrow keys glide one project. It wraps forever.
     (function () {
         var ALL = JSON.parse(document.getElementById("rcRoll").textContent);
         var section = document.querySelector(".rc-roll");
@@ -68,8 +68,8 @@
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var PITCH = 420;
 
-        var view = "selected", projects = [], sel = 0, f = 0, target = 0, base = 0;
-        var following = false, inGesture = false, settle = 0, items = [];
+        var view = "selected", projects = [], sel = 0, f = 0, target = 0;
+        var following = false, items = [];
 
         function pick(name) {
             view = name;
@@ -82,7 +82,7 @@
                 var tags = li.dataset.tags.split(" ");
                 li.hidden = resume || !(name === "all" || tags.indexOf(name) >= 0);
             });
-            sel = 0; f = 0; target = 0; base = 0;
+            sel = 0; f = 0; target = 0;
             track.hidden = resume || !desktop.matches;
             if (!resume) build();
         }
@@ -127,32 +127,34 @@
             return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
         }
 
-        // Size, color and edge softness all follow each slot's distance from the middle
+        // Size, color and edge softness all follow each slot's distance from the middle; right at the
+        // middle it swells a touch (up to 4%), so the one in focus leans forward as it passes
         function place() {
             items.forEach(function (it) {
                 var pos = it.k - f;
                 var d = Math.min(Math.abs(pos), 1);
-                it.el.style.transform = "translate(-50%, -50%) translateY(" + (pos * PITCH).toFixed(1) + "px) scale(" + (1 - 0.4 * d).toFixed(3) + ")";
+                var scale = (1 - 0.4 * d) * (1 + 0.04 * (1 - d) * (1 - d));
+                it.el.style.transform = "translate(-50%, -50%) translateY(" + (pos * PITCH).toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
                 it.el.style.zIndex = String(10 - Math.round(Math.abs(pos) * 3));
                 it.el.style.setProperty("--d", d.toFixed(3));
             });
         }
 
-        // The track trails a target, closing 14% of the gap every 60th of a second (timed, so slow
-        // screens keep the same pace), so every move eases in and out
+        // The track trails a target, closing 12% of the gap every 60th of a second (timed, so slow
+        // screens keep the same pace), so every move eases out with a long tail
         function follow() {
             if (following) return;
             following = true;
             var last = performance.now();
             (function frame() {
                 var now = performance.now();
-                var k = 1 - Math.pow(0.86, Math.min(now - last, 250) / (1000 / 60));
+                var k = 1 - Math.pow(0.88, Math.min(now - last, 250) / (1000 / 60));
                 last = now;
                 var v = reduced ? target : f + (target - f) * k;
                 if (Math.abs(target - v) < 0.001) v = target;
                 var moved = false;
-                while (v >= 0.5) { v -= 1; target -= 1; base -= 1; sel = (sel + 1) % projects.length; moved = true; }
-                while (v <= -0.5) { v += 1; target += 1; base += 1; sel = (sel - 1 + projects.length) % projects.length; moved = true; }
+                while (v >= 0.5) { v -= 1; target -= 1; sel = (sel + 1) % projects.length; moved = true; }
+                while (v <= -0.5) { v += 1; target += 1; sel = (sel - 1 + projects.length) % projects.length; moved = true; }
                 f = v;
                 if (moved) fill();
                 place();
@@ -169,16 +171,10 @@
         section.addEventListener("wheel", function (e) {
             if (track.hidden) return;
             e.preventDefault();
-            if (!inGesture) { inGesture = true; base = Math.round(target); }
-            target = Math.max(base - 1, Math.min(base + 1, target + e.deltaY / (PITCH * 2)));
+            // Lines (Firefox) are about 40px each; the roll moves a little slower than the wheel
+            var px = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
+            target += px * 0.7 / PITCH;
             follow();
-            clearTimeout(settle);
-            settle = setTimeout(function () {
-                inGesture = false;
-                var moved = target - base;
-                target = Math.abs(moved) < 0.04 ? base : base + (moved > 0 ? 1 : -1);
-                follow();
-            }, 220);
         }, { passive: false });
 
         track.addEventListener("keydown", function (e) {

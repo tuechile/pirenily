@@ -15,6 +15,10 @@
     {# Only reachable through the private link, so search engines stay out #}
     <meta name="robots" content="noindex">
     <link href="/static/favicon.ico" rel="icon">
+    {# The header face: nav, the name, card titles and the veil #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&display=swap" rel="stylesheet">
     <link href="/static/css/styles.css?v={{ asset_v }}" rel="stylesheet">
     <link href="/static/css/settings.css?v={{ asset_v }}" rel="stylesheet">
     <link href="/static/css/body.css?v={{ asset_v }}" rel="stylesheet">
@@ -34,6 +38,7 @@
 <body class="rc">
     <div class="rc-page">
         <nav class="rc-nav" aria-label="Main">
+            <a class="rc-logo" href="/"{% if request.endpoint == "home" %} aria-current="page"{% endif %}>Pirenily</a>
             <div class="rc-nav-right">
                 <button class="rc-sound" type="button" data-switch="sound" aria-label="Sound">♪</button>
                 {% include "recruiter/_links.html" %}

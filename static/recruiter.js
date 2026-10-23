@@ -74,36 +74,55 @@
         });
     }
 
-    // ---------- Our own cursor: a small ink square that trails the mouse ----------
+    // ---------- Our own cursor, like frankxu.ca: the arrow stays, and a small ink square trails it ----------
+    // It sits just below and right of the arrow and lags behind it. Over something with a note it grows
+    // into an ink label holding those words, its size easing to fit and the words fading in.
     var cursor = document.querySelector(".rc-cursor");
     if (canHover && cursor && !reduced) {
-        document.documentElement.classList.add("rc-own-cursor");
-        var mouse = null, at = null, raf = 0;
+        var label = document.createElement("span");
+        cursor.appendChild(label);
+        var OFFSET = 14, DOT = 10;
+        var mouse = null, at = null, size = { w: DOT, h: DOT }, ink = 0, note = "", raf = 0, last = 0;
 
-        function frame() {
-            if (!mouse) { raf = 0; return; }
-            at.x += (mouse.x - at.x) * 0.25;
-            at.y += (mouse.y - at.y) * 0.25;
-            cursor.style.transform = "translate(" + at.x.toFixed(1) + "px, " + at.y.toFixed(1) + "px) translate(-50%, -50%)";
-            raf = requestAnimationFrame(frame);
+        function frame(now) {
+            // Timed easing: each 60th of a second closes 15% of the gap (20% for the words)
+            var dt = Math.min(now - last, 250) / (1000 / 60);
+            last = now;
+            var k = 1 - Math.pow(0.85, dt), kInk = 1 - Math.pow(0.8, dt);
+            var want = note ? { w: label.offsetWidth + 10, h: label.offsetHeight + 6 } : { w: DOT, h: DOT };
+            at.x += (mouse.x - at.x) * k;
+            at.y += (mouse.y - at.y) * k;
+            size.w += (want.w - size.w) * k;
+            size.h += (want.h - size.h) * k;
+            ink += ((note ? 1 : 0) - ink) * kInk;
+            cursor.style.transform = "translate(" + (at.x + OFFSET).toFixed(1) + "px, " + (at.y + OFFSET).toFixed(1) + "px)";
+            cursor.style.width = size.w.toFixed(1) + "px";
+            cursor.style.height = size.h.toFixed(1) + "px";
+            label.style.opacity = ink.toFixed(3);
+            var still = Math.abs(mouse.x - at.x) + Math.abs(mouse.y - at.y) + Math.abs(want.w - size.w) +
+                Math.abs(want.h - size.h) + Math.abs((note ? 1 : 0) - ink) < 0.1;
+            raf = still ? 0 : requestAnimationFrame(frame);
+        }
+
+        function wake() {
+            if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
         }
 
         document.addEventListener("mousemove", function (e) {
             mouse = { x: e.clientX, y: e.clientY };
             if (!at) at = { x: mouse.x, y: mouse.y };
             cursor.hidden = false;
-            if (!raf) raf = requestAnimationFrame(frame);
+            wake();
         });
         document.documentElement.addEventListener("mouseleave", function () {
-            mouse = null;
             cursor.hidden = true;
         });
-        // Over something with a note, the square becomes the note
+        // Over something with a note, the square becomes the note; the words stay until they fade out
         document.addEventListener("mouseover", function (e) {
             var el = e.target.closest && e.target.closest("[data-note]");
-            var note = el ? el.dataset.note : "";
-            cursor.textContent = note;
-            cursor.classList.toggle("has-note", !!note);
+            note = el ? el.dataset.note : "";
+            if (note) label.textContent = note;
+            if (mouse) wake();
         });
     }
 
