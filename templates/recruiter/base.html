@@ -34,14 +34,9 @@
 <body class="rc">
     <div class="rc-page">
         <nav class="rc-nav" aria-label="Main">
-            {% block logo %}<a class="rc-logo" href="/" aria-label="Pirenily, back to the home page">Pirenily</a>{% endblock %}
             <div class="rc-nav-right">
                 <button class="rc-sound" type="button" data-switch="sound" aria-label="Sound">♪</button>
-                <div class="rc-links">
-                    {% if request.endpoint != "about" %}<a href="/about">About</a>{% endif %}
-                    {% if request.endpoint != "play" %}<a href="/play">Play</a>{% endif %}
-                    {% if request.endpoint != "writing" %}<a href="/writing">Writing</a>{% endif %}
-                </div>
+                {% include "recruiter/_links.html" %}
             </div>
         </nav>
 

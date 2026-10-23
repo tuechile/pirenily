@@ -5,7 +5,7 @@
 //   data-note="WORDS"     the cursor turns into a white square holding those words
 // Everything appears and disappears instantly.
 (function () {
-    var NAMES = ["Pirenily", "Chi Le", "Iron Pig", "Emily", "Chi Bell", "Emily Tiles", "Chi Chi Cha Cha",
+    var NAMES = ["Chi Le", "Pirenily", "Iron Pig", "Emily", "Chi Bell", "Emily Tiles", "Chi Chi Cha Cha",
                  "Chi Tu Le", "Le Le", "Chi", "Kai", "The Country"];
     var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -120,16 +120,18 @@
         card.querySelector(".rc-card-photos").addEventListener("click", flip);
     }
 
-    // ---------- The running name: a new one every 400ms, like the home finder's placeholder ----------
+    // ---------- The running name: Chi Le holds for 3s, then a new one every 400ms, like the home finder's placeholder ----------
     var heading = document.querySelector(".rc-name");
     var nameBtn = heading && heading.querySelector(".rc-name-btn");
     if (nameBtn) {
         var names = NAMES.slice(), n = 1, typing = false;
-        setInterval(function () {
-            if (typing) return;
-            nameBtn.textContent = names[n % names.length];
-            n++;
-        }, 400);
+        setTimeout(function () {
+            setInterval(function () {
+                if (typing) return;
+                nameBtn.textContent = names[n % names.length];
+                n++;
+            }, 400);
+        }, 3000);
 
         // Hovering the heading runs the names big on the veil too
         if (canHover) {

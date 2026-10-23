@@ -881,4 +881,70 @@ body.rc {
     .rc-veil {
         display: none;
     }
+
+    /* Everything centred, with a smaller photo and type */
+    .rc-nav {
+        justify-content: center;
+        padding-bottom: 40px;
+    }
+
+    .rc-nav-right {
+        margin-left: 0;
+        gap: 12px;
+    }
+
+    .rc-main {
+        text-align: center;
+    }
+
+    .rc-panel {
+        align-items: center;
+        gap: 12px;
+    }
+
+    .rc-card {
+        width: 124px;
+        height: 150px;
+    }
+
+    .rc-name {
+        width: auto;
+        font-size: 1.25rem;
+    }
+
+    .rc-name-btn {
+        text-align: center;
+    }
+
+    .rc-sub,
+    .rc-line {
+        width: auto;
+        font-size: var(--fs-note);
+    }
+
+    .rc-contacts {
+        margin-left: 0;
+    }
+
+    .rc-words {
+        justify-content: center;
+    }
+
+    .rc-word {
+        font-size: var(--fs-note);
+    }
+
+    .rc-project-head {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .rc-project-head h2 {
+        font-size: 1.25rem;
+    }
+
+    .rc-project-role {
+        max-width: none;
+        text-align: center;
+    }
 }

@@ -32,10 +32,18 @@
             </div>
             <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
             <div class="nav-item-big">
+                {% if recruiter %}
+                {# Recruiter mode: the same four links as the recruiter pages #}
+                <a class="nav-item" href="/about"> About </a>
+                <a class="nav-item" href="/"> Pirenily </a>
+                <a class="nav-item" href="/writing"> Writing </a>
+                <a class="nav-item" href="/play"> Play </a>
+                {% else %}
                 <a class="nav-item" href="/about"{% if nav_section == "about" %} aria-current="page"{% endif %}> About </a>
                 <a class="nav-item" href="/code"{% if nav_section == "code" %} aria-current="page"{% endif %}> Code </a>
                 <a class="nav-item" href="/play"{% if nav_section == "play" %} aria-current="page"{% endif %}> Play </a>
                 <a class="nav-item" href="/#portfolio"{% if nav_section == "projects" %} aria-current="page"{% endif %}> Projects </a>
+                {% endif %}
             </div>
             <span class="settings-switches">
                 <button class="nav-item settings-btn" type="button" data-switch="light" aria-label="Light">☀</button>
