@@ -346,6 +346,9 @@
                 setView(b.dataset.view);
                 // keep the choice on back/forward without adding history entries
                 history.replaceState(null, "", b.dataset.view === "selected" ? location.pathname : "#" + b.dataset.view);
+                // on laptops the side tabs already show on the landing, so picking one there brings the list down
+                var list = document.getElementById("portfolio");
+                if (list.getBoundingClientRect().top > 1) list.scrollIntoView();
             });
         });
 

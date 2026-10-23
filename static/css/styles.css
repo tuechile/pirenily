@@ -225,16 +225,6 @@ a:focus-visible .contact-logo {
   display: block;
 }
 
-.portfolio-intro{
-  margin: 0 auto 1.5rem;
-  padding: 0 1rem;
-  text-align: center;
-  font-family: var(--font-body);
-  font-style: italic;
-  font-size: var(--fs-small);
-  color: rgba(var(--fg-rgb), 0.6);
-}
-
 /* Code page: cards in two columns, one on narrow screens */
 .project-grid{
   display: grid;

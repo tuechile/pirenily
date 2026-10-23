@@ -1149,8 +1149,9 @@
     }
 }
 
-/* Your view on laptops and up: the bar stands as a column on the left of the list, words left-aligned,
-   and stays put while the list scrolls (the list and password panel keep the middle column) */
+/* Your view on laptops and up: the bar stands as a column on the left, words left-aligned, fixed to the
+   screen so it already shows on the landing and stays put while the list scrolls (the list and password
+   panel keep the middle column) */
 @media screen and (min-width: 881px) {
     :root:not([data-mode="mine"]) .home-design {
         display: grid;
@@ -1165,10 +1166,11 @@
     :root:not([data-mode="mine"]) #portfolio .view-toggle {
         grid-column: 1;
         grid-row: 1 / span 4;
-        justify-self: start;
+        position: fixed;
         top: 30vh;
+        left: 2.5rem;
         flex-direction: column;
-        margin: 3rem 0 0 2.5rem;
+        margin: 0;
     }
 
     :root:not([data-mode="mine"]) #portfolio .view-btn {
@@ -1283,6 +1285,18 @@
 
 :root[data-mode="mine"] #portfolio .view-side--right {
     align-items: flex-end;
+}
+
+/* On laptops and up the rails are fixed to the screen, so they already show either side of the landing */
+@media screen and (min-width: 881px) {
+    :root[data-mode="mine"] #portfolio .view-toggle {
+        position: fixed;
+        inset: 40vh 2.5rem auto;
+    }
+
+    :root[data-mode="mine"] #portfolio .view-side {
+        position: static;
+    }
 }
 
 /* Play's filter gets the same plain words, in one centered row that scrolls away with the page */
