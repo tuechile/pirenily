@@ -457,7 +457,7 @@ body.rc {
 }
 
 .rc-project-desc {
-    margin: 8px 0 0;
+    margin: 0;
     font-size: var(--fs-tiny);
     line-height: 1.4;
 }
@@ -477,7 +477,7 @@ body.rc {
 .rc-slot-inner {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
     text-decoration: none;
 }
 
@@ -540,7 +540,7 @@ body.rc {
     }
 
     .rc-slot .rc-project-desc {
-        margin-top: 18px;
+        margin-top: 0;
     }
 }
 
@@ -553,6 +553,10 @@ body.rc {
     .rc-card {
         width: 124px;
         height: 150px;
+    }
+
+    .rc-slot .rc-frame {
+        height: 280px;
     }
 }
 
