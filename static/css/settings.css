@@ -97,9 +97,46 @@
     opacity: 0.45;
 }
 
-/* Shimmering links and the poem run yellow through pink to ink and back */
-:root[data-theme="light"] :is(.com-footer:hover, .bio-text a:hover, .gradient-poem) {
+/* The poem runs yellow through pink to ink and back */
+:root[data-theme="light"] .gradient-poem {
     background-image: linear-gradient(45deg, var(--yellow), var(--accent), var(--c-strong), var(--accent), var(--yellow));
+}
+
+/* ---------- Text links ----------
+   Every link inside a line of text (not the recruiter pages) shimmers on hover: teal through white in
+   the dark, yellow through pink on paper. Your view also sets them in the IM Fell header face */
+:where(body:not(.rc) p) a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body:not(.rc) p a:hover {
+    background-image: linear-gradient(45deg, var(--accent), var(--c-strong), var(--accent));
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: transparent;
+    filter: none;
+    animation: gradientHover 2s infinite linear;
+}
+
+:root[data-theme="light"] :is(body:not(.rc) p a:hover, .com-footer:hover) {
+    background-image: linear-gradient(45deg, var(--yellow), var(--accent), var(--yellow));
+}
+
+:root[data-mode="easy"] body:not(.rc) p a {
+    font-family: var(--font-head);
+    -webkit-text-stroke: var(--head-stroke) currentColor;
+}
+
+@keyframes gradientHover {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 100%;
+    }
 }
 
 :root[data-theme="light"] :is(.progress-bar, .load-bar span) {

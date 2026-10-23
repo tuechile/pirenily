@@ -104,10 +104,10 @@
         }
 
         // Space the slots by the tallest card: the one in the middle (up to 104%) and its neighbours
-        // (60%) sit 12px apart, so the ones above and below always peek in
+        // (60%) sit 28px apart, so the ones above and below always peek in
         function fit() {
             var h = Math.max.apply(null, items.map(function (it) { return it.el.offsetHeight; }));
-            if (h) PITCH = Math.round(h * (1.04 + 0.6) / 2 + 12);
+            if (h) PITCH = Math.round(h * (1.04 + 0.6) / 2 + 28);
         }
 
         function project(k) {
@@ -135,7 +135,7 @@
             return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
         }
 
-        // Size, color and edge softness all follow each slot's distance from the middle; right at the
+        // Size, color, blur and edge softness all follow each slot's distance from the middle; right at the
         // middle it swells a touch (up to 4%), so the one in focus leans forward as it passes
         function place() {
             items.forEach(function (it) {

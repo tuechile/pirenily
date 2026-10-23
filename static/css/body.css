@@ -298,15 +298,6 @@
     transition: color var(--dur-2) var(--ease-out);
 }
 
-.bio-text a:hover {
-    background: linear-gradient(45deg, var(--accent), var(--c-strong), var(--accent));
-    background-size: 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradientHover 2s infinite linear;
-}
-
 .bio-text h2,
 .bio-text p {
     font-family: var(--font-body);
@@ -574,12 +565,26 @@
     margin: 0.9rem 0 0;
 }
 
+.bio-sub {
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
+    color: var(--c-faint);
+    text-align: center;
+    margin: 0;
+}
+
 .bio-contact-text {
     font-family: var(--font-body);
     font-size: var(--fs-1);
     color: var(--c-text);
     text-align: center;
     margin: 0;
+}
+
+/* The tagline quietly leads to how the site was built (hover: the text-link shimmer in settings.css) */
+.bio-contact-text .bio-tagline {
+    color: inherit;
+    text-decoration: none;
 }
 
 .bio-contact-logos {
@@ -1734,18 +1739,12 @@
     font-size: var(--fs-note);
 }
 
-.bio-text .bio-built {
-    margin: 0.4rem 0 1rem;
-    font-size: var(--fs-note);
-    text-align: left;
-}
-
-:is(.bio-where-more, .bio-built) a {
+.bio-where-more a {
     font-style: italic;
     color: var(--accent);
 }
 
-:is(.bio-where-more, .bio-built) span {
+.bio-where-more span {
     color: var(--c-faint);
 }
 

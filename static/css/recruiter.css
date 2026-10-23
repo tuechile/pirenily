@@ -118,6 +118,23 @@ body.rc {
     font-size: 1rem;
 }
 
+/* Laptops: line the header up with Your view's nav (layout.html), so switching between the two doesn't jump.
+   Same height for the logo and links, and the ♪ as big and as close to the edge as Your view's */
+@media (min-width: 881px) {
+    .rc-nav {
+        padding-top: 17px;
+        padding-right: 11px;
+    }
+
+    .rc-nav-right {
+        gap: 34px;
+    }
+
+    .rc .rc-sound {
+        font-size: 1rem;
+    }
+}
+
 .rc-links a {
     text-decoration: none;
 }
@@ -520,7 +537,9 @@ body.rc {
         /* never wider than the column, even at the 4% swell in the middle */
         width: min(var(--rc-col), calc(100% / 1.04));
         cursor: pointer;
-        will-change: transform;
+        /* the ones out of focus go soft all over, picture, words and edges, and sharpen as they roll in */
+        filter: blur(calc(var(--d) * 2.5px));
+        will-change: transform, filter;
     }
 
     .rc-slot .rc-frame {
