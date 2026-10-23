@@ -540,6 +540,27 @@ body.rc {
     display: none;
 }
 
+/* Level 1: five emoji on a diagonal from the top left to the bottom right of the middle */
+.rc-bio > .rc-bio-emoji {
+    display: block;
+    position: relative;
+    height: calc(100vh - 200px);
+    min-height: 360px;
+}
+
+.rc-bio-emoji span {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 4.5rem;
+    line-height: 1;
+}
+
+.rc-bio-emoji span:nth-child(1) { left: 8%; top: 10%; }
+.rc-bio-emoji span:nth-child(2) { left: 29%; top: 30%; }
+.rc-bio-emoji span:nth-child(3) { left: 50%; top: 50%; }
+.rc-bio-emoji span:nth-child(4) { left: 71%; top: 70%; }
+.rc-bio-emoji span:nth-child(5) { left: 92%; top: 90%; }
+
 .rc-bio p {
     margin: 0;
     font-size: 1.0625rem;
