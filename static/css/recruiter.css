@@ -973,7 +973,7 @@ body.rc {
 /* ---------- Tiny type: everything but the nav small, like a Cargo index page ---------- */
 body.rc,
 .rc :is(.rc-sub, .rc-line, .rc-word, .rc-project-role, .rc-project-desc, .rc-foot,
-    .rc-bio p, .rc-roles > div, .rc-card-item p, .rc-locked a, .rc-cursor span) {
+    .rc-bio p, .rc-roles > div, .rc-card-item p, .rc-card-head span, .rc-locked p, .rc-locked a, .rc-cursor span) {
     font-size: var(--rc-fs-text);
     line-height: 1.4;
 }
