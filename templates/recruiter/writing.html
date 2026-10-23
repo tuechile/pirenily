@@ -1,0 +1,18 @@
+{% extends "recruiter/base.html" %}
+
+{% import "partials/icons.html" as icons %}
+{% block title %}| Writing{% endblock %}
+
+{% block main_class %}rc-writing{% endblock %}
+
+{% block middle %}
+{# Writing is locked for now; the one piece on offer is the story of this site #}
+<section class="rc-middle rc-locked" aria-label="Writing">
+    <div class="rc-col">
+        {{ icons.icon("lock", None, "rc-lock") }}
+        <h1>My writing is locked for now.</h1>
+        <p>Want to read how I designed this page instead?</p>
+        <a href="/pirenily">Read how I designed this page →</a>
+    </div>
+</section>
+{% endblock %}

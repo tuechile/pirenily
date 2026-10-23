@@ -9,8 +9,8 @@
 /* ---------- Themes ---------- */
 :root[data-theme="light"] {
     color-scheme: light;
-    --bg-rgb: 245, 241, 236;          /* beige paper */
-    --fg-rgb: 42, 37, 32;             /* brown-black ink */
+    --bg-rgb: 255, 255, 255;          /* white paper */
+    --fg-rgb: 0, 0, 0;                /* black ink */
     --accent: #ffa8c2;                /* on paper the teal becomes pink: text, dots, globe */
     --accent-rgb: 255, 168, 194;
     --pink-soft: #ffc9de;             /* focus ring, photo shadow, slider, panel tint */

@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "251"
+ASSET_VERSION = "254"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -450,14 +450,130 @@ def unlock():
 
 
 def recruiter_link():
-    # ?next=/t4sg lets the CV link straight to a case study and unlock it on the way
+    # ?next=/t4sg lets the CV link straight to a case study and unlock it on the way.
+    # The link also turns on recruiter mode: home, About, Play and Writing become the light recruiter pages.
     target = request.args.get("next", "")
     if not target.startswith("/") or target[1:2] in ("/", "\\"):
-        target = "/#portfolio"
+        target = "/"
     response = redirect(target)
     response.set_cookie(PROJECTS_COOKIE, RECRUITER_LINK, max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
+    response.set_cookie(RECRUITER_COOKIE, "1", max_age=60 * 60 * 24 * 30,
+                        httponly=True, secure=request.is_secure, samesite="Lax")
     return response
+
+
+RECRUITER_COOKIE = "recruiter_view"
+
+
+def recruiter_mode():
+    return request.cookies.get(RECRUITER_COOKIE) == "1" and projects_unlocked()
+
+
+@app.context_processor
+def inject_recruiter_mode():
+    return dict(recruiter=recruiter_mode())
+
+
+# The eye on the back of the recruiter flip card: "Not a recruiter?" drops back to the normal site
+@app.route("/full-site")
+def full_site():
+    response = redirect("/")
+    response.delete_cookie(RECRUITER_COOKIE)
+    return response
+
+
+# Recruiter home roll: the same cards and tags as partials/design_list.html (keep the two in step).
+# img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture.
+RECRUITER_PROJECTS = [
+    {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "UX Designer", "tags": ["selected", "uiux"],
+     "desc": "An offline-first inventory system for 2ft Prosthetics' volunteers across 10 countries. Delivered as a tested hi-fi prototype.",
+     "img": ("ux", "t4sg/preview.webp"), "alt": "T4SG × 2ft inventory system preview", "note": "SUPER DETAILED",
+     "previews": ("ux", ["t4sg/hifi view.webp", "t4sg/hifi add.webp", "t4sg/userflow.png", "t4sg/affmap.png"])},
+    {"href": "/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design", "tags": ["selected", "brand"],
+     "desc": "Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.",
+     "img": ("design", "hackharvard/logo-thumb.png"), "alt": "HackHarvard logo in red on black", "note": "DETAILED AND NUMBERS",
+     "previews": ("design", ["hackharvard/poster-moon.jpg", "hackharvard/site-about.jpg", "hackharvard/site-tracks.jpg", "hackharvard/stickers.png"])},
+    {"href": "/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Senior UX Designer / Project Manager", "tags": ["selected", "uiux"],
+     "desc": "12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Handed off to engineering.",
+     "img": ("ux", "commonspirit/preview.webp"), "alt": "T4SG × CommonSpirit Health redesign preview", "note": "LEAD, LESS DETAILED",
+     "previews": ("ux", ["commonspirit/redes1.webp", "commonspirit/redes2.webp", "commonspirit/impact-effort.png"])},
+    {"href": "/cs1710", "title": "The Story of Unicode", "role": "Developer & Designer", "tags": ["selected"],
+     "desc": "A scroll-driven data story for non-technical readers, our CS 1710 final as a team of two. Live, and both think-aloud testers got the main message.",
+     "img": ("ux", "cs171/preview.gif"), "alt": "Visualization: A Unicode Story", "note": "DETAILED, FUN",
+     "previews": ("ux", ["cs171/hifi overview.png", "cs171/hifi time.png", "cs171/hifi emoji.png", "cs171/map_q.png"])},
+    {"href": "/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [],
+     "desc": "How I built this website. Hardcoded, and every visual element is drawn by me ^v^ (not the fonts).",
+     "img": None, "alt": "", "note": "", "previews": None},
+    {"href": "/merch", "title": "Merch", "role": "Designer", "tags": ["compilations"],
+     "desc": "Crests, posters and goods for HPAIR, IVMUN and HUDC.",
+     "img": ("design", "merch/hpair-crest.png"), "alt": "HCONF crest", "note": "",
+     "previews": ("design", ["merch/aconf-poster.png", "merch/hconf-sketch.png", "merch/ivmun-placards.webp", "merch/hudc-the-game-shirt.webp"])},
+    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design · Student Content Creator · Director of Internal Relations", "tags": ["compilations"],
+     "desc": "Three Harvard organizations, with a measured result for each.",
+     "img": ("design", "hackharvard/poster-apps.jpg"), "alt": "HackHarvard 2026 poster announcing that hacker applications are open", "note": "",
+     "previews": ("design", ["hackharvard/poster-moon.jpg", "merch/hpair-crest.png", "hackharvard/lanyard.webp"])},
+    {"href": "/olympics", "title": "CNN Olympics", "role": "Commissioned Designer", "tags": ["brand"],
+     "desc": "Commissioned team logos for CNN Hội Thao.",
+     "img": ("olympics", "6Artboard.webp"), "alt": "CNN Olympics team logos", "note": "",
+     "previews": ("olympics", ["2Sapphire.jpg", "4Ruby.jpg", "5Emerald.jpg", "3Amethyst.jpg"])},
+    {"href": "/recit", "title": "Recít Film Studio", "role": "Art Director", "tags": [],
+     "desc": "Posters and banners for a student-run Hanoi film studio making short films about Vietnamese stories.",
+     "img": ("art_direction", "recit.jpg"), "alt": "Recít Film Studio", "note": "",
+     "previews": ("recit", ["recitbanner.jpg", "recitposter.jpg"])},
+    {"href": "https://www.facebook.com/official.ivmun", "title": "International Vietnam Model United Nations", "role": "Design Lead", "tags": ["brand"],
+     "desc": "Led design with a team of 7 for a conference of over 1,000 people.",
+     "img": ("art_direction", "ivmun-cover.webp"), "alt": "IVMUN 2023 banner: the title over red-green mountains, a crescent moon and a geometric tower", "note": "",
+     "previews": ("art_direction", ["ivmun-quarter.webp", "ivmun-banner.webp", "ivmun-header.webp", "ivmun-storm.webp"])},
+    {"href": "/highlander", "title": "CNN English Club: Highlander", "role": "Director", "tags": [],
+     "desc": "A short film production team for CEC Oscar, a film event of CNN English Club.",
+     "img": ("art_direction", "highlander.jpg"), "alt": "Highlander short film", "note": "",
+     "previews": ("art_direction", ["poster.jpg"])},
+    {"href": None, "title": "CNN English Club", "role": "Commissioned Designer", "tags": [],
+     "desc": "Commissioned posters and tickets for CNN English Club.",
+     "img": ("client", "cec.png"), "alt": "CNN English Club posters", "note": "", "previews": None},
+    {"href": None, "title": "CNN Dance Club: TeddeAh!", "role": "Commissioned Designer", "tags": [],
+     "desc": "Commissioned logo for TeddeAh!, a competitive dance group from CNN Dance Club.",
+     "img": ("client", "teddeah!.webp"), "alt": "TeddeAh! logo", "note": "", "previews": None},
+]
+
+# Recruiter Play: the Code page's projects and the Play page's cards in one list, newest first.
+# at sorts them: ongoing pieces by when they started (999xxx), the rest by YYYYMM.
+RECRUITER_PLAY = [
+    {"title": "ASCII Avatar", "cat": "code", "when": "Sept 2026", "at": 202609, "href": "https://github.com/tuechile/ascii-simple-avatar",
+     "desc": "A cute little fashion app that dresses you up as a tiny ASCII avatar.", "previews": ("ux", ["ascii-avatar.webp"])},
+    {"title": "my-superface", "cat": "code", "when": "2022 – Ongoing", "at": 999980, "href": "https://github.com/tuechile/my-superface",
+     "desc": "Morphs any image into my face by rearranging its pixels, none created or recolored, and animates them flying into place.", "previews": ("ux", ["superface.webp"])},
+    {"title": "Ukuraoke", "cat": "code", "when": "Aug 2026", "at": 202608, "href": "https://github.com/tuechile/ukuraoke",
+     "desc": "Ukulele chord sheets with time-synced lyrics that follow the song, so I can play and sing along at home.", "previews": ("ux", ["ukuraoke.webp"])},
+    {"title": "AeroTone", "cat": "code", "when": "May 2026", "at": 202605, "href": None,
+     "desc": "A gesture-based wearable synth: a glove that maps finger pressure to pitch.", "previews": ("afvs", ["aerotone.webp"])},
+    {"title": "Neural Reconstruction of Handwritten Curves", "cat": "code", "when": "Dec 2025", "at": 202512, "href": None,
+     "desc": "Training a small language model from scratch.", "previews": ("ux", ["chi111.webp"])},
+    {"title": "Backtiming", "cat": "code", "when": "Aug 2026 – Ongoing", "at": 999996, "href": "https://github.com/tuechile/backtiming",
+     "desc": "Syncs with my calendars and works backwards from each event to maximize grwm time.", "previews": None},
+    {"title": "CineNode", "cat": "code", "when": "Jun 2026 – Ongoing", "at": 999994, "href": None,
+     "desc": "A node-based pipeline for generating and arranging shots into a shot list and storyboard. Started at the TekTrek residency.", "previews": None},
+    {"title": "Street Photography", "cat": "art", "when": "Ongoing", "at": 999970, "href": "/street",
+     "desc": "Through the lens of my Nikon D5100 since 2017.", "previews": ("street", None)},
+    {"title": "Coding and Interactivity", "cat": "interactivity", "when": "Ongoing", "at": 999999, "href": "/afvs",
+     "desc": "Self-expression through code: press a key to see the face react.",
+     "previews": ("afvs", ["p1-final.jpg", "p1-360-1.jpg", "p1-360-2.jpg", "p1-code-face.jpg", "p1-progress-1.jpg", "p1-progress-2.jpg"])},
+    {"title": "What Brings You Here", "cat": "interactivity", "when": "Oct 2024", "at": 202410, "href": "/gifafvs",
+     "desc": "Do you wish someone would tell you what to do?", "previews": ("processing", ["candy.png", "fish.png", "lid_open.png"])},
+    {"title": "The land of rivers: An imagined tea garden", "cat": "essays", "when": "December 2024", "at": 202412, "href": "/fysemr",
+     "desc": "Final project for FYSEMR 65R, created with Clip Studio Paint and InDesign.",
+     "previews": ("fish", ["full.webp", "fish outline.jpg", "no fish.webp", "no sub.webp"])},
+    {"title": "Superface", "cat": "art", "when": "Delayed after 2023", "at": 202300, "href": "/superface",
+     "desc": "Self-edited self-portraits exploring makeup and persona.", "previews": ("self", None)},
+    {"title": "Video essays", "cat": "essays", "when": "May 2025", "at": 202505, "href": "/essays",
+     "desc": "A list of possible video essays I might create.", "previews": None},
+    {"title": "The Portal", "cat": "essays", "when": "Discontinued in 2021", "at": 202100, "href": "/portal",
+     "desc": "A collection of poems and short stories.", "previews": ("portal", None)},
+    {"title": "Illustrations", "cat": "art", "when": "Delayed after 2022", "at": 202200, "href": "/illustration",
+     "desc": "My journey in the world of drawing cartoons (2018-2024).", "previews": ("illustration", None)},
+]
+RECRUITER_PLAY.sort(key=lambda c: -c["at"])
 
 
 # Only when it's set: an empty link would take over the home page
@@ -468,6 +584,8 @@ if RECRUITER_LINK:
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "GET":
+        if recruiter_mode():
+            return render_template("recruiter/home.html", projects=RECRUITER_PROJECTS)
         return render_template("index.html")
 
     url = find_page(request.form.get("finder", ""))
@@ -490,6 +608,8 @@ def commonspirit():
 # ---- your existing routes ----
 @app.route("/about")
 def about():
+    if recruiter_mode():
+        return render_template("recruiter/about.html")
     return render_template("about.html")
 
 # Old addresses still work: /design, /collab and /client -> home Projects, /personal -> /play
@@ -505,11 +625,21 @@ def personal():
 
 @app.route("/code")
 def code():
+    # Recruiter mode folds Code into Play
+    if recruiter_mode():
+        return redirect(url_for("play"))
     return render_template("code.html")
 
 @app.route("/play")
 def play():
+    if recruiter_mode():
+        return render_template("recruiter/play.html", items=RECRUITER_PLAY)
     return render_template("personal.html")
+
+# Only the recruiter nav links here; for now it is locked and points to the Pirenily essay
+@app.route("/writing")
+def writing():
+    return render_template("recruiter/writing.html")
 
 @app.route("/illustration")
 def illustration():

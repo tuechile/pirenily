@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{#
+    Recruiter mode (the recruiter link sets it; /full-site clears it): light-only pages in one sans,
+    with the profile panel on the left, the page's own column in the middle and its controls on the right.
+    Pages fill: logo, middle, right, main_class, scripts.
+#}
+<html lang="en" data-mode="easy" data-theme="light" data-font="sans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirenily {% block title %}{% endblock %}</title>
+    <meta property="og:title" content="Pirenily {{ self.title() }}">
+    {% include "partials/meta.html" %}
+    {# Only reachable through the private link, so search engines stay out #}
+    <meta name="robots" content="noindex">
+    <link href="/static/favicon.ico" rel="icon">
+    <link href="/static/css/styles.css?v={{ asset_v }}" rel="stylesheet">
+    <link href="/static/css/settings.css?v={{ asset_v }}" rel="stylesheet">
+    <link href="/static/css/body.css?v={{ asset_v }}" rel="stylesheet">
+    <link href="/static/css/recruiter.css?v={{ asset_v }}" rel="stylesheet">
+    <script src="/static/settings.js?v={{ asset_v }}"></script>
+    <script>
+        // Recruiter pages are always Your view, whatever the visitor saved; the ♪ switch still works
+        (function () {
+            var root = document.documentElement;
+            function light() { root.dataset.mode = "easy"; root.dataset.theme = "light"; root.dataset.font = "sans"; }
+            light();
+            document.addEventListener("pirenily:settings", light);
+        })();
+    </script>
+</head>
+
+<body class="rc">
+    <div class="rc-page">
+        <nav class="rc-nav" aria-label="Main">
+            {% block logo %}<a class="rc-logo" href="/" aria-label="Pirenily, back to the home page">Pirenily</a>{% endblock %}
+            <div class="rc-nav-right">
+                <button class="rc-sound" type="button" data-switch="sound" aria-label="Sound">♪</button>
+                <div class="rc-links">
+                    {% if request.endpoint != "about" %}<a href="/about">About</a>{% endif %}
+                    {% if request.endpoint != "play" %}<a href="/play">Play</a>{% endif %}
+                    {% if request.endpoint != "writing" %}<a href="/writing">Writing</a>{% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <main class="rc-main {% block main_class %}{% endblock %}">
+            {% include "recruiter/_panel.html" %}
+            {% block middle %}{% endblock %}
+            {# The white veil over the middle column: hovering something with data-veil writes its words here #}
+            <div class="rc-veil" aria-hidden="true" hidden><span></span></div>
+            {% block right %}{% endblock %}
+        </main>
+
+        <footer class="rc-foot">
+            <span data-veil="im usually not like this">Chi (Tue) Le | pirenily | Updated {{ last_updated }}</span>
+        </footer>
+    </div>
+
+    <div class="rc-pop-layer" aria-hidden="true"></div>
+    <div class="rc-cursor" aria-hidden="true" hidden></div>
+
+    <script src="/static/recruiter.js?v={{ asset_v }}"></script>
+    <script src="/static/fire.js?v={{ asset_v }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

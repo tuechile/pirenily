@@ -1,0 +1,58 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}| Play{% endblock %}
+
+{% block main_class %}rc-play{% endblock %}
+
+{% block middle %}
+{# Code and Play in one list, newest first (RECRUITER_PLAY in app.py). Hovering a card pops one of its pictures #}
+<section class="rc-middle" aria-label="Play: code and personal work">
+    <ul class="rc-col rc-cards">
+        {% for c in items %}
+        <li data-cat="{{ c.cat }}">
+            {% set pics = previews(c.previews[0], c.previews[1]) if c.previews else "" %}
+            {% if c.href %}<a class="rc-card-item" href="{{ c.href }}"{% if c.href.startswith('http') %} target="_blank" rel="noopener"{% endif %}{% if pics %} data-previews="{{ pics }}"{% endif %}>
+            {% else %}<div class="rc-card-item"{% if pics %} data-previews="{{ pics }}"{% endif %}>{% endif %}
+                <div class="rc-card-head">
+                    <h2>{{ c.title }}</h2>
+                    <span>{{ c.when }}</span>
+                </div>
+                <p>{{ c.desc }}</p>
+            {% if c.href %}</a>{% else %}</div>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
+
+{% block right %}
+<nav class="rc-words" role="group" aria-label="Show">
+    <button type="button" class="rc-word" data-cat="all" aria-pressed="true">All</button>
+    <button type="button" class="rc-word" data-cat="code" aria-pressed="false">Code</button>
+    <button type="button" class="rc-word" data-cat="art" aria-pressed="false">Gallery</button>
+    <button type="button" class="rc-word" data-cat="interactivity" aria-pressed="false">Interactive</button>
+    <button type="button" class="rc-word" data-cat="essays" aria-pressed="false">Essays</button>
+</nav>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // The filter words: click to show one kind; hovering one says it big on the veil, like the home tabs
+    (function () {
+        var words = document.querySelectorAll(".rc-word");
+        var cards = document.querySelectorAll(".rc-cards > li");
+        words.forEach(function (w) {
+            w.addEventListener("click", function () {
+                words.forEach(function (x) { x.setAttribute("aria-pressed", String(x === w)); });
+                cards.forEach(function (c) { c.hidden = w.dataset.cat !== "all" && c.dataset.cat !== w.dataset.cat; });
+            });
+            var say = function () { window.rcVeil && window.rcVeil.show(w.textContent); };
+            var hush = function () { window.rcVeil && window.rcVeil.hide(); };
+            w.addEventListener("mouseenter", say);
+            w.addEventListener("focus", say);
+            w.addEventListener("mouseleave", hush);
+            w.addEventListener("blur", hush);
+        });
+    })();
+</script>
+{% endblock %}

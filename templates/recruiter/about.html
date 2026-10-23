@@ -1,0 +1,79 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}| Meet Chi{% endblock %}
+
+{% block main_class %}rc-about{% endblock %}
+
+{% block middle %}
+{# Five lengths of the same bio. The stretch bar on the right picks one: the longer it is, the more there is #}
+<section class="rc-middle" aria-label="About me" aria-live="polite">
+    <div class="rc-col rc-bio">
+        <div data-level="1" hidden>
+            <p class="rc-bio-lead">I’m Chi, a design engineer at Harvard who makes things a little stranger and a lot more curious.</p>
+        </div>
+        <div data-level="2" hidden>
+            <p class="rc-bio-lead">I’m Chi Le, a design engineer: a designer who codes &amp;&amp; a developer who draws.</p>
+            <p>I study Computer Science and Art, Film, and Visual Studies at Harvard, and I’m looking for summer 2027 internships.</p>
+        </div>
+        <div data-level="3" hidden>
+            <p class="rc-bio-lead">I’m a design engineer, a designer who codes &amp;&amp; a developer who draws, based in Cambridge, MA.</p>
+            <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
+            <p>I’m a junior at Harvard College, concentrating in Computer Science and Art, Film, and Visual Studies with a secondary in Mathematics. Right now I lead design at HackHarvard and work as a senior UX designer and project manager at Tech for Social Good.</p>
+            <p>I like to make things a little stranger and a lot more curious.</p>
+        </div>
+        <div data-level="4" hidden>
+            <p class="rc-bio-lead">I’m a design engineer, a designer who codes &amp;&amp; a developer who draws, based in Cambridge, MA.</p>
+            <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
+            <p>I am a junior at Harvard College, concentrating in Computer Science and Art, Film, and Visual Studies with a secondary in Mathematics. Right now I am Director of Design at HackHarvard, a senior UX designer and project manager at Tech for Social Good, Director of Internal Relations at HPAIR, and a student content creator at the Office for the Arts.</p>
+            <p>Outside of that, I make things as pirenily: graphic design, photography and storyboards, nearly all of it taken, edited and built by me, including this website.</p>
+            <p>Where am I? HackHarvard, rebuilding the brand for a 500+ hacker weekend. The Office for the Arts, running campaigns for 10+ arts events a semester. HPAIR, on freshman programming. Tech for Social Good, on an offline-first system for prosthetics care.</p>
+        </div>
+        {# Without the script, the whole bio shows #}
+        <div data-level="5">
+            <p class="rc-bio-lead">I’m a design engineer, a designer who codes &amp;&amp; a developer who draws, based in Cambridge, MA.</p>
+            <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
+            <p>I am currently a junior at Harvard College, concentrating in Computer Science and Art, Film, and Visual Studies with a secondary in Mathematics. Right now I am Director of Design at the Harvard Undergraduate Hackathon (HackHarvard), a senior UX designer and project manager at Tech for Social Good (T4SG), Director of Internal Relations at HPAIR, and a student content creator at the Office for the Arts.</p>
+            <p>My passion for film and installation art grows within my identity: pirenily. I use pirenily as a vessel of self-expression through graphic design, photography, and storyboards. My main interests lie in the construction of interdependence: of the movement of time within the static, of the existence of the multiverse through doors-and-paths-related design, and of myself as a locus of socialization. This also affects how I perceive selfhood and technology. Recently, something I have been thinking about is the voyeuristic gaze deconstructed in the digital age and the grotesqueness of personhood as a public repo. Every form of visual presentation on this website is mainly experimented, taken, edited, scripted, and modeled by me.</p>
+            <h2 class="rc-bio-head">Where am I?</h2>
+            <dl class="rc-roles">
+                <div><dt>HackHarvard<span>Director of Design</span></dt><dd>Rebuilt the brand for a 500+ hacker weekend, and applications doubled.</dd></div>
+                <div><dt>Office for the Arts<span>Student Content Creator</span></dt><dd>Campaigns for 10+ arts events a semester, with engagement up 2&times;.</dd></div>
+                <div><dt>HPAIR<span>Director of Internal Relations</span></dt><dd>Freshman programming now; before that, marketing for a 2,000-person conference.</dd></div>
+                <div><dt>Tech for Social Good<span>UX Designer</span></dt><dd>An offline-first system for prosthetics care.</dd></div>
+            </dl>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block right %}
+{# The stretch bar: a plain ink rectangle. Drag it down and it grows longer, five lengths, no labels.
+   A see-through range input lies over its full reach, so mouse, touch and the arrow keys all work #}
+<div class="rc-stretch">
+    <div class="rc-stretch-bar" aria-hidden="true"></div>
+    <input class="rc-stretch-range" type="range" min="1" max="5" step="1" value="1"
+        aria-label="How much of my bio to show, from short to everything" aria-valuetext="Level 1 of 5">
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var range = document.querySelector(".rc-stretch-range");
+        var bar = document.querySelector(".rc-stretch-bar");
+        var levels = document.querySelectorAll(".rc-bio [data-level]");
+        var narrow = window.matchMedia("(max-width: 880px)");
+        function show() {
+            // Phones have no bar (no room beside the text), so they get the whole bio
+            var n = narrow.matches ? 5 : Number(range.value);
+            levels.forEach(function (l) { l.hidden = Number(l.dataset.level) !== n; });
+            // 60px at the shortest, 75px longer each level, 360px at the longest
+            bar.style.height = (60 + (n - 1) * 75) + "px";
+            range.setAttribute("aria-valuetext", "Level " + n + " of 5");
+        }
+        range.addEventListener("input", show);
+        narrow.addEventListener("change", show);
+        show();
+    })();
+</script>
+{% endblock %}

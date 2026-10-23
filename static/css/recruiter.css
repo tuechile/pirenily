@@ -1,0 +1,854 @@
+/* ========================================= Recruiter mode =========================================
+   The pages the recruiter link opens (templates/recruiter/). Always Your view (light, one sans), so
+   everything here builds on the easy-mode light tokens from styles.css and settings.css.
+   Desktop: one screen, no page scroll. A white page between a floating header and footer that fade
+   from the paper into white; the profile panel left, the page's column in the middle, its controls right.
+   Phones stack it all into one scrolling column and drop the hover-only extras. */
+
+:root {
+    --rc-page: var(--sheet);                       /* the white page area */
+    --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
+    --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
+    --rc-col: 640px;                               /* the middle column and the home thumbnails */
+    --rc-gutter: 48px;
+    --rc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.rc {
+    display: block;
+    height: auto;
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--c-lead);
+    background: var(--bg);
+}
+
+.rc a {
+    color: inherit;
+}
+
+/* One sans for the whole page: headings skip Your view's IM Fell header face */
+body.rc {
+    --font-head: var(--font-sans);
+    --head-stroke: 0;
+}
+
+.rc button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.rc-page {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+/* ---------- Header and footer: float over the page, fading from the paper into white, then clear ---------- */
+.rc-nav,
+.rc-foot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    padding-left: var(--rc-gutter);
+    padding-right: var(--rc-gutter);
+}
+
+.rc-nav {
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding-top: 22px;
+    padding-bottom: 48px;
+    background: linear-gradient(to bottom, var(--bg) 0%, var(--rc-page) 70%, var(--rc-clear) 100%);
+}
+
+.rc-logo {
+    font-size: 1.375rem;
+    color: var(--c-title);
+    text-decoration: none;
+}
+
+.rc-nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.rc-sound {
+    width: 44px;
+    height: 44px;
+    font-size: 1.125rem;
+}
+
+.rc-sound[aria-pressed="false"] {
+    opacity: 0.45;
+    text-decoration: line-through;
+}
+
+.rc-links {
+    display: flex;
+    gap: 28px;
+    font-size: 1.0625rem;
+}
+
+.rc-links a {
+    text-decoration: none;
+}
+
+.rc-foot {
+    bottom: 0;
+    padding-top: 48px;
+    padding-bottom: 22px;
+    font-size: var(--fs-tiny);
+    color: var(--c-faint);
+    text-align: right;
+    background: linear-gradient(to top, var(--bg) 0%, var(--rc-page) 70%, var(--rc-clear) 100%);
+}
+
+/* ---------- The three columns ---------- */
+.rc-main {
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr) 140px;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    column-gap: 24px;
+    padding: 0 var(--rc-gutter);
+    background: var(--rc-page);
+}
+
+/* A middle column that scrolls (About, Play) runs the full height under the header and footer fades */
+.rc-middle {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    box-sizing: border-box;
+    padding: 104px 0 96px;
+}
+
+.rc-middle::-webkit-scrollbar {
+    display: none;
+}
+
+.rc-col {
+    width: 100%;
+    max-width: var(--rc-col);
+    margin: 0 auto;
+}
+
+/* ---------- The veil: pale white over the middle column, big words in it. Appears and goes instantly ---------- */
+.rc-veil {
+    grid-column: 2;
+    grid-row: 1;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    background: var(--rc-veil);
+    font-size: 5.5rem;
+    line-height: 1.05;
+    text-align: center;
+    color: var(--c-title);
+}
+
+.rc-veil[hidden] {
+    display: none;
+}
+
+/* ---------- Left panel ---------- */
+.rc-panel {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.rc-card {
+    position: relative;
+    width: 186px;
+    height: 225px;
+    perspective: 1200px;
+}
+
+.rc-card-front,
+.rc-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 700ms var(--rc-ease);
+}
+
+.rc-card-front img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.rc-card-front img:hover {
+    animation: rcWarm 1s infinite alternate;
+}
+
+@keyframes rcWarm {
+    from { filter: grayscale(100%); }
+    to { filter: grayscale(25%); }
+}
+
+.rc-card-back {
+    transform: rotateY(180deg);
+    box-sizing: border-box;
+    padding: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    pointer-events: none;
+}
+
+.rc-card.is-flipped .rc-card-front {
+    transform: rotateY(-180deg);
+    pointer-events: none;
+}
+
+.rc-card.is-flipped .rc-card-back {
+    transform: rotateY(0deg);
+    pointer-events: auto;
+}
+
+/* The back: every About photo at its own shape, a four-column masonry */
+.rc-card-photos {
+    display: block;
+    columns: 4;
+    column-gap: 4px;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.rc-card-photos img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 4px;
+    break-inside: avoid;
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.rc-card-eye {
+    flex: none;
+    align-self: center;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-decoration: none;
+    color: var(--c-title);
+    font-size: var(--fs-0);
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.rc-eye {
+    width: 26px;
+    height: 26px;
+}
+
+.rc-name {
+    margin: 0;
+    width: 192px;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    color: var(--c-title);
+}
+
+.rc-name-btn {
+    white-space: nowrap;
+    text-align: left;
+}
+
+.rc-name-btn:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.rc-name-input {
+    font: inherit;
+    width: 100%;
+    padding: 0;
+    color: var(--c-title);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--c-faint);
+    outline: none;
+}
+
+.rc-sub,
+.rc-line {
+    margin: 0;
+    width: 195px;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+}
+
+.rc-sub {
+    color: var(--c-faint);
+}
+
+.rc-line a {
+    text-decoration: none;
+}
+
+.rc-contacts {
+    display: flex;
+    gap: 4px;
+    width: fit-content;
+    margin-left: -10px;
+}
+
+.rc-contacts a {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rc-contacts .contact-logo {
+    width: 22px;
+    height: 22px;
+}
+
+/* ---------- Right column: plain words, right-aligned; hovering one dims the rest ---------- */
+.rc-words {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.rc-word {
+    min-height: 44px;
+    padding: 0 2px;
+    font-size: 1.05rem;
+    text-align: right;
+    transition: opacity 400ms var(--rc-ease);
+}
+
+.rc-word[aria-pressed="true"] {
+    color: var(--c-title);
+}
+
+.rc-words:hover > .rc-word:not(:hover) {
+    opacity: 0.45;
+}
+
+/* The gap between the two groups of home tabs owns up to itself on hover */
+.rc-words-gap {
+    align-self: stretch;
+    height: 40px;
+}
+
+/* ---------- Home: the project roll ---------- */
+.rc-roll {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    align-self: stretch;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Every picture fills the same frame, cropped to fit, whichever tab it comes from */
+.rc-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--glass);
+}
+
+.rc-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rc-project-head {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.rc-project-head h2 {
+    margin: 0;
+    flex-grow: 1;
+    min-width: 0;
+    font-weight: 400;
+    font-size: 1.625rem;
+    line-height: 1.2;
+    color: var(--c-title);
+}
+
+.rc-project-role {
+    margin: 0;
+    flex-shrink: 0;
+    max-width: 45%;
+    text-align: right;
+    font-size: var(--fs-note);
+    color: var(--c-lead);
+}
+
+.rc-project-desc {
+    margin: 8px 0 0;
+    font-size: var(--fs-note);
+    line-height: 1.5;
+}
+
+/* Phones and no-script: the plain list */
+.rc-list {
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.rc-project,
+.rc-slot-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.rc-project-link {
+    display: contents;
+}
+
+.rc-roll .cv-panel {
+    width: min(440px, 100%);
+    margin: 0 auto;
+    padding: 104px 0 96px;
+}
+
+@media (min-width: 881px) {
+    .rc-roll.is-live .rc-list {
+        display: none;
+    }
+
+    .rc-roll .cv-panel {
+        height: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    /* The roll runs the full height under the header and footer, fading into white at both ends */
+    .rc-track {
+        position: absolute;
+        inset: 0;
+        outline: none;
+        -webkit-mask-image: linear-gradient(to bottom, transparent, #000 90px, #000 calc(100% - 90px), transparent);
+        mask-image: linear-gradient(to bottom, transparent, #000 90px, #000 calc(100% - 90px), transparent);
+    }
+
+    .rc-slot {
+        --d: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: var(--rc-col);
+        cursor: pointer;
+        will-change: transform;
+    }
+
+    .rc-slot .rc-frame {
+        aspect-ratio: auto;
+        height: 360px;
+        /* the peeks keep a soft, blurred edge; it thins to nothing as one reaches the middle */
+        --soft: calc(var(--d) * 28px);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent), linear-gradient(to bottom, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent);
+        -webkit-mask-composite: source-in;
+        mask-image: linear-gradient(to right, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent), linear-gradient(to bottom, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent);
+        mask-composite: intersect;
+    }
+
+    .rc-slot .rc-frame img {
+        filter: grayscale(calc(var(--d) * 100%));
+        opacity: calc(1 - var(--d) * 0.2);
+    }
+
+    .rc-slot .rc-project-desc {
+        margin-top: 18px;
+    }
+}
+
+/* ---------- About: the bio and its stretch bar ---------- */
+.rc-bio > div {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.rc-bio > div[hidden] {
+    display: none;
+}
+
+.rc-bio p {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+}
+
+.rc-bio .rc-bio-lead {
+    font-size: 1.625rem;
+    line-height: 1.35;
+    color: var(--c-title);
+}
+
+.rc-bio-head {
+    margin: 14px 0 0;
+    font-weight: 400;
+    font-size: 1.375rem;
+    color: var(--c-title);
+}
+
+.rc-roles {
+    margin: 0;
+}
+
+.rc-roles > div {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 24px;
+    padding: 12px 0;
+    border-top: 1px solid var(--hairline);
+    font-size: var(--fs-note);
+    line-height: 1.5;
+}
+
+.rc-roles dt {
+    color: var(--c-title);
+}
+
+.rc-roles dt span {
+    display: block;
+    color: var(--c-faint);
+}
+
+.rc-roles dd {
+    margin: 0;
+}
+
+.rc-stretch {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    position: relative;
+    width: 22px;
+    height: 360px;
+}
+
+.rc-stretch-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 360px;
+    background: var(--c-title);
+    transition: height 300ms var(--rc-ease);
+}
+
+.rc-stretch-range {
+    writing-mode: vertical-lr;
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: ns-resize;
+}
+
+/* Clicks leave no outline; reaching it with the keyboard does */
+.rc-stretch:has(.rc-stretch-range:focus-visible) {
+    outline: 2px solid var(--c-title);
+    outline-offset: 4px;
+}
+
+/* ---------- Play: the cards ---------- */
+.rc-cards {
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 72px;
+}
+
+.rc-cards li[hidden] {
+    display: none;
+}
+
+.rc-card-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.rc-card-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.rc-card-head h2 {
+    margin: 0;
+    flex-grow: 1;
+    min-width: 0;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: var(--c-title);
+}
+
+.rc-card-head span {
+    flex-shrink: 0;
+    font-size: var(--fs-0);
+    color: var(--c-faint);
+}
+
+.rc-card-item p {
+    margin: 0;
+    font-size: var(--fs-0);
+    line-height: 1.5;
+}
+
+/* ---------- Writing: locked ---------- */
+.rc-locked {
+    display: flex;
+    align-items: center;
+}
+
+.rc-locked .rc-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.rc-lock {
+    width: 28px;
+    height: 28px;
+    color: var(--c-faint);
+}
+
+.rc-locked h1 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 1.625rem;
+    line-height: 1.3;
+    color: var(--c-title);
+}
+
+.rc-locked p,
+.rc-locked a {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+}
+
+.rc-locked a {
+    color: var(--c-title);
+}
+
+/* ---------- Hover pictures and the cursor ---------- */
+.rc-pop-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+
+.rc-pop {
+    position: absolute;
+    display: block;
+    height: auto;
+    border: 1px solid var(--hairline);
+}
+
+/* The page draws its own cursor on mouse screens (recruiter.js adds .rc-own-cursor) */
+.rc-own-cursor,
+.rc-own-cursor * {
+    cursor: none !important;
+}
+
+.rc-cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    pointer-events: none;
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    background: var(--c-title);
+}
+
+.rc-cursor[hidden] {
+    display: none;
+}
+
+/* Over a project picture it becomes a white square holding a note, hugging the text */
+.rc-cursor.has-note {
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: var(--rc-page);
+    color: var(--c-title);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rc-card-front,
+    .rc-card-back,
+    .rc-word {
+        transition: none;
+    }
+
+    .rc-card-front img:hover {
+        animation: none;
+    }
+}
+
+/* ---------- Phones and narrow tablets: one scrolling column, no hover extras ---------- */
+@media (max-width: 880px) {
+    :root {
+        --rc-gutter: 16px;
+    }
+
+    .rc-page {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .rc-nav {
+        position: sticky;
+    }
+
+    .rc-links {
+        gap: 18px;
+    }
+
+    .rc-foot {
+        position: static;
+        padding-top: 24px;
+    }
+
+    .rc-main {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 40px;
+        padding-top: 8px;
+        padding-bottom: 24px;
+    }
+
+    .rc-panel {
+        align-items: flex-start;
+    }
+
+    .rc-middle,
+    .rc-roll {
+        order: 2;
+        overflow: visible;
+        padding: 0;
+    }
+
+    .rc-roll .cv-panel {
+        padding: 0;
+    }
+
+    .rc-stretch {
+        display: none;
+    }
+
+    .rc-cards {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+    }
+
+    .rc-roles > div {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 4px;
+    }
+
+    .rc-veil {
+        font-size: 3rem;
+    }
+
+    /* Panel, then the page's words, then its column */
+    .rc-words {
+        order: 1;
+        justify-self: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 16px;
+    }
+
+    .rc-words-gap {
+        display: none;
+    }
+
+    .rc-veil {
+        display: none;
+    }
+}

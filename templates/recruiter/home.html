@@ -1,0 +1,205 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}| Chi Le{% endblock %}
+
+{% block logo %}{% endblock %}
+
+{% block main_class %}rc-home{% endblock %}
+
+{% block middle %}
+{# Each project once, for the roll script (and the phone list below) #}
+{% set roll = [] %}
+{% for p in projects %}
+    {% set _ = roll.append({
+        "href": p.href, "title": p.title, "role": p.role, "desc": p.desc, "tags": p.tags, "note": p.note, "alt": p.alt,
+        "img": img(p.img[0], p.img[1]) if p.img else "",
+        "previews": previews(p.previews[0], p.previews[1]) if p.previews else ""
+    }) %}
+{% endfor %}
+
+<section class="rc-roll" aria-label="Projects" aria-roledescription="carousel">
+    {# Phones and no-script: a plain list of every project. On desktop the script swaps in the roll #}
+    <ol class="rc-list rc-col">
+        {% for p in roll %}
+        <li class="rc-project" data-tags="{{ p.tags|join(' ') }}">
+            {% if p.href %}<a class="rc-project-link" href="{{ p.href }}"{% if p.href.startswith('http') %} target="_blank" rel="noopener"{% endif %}>{% endif %}
+            <div class="rc-frame"{% if p.previews %} data-previews="{{ p.previews }}"{% endif %}{% if p.note %} data-note="{{ p.note }}"{% endif %}>
+                {% if p.img %}<img src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy">{% endif %}
+            </div>
+            <div class="rc-project-head">
+                <h2>{{ p.title }}</h2>
+                <p class="rc-project-role">{{ p.role }}</p>
+            </div>
+            <p class="rc-project-desc">{{ p.desc }}</p>
+            {% if p.href %}</a>{% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+    <div class="rc-track" tabindex="0" aria-label="Projects roll: scroll or use the arrow keys to move between projects" hidden></div>
+    {% include "partials/cv_panel.html" %}
+</section>
+<script type="application/json" id="rcRoll">{{ roll|tojson }}</script>
+{% endblock %}
+
+{% block right %}
+<nav class="rc-words" role="group" aria-label="Show projects">
+    <button type="button" class="rc-word" data-view="selected" aria-pressed="true">Selected</button>
+    {% if cv %}<button type="button" class="rc-word" data-view="resume" aria-pressed="false">Résumé</button>{% endif %}
+    <button type="button" class="rc-word" data-view="compilations" aria-pressed="false">Compilations</button>
+    <div class="rc-words-gap" aria-hidden="true" data-veil="Awkward white space for UI purposes"></div>
+    <button type="button" class="rc-word" data-view="uiux" aria-pressed="false">UI/UX</button>
+    <button type="button" class="rc-word" data-view="brand" aria-pressed="false">Brand</button>
+    <button type="button" class="rc-word" data-view="all" aria-pressed="false">All</button>
+</nav>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // The roll: the project in the middle is full size and in color; the ones above and below shrink
+    // toward the centre, go black and white and soften at the edges, and only peek in. The wheel moves
+    // it smoothly, one project per gesture at most, and it always finishes on the next one (no springing
+    // back). Clicking a peek or the arrow keys glide one project. It wraps forever.
+    (function () {
+        var ALL = JSON.parse(document.getElementById("rcRoll").textContent);
+        var section = document.querySelector(".rc-roll");
+        var list = section.querySelector(".rc-list");
+        var track = section.querySelector(".rc-track");
+        var cvPanel = document.getElementById("cvPanel");
+        var words = document.querySelectorAll(".rc-word");
+        var desktop = window.matchMedia("(min-width: 881px)");
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var PITCH = 420;
+
+        var view = "selected", projects = [], sel = 0, f = 0, target = 0, base = 0;
+        var following = false, inGesture = false, settle = 0, items = [];
+
+        function pick(name) {
+            view = name;
+            words.forEach(function (w) { w.setAttribute("aria-pressed", String(w.dataset.view === name)); });
+            var resume = name === "resume";
+            if (cvPanel) cvPanel.hidden = !resume;
+            projects = ALL.filter(function (p) { return name === "all" || p.tags.indexOf(name) >= 0; });
+            // Phones: filter the list
+            list.querySelectorAll(".rc-project").forEach(function (li) {
+                var tags = li.dataset.tags.split(" ");
+                li.hidden = resume || !(name === "all" || tags.indexOf(name) >= 0);
+            });
+            sel = 0; f = 0; target = 0; base = 0;
+            track.hidden = resume || !desktop.matches;
+            if (!resume) build();
+        }
+
+        // Five slots: the main project and two each way
+        function build() {
+            track.innerHTML = "";
+            items = [];
+            if (!desktop.matches || !projects.length) return;
+            for (var k = -2; k <= 2; k++) {
+                var el = document.createElement("article");
+                el.className = "rc-slot";
+                track.appendChild(el);
+                items.push({ k: k, el: el });
+            }
+            fill();
+            place();
+        }
+
+        function project(k) {
+            var n = projects.length;
+            return projects[((sel + k) % n + n) % n];
+        }
+
+        function fill() {
+            items.forEach(function (it) {
+                var p = project(it.k);
+                var main = it.k === 0;
+                var tag = main && p.href ? "a" : "div";
+                var html = '<div class="rc-frame"' + (p.previews && main ? ' data-previews="' + p.previews + '"' : "") +
+                    (p.note ? ' data-note="' + p.note + '"' : "") + ">" +
+                    (p.img ? '<img src="' + p.img + '" alt="' + (main ? p.alt.replace(/"/g, "&quot;") : "") + '">' : "") + "</div>" +
+                    '<div class="rc-project-head"><h2>' + escape(p.title) + '</h2><p class="rc-project-role">' + escape(p.role) + "</p></div>" +
+                    '<p class="rc-project-desc">' + escape(p.desc) + "</p>";
+                it.el.innerHTML = "<" + tag + ' class="rc-slot-inner"' + (tag === "a" ? ' href="' + p.href + '"' + (/^http/.test(p.href) ? ' target="_blank" rel="noopener"' : "") : "") + ">" + html + "</" + tag + ">";
+                it.el.setAttribute("aria-hidden", String(!main));
+                it.el.onclick = main ? null : function () { glideTo(it.k > 0 ? 1 : -1); };
+            });
+        }
+
+        function escape(s) {
+            return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+        }
+
+        // Size, color and edge softness all follow each slot's distance from the middle
+        function place() {
+            items.forEach(function (it) {
+                var pos = it.k - f;
+                var d = Math.min(Math.abs(pos), 1);
+                it.el.style.transform = "translate(-50%, -50%) translateY(" + (pos * PITCH).toFixed(1) + "px) scale(" + (1 - 0.4 * d).toFixed(3) + ")";
+                it.el.style.zIndex = String(10 - Math.round(Math.abs(pos) * 3));
+                it.el.style.setProperty("--d", d.toFixed(3));
+            });
+        }
+
+        // The track trails a target, closing 7% of the gap every 60th of a second (timed, so slow
+        // screens keep the same pace), so every move eases in and out
+        function follow() {
+            if (following) return;
+            following = true;
+            var last = performance.now();
+            (function frame() {
+                var now = performance.now();
+                var k = 1 - Math.pow(0.93, Math.min(now - last, 250) / (1000 / 60));
+                last = now;
+                var v = reduced ? target : f + (target - f) * k;
+                if (Math.abs(target - v) < 0.001) v = target;
+                var moved = false;
+                while (v >= 0.5) { v -= 1; target -= 1; base -= 1; sel = (sel + 1) % projects.length; moved = true; }
+                while (v <= -0.5) { v += 1; target += 1; base += 1; sel = (sel - 1 + projects.length) % projects.length; moved = true; }
+                f = v;
+                if (moved) fill();
+                place();
+                if (f !== target) { requestAnimationFrame(frame); return; }
+                following = false;
+            })();
+        }
+
+        function glideTo(step) {
+            target = Math.round(target) + step;
+            follow();
+        }
+
+        section.addEventListener("wheel", function (e) {
+            if (track.hidden) return;
+            e.preventDefault();
+            if (!inGesture) { inGesture = true; base = Math.round(target); }
+            target = Math.max(base - 1, Math.min(base + 1, target + e.deltaY / (PITCH * 2)));
+            follow();
+            clearTimeout(settle);
+            settle = setTimeout(function () {
+                inGesture = false;
+                var moved = target - base;
+                target = Math.abs(moved) < 0.04 ? base : base + (moved > 0 ? 1 : -1);
+                follow();
+            }, 220);
+        }, { passive: false });
+
+        track.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowDown") { e.preventDefault(); glideTo(1); }
+            if (e.key === "ArrowUp") { e.preventDefault(); glideTo(-1); }
+        });
+
+        words.forEach(function (w) {
+            w.addEventListener("click", function () { pick(w.dataset.view); });
+            w.addEventListener("mouseenter", function () { window.rcVeil && window.rcVeil.show(w.textContent); });
+            w.addEventListener("focus", function () { window.rcVeil && window.rcVeil.show(w.textContent); });
+            w.addEventListener("mouseleave", function () { window.rcVeil && window.rcVeil.hide(); });
+            w.addEventListener("blur", function () { window.rcVeil && window.rcVeil.hide(); });
+        });
+
+        section.classList.add("is-live");
+        desktop.addEventListener("change", function () { pick(view); });
+        var fromHash = { "#resume": "resume", "#cv": "resume", "#brand": "brand", "#uiux": "uiux", "#compilations": "compilations", "#all": "all" }[location.hash];
+        pick(fromHash && document.querySelector('.rc-word[data-view="' + fromHash + '"]') ? fromHash : "selected");
+    })();
+</script>
+{% endblock %}

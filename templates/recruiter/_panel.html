@@ -1,0 +1,36 @@
+{#
+    The left profile panel on every recruiter page. Hovers (static/recruiter.js):
+    headshot pops a photo, each back photo pops itself, the name runs the finder names on the veil,
+    the one-liner says "How I build this website", the contact icons say "Text me ;)".
+#}
+{% import "partials/icons.html" as icons %}
+{% set about_photos = gallery_images("about") %}
+<section class="rc-panel" aria-label="About Chi">
+    <div class="rc-card">
+        <button type="button" class="rc-card-front" aria-label="Flip to see more pictures" aria-pressed="false">
+            <img src="{{ img('other', 'Headshot_Chi Le.jpg') }}" alt="Chi Le"
+                data-previews="{% for f in about_photos %}{{ img('about', f) }}{% if not loop.last %}|{% endif %}{% endfor %}" data-pop-width="300">
+        </button>
+        <div class="rc-card-back">
+            <button type="button" class="rc-card-photos" aria-label="Flip back to the headshot">
+                {% for f in about_photos %}
+                <img src="{{ img('about', f) }}" alt="" loading="lazy" data-previews="{{ img('about', f) }}" data-pop-width="300">
+                {% endfor %}
+            </button>
+            <a class="rc-card-eye" href="{{ url_for('full_site') }}">
+                <span>Not a recruiter?</span>
+                {{ icons.icon("eye", None, "rc-eye") }}
+            </a>
+        </div>
+    </div>
+
+    <h2 class="rc-name" data-veil-names>Hi! My name is<br><button type="button" class="rc-name-btn" aria-label="Give Chi a new name">Chi Le</button></h2>
+    <p class="rc-sub">CS &amp; AFVS @ Harvard</p>
+    <p class="rc-line"><a href="/pirenily" data-veil="How I build this website">I like to make things a little stranger and a lot more curious.</a></p>
+    <div class="rc-contacts" data-veil="Text me ;)">
+        <a href="https://www.instagram.com/pju_irza/" target="_blank" rel="noopener">{{ icons.icon("instagram", "Instagram") }}</a>
+        <a href="mailto:chile@college.harvard.edu">{{ icons.icon("mail", "Email") }}</a>
+        <a href="https://www.linkedin.com/in/chi-tue-le-214705320/" target="_blank" rel="noopener">{{ icons.icon("linkedin", "LinkedIn") }}</a>
+        <a href="https://github.com/tuechile" target="_blank" rel="noopener">{{ icons.icon("github", "GitHub") }}</a>
+    </div>
+</section>

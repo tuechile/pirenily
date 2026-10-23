@@ -1,0 +1,135 @@
+{# The résumé sheet: pdf.js draws the Drive PDF (from /cv.pdf). Used by the home Résumé tab and the recruiter home. #}
+{% if cv %}
+{# Only the full password gets here; the Drive link lives in CV_DRIVE_URL (app.py) #}
+<section class="cv-panel" id="cvPanel" aria-label="Résumé" hidden>
+    {% if cv.url %}
+    <p class="gate-note cv-open"><a href="{{ cv.url }}" target="_blank" rel="noopener">Open it in Google Drive ↗</a></p>
+    {% endif %}
+    {% if cv.page %}
+    <div class="cv-frame" aria-label="Chi Le's résumé">
+        <div class="cv-sheet"><canvas aria-hidden="true"></canvas><div class="textLayer"></div><div class="cv-links"></div></div>
+    </div>
+    <script>
+        // The CV as a plain sheet of paper: pdf.js draws it here (sharp, selectable, links work) so there's
+        // none of Drive's viewer around it. Pinch or ctrl-scroll zooms in, never out past the page.
+        (function () {
+            var frame = document.querySelector("#cvPanel .cv-frame");
+            if (!frame) return;
+            var sheet = frame.querySelector(".cv-sheet"), canvas = sheet.querySelector("canvas");
+            var PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+            var page = null, base = null, zoom = 1, drawn = 0, redraw = 0;
+
+            function draw() {
+                // Redrawn at the sheet's real pixel width after each zoom, so text stays crisp
+                var px = Math.min(sheet.clientWidth * (window.devicePixelRatio || 1), 4096);
+                sheet.style.setProperty("--scale-factor", sheet.clientWidth / base.width);
+                if (Math.abs(px - drawn) < 2) return;
+                drawn = px;
+                var viewport = page.getViewport({ scale: px / base.width });
+                var off = document.createElement("canvas");
+                off.width = viewport.width;
+                off.height = viewport.height;
+                page.render({ canvasContext: off.getContext("2d"), viewport: viewport }).promise.then(function () {
+                    if (px !== drawn) return;
+                    canvas.width = off.width;
+                    canvas.height = off.height;
+                    canvas.getContext("2d").drawImage(off, 0, 0);
+                });
+            }
+
+            function setZoom(next, cx, cy) {
+                next = Math.min(4, Math.max(1, next));
+                if (!page || next === zoom) return;
+                // Keep the spot under the fingers (or cursor) where it is
+                var box = frame.getBoundingClientRect();
+                var x = (frame.scrollLeft + cx - box.left) / zoom, y = (frame.scrollTop + cy - box.top) / zoom;
+                zoom = next;
+                sheet.style.width = zoom * 100 + "%";
+                frame.classList.toggle("is-zoomed", zoom > 1);
+                frame.scrollLeft = x * zoom - (cx - box.left);
+                frame.scrollTop = y * zoom - (cy - box.top);
+                sheet.style.setProperty("--scale-factor", sheet.clientWidth / base.width);
+                clearTimeout(redraw);
+                redraw = setTimeout(draw, 150);
+            }
+
+            // Trackpad pinch: ctrl+wheel in most browsers, gesture events in Safari
+            frame.addEventListener("wheel", function (e) {
+                if (!e.ctrlKey) return;
+                e.preventDefault();
+                setZoom(zoom * Math.exp(-e.deltaY * 0.01), e.clientX, e.clientY);
+            }, { passive: false });
+            var pinch = null, gestureFrom = 1;
+            frame.addEventListener("gesturestart", function (e) { e.preventDefault(); gestureFrom = zoom; });
+            frame.addEventListener("gesturechange", function (e) {
+                e.preventDefault();
+                if (!pinch) setZoom(gestureFrom * e.scale, e.clientX, e.clientY);
+            });
+
+            // Two-finger pinch on touch screens; one finger still scrolls
+            function spread(t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); }
+            frame.addEventListener("touchstart", function (e) {
+                if (e.touches.length === 2) pinch = { d: spread(e.touches), z: zoom };
+            }, { passive: true });
+            frame.addEventListener("touchmove", function (e) {
+                if (!pinch || e.touches.length !== 2) return;
+                e.preventDefault();
+                var t = e.touches;
+                setZoom(pinch.z * spread(t) / pinch.d, (t[0].clientX + t[1].clientX) / 2, (t[0].clientY + t[1].clientY) / 2);
+            }, { passive: false });
+            frame.addEventListener("touchend", function (e) { if (e.touches.length < 2) pinch = null; });
+
+            function open() {
+                var lib = window.pdfjsLib;
+                lib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js";
+                lib.getDocument("{{ url_for('cv_pdf', v=asset_v) }}").promise
+                    .then(function (doc) { return doc.getPage(1); })
+                    .then(function (p) {
+                        page = p;
+                        base = p.getViewport({ scale: 1 });
+                        draw();
+                        lib.renderTextLayer({ textContentSource: p.streamTextContent(), container: sheet.querySelector(".textLayer"), viewport: base });
+                        return p.getAnnotations();
+                    })
+                    .then(function (notes) {
+                        var links = sheet.querySelector(".cv-links"), v = page.view, w = v[2] - v[0], h = v[3] - v[1];
+                        notes.forEach(function (n) {
+                            if (n.subtype !== "Link" || !n.url) return;
+                            var a = document.createElement("a"), r = n.rect;
+                            a.href = n.url;
+                            a.target = "_blank";
+                            a.rel = "noopener";
+                            a.setAttribute("aria-label", n.url);
+                            a.style.left = (r[0] - v[0]) / w * 100 + "%";
+                            a.style.top = (v[3] - r[3]) / h * 100 + "%";
+                            a.style.width = (r[2] - r[0]) / w * 100 + "%";
+                            a.style.height = (r[3] - r[1]) / h * 100 + "%";
+                            links.appendChild(a);
+                        });
+                    })
+                    .catch(function () { frame.classList.add("is-broken"); });
+                if ("ResizeObserver" in window) new ResizeObserver(function () { if (page) draw(); }).observe(frame);
+            }
+
+            // pdf.js only loads once the CV tab is opened
+            var panel = document.getElementById("cvPanel");
+            function start() {
+                if (panel.hidden) return;
+                watch.disconnect();
+                if (window.pdfjsLib) return open();
+                var s = document.createElement("script");
+                s.src = PDFJS + "pdf.min.js";
+                s.onload = open;
+                s.onerror = function () { frame.classList.add("is-broken"); };
+                document.head.appendChild(s);
+            }
+            var watch = new MutationObserver(start);
+            watch.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+            start();
+        })();
+    </script>
+    {% elif not cv.url %}
+    <p class="cv-soon">On its way. Until it's up, <a href="mailto:chile@college.harvard.edu?subject=R%C3%A9sum%C3%A9">email me</a> and I'll send a copy.</p>
+    {% endif %}
+</section>
+{% endif %}
