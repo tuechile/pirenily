@@ -12,6 +12,8 @@
     --rc-sub: rgba(var(--fg-rgb), 0.42);           /* "Design @ Harvard": grayer than the text around it */
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
+    --rc-fs-text: 0.6875rem;                       /* tiny type (11px): running text, tabs, labels */
+    --rc-fs-title: 0.8125rem;                      /* tiny type (13px): the name and titles */
     --rc-col: 640px;                               /* the middle column and the home thumbnails */
     --rc-gutter: 32px;
     --rc-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -966,4 +968,21 @@ body.rc {
         max-width: none;
         text-align: center;
     }
+}
+
+/* ---------- Tiny type: everything but the nav small, like a Cargo index page ---------- */
+body.rc,
+.rc :is(.rc-sub, .rc-line, .rc-word, .rc-project-role, .rc-project-desc, .rc-foot,
+    .rc-bio p, .rc-roles > div, .rc-card-item p, .rc-locked a, .rc-cursor span) {
+    font-size: var(--rc-fs-text);
+    line-height: 1.4;
+}
+
+.rc :is(.rc-name, .rc-project-head h2, .rc-bio .rc-bio-lead, .rc-bio-head, .rc-card-head h2, .rc-locked h1) {
+    font-size: var(--rc-fs-title);
+    line-height: 1.3;
+}
+
+.rc .rc-word {
+    min-height: 22px;
 }
