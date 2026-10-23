@@ -53,6 +53,7 @@
         {% block footer %}
         {% endblock %}
         <span>Chi (Tue) Le | pirenily | Updated {{ last_updated }}</span>
+        {% include "partials/recruiter_return.html" %}
     </footer>
 
     <script src="{{ url_for('static', filename='loading.js') }}?v={{ asset_v }}">

@@ -1,0 +1,7 @@
+{# Your view only: the way back into recruiter mode. Locked until this browser has opened the recruiter link #}
+{% import "partials/icons.html" as icons %}
+{% if recruiter_seen %}
+<a class="pitch-btn rc-return easy-only" href="{{ url_for('recruiter_view') }}">Come back to be a recruiter?</a>
+{% else %}
+<span class="rc-return is-locked easy-only" tabindex="0">{{ icons.icon("lock", None, "rc-return-lock") }}<span class="rc-return-ask">Come back to be a recruiter?</span><span class="rc-return-how">Open the Recruiter link!</span></span>
+{% endif %}

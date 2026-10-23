@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "254"
+ASSET_VERSION = "257"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -460,10 +460,14 @@ def recruiter_link():
                         httponly=True, secure=request.is_secure, samesite="Lax")
     response.set_cookie(RECRUITER_COOKIE, "1", max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
+    response.set_cookie(RECRUITER_SEEN_COOKIE, "1", max_age=60 * 60 * 24 * 30,
+                        httponly=True, secure=request.is_secure, samesite="Lax")
     return response
 
 
 RECRUITER_COOKIE = "recruiter_view"
+# Stays after "Not a recruiter?", so Your view can offer the way back
+RECRUITER_SEEN_COOKIE = "recruiter_seen"
 
 
 def recruiter_mode():
@@ -472,7 +476,8 @@ def recruiter_mode():
 
 @app.context_processor
 def inject_recruiter_mode():
-    return dict(recruiter=recruiter_mode())
+    seen = request.cookies.get(RECRUITER_SEEN_COOKIE) == "1" and projects_unlocked()
+    return dict(recruiter=recruiter_mode(), recruiter_seen=seen)
 
 
 # The eye on the back of the recruiter flip card: "Not a recruiter?" drops back to the normal site
@@ -480,6 +485,16 @@ def inject_recruiter_mode():
 def full_site():
     response = redirect("/")
     response.delete_cookie(RECRUITER_COOKIE)
+    return response
+
+
+# "Come back to be a recruiter?" in Your view: only for visitors who opened the recruiter link before
+@app.route("/recruiter")
+def recruiter_view():
+    response = redirect("/")
+    if request.cookies.get(RECRUITER_SEEN_COOKIE) == "1" and projects_unlocked():
+        response.set_cookie(RECRUITER_COOKIE, "1", max_age=60 * 60 * 24 * 30,
+                            httponly=True, secure=request.is_secure, samesite="Lax")
     return response
 
 

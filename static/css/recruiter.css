@@ -63,6 +63,15 @@ body.rc {
     padding-right: var(--rc-gutter);
 }
 
+/* The long fades are see-through to clicks; only what sits in them catches the pointer */
+:is(.rc-nav, .rc-foot) {
+    pointer-events: none;
+}
+
+:is(.rc-nav, .rc-foot) > * {
+    pointer-events: auto;
+}
+
 .rc-nav {
     top: 0;
     display: flex;
@@ -70,8 +79,8 @@ body.rc {
     justify-content: space-between;
     gap: 32px;
     padding-top: 22px;
-    padding-bottom: 48px;
-    background: linear-gradient(to bottom, var(--bg) 0%, var(--rc-page) 70%, var(--rc-clear) 100%);
+    padding-bottom: 96px;
+    background: linear-gradient(to bottom, var(--rc-page) 0%, var(--rc-clear) 100%);
 }
 
 .rc-logo {
@@ -110,12 +119,12 @@ body.rc {
 
 .rc-foot {
     bottom: 0;
-    padding-top: 48px;
+    padding-top: 96px;
     padding-bottom: 22px;
     font-size: var(--fs-tiny);
     color: var(--c-faint);
     text-align: right;
-    background: linear-gradient(to top, var(--bg) 0%, var(--rc-page) 70%, var(--rc-clear) 100%);
+    background: linear-gradient(to top, var(--rc-page) 0%, var(--rc-clear) 100%);
 }
 
 /* ---------- The three columns ---------- */

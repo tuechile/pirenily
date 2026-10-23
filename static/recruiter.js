@@ -82,8 +82,8 @@
 
         function frame() {
             if (!mouse) { raf = 0; return; }
-            at.x += (mouse.x - at.x) * 0.12;
-            at.y += (mouse.y - at.y) * 0.12;
+            at.x += (mouse.x - at.x) * 0.25;
+            at.y += (mouse.y - at.y) * 0.25;
             cursor.style.transform = "translate(" + at.x.toFixed(1) + "px, " + at.y.toFixed(1) + "px) translate(-50%, -50%)";
             raf = requestAnimationFrame(frame);
         }

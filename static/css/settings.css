@@ -399,3 +399,31 @@
     border-radius: var(--r-pill);
     pointer-events: none;
 }
+
+/* "Come back to be a recruiter?" (partials/recruiter_return.html). Locked, it says how to get in on hover */
+.site-footer > .rc-return {
+    display: inline-flex;
+    margin-top: 0.5rem;
+}
+
+.rc-return.is-locked {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    color: var(--c-faint);
+    cursor: default;
+}
+
+.rc-return-lock {
+    width: 1em;
+    height: 1em;
+}
+
+.rc-return.is-locked .rc-return-how,
+.rc-return.is-locked:is(:hover, :focus-visible) .rc-return-ask {
+    display: none;
+}
+
+.rc-return.is-locked:is(:hover, :focus-visible) .rc-return-how {
+    display: inline;
+}

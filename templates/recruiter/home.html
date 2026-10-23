@@ -140,7 +140,7 @@
             });
         }
 
-        // The track trails a target, closing 7% of the gap every 60th of a second (timed, so slow
+        // The track trails a target, closing 14% of the gap every 60th of a second (timed, so slow
         // screens keep the same pace), so every move eases in and out
         function follow() {
             if (following) return;
@@ -148,7 +148,7 @@
             var last = performance.now();
             (function frame() {
                 var now = performance.now();
-                var k = 1 - Math.pow(0.93, Math.min(now - last, 250) / (1000 / 60));
+                var k = 1 - Math.pow(0.86, Math.min(now - last, 250) / (1000 / 60));
                 last = now;
                 var v = reduced ? target : f + (target - f) * k;
                 if (Math.abs(target - v) < 0.001) v = target;
