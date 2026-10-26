@@ -159,42 +159,27 @@ body:not(.rc) p a:hover {
     background: rgba(var(--pink-soft-rgb), 0.06);
 }
 
-/* The home finder sits on the dark video: white text, inverted where it runs onto the paper.
-   Below 881px the finder carries its own background picture, so it stays plain white there. */
+/* Below 881px the finder carries its own background picture, so its text stays white there.
+   Wider, it sits on the pale inverted video and the paper, so it's plain ink. */
 :root[data-theme="light"] .header,
 :root[data-theme="light"] .header::placeholder {
     color: var(--on-dark);
 }
 
 @media (min-width: 881px) {
-    :root[data-theme="light"] .header {
-        mix-blend-mode: difference;
+    :root[data-theme="light"] .header,
+    :root[data-theme="light"] .header::placeholder {
+        color: rgb(var(--fg-rgb));
     }
 }
 
-/* On paper the video sits on the landing and scrolls away with it, instead of staying fixed behind Projects */
-:root[data-theme="light"] .landing {
-    position: relative;
-}
-
+/* Same place as the dark video; inverted, its black ground turns white and multiply sinks it into the paper */
 :root[data-theme="light"] #video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: auto;
-    height: calc(95vh - var(--home-nav-h, 0px) - 5rem);
-    padding-bottom: 0;
-    /* Overlay blend: the video prints into the paper instead of sitting on it as a black block */
-    mix-blend-mode: overlay;
+    mix-blend-mode: multiply;
 }
 
 :root[data-theme="light"] #background-video {
-    width: auto;
-    max-width: 60%;
-    height: 100%;
-    max-height: none;
-    padding-bottom: 0;
+    filter: grayscale(100%) invert(1);
 }
 
 /* Content that belongs to one view: .easy-only shows in Your view, .mine-only in My view */
