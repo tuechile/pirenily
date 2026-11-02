@@ -24,11 +24,8 @@
     --ink-bleed: 0 0 0.7px rgba(var(--fg-rgb), 0.5);   /* letters soak slightly into the paper */
     --shadow-rgb: 120, 100, 80;     /* warm and faint on paper */
     --view-bubble: rgba(255, 255, 255, 0.75);   /* a white bubble, lighter than the paper */
-    --caramel-rgb: 190, 140, 90;      /* case study facts panel */
     --rail-ink: #b3aca5;              /* case study rail at rest: a solid pale ink, so lines and rings don't stack */
     --rail-ink-soft: #ddd7d0;         /* its track */
-    --facts-tint: rgba(var(--caramel-rgb), 0.26);
-    --facts-tint-fade: rgba(var(--caramel-rgb), 0.03);
 }
 
 /* No glows on paper: selected text is plain pink */
@@ -47,6 +44,19 @@
 :root[data-theme="light"] :is(.progress-bar, .load-bar span, .btn:hover, .travel-globe .globe-legend i),
 :root[data-theme="light"] .cs-index a.is-current::before {
     box-shadow: none;
+}
+
+/* The case study facts (role, team, scope…): no panel, just a line above and below */
+:root[data-theme="light"] .cs-facts {
+    padding: var(--s-5) 0;
+    background: none;
+    border-width: 1px 0;
+    border-color: var(--hairline-strong);
+}
+
+/* Its bottom line already closes the header, so the header's own divider goes */
+:root[data-theme="light"] .cs-hero:has(.cs-facts) {
+    border-bottom: 0;
 }
 
 /* The case-study rail rests in pale ink and goes full ink while hovered */
