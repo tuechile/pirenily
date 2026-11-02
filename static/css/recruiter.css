@@ -9,7 +9,7 @@
     --rc-page: var(--sheet);                       /* the white page area */
     --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
     --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
-    --rc-sub: rgba(var(--fg-rgb), 0.42);           /* "Design @ Harvard": grayer than the text around it */
+    --rc-sub: rgba(var(--fg-rgb), 0.42);           /* "CS & AFVS @ Harvard": grayer than the text around it */
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
     --rc-fs-text: 0.6875rem;                       /* tiny type (11px): running text, tabs, labels */
@@ -81,8 +81,7 @@ body.rc {
     top: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 32px;
+    gap: 56px;
     padding-top: 22px;
     padding-bottom: 96px;
     background: linear-gradient(to bottom, var(--rc-page) 0%, var(--rc-clear) 100%);
@@ -137,6 +136,26 @@ body.rc {
 
 .rc-links a {
     text-decoration: none;
+}
+
+.rc-links a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 1px;
+}
+
+/* Case studies in recruiter mode (layout.html): the same header, stuck to the top as the page scrolls */
+.rc-bar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.rc-bar .rc-nav {
+    --rc-page: var(--bg);
+    --rc-clear: rgba(var(--bg-rgb), 0);
+    position: relative;
+    padding-bottom: 24px;
 }
 
 .rc-foot {
@@ -228,8 +247,8 @@ body.rc {
 
 .rc-card {
     position: relative;
-    width: 150px;
-    height: 181px;
+    width: 190px;
+    height: 229px;
     perspective: 1200px;
 }
 
@@ -326,10 +345,10 @@ body.rc {
 
 .rc-name {
     margin: 0;
-    width: 180px;
+    width: 230px;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.2;
+    font-size: 1.75rem;
+    line-height: 1.15;
     color: var(--c-title);
 }
 
@@ -354,10 +373,17 @@ body.rc {
     outline: none;
 }
 
+.rc-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rc-role,
 .rc-sub,
 .rc-line {
     margin: 0;
-    width: 180px;
+    width: 190px;
     font-size: var(--fs-tiny);
     line-height: 1.45;
 }
@@ -368,6 +394,32 @@ body.rc {
 
 .rc-line a {
     text-decoration: none;
+}
+
+/* Square ink buttons (View Resume, Download PDF): they turn white on hover, instantly */
+.rc .rc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 0 18px;
+    box-sizing: border-box;
+    font-size: var(--rc-fs-title);
+    text-decoration: none;
+    color: var(--rc-page);
+    background: var(--c-title);
+    border: 1px solid var(--c-title);
+}
+
+.rc .rc-btn:hover,
+.rc .rc-btn[aria-pressed="true"] {
+    color: var(--c-title);
+    background: var(--rc-page);
+}
+
+.cv-download {
+    margin: 0 0 12px;
+    text-align: right;
 }
 
 .rc-contacts {
@@ -563,6 +615,47 @@ body.rc {
     }
 }
 
+/* The end of a filter: pulling past it fills a hairline under the next filter's name (home.html) */
+.rc-pull {
+    position: absolute;
+    left: 50%;
+    bottom: 96px;
+    z-index: 5;
+    transform: translateX(-50%);
+    width: min(240px, 60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+}
+
+.rc-pull.is-up {
+    top: 104px;
+    bottom: auto;
+    flex-direction: column-reverse;
+}
+
+.rc-pull[hidden] {
+    display: none;
+}
+
+.rc-pull-line {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background: var(--hairline);
+}
+
+.rc-pull-line i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 1px;
+    width: 0;
+    background: var(--c-title);
+}
+
 /* Short desktop windows: a smaller photo and tighter panel, so it clears the logo above it */
 @media (min-width: 881px) and (max-height: 760px) {
     .rc-panel {
@@ -570,8 +663,8 @@ body.rc {
     }
 
     .rc-card {
-        width: 124px;
-        height: 150px;
+        width: 160px;
+        height: 193px;
     }
 
     .rc-slot .rc-frame {
@@ -928,8 +1021,15 @@ body.rc {
 
     /* Everything centred, with a smaller photo and type */
     .rc-nav {
+        flex-wrap: wrap;
         justify-content: center;
+        gap: 4px 18px;
         padding-bottom: 40px;
+    }
+
+    .rc-logo {
+        flex-basis: 100%;
+        text-align: center;
     }
 
     .rc-nav-right {
@@ -947,19 +1047,20 @@ body.rc {
     }
 
     .rc-card {
-        width: 124px;
-        height: 150px;
+        width: 150px;
+        height: 181px;
     }
 
     .rc-name {
         width: auto;
-        font-size: 1.125rem;
+        font-size: 1.375rem;
     }
 
     .rc-name-btn {
         text-align: center;
     }
 
+    .rc-role,
     .rc-sub,
     .rc-line {
         width: auto;
@@ -995,13 +1096,13 @@ body.rc {
 
 /* ---------- Tiny type: everything but the nav small, like a Cargo index page ---------- */
 body.rc,
-.rc :is(.rc-sub, .rc-line, .rc-word, .rc-project-role, .rc-project-desc, .rc-foot,
+.rc :is(.rc-role, .rc-sub, .rc-line, .rc-word, .rc-project-role, .rc-project-desc, .rc-foot,
     .rc-bio p, .rc-roles > div, .rc-card-item p, .rc-card-head span, .rc-locked p, .rc-locked a, .rc-cursor span) {
     font-size: var(--rc-fs-text);
     line-height: 1.4;
 }
 
-.rc :is(.rc-name, .rc-project-head h2, .rc-card-head h2, .rc-locked h1) {
+.rc :is(.rc-project-head h2, .rc-card-head h2, .rc-locked h1) {
     font-size: var(--rc-fs-title);
     line-height: 1.3;
 }

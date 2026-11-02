@@ -2,7 +2,9 @@
 {% if cv %}
 {# Only the full password gets here; the Drive link lives in CV_DRIVE_URL (app.py) #}
 <section class="cv-panel" id="cvPanel" aria-label="Résumé" hidden>
-    {% if cv.url %}
+    {% if recruiter %}
+    <p class="cv-download"><a class="rc-btn" href="{{ url_for('cv_pdf', download=1) }}" download>Download PDF</a></p>
+    {% elif cv.url %}
     <p class="gate-note cv-open"><a href="{{ cv.url }}" target="_blank" rel="noopener">Open it in Google Drive ↗</a></p>
     {% endif %}
     {% if cv.page %}

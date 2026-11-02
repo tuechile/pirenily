@@ -1,0 +1,17 @@
+{# The recruiter header, on every page in recruiter mode (recruiter pages and the case studies, via layout.html):
+   Pirenily, then About · Leadership · Projects, and Writing · Play · ♪ on the right #}
+<nav class="rc-nav" aria-label="Main">
+    <a class="rc-logo" href="/">Pirenily</a>
+    <div class="rc-links">
+        <a href="/about"{% if request.endpoint == "about" %} aria-current="page"{% endif %}>About</a>
+        <a href="/involvement"{% if request.endpoint == "involvement" %} aria-current="page"{% endif %}>Leadership</a>
+        <a href="/"{% if request.endpoint == "home" %} aria-current="page"{% endif %}>Projects</a>
+    </div>
+    <div class="rc-nav-right">
+        <div class="rc-links">
+            <a href="/writing"{% if request.endpoint == "writing" %} aria-current="page"{% endif %}>Writing</a>
+            <a href="/play"{% if request.endpoint == "play" %} aria-current="page"{% endif %}>Play</a>
+        </div>
+        <button class="rc-sound" type="button" data-switch="sound" aria-label="Sound">♪</button>
+    </div>
+</nav>

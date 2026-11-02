@@ -33,7 +33,8 @@
         </li>
         {% endfor %}
     </ol>
-    <div class="rc-track" tabindex="0" aria-label="Projects roll: scroll or use the arrow keys to move between projects" hidden></div>
+    <div class="rc-track" tabindex="0" aria-label="Projects roll: scroll or use the arrow keys to move between projects; past the last one comes the next filter" hidden></div>
+    <div class="rc-pull" aria-hidden="true" hidden><span class="rc-pull-name"></span><span class="rc-pull-line"><i></i></span></div>
     {% include "partials/cv_panel.html" %}
 </section>
 <script type="application/json" id="rcRoll">{{ roll|tojson }}</script>
@@ -42,8 +43,6 @@
 {% block right %}
 <nav class="rc-words" role="group" aria-label="Show projects">
     <button type="button" class="rc-word" data-view="selected" aria-pressed="true">Selected</button>
-    {% if cv %}<button type="button" class="rc-word" data-view="resume" aria-pressed="false">Résumé</button>{% endif %}
-    <button type="button" class="rc-word" data-view="compilations" aria-pressed="false">Compilations</button>
     <div class="rc-words-gap" aria-hidden="true" data-veil="Awkward white space for UI purposes"></div>
     <button type="button" class="rc-word" data-view="uiux" aria-pressed="false">UI/UX</button>
     <button type="button" class="rc-word" data-view="brand" aria-pressed="false">Brand</button>
@@ -56,35 +55,61 @@
     // The roll: the project in the middle is full size and in color; the ones above and below shrink
     // toward the centre, go black and white and soften at the edges, and only peek in. The wheel scrolls
     // it freely like frankxu.ca: no snapping, it stops wherever the scroll leaves it and eases out with a
-    // long soft tail. Clicking a peek or the arrow keys glide one project. It wraps forever.
+    // long soft tail. Clicking a peek or the arrow keys glide one project.
+    // Each filter has two ends. Scrolling on past one is heavy: the roll gives way in small jolts while a
+    // hairline fills under the next filter's name. Let go early and it springs back; push through and the
+    // next filter (or the one before) is just there. After All comes Selected again.
     (function () {
         var ALL = JSON.parse(document.getElementById("rcRoll").textContent);
         var section = document.querySelector(".rc-roll");
         var list = section.querySelector(".rc-list");
         var track = section.querySelector(".rc-track");
+        var pullBox = section.querySelector(".rc-pull");
+        var pullName = pullBox.querySelector(".rc-pull-name");
+        var pullFill = pullBox.querySelector(".rc-pull-line i");
         var cvPanel = document.getElementById("cvPanel");
-        var words = document.querySelectorAll(".rc-word");
+        var resumeBtn = document.querySelector(".rc-resume-btn");
+        var words = Array.prototype.slice.call(document.querySelectorAll(".rc-word"));
         var desktop = window.matchMedia("(min-width: 881px)");
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var PITCH = 380;
+        var PULL = 420;   // px of scrolling past an end before the next filter comes
 
-        var view = "selected", projects = [], sel = 0, f = 0, target = 0;
+        var view = "selected", lastView = "selected", projects = [], sel = 0, f = 0, target = 0;
         var following = false, items = [];
+        var strain = 0, shift = 0, letGo = 0, springing = 0, hush = false, hushTimer = 0;
 
-        function pick(name) {
+        // fromEnd: arriving from the filter after this one, so start on its last project
+        function pick(name, fromEnd) {
             view = name;
+            if (name !== "resume") lastView = name;
             words.forEach(function (w) { w.setAttribute("aria-pressed", String(w.dataset.view === name)); });
             var resume = name === "resume";
             if (cvPanel) cvPanel.hidden = !resume;
+            if (resumeBtn) {
+                resumeBtn.setAttribute("aria-pressed", String(resume));
+                resumeBtn.textContent = resume ? "Hide Resume" : "View Resume";
+            }
             projects = ALL.filter(function (p) { return name === "all" || p.tags.indexOf(name) >= 0; });
             // Phones: filter the list
             list.querySelectorAll(".rc-project").forEach(function (li) {
                 var tags = li.dataset.tags.split(" ");
                 li.hidden = resume || !(name === "all" || tags.indexOf(name) >= 0);
             });
-            sel = 0; f = 0; target = 0;
+            sel = fromEnd ? Math.max(0, projects.length - 1) : 0; f = 0; target = 0;
+            setStrain(0);
             track.hidden = resume || !desktop.matches;
             if (!resume) build();
+        }
+
+        // The filter dir steps away from this one, wrapping round
+        function neighbour(dir) {
+            var i = words.findIndex(function (w) { return w.dataset.view === view; });
+            return words[(i + dir + words.length) % words.length];
+        }
+
+        function jump(dir) {
+            pick(neighbour(dir).dataset.view, dir < 0);
         }
 
         // Five slots: the main project and two each way
@@ -110,14 +135,16 @@
             if (h) PITCH = Math.round(h * (1.04 + 0.6) / 2 + 28);
         }
 
+        // Past either end there's nothing: those slots stay empty
         function project(k) {
-            var n = projects.length;
-            return projects[((sel + k) % n + n) % n];
+            return projects[sel + k] || null;
         }
 
         function fill() {
             items.forEach(function (it) {
                 var p = project(it.k);
+                it.el.hidden = !p;
+                if (!p) { it.el.innerHTML = ""; return; }
                 var main = it.k === 0;
                 var tag = main && p.href ? "a" : "div";
                 var html = '<div class="rc-frame"' + (p.previews && main ? ' data-previews="' + p.previews + '"' : "") +
@@ -142,7 +169,7 @@
                 var pos = it.k - f;
                 var d = Math.min(Math.abs(pos), 1);
                 var scale = (1 - 0.4 * d) * (1 + 0.04 * (1 - d) * (1 - d));
-                it.el.style.transform = "translate(-50%, -50%) translateY(" + (pos * PITCH).toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
+                it.el.style.transform = "translate(-50%, -50%) translateY(" + (pos * PITCH - shift).toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
                 it.el.style.zIndex = String(10 - Math.round(Math.abs(pos) * 3));
                 it.el.style.setProperty("--d", d.toFixed(3));
             });
@@ -161,8 +188,8 @@
                 var v = reduced ? target : f + (target - f) * k;
                 if (Math.abs(target - v) < 0.001) v = target;
                 var moved = false;
-                while (v >= 0.5) { v -= 1; target -= 1; sel = (sel + 1) % projects.length; moved = true; }
-                while (v <= -0.5) { v += 1; target += 1; sel = (sel - 1 + projects.length) % projects.length; moved = true; }
+                while (v >= 0.5) { v -= 1; target -= 1; sel += 1; moved = true; }
+                while (v <= -0.5) { v += 1; target += 1; sel -= 1; moved = true; }
                 f = v;
                 if (moved) fill();
                 place();
@@ -171,17 +198,71 @@
             })();
         }
 
+        // Arrow keys and peeks; at an end the arrow keys go straight to the next filter
         function glideTo(step) {
-            target = Math.round(target) + step;
+            var next = Math.round(target) + step;
+            if (sel + next < 0 || sel + next > projects.length - 1) { jump(step); return; }
+            target = next;
             follow();
+        }
+
+        // strain: px scrolled past the last project (+) or the first (-). The roll gives way in 6px jolts,
+        // less with each one, never more than 80px; the hairline fills in twelfths
+        function setStrain(s) {
+            strain = s;
+            clearTimeout(letGo);
+            clearTimeout(springing);
+            var dir = s > 0 ? 1 : -1;
+            shift = s ? dir * Math.round(80 * (1 - Math.exp(-Math.abs(s) / 260)) / 6) * 6 : 0;
+            pullBox.hidden = !s;
+            if (s) {
+                pullBox.classList.toggle("is-up", dir < 0);
+                pullName.textContent = dir > 0 ? neighbour(1).textContent + " ↓" : "↑ " + neighbour(-1).textContent;
+                pullFill.style.width = Math.floor(Math.min(1, Math.abs(s) / PULL) * 12) / 12 * 100 + "%";
+            }
+            place();
+        }
+
+        function pull(px) {
+            var s = strain + px;
+            // Scrolling back the other way first undoes the strain
+            if ((strain > 0 && s < 0) || (strain < 0 && s > 0)) s = 0;
+            setStrain(s);
+            if (Math.abs(s) >= PULL) {
+                // The rest of that flick is swallowed: the new filter waits for a fresh scroll
+                hush = true;
+                hushTimer = setTimeout(function () { hush = false; }, 250);
+                jump(s > 0 ? 1 : -1);
+                return;
+            }
+            if (s) letGo = setTimeout(springBack, 140);
+        }
+
+        // Let go too early: it drops back in a few halving jolts
+        function springBack() {
+            var s = reduced || Math.abs(strain) < 20 ? 0 : strain / 2;
+            setStrain(s);
+            if (s) springing = setTimeout(springBack, 45);
         }
 
         section.addEventListener("wheel", function (e) {
             if (track.hidden) return;
             e.preventDefault();
-            // Lines (Firefox) are about 40px each; the roll moves a little slower than the wheel
+            if (hush) {
+                clearTimeout(hushTimer);
+                hushTimer = setTimeout(function () { hush = false; }, 250);
+                return;
+            }
+            // Lines (Firefox) are about 40px each
             var px = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
-            target += px * 0.7 / PITCH;
+            var lo = -sel, hi = projects.length - 1 - sel;
+            // Only once the roll has come to rest at an end does scrolling on start to strain
+            if (strain || (!following && ((px > 0 && target >= hi) || (px < 0 && target <= lo)))) {
+                pull(px);
+                return;
+            }
+            // the roll moves a little slower than the wheel
+            target = Math.max(lo, Math.min(hi, target + px * 0.7 / PITCH));
             follow();
         }, { passive: false });
 
@@ -198,10 +279,20 @@
             w.addEventListener("blur", function () { window.rcVeil && window.rcVeil.hide(); });
         });
 
+        // View Resume (in the panel) opens the résumé here; pressed again it goes back to the projects
+        if (resumeBtn) {
+            resumeBtn.addEventListener("click", function (e) {
+                if (!cvPanel) return;
+                e.preventDefault();
+                pick(view === "resume" ? lastView : "resume");
+            });
+        }
+
         section.classList.add("is-live");
         desktop.addEventListener("change", function () { pick(view); });
-        var fromHash = { "#resume": "resume", "#cv": "resume", "#brand": "brand", "#uiux": "uiux", "#compilations": "compilations", "#all": "all" }[location.hash];
-        pick(fromHash && document.querySelector('.rc-word[data-view="' + fromHash + '"]') ? fromHash : "selected");
+        var fromHash = { "#resume": "resume", "#brand": "brand", "#uiux": "uiux", "#all": "all" }[location.hash];
+        var known = fromHash === "resume" ? cvPanel : document.querySelector('.rc-word[data-view="' + fromHash + '"]');
+        pick(fromHash && known ? fromHash : "selected");
     })();
 </script>
 {% endblock %}

@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "290"
+ASSET_VERSION = "292"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -374,6 +374,9 @@ GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "h
 # Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
 # Empty shows a "coming soon" note in the CV tab instead of the embed.
 CV_DRIVE_URL = "https://drive.google.com/file/d/1OD9F_altGOjGhBZb4YsQQI-oJJ-oT6YL/view?usp=sharing"
+# Recruiter mode's résumé: a Word file opened in Google Docs (anyone with the link can view).
+# Docs exports it as a PDF, which both the sheet and the Download button use.
+RECRUITER_CV_URL = "https://docs.google.com/document/d/1I9r2JRAZNCa9Ej9AuDN5b10PXsnvO7v-/edit"
 
 
 def access_level(key=None):
@@ -397,7 +400,9 @@ def projects_unlocked():
 def inject_projects_unlocked():
     level = access_level()
     cv = None
-    if level == "cv":
+    if level == "cv" and recruiter_mode():
+        cv = {"url": None, "page": True}
+    elif level == "cv":
         cv = {"url": CV_DRIVE_URL or None, "page": cv_file_id() is not None}
     return dict(projects_unlocked=level is not None, cv=cv)
 
@@ -408,23 +413,32 @@ def cv_file_id():
 
 
 # The CV tab draws the PDF itself (design_list.html) instead of embedding Drive's viewer, which brings
-# its own gray backdrop and toolbar. The file is kept here for five minutes so a new upload shows up soon.
-_cv_pdf = {"data": None, "at": 0}
+# its own gray backdrop and toolbar. Each file is kept here for five minutes so a new upload shows up soon.
+# Recruiter mode gets its own résumé; ?download=1 saves it instead of showing it.
+_cv_pdf = {}
 
 @app.route("/cv.pdf")
 def cv_pdf():
     if access_level() != "cv":
         abort(404)
-    file_id = cv_file_id() or abort(404)
-    if not _cv_pdf["data"] or time.time() - _cv_pdf["at"] > 300:
+    if recruiter_mode():
+        doc_id = re.search(r"/d/([\w-]+)", RECRUITER_CV_URL).group(1)
+        url = f"https://docs.google.com/document/d/{doc_id}/export?format=pdf"
+    else:
+        file_id = cv_file_id() or abort(404)
         url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
+    cached = _cv_pdf.get(url)
+    if not cached or time.time() - cached["at"] > 300:
         try:
             with urllib.request.urlopen(url, timeout=20) as r:
-                _cv_pdf.update(data=r.read(), at=time.time())
+                cached = _cv_pdf[url] = {"data": r.read(), "at": time.time()}
         except (urllib.error.URLError, TimeoutError):
-            if not _cv_pdf["data"]:
+            if not cached:
                 abort(502)
-    return Response(_cv_pdf["data"], mimetype="application/pdf", headers={"Cache-Control": "private, no-cache"})
+    headers = {"Cache-Control": "private, no-cache"}
+    if request.args.get("download"):
+        headers["Content-Disposition"] = 'attachment; filename="Chi-Le-Resume.pdf"'
+    return Response(cached["data"], mimetype="application/pdf", headers=headers)
 
 
 @app.before_request
@@ -498,7 +512,7 @@ def recruiter_view():
     return response
 
 
-# Recruiter home roll: the same cards and tags as partials/design_list.html (keep the two in step).
+# Recruiter home roll: the cards from partials/design_list.html, with recruiter mode's own tags and titles.
 # img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture.
 RECRUITER_PROJECTS = [
     {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "UX Designer", "tags": ["selected", "uiux"],
@@ -520,11 +534,11 @@ RECRUITER_PROJECTS = [
     {"href": "/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [],
      "desc": "How I built this website. Hardcoded, and every visual element is drawn by me ^v^ (not the fonts).",
      "img": None, "alt": "", "note": "", "previews": None},
-    {"href": "/merch", "title": "Merch", "role": "Designer", "tags": ["compilations"],
+    {"href": "/merch", "title": "Merch Compilations", "role": "Designer", "tags": ["brand"],
      "desc": "Crests, posters and goods for HPAIR, IVMUN and HUDC.",
      "img": ("design", "merch/hpair-crest.png"), "alt": "HCONF crest", "note": "",
      "previews": ("design", ["merch/aconf-poster.png", "merch/hconf-sketch.png", "merch/ivmun-placards.webp", "merch/hudc-the-game-shirt.webp"])},
-    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design · Student Content Creator · Director of Internal Relations", "tags": ["compilations"],
+    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design · Student Content Creator · Director of Internal Relations", "tags": [],
      "desc": "Three Harvard organizations, with a measured result for each.",
      "img": ("design", "hackharvard/poster-apps.jpg"), "alt": "HackHarvard 2026 poster announcing that hacker applications are open", "note": "",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "merch/hpair-crest.png", "hackharvard/lanyard.webp"])},

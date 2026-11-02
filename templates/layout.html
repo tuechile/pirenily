@@ -17,6 +17,10 @@
     <link href="/static/css/styles.css?v={{ asset_v }}" rel="stylesheet">
     <link href="/static/css/settings.css?v={{ asset_v }}" rel="stylesheet">
     <script src="/static/settings.js?v={{ asset_v }}"></script>
+    {% if recruiter %}
+    <link href="/static/css/recruiter.css?v={{ asset_v }}" rel="stylesheet">
+    {% include "recruiter/_light.html" %}
+    {% endif %}
     {% block extra_css %}
     {% endblock %}
 </head>
@@ -26,29 +30,27 @@
 
     <!-- Main Content -->
     <main>
+        {% if recruiter %}
+        {# Recruiter mode: the recruiter pages' own header #}
+        <div class="rc rc-bar">{% include "recruiter/_nav.html" %}</div>
+        {% else %}
         <nav class="navigator">
             <div class="nav-header">
                 <a class="nav-header" href="/"> Pirenily </a>
             </div>
             <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
             <div class="nav-item-big">
-                {% if recruiter %}
-                {# Recruiter mode: the same links as the recruiter pages (Pirenily is the logo on the left) #}
-                <a class="nav-item" href="/about"> About </a>
-                <a class="nav-item" href="/writing"> Writing </a>
-                <a class="nav-item" href="/play"> Play </a>
-                {% else %}
                 <a class="nav-item" href="/about"{% if nav_section == "about" %} aria-current="page"{% endif %}> About </a>
                 <a class="nav-item" href="/code"{% if nav_section == "code" %} aria-current="page"{% endif %}> Code </a>
                 <a class="nav-item" href="/play"{% if nav_section == "play" %} aria-current="page"{% endif %}> Play </a>
                 <a class="nav-item" href="/#portfolio"{% if nav_section == "projects" %} aria-current="page"{% endif %}> Projects </a>
-                {% endif %}
             </div>
             <span class="settings-switches">
                 <button class="nav-item settings-btn" type="button" data-switch="light" aria-label="Light">☀</button>
                 <button class="nav-item settings-btn" type="button" data-switch="sound" aria-label="Sound">♪</button>
             </span>
         </nav>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>

@@ -1,0 +1,9 @@
+<script>
+    // Recruiter mode is always Your view, whatever the visitor saved; the ♪ switch still works
+    (function () {
+        var root = document.documentElement;
+        function light() { root.dataset.mode = "easy"; root.dataset.theme = "light"; root.dataset.font = "sans"; }
+        light();
+        document.addEventListener("pirenily:settings", light);
+    })();
+</script>

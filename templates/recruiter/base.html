@@ -24,26 +24,12 @@
     <link href="/static/css/body.css?v={{ asset_v }}" rel="stylesheet">
     <link href="/static/css/recruiter.css?v={{ asset_v }}" rel="stylesheet">
     <script src="/static/settings.js?v={{ asset_v }}"></script>
-    <script>
-        // Recruiter pages are always Your view, whatever the visitor saved; the ♪ switch still works
-        (function () {
-            var root = document.documentElement;
-            function light() { root.dataset.mode = "easy"; root.dataset.theme = "light"; root.dataset.font = "sans"; }
-            light();
-            document.addEventListener("pirenily:settings", light);
-        })();
-    </script>
+    {% include "recruiter/_light.html" %}
 </head>
 
 <body class="rc">
     <div class="rc-page">
-        <nav class="rc-nav" aria-label="Main">
-            <a class="rc-logo" href="/"{% if request.endpoint == "home" %} aria-current="page"{% endif %}>Pirenily</a>
-            <div class="rc-nav-right">
-                {% include "recruiter/_links.html" %}
-                <button class="rc-sound" type="button" data-switch="sound" aria-label="Sound">♪</button>
-            </div>
-        </nav>
+        {% include "recruiter/_nav.html" %}
 
         <main class="rc-main {% block main_class %}{% endblock %}">
             {% include "recruiter/_panel.html" %}
