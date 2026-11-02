@@ -126,6 +126,29 @@
         });
     }
 
+    // ---------- The résumé popup ----------
+    // View Resume opens it over the page; Hide Resume, Close, Esc or a click beside the sheet shuts it.
+    // pdf.js (partials/cv_panel.html) loads the first time it opens. /#resume opens it straight away.
+    var cvPanel = document.getElementById("cvPanel");
+    var resumeBtn = document.querySelector(".rc-resume-btn");
+    if (cvPanel && resumeBtn) {
+        var showCv = function (open) {
+            cvPanel.hidden = !open;
+            document.body.classList.toggle("has-cv", open);
+            resumeBtn.setAttribute("aria-pressed", String(open));
+            resumeBtn.textContent = open ? "Hide Resume" : "View Resume";
+            if (open) hideVeil();
+        };
+        resumeBtn.addEventListener("click", function () { showCv(cvPanel.hidden); });
+        cvPanel.addEventListener("click", function (e) {
+            if (e.target === cvPanel || e.target.closest(".rc-cv-close")) showCv(false);
+        });
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && !cvPanel.hidden) { showCv(false); resumeBtn.focus(); }
+        });
+        if (location.hash === "#resume") showCv(true);
+    }
+
     // ---------- The flip card ----------
     var card = document.querySelector(".rc-card");
     if (card) {

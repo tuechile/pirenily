@@ -3,14 +3,14 @@
 {# Only the full password gets here; the Drive link lives in CV_DRIVE_URL (app.py) #}
 <section class="cv-panel" id="cvPanel" aria-label="Résumé" hidden>
     {% if recruiter %}
-    <p class="cv-download"><a class="rc-btn" href="{{ url_for('cv_pdf', download=1) }}" download>Download PDF</a></p>
+    <p class="cv-download"><a class="rc-btn" href="{{ url_for('cv_pdf', download=1) }}" download>Download PDF</a><button type="button" class="rc-btn rc-cv-close">Close</button></p>
     {% elif cv.url %}
     <p class="gate-note cv-open"><a href="{{ cv.url }}" target="_blank" rel="noopener">Open it in Google Drive ↗</a></p>
     {% endif %}
     {% if cv.page %}
     <div class="cv-frame" aria-label="Chi Le's résumé">
         <div class="cv-sheet"><canvas aria-hidden="true"></canvas><div class="textLayer"></div><div class="cv-links"></div></div>
-        {% if recruiter %}<div class="cv-loading" role="status"><img src="{{ img('other', 'loader.gif') }}" alt=""><span>Loading the résumé…</span></div>{% endif %}
+        {% if recruiter %}<div class="cv-loading" role="status" aria-label="Loading the résumé"><span></span></div>{% endif %}
     </div>
     <script>
         // The CV as a plain sheet of paper: pdf.js draws it here (sharp, selectable, links work) so there's

@@ -2,7 +2,7 @@
     The left profile panel on every recruiter page. Hovers (static/recruiter.js):
     headshot pops a photo, each back photo pops itself, the name runs the finder names on the veil,
     the one-liner says "How I build this website", the contact icons say "Text me ;)".
-    View Resume opens the résumé on home.
+    View Resume opens the résumé popup (base.html).
 #}
 {% import "partials/icons.html" as icons %}
 {% set about_photos = gallery_images("about") %}
@@ -31,8 +31,7 @@
         <p class="rc-sub">CS &amp; AFVS @ Harvard</p>
     </div>
     <p class="rc-line"><a href="/pirenily" data-veil="How I build this website">I like to make things a little stranger and a lot more curious.</a></p>
-    {# Home opens the résumé in its middle column (home.html); elsewhere this goes there #}
-    {% if cv %}<div><a class="rc-btn rc-resume-btn" href="/#resume">View Resume</a></div>{% endif %}
+    {% if cv %}<div><button type="button" class="rc-btn rc-resume-btn" aria-pressed="false" aria-controls="cvPanel">View Resume</button></div>{% endif %}
     <div class="rc-contacts" data-veil="Text me ;)">
         <a href="https://www.instagram.com/pju_irza/" target="_blank" rel="noopener">{{ icons.icon("instagram", "Instagram") }}</a>
         <a href="mailto:chile@college.harvard.edu">{{ icons.icon("mail", "Email") }}</a>

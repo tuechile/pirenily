@@ -9,8 +9,8 @@
     --rc-page: var(--sheet);                       /* the white page area */
     --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
     --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
-    --rc-sub: rgba(var(--fg-rgb), 0.42);
-    --rc-nav-off: rgba(var(--fg-rgb), 0.55);      /* the nav links not hovered or not the page you're on */           /* "CS & AFVS @ Harvard": grayer than the text around it */
+    --rc-gray: rgba(var(--fg-rgb), 0.47);         /* half the ink: the nav links not hovered or not the page you're on */
+    --rc-sub: var(--rc-gray);                      /* "CS & AFVS @ Harvard" */
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
     --rc-fs-text: 0.6875rem;                       /* tiny type (11px): running text, tabs, labels */
@@ -141,7 +141,7 @@ body.rc {
 
 /* The page you're on is ink and the rest gray; hovering one makes it ink and grays the rest, instantly */
 .rc-nav:has([aria-current="page"], .rc-links a:hover, .rc-sound:hover) :is(.rc-links a, .rc-sound) {
-    color: var(--rc-nav-off);
+    color: var(--rc-gray);
 }
 
 /* Both outrank the gray above */
@@ -423,23 +423,66 @@ body.rc {
     background: var(--rc-page);
 }
 
-/* The loader GIF in the middle of the blank sheet until pdf.js has drawn it */
+/* ---------- The résumé popup (partials/cv_panel.html, opened by recruiter.js) ----------
+   Over the whole page on the white veil, under the profile panel so View/Hide Resume stays in reach.
+   The sheet scrolls in it; unzoomed, scrolling over the sheet scrolls the popup */
+.rc .cv-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 32;
+    width: auto;
+    margin: 0;
+    padding: 96px var(--rc-gutter) 64px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    background: var(--rc-veil);
+}
+
+.rc .cv-panel[hidden] {
+    display: none;
+}
+
+.rc .cv-panel > * {
+    width: min(560px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rc.has-cv .rc-panel {
+    position: relative;
+    z-index: 33;
+}
+
+.rc .cv-frame:not(.is-zoomed) {
+    overscroll-behavior: auto;
+}
+
+.rc .cv-frame {
+    box-shadow: 0 0 0 1px var(--hairline);
+}
+
+/* A plain ring turning in the middle of the blank sheet until pdf.js has drawn it */
 .cv-loading {
     position: absolute;
     inset: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    color: var(--c-faint);
-    font-size: var(--rc-fs-text);
     pointer-events: none;
 }
 
-.cv-loading img {
-    width: 64px;
-    height: auto;
+.cv-loading span {
+    width: 28px;
+    height: 28px;
+    box-sizing: border-box;
+    border: 2px solid var(--hairline);
+    border-top-color: var(--c-title);
+    border-radius: 50%;
+    animation: rcSpin 800ms linear infinite;
+}
+
+@keyframes rcSpin {
+    to { transform: rotate(360deg); }
 }
 
 .cv-frame.is-drawn .cv-loading,
@@ -448,8 +491,16 @@ body.rc {
 }
 
 .cv-download {
-    margin: 0 0 12px;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+/* Phones: the panel's button is out of sight, so the popup has its own */
+.rc .rc-cv-close {
+    display: none;
 }
 
 .rc-contacts {
@@ -541,9 +592,9 @@ body.rc {
 
 .rc .rc-stack .tag-chip {
     margin: 0 -1px -1px 0;
-    background: rgba(var(--bg-rgb), 0.6);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+    color: var(--c-title);
+    background: var(--rc-page);
+    border-color: var(--c-title);
     transform: translateY(-10rem);
 }
 
@@ -619,28 +670,9 @@ body.rc {
     display: contents;
 }
 
-/* The résumé at a readable size; the column scrolls so its foot clears the footer fade */
-.rc-roll .cv-panel {
-    width: min(520px, 100%);
-    margin: 0 auto;
-    padding: 104px 0 140px;
-}
-
-/* Unzoomed, scrolling over the sheet scrolls the column */
-.rc-roll .cv-frame:not(.is-zoomed) {
-    overscroll-behavior: auto;
-}
-
 @media (min-width: 881px) {
     .rc-roll.is-live .rc-list {
         display: none;
-    }
-
-    .rc-roll .cv-panel {
-        height: 100%;
-        box-sizing: border-box;
-        overflow-y: auto;
-        scrollbar-width: none;
     }
 
     /* The roll runs the full height under the header and footer, fading into white at both ends */
@@ -845,12 +877,17 @@ body.rc {
     color: var(--c-faint);
 }
 
-.rc-skills .tag-row {
+.rc-bio .tag-row {
     list-style: none;
     margin: 0;
 }
 
-.rc :is(.rc-skills h3, .rc-skills .tag-chip) {
+/* Level 3's four: right under "My skills span:" */
+.rc-bio p + .tag-row {
+    margin-top: -14px;
+}
+
+.rc :is(.rc-skills h3, .rc-bio .tag-chip) {
     font-size: var(--rc-fs-text);
 }
 
@@ -1083,8 +1120,12 @@ body.rc {
         padding: 0;
     }
 
-    .rc-roll .cv-panel {
-        padding: 0;
+    .rc .cv-panel {
+        padding-top: 24px;
+    }
+
+    .rc .rc-cv-close {
+        display: inline-flex;
     }
 
     .rc-stretch {
@@ -1105,7 +1146,7 @@ body.rc {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .rc-skills .tag-row {
+    .rc-bio .tag-row {
         justify-content: center;
     }
 
@@ -1224,4 +1265,13 @@ body.rc,
 
 .rc .rc-word {
     min-height: 22px;
+}
+
+/* About reads 2px bigger than the other pages */
+.rc .rc-about :is(.rc-bio p, .rc-roles > div, .rc-skills h3, .rc-bio .tag-chip) {
+    font-size: calc(var(--rc-fs-text) + 2px);
+}
+
+.rc .rc-about :is(.rc-bio .rc-bio-lead, .rc-bio-head) {
+    font-size: calc(var(--fs-tiny) + 2px);
 }
