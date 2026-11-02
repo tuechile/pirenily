@@ -1989,15 +1989,14 @@ html {
     margin: var(--s-3) 0 var(--s-4);
 }
 
-/* ----- Call to action: a solid ink button (black in light views, white in dark) on the right of
-   the column, that flips to the page color with an ink border on hover, instantly ----- */
+/* ----- Call to action: a solid ink button (black in light views, white in dark) across the full
+   column, that flips to the page color with an ink border on hover, instantly ----- */
 .cta-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--s-4);
-    max-width: 32ch;
-    margin: var(--s-5) 0 var(--s-5) auto;
+    margin: var(--s-5) 0;
     padding: var(--s-4) var(--s-5);
     border: 1px solid var(--c-strong);
     background: var(--c-strong);
