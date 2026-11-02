@@ -140,3 +140,6 @@ cython_debug/
 # Markdown notes stay local (README is the exception)
 *.md
 !README.md
+
+# macOS folder settings
+.DS_Store
