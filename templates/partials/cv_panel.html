@@ -10,6 +10,7 @@
     {% if cv.page %}
     <div class="cv-frame" aria-label="Chi Le's résumé">
         <div class="cv-sheet"><canvas aria-hidden="true"></canvas><div class="textLayer"></div><div class="cv-links"></div></div>
+        {% if recruiter %}<div class="cv-loading" role="status"><img src="{{ img('other', 'loader.gif') }}" alt=""><span>Loading the résumé…</span></div>{% endif %}
     </div>
     <script>
         // The CV as a plain sheet of paper: pdf.js draws it here (sharp, selectable, links work) so there's
@@ -36,6 +37,7 @@
                     canvas.width = off.width;
                     canvas.height = off.height;
                     canvas.getContext("2d").drawImage(off, 0, 0);
+                    frame.classList.add("is-drawn");
                 });
             }
 

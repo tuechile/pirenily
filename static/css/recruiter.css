@@ -9,7 +9,8 @@
     --rc-page: var(--sheet);                       /* the white page area */
     --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
     --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
-    --rc-sub: rgba(var(--fg-rgb), 0.42);           /* "CS & AFVS @ Harvard": grayer than the text around it */
+    --rc-sub: rgba(var(--fg-rgb), 0.42);
+    --rc-nav-off: rgba(var(--fg-rgb), 0.55);      /* the nav links not hovered or not the page you're on */           /* "CS & AFVS @ Harvard": grayer than the text around it */
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
     --rc-fs-text: 0.6875rem;                       /* tiny type (11px): running text, tabs, labels */
@@ -138,10 +139,15 @@ body.rc {
     text-decoration: none;
 }
 
-.rc-links a[aria-current="page"] {
-    text-decoration: underline;
-    text-underline-offset: 5px;
-    text-decoration-thickness: 1px;
+/* The page you're on is ink and the rest gray; hovering one makes it ink and grays the rest, instantly */
+.rc-nav:has([aria-current="page"], .rc-links a:hover, .rc-sound:hover) :is(.rc-links a, .rc-sound) {
+    color: var(--rc-nav-off);
+}
+
+/* Both outrank the gray above */
+.rc-nav:has([aria-current="page"], .rc-links a:hover, .rc-sound:hover) :is(.rc-links a, .rc-sound):hover,
+.rc-nav:not(:has(.rc-links a:hover, .rc-sound:hover)) .rc-links a[aria-current="page"] {
+    color: var(--c-title);
 }
 
 /* Case studies in recruiter mode (layout.html): the same header, stuck to the top as the page scrolls */
@@ -417,6 +423,30 @@ body.rc {
     background: var(--rc-page);
 }
 
+/* The loader GIF in the middle of the blank sheet until pdf.js has drawn it */
+.cv-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--c-faint);
+    font-size: var(--rc-fs-text);
+    pointer-events: none;
+}
+
+.cv-loading img {
+    width: 64px;
+    height: auto;
+}
+
+.cv-frame.is-drawn .cv-loading,
+.cv-frame.is-broken .cv-loading {
+    display: none;
+}
+
 .cv-download {
     margin: 0 0 12px;
     text-align: right;
@@ -468,11 +498,6 @@ body.rc {
     opacity: 0.45;
 }
 
-/* The gap between the two groups of home tabs owns up to itself on hover */
-.rc-words-gap {
-    align-self: stretch;
-    height: 40px;
-}
 
 /* ---------- Home: the project roll ---------- */
 .rc-roll {
@@ -498,6 +523,46 @@ body.rc {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* The project's tags wait above the picture (clipped out of sight) and drop in on hover, like the
+   normal cards (body.css .strip-stack); leaving snaps them back up */
+.rc-stack {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    right: 16px;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 1px 1px 0;
+    pointer-events: none;
+}
+
+.rc .rc-stack .tag-chip {
+    margin: 0 -1px -1px 0;
+    background: rgba(var(--bg-rgb), 0.6);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transform: translateY(-10rem);
+}
+
+:is(.rc-slot-inner, .rc-project-link):is(:hover, :focus-visible) .rc-stack .tag-chip {
+    transform: none;
+    transition: transform var(--dur-3) var(--ease-out);
+}
+
+:is(.rc-slot-inner, .rc-project-link):is(:hover, :focus-visible) .rc-stack .tag-chip:nth-child(2) { transition-delay: 50ms; }
+:is(.rc-slot-inner, .rc-project-link):is(:hover, :focus-visible) .rc-stack .tag-chip:nth-child(3) { transition-delay: 100ms; }
+:is(.rc-slot-inner, .rc-project-link):is(:hover, :focus-visible) .rc-stack .tag-chip:nth-child(4) { transition-delay: 150ms; }
+:is(.rc-slot-inner, .rc-project-link):is(:hover, :focus-visible) .rc-stack .tag-chip:nth-child(5) { transition-delay: 200ms; }
+:is(.rc-slot-inner, .rc-project-link):is(:hover, :focus-visible) .rc-stack .tag-chip:nth-child(6) { transition-delay: 250ms; }
+
+/* No hover on touch screens: the tags just sit on the picture */
+@media (hover: none) {
+    .rc .rc-stack .tag-chip {
+        transform: none;
+    }
 }
 
 .rc-project-head {
@@ -554,10 +619,16 @@ body.rc {
     display: contents;
 }
 
+/* The résumé at a readable size; the column scrolls so its foot clears the footer fade */
 .rc-roll .cv-panel {
-    width: min(440px, 100%);
+    width: min(520px, 100%);
     margin: 0 auto;
-    padding: 104px 0 96px;
+    padding: 104px 0 140px;
+}
+
+/* Unzoomed, scrolling over the sheet scrolls the column */
+.rc-roll .cv-frame:not(.is-zoomed) {
+    overscroll-behavior: auto;
 }
 
 @media (min-width: 881px) {
@@ -673,6 +744,17 @@ body.rc {
 }
 
 /* ---------- About: the bio and its stretch bar ---------- */
+/* Shorter than the window, the bio sits in the middle of it; longer, it scrolls from the top */
+.rc-about .rc-middle {
+    display: flex;
+    flex-direction: column;
+}
+
+.rc-about .rc-bio {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .rc-bio > div {
     display: flex;
     flex-direction: column;
@@ -748,6 +830,28 @@ body.rc {
 
 .rc-roles dd {
     margin: 0;
+}
+
+/* What do I use?: two columns of tag groups, the tags joined like the project tags */
+.rc-skills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 32px;
+}
+
+.rc-skills h3 {
+    margin: 0 0 8px;
+    font-weight: 400;
+    color: var(--c-faint);
+}
+
+.rc-skills .tag-row {
+    list-style: none;
+    margin: 0;
+}
+
+.rc :is(.rc-skills h3, .rc-skills .tag-chip) {
+    font-size: var(--rc-fs-text);
 }
 
 .rc-stretch {
@@ -997,6 +1101,14 @@ body.rc {
         gap: 4px;
     }
 
+    .rc-skills {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .rc-skills .tag-row {
+        justify-content: center;
+    }
+
     .rc-veil {
         font-size: 3rem;
     }
@@ -1011,9 +1123,6 @@ body.rc {
         gap: 4px 16px;
     }
 
-    .rc-words-gap {
-        display: none;
-    }
 
     .rc-veil {
         display: none;

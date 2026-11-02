@@ -9,7 +9,7 @@
 {% set roll = [] %}
 {% for p in projects %}
     {% set _ = roll.append({
-        "href": p.href, "title": p.title, "role": p.role, "desc": p.desc, "tags": p.tags, "note": p.note, "alt": p.alt,
+        "href": p.href, "title": p.title, "role": p.role, "desc": p.desc, "tags": p.tags, "chips": p.chips, "note": p.note, "alt": p.alt,
         "img": img(p.img[0], p.img[1]) if p.img else "",
         "previews": previews(p.previews[0], p.previews[1]) if p.previews else ""
     }) %}
@@ -23,6 +23,7 @@
             {% if p.href %}<a class="rc-project-link" href="{{ p.href }}"{% if p.href.startswith('http') %} target="_blank" rel="noopener"{% endif %}>{% endif %}
             <div class="rc-frame"{% if p.previews %} data-previews="{{ p.previews }}"{% endif %}{% if p.note %} data-note="{{ p.note }}"{% endif %}>
                 {% if p.img %}<img src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy">{% endif %}
+                {% if p.chips %}<div class="rc-stack">{% for c in p.chips %}<span class="tag-chip">{{ c }}</span>{% endfor %}</div>{% endif %}
             </div>
             <div class="rc-project-head">
                 <h2>{{ p.title }}</h2>
@@ -43,7 +44,6 @@
 {% block right %}
 <nav class="rc-words" role="group" aria-label="Show projects">
     <button type="button" class="rc-word" data-view="selected" aria-pressed="true">Selected</button>
-    <div class="rc-words-gap" aria-hidden="true" data-veil="Awkward white space for UI purposes"></div>
     <button type="button" class="rc-word" data-view="uiux" aria-pressed="false">UI/UX</button>
     <button type="button" class="rc-word" data-view="brand" aria-pressed="false">Brand</button>
     <button type="button" class="rc-word" data-view="all" aria-pressed="false">All</button>
@@ -73,11 +73,11 @@
         var desktop = window.matchMedia("(min-width: 881px)");
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var PITCH = 380;
-        var PULL = 420;   // px of scrolling past an end before the next filter comes
+        var PULL = 240;   // px of scrolling past an end before the next filter comes
 
         var view = "selected", lastView = "selected", projects = [], sel = 0, f = 0, target = 0;
         var following = false, items = [];
-        var strain = 0, shift = 0, letGo = 0, springing = 0, hush = false, hushTimer = 0;
+        var strain = 0, shift = 0, letGo = 0, springing = 0, hushUntil = 0;
 
         // fromEnd: arriving from the filter after this one, so start on its last project
         function pick(name, fromEnd) {
@@ -149,7 +149,8 @@
                 var tag = main && p.href ? "a" : "div";
                 var html = '<div class="rc-frame"' + (p.previews && main ? ' data-previews="' + p.previews + '"' : "") +
                     (p.note ? ' data-note="' + p.note + '"' : "") + ">" +
-                    (p.img ? '<img src="' + p.img + '" alt="' + (main ? p.alt.replace(/"/g, "&quot;") : "") + '">' : "") + "</div>" +
+                    (p.img ? '<img src="' + p.img + '" alt="' + (main ? p.alt.replace(/"/g, "&quot;") : "") + '">' : "") +
+                    (main && p.chips.length ? '<div class="rc-stack">' + p.chips.map(function (c) { return '<span class="tag-chip">' + escape(c) + "</span>"; }).join("") + "</div>" : "") + "</div>" +
                     '<div class="rc-project-head"><h2>' + escape(p.title) + '</h2><p class="rc-project-role">' + escape(p.role) + "</p></div>" +
                     '<p class="rc-project-desc">' + escape(p.desc) + "</p>";
                 it.el.innerHTML = "<" + tag + ' class="rc-slot-inner"' + (tag === "a" ? ' href="' + p.href + '"' + (/^http/.test(p.href) ? ' target="_blank" rel="noopener"' : "") : "") + ">" + html + "</" + tag + ">";
@@ -229,9 +230,8 @@
             if ((strain > 0 && s < 0) || (strain < 0 && s > 0)) s = 0;
             setStrain(s);
             if (Math.abs(s) >= PULL) {
-                // The rest of that flick is swallowed: the new filter waits for a fresh scroll
-                hush = true;
-                hushTimer = setTimeout(function () { hush = false; }, 250);
+                // The rest of that flick is swallowed for a moment, so it doesn't carry on through the new filter
+                hushUntil = performance.now() + 300;
                 jump(s > 0 ? 1 : -1);
                 return;
             }
@@ -248,22 +248,20 @@
         section.addEventListener("wheel", function (e) {
             if (track.hidden) return;
             e.preventDefault();
-            if (hush) {
-                clearTimeout(hushTimer);
-                hushTimer = setTimeout(function () { hush = false; }, 250);
-                return;
-            }
+            if (performance.now() < hushUntil) return;
             // Lines (Firefox) are about 40px each
             var px = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
             var lo = -sel, hi = projects.length - 1 - sel;
-            // Only once the roll has come to rest at an end does scrolling on start to strain
-            if (strain || (!following && ((px > 0 && target >= hi) || (px < 0 && target <= lo)))) {
+            // Once the roll is headed for an end, scrolling on past it strains
+            if (strain || (px > 0 && target >= hi) || (px < 0 && target <= lo)) {
                 pull(px);
                 return;
             }
-            // the roll moves a little slower than the wheel
-            target = Math.max(lo, Math.min(hi, target + px * 0.7 / PITCH));
+            // the roll moves a little slower than the wheel; whatever runs past an end goes into the strain
+            var next = target + px * 0.7 / PITCH;
+            target = Math.max(lo, Math.min(hi, next));
             follow();
+            if (next !== target) pull((next - target) * PITCH / 0.7);
         }, { passive: false });
 
         track.addEventListener("keydown", function (e) {

@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "292"
+ASSET_VERSION = "299"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -513,55 +513,56 @@ def recruiter_view():
 
 
 # Recruiter home roll: the cards from partials/design_list.html, with recruiter mode's own tags and titles.
-# img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture.
+# img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture;
+# chips are the tags that drop onto the picture on hover, the same as the normal cards'.
 RECRUITER_PROJECTS = [
-    {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "UX Designer", "tags": ["selected", "uiux"],
+    {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "UX Designer", "tags": ["selected", "uiux"], "chips": ["Figma"],
      "desc": "An offline-first inventory system for 2ft Prosthetics' volunteers across 10 countries. Delivered as a tested hi-fi prototype.",
      "img": ("ux", "t4sg/preview.webp"), "alt": "T4SG × 2ft inventory system preview", "note": "SUPER DETAILED",
      "previews": ("ux", ["t4sg/hifi view.webp", "t4sg/hifi add.webp", "t4sg/userflow.png", "t4sg/affmap.png"])},
-    {"href": "/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design", "tags": ["selected", "brand"],
+    {"href": "/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design", "tags": ["selected", "brand"], "chips": ["Brand", "Campaign", "Website", "Merch"],
      "desc": "Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.",
      "img": ("design", "hackharvard/logo-thumb.png"), "alt": "HackHarvard logo in red on black", "note": "DETAILED AND NUMBERS",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "hackharvard/site-about.jpg", "hackharvard/site-tracks.jpg", "hackharvard/stickers.png"])},
-    {"href": "/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Senior UX Designer / Project Manager", "tags": ["selected", "uiux"],
+    {"href": "/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Senior UX Designer / Project Manager", "tags": ["selected", "uiux"], "chips": ["Figma"],
      "desc": "12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Handed off to engineering.",
      "img": ("ux", "commonspirit/preview.webp"), "alt": "T4SG × CommonSpirit Health redesign preview", "note": "LEAD, LESS DETAILED",
      "previews": ("ux", ["commonspirit/redes1.webp", "commonspirit/redes2.webp", "commonspirit/impact-effort.png"])},
-    {"href": "/cs1710", "title": "The Story of Unicode", "role": "Developer & Designer", "tags": ["selected"],
+    {"href": "/cs1710", "title": "The Story of Unicode", "role": "Developer & Designer", "tags": ["selected"], "chips": ["D3.js", "JavaScript", "HTML", "CSS"],
      "desc": "A scroll-driven data story for non-technical readers, our CS 1710 final as a team of two. Live, and both think-aloud testers got the main message.",
      "img": ("ux", "cs171/preview.gif"), "alt": "Visualization: A Unicode Story", "note": "DETAILED, FUN",
      "previews": ("ux", ["cs171/hifi overview.png", "cs171/hifi time.png", "cs171/hifi emoji.png", "cs171/map_q.png"])},
-    {"href": "/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [],
+    {"href": "/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [], "chips": ["Python", "Flask", "Jinja2", "HTML", "CSS", "JavaScript"],
      "desc": "How I built this website. Hardcoded, and every visual element is drawn by me ^v^ (not the fonts).",
      "img": None, "alt": "", "note": "", "previews": None},
-    {"href": "/merch", "title": "Merch Compilations", "role": "Designer", "tags": ["brand"],
+    {"href": "/merch", "title": "Merch Compilations", "role": "Designer", "tags": ["brand"], "chips": ["HPAIR", "IVMUN", "HUDC"],
      "desc": "Crests, posters and goods for HPAIR, IVMUN and HUDC.",
      "img": ("design", "merch/hpair-crest.png"), "alt": "HCONF crest", "note": "",
      "previews": ("design", ["merch/aconf-poster.png", "merch/hconf-sketch.png", "merch/ivmun-placards.webp", "merch/hudc-the-game-shirt.webp"])},
-    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design · Student Content Creator · Director of Internal Relations", "tags": [],
+    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design · Student Content Creator · Director of Internal Relations", "tags": [], "chips": ["HackHarvard", "Office for the Arts", "HPAIR"],
      "desc": "Three Harvard organizations, with a measured result for each.",
      "img": ("design", "hackharvard/poster-apps.jpg"), "alt": "HackHarvard 2026 poster announcing that hacker applications are open", "note": "",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "merch/hpair-crest.png", "hackharvard/lanyard.webp"])},
-    {"href": "/olympics", "title": "CNN Olympics", "role": "Commissioned Designer", "tags": ["brand"],
+    {"href": "/olympics", "title": "CNN Olympics", "role": "Commissioned Designer", "tags": ["brand"], "chips": ["Logos"],
      "desc": "Commissioned team logos for CNN Hội Thao.",
      "img": ("olympics", "6Artboard.webp"), "alt": "CNN Olympics team logos", "note": "",
      "previews": ("olympics", ["2Sapphire.jpg", "4Ruby.jpg", "5Emerald.jpg", "3Amethyst.jpg"])},
-    {"href": "/recit", "title": "Recít Film Studio", "role": "Art Director", "tags": [],
+    {"href": "/recit", "title": "Recít Film Studio", "role": "Art Director", "tags": [], "chips": [],
      "desc": "Posters and banners for a student-run Hanoi film studio making short films about Vietnamese stories.",
      "img": ("art_direction", "recit.jpg"), "alt": "Recít Film Studio", "note": "",
      "previews": ("recit", ["recitbanner.jpg", "recitposter.jpg"])},
-    {"href": "https://www.facebook.com/official.ivmun", "title": "International Vietnam Model United Nations", "role": "Design Lead", "tags": ["brand"],
+    {"href": "https://www.facebook.com/official.ivmun", "title": "International Vietnam Model United Nations", "role": "Design Lead", "tags": ["brand"], "chips": [],
      "desc": "Led design with a team of 7 for a conference of over 1,000 people.",
      "img": ("art_direction", "ivmun-cover.webp"), "alt": "IVMUN 2023 banner: the title over red-green mountains, a crescent moon and a geometric tower", "note": "",
      "previews": ("art_direction", ["ivmun-quarter.webp", "ivmun-banner.webp", "ivmun-header.webp", "ivmun-storm.webp"])},
-    {"href": "/highlander", "title": "CNN English Club: Highlander", "role": "Director", "tags": [],
+    {"href": "/highlander", "title": "CNN English Club: Highlander", "role": "Director", "tags": [], "chips": ["Short film"],
      "desc": "A short film production team for CEC Oscar, a film event of CNN English Club.",
      "img": ("art_direction", "highlander.jpg"), "alt": "Highlander short film", "note": "",
      "previews": ("art_direction", ["poster.jpg"])},
-    {"href": None, "title": "CNN English Club", "role": "Commissioned Designer", "tags": [],
+    {"href": None, "title": "CNN English Club", "role": "Commissioned Designer", "tags": [], "chips": ["Posters", "Tickets"],
      "desc": "Commissioned posters and tickets for CNN English Club.",
      "img": ("client", "cec.png"), "alt": "CNN English Club posters", "note": "", "previews": None},
-    {"href": None, "title": "CNN Dance Club: TeddeAh!", "role": "Commissioned Designer", "tags": [],
+    {"href": None, "title": "CNN Dance Club: TeddeAh!", "role": "Commissioned Designer", "tags": [], "chips": ["Logo"],
      "desc": "Commissioned logo for TeddeAh!, a competitive dance group from CNN Dance Club.",
      "img": ("client", "teddeah!.webp"), "alt": "TeddeAh! logo", "note": "", "previews": None},
 ]
