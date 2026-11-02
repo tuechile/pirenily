@@ -275,12 +275,9 @@
 
 {# §11 Call to action (use inside a section) — a panel link with the destination's host.
    Site-internal links ("/hackharvard") open in the same tab; kicker overrides the small label. #}
-{% macro cta(href, label, kicker=None) %}
+{% macro cta(href, label) %}
 {% set internal = href.startswith('/') %}
 <a href="{{ href }}"{% if not internal %} target="_blank" rel="noopener"{% endif %} class="cta-button">
-    <span>
-        <span class="cs-label">{{ kicker or ('pirenily.com' if internal else href.split('/')[2]|replace('www.', '')) }}</span>
-        <span class="cta-title">{{ label|replace(' →', '')|safe }}</span>
-    </span>
+    <span class="cta-title">{{ label|replace(' →', '')|safe }}</span>
 </a>
 {% endmacro %}

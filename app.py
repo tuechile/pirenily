@@ -8,6 +8,7 @@ import os
 import random
 import re
 import subprocess
+import threading
 import time
 import unicodedata
 import urllib.error
@@ -41,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "307"
+ASSET_VERSION = "308"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -423,28 +424,53 @@ def cv_file_id():
 
 
 # The CV tab draws the PDF itself (design_list.html) instead of embedding Drive's viewer, which brings
-# its own gray backdrop and toolbar. Each file is kept here for five minutes so a new upload shows up soon.
-# Recruiter mode gets its own résumé; ?download=1 saves it instead of showing it.
+# its own gray backdrop and toolbar. Recruiter mode gets its own résumé; ?download=1 saves it instead.
+# Both are fetched in the background when the server starts, and a visitor always gets the copy in hand:
+# one older than five minutes is refreshed behind the scenes, so a new upload still shows up soon.
 _cv_pdf = {}
+_cv_refreshing = set()
+
+
+def _cv_urls():
+    doc_id = re.search(r"/d/([\w-]+)", RECRUITER_CV_URL).group(1)
+    urls = {"recruiter": f"https://docs.google.com/document/d/{doc_id}/export?format=pdf"}
+    if cv_file_id():
+        urls["site"] = f"https://drive.usercontent.google.com/download?id={cv_file_id()}&export=download&confirm=t"
+    return urls
+
+
+def _fetch_cv(url):
+    try:
+        with urllib.request.urlopen(url, timeout=20) as r:
+            _cv_pdf[url] = {"data": r.read(), "at": time.time()}
+    except (urllib.error.URLError, TimeoutError):
+        pass
+    finally:
+        _cv_refreshing.discard(url)
+
+
+def _refresh_cv(url):
+    if url not in _cv_refreshing:
+        _cv_refreshing.add(url)
+        threading.Thread(target=_fetch_cv, args=(url,), daemon=True).start()
+
+
+for _url in _cv_urls().values():
+    _refresh_cv(_url)
+
 
 @app.route("/cv.pdf")
 def cv_pdf():
     if access_level() != "cv":
         abort(404)
-    if recruiter_mode():
-        doc_id = re.search(r"/d/([\w-]+)", RECRUITER_CV_URL).group(1)
-        url = f"https://docs.google.com/document/d/{doc_id}/export?format=pdf"
-    else:
-        file_id = cv_file_id() or abort(404)
-        url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
+    url = _cv_urls().get("recruiter" if recruiter_mode() else "site") or abort(404)
     cached = _cv_pdf.get(url)
-    if not cached or time.time() - cached["at"] > 300:
-        try:
-            with urllib.request.urlopen(url, timeout=20) as r:
-                cached = _cv_pdf[url] = {"data": r.read(), "at": time.time()}
-        except (urllib.error.URLError, TimeoutError):
-            if not cached:
-                abort(502)
+    if not cached:
+        # Not in yet (the server just started, or Google was down): wait for it this once
+        _fetch_cv(url)
+        cached = _cv_pdf.get(url) or abort(502)
+    elif time.time() - cached["at"] > 300:
+        _refresh_cv(url)
     headers = {"Cache-Control": "private, no-cache"}
     if request.args.get("download"):
         headers["Content-Disposition"] = 'attachment; filename="Chi-Le-Resume.pdf"'

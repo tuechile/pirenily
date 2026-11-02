@@ -36,7 +36,10 @@
 <!--- The candy-jar program, flanked by its recording in color and in grayscale --->
 <div class="gif-page">
 
-    <img class="gif-image" src="{{ img('processing', 'output.gif') }}" alt="The candy-jar program answering different inputs">
+    {# A looping video of the old GIF: the same frames at an eighth of the weight #}
+    <video class="gif-image" autoplay loop muted playsinline poster="{{ img('processing', 'output.webp') }}" aria-label="The candy-jar program answering different inputs">
+        <source src="{{ img('processing', 'output.mp4') }}" type="video/mp4">
+    </video>
 
     <div class="gif-text">
         <p class="gif-kicker">Interactive · Processing (Java) · October 2024</p>
@@ -57,7 +60,9 @@
         </p>
     </div>
 
-    <img class="gif-image gif-image--gray" src="{{ img('processing', 'output.gif') }}" alt="">
+    <video class="gif-image gif-image--gray" autoplay loop muted playsinline poster="{{ img('processing', 'output.webp') }}" aria-hidden="true">
+        <source src="{{ img('processing', 'output.mp4') }}" type="video/mp4">
+    </video>
 
 </div>
 

@@ -718,25 +718,28 @@ body.rc {
         /* never wider than the column, even at the 4% swell in the middle */
         width: min(var(--rc-col), calc(100% / 1.04));
         cursor: pointer;
-        /* the ones out of focus go soft all over, picture, words and edges, and sharpen as they roll in */
-        filter: blur(calc(var(--d) * 2.5px));
-        will-change: transform, filter;
+        /* the ones out of focus fade back; opacity and moves are all a frame has to redraw */
+        opacity: calc(1 - var(--d) * 0.3);
+        will-change: transform, opacity;
     }
 
     .rc-slot .rc-frame {
         aspect-ratio: auto;
         height: 360px;
-        /* the peeks keep a soft, blurred edge; it thins to nothing as one reaches the middle */
-        --soft: calc(var(--d) * 28px);
-        -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent), linear-gradient(to bottom, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent);
-        -webkit-mask-composite: source-in;
-        mask-image: linear-gradient(to right, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent), linear-gradient(to bottom, transparent, #000 var(--soft), #000 calc(100% - var(--soft)), transparent);
-        mask-composite: intersect;
     }
 
-    .rc-slot .rc-frame img {
-        filter: grayscale(calc(var(--d) * 100%));
-        opacity: calc(1 - var(--d) * 0.2);
+    /* The peeks are black and white; the colour swaps as a project passes the middle */
+    .rc-slot[aria-hidden="true"] .rc-frame img {
+        filter: grayscale(100%);
+    }
+
+    /* Once the roll stops, the peeks go soft (recomputing a blur every frame of a move is what made it lag) */
+    .rc-slot[aria-hidden="true"] {
+        transition: filter 200ms var(--rc-ease);
+    }
+
+    .rc-track.is-still .rc-slot[aria-hidden="true"] {
+        filter: blur(2.5px);
     }
 
     .rc-slot .rc-project-desc {

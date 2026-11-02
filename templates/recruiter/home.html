@@ -123,6 +123,7 @@
             fill();
             fit();
             place();
+            track.classList.add("is-still");
         }
 
         // Space the slots by the tallest card: the one in the middle (up to 104%) and its neighbours
@@ -178,6 +179,7 @@
         function follow() {
             if (following) return;
             following = true;
+            track.classList.remove("is-still");
             var last = performance.now();
             (function frame() {
                 var now = performance.now();
@@ -193,6 +195,7 @@
                 place();
                 if (f !== target) { requestAnimationFrame(frame); return; }
                 following = false;
+                track.classList.add("is-still");
             })();
         }
 
