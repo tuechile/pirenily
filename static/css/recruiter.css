@@ -9,7 +9,7 @@
     --rc-page: var(--sheet);                       /* the white page area */
     --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
     --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
-    --rc-gray: rgba(var(--fg-rgb), 0.47);         /* half the ink: the nav links not hovered or not the page you're on */
+    --rc-gray: rgba(var(--fg-rgb), 0.28);         /* light gray: the nav links not hovered or not the page you're on */
     --rc-sub: var(--rc-gray);                      /* "CS & AFVS @ Harvard" */
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
@@ -424,18 +424,22 @@ body.rc {
 }
 
 /* ---------- The résumé popup (partials/cv_panel.html, opened by recruiter.js) ----------
-   Over the whole page on the white veil, under the profile panel so View/Hide Resume stays in reach.
-   The sheet scrolls in it; unzoomed, scrolling over the sheet scrolls the popup */
+   A plain white page over just the middle column, so it reads as its own page with the panel, the
+   header and the filters still around it. The sheet scrolls in it; unzoomed, scrolling over the sheet
+   scrolls the popup. Left edge: gutter + panel column + gap; right edge: gutter + words column + gap */
 .rc .cv-panel {
     position: fixed;
-    inset: 0;
-    z-index: 32;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--rc-gutter) + 240px + 24px);
+    right: calc(var(--rc-gutter) + 120px + 24px);
+    z-index: 29;
     width: auto;
     margin: 0;
-    padding: 96px var(--rc-gutter) 64px;
+    padding: 96px 24px 72px;
     overflow-y: auto;
     scrollbar-width: none;
-    background: var(--rc-veil);
+    background: var(--rc-page);
 }
 
 .rc .cv-panel[hidden] {
@@ -1121,7 +1125,10 @@ body.rc {
     }
 
     .rc .cv-panel {
-        padding-top: 24px;
+        left: 0;
+        right: 0;
+        z-index: 32;
+        padding: 24px var(--rc-gutter) 64px;
     }
 
     .rc .rc-cv-close {
