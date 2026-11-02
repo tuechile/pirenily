@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "315"
+ASSET_VERSION = "317"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -382,12 +382,9 @@ PROJECTS_COOKIE = "projects_key"
 GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
                   "commonspirit", "cs171", "pirenily"}
 
-# Paste the Google Drive share link of the CV here (Share → anyone with the link → Viewer).
-# Empty shows a "coming soon" note in the CV tab instead of the embed.
-CV_DRIVE_URL = "https://drive.google.com/file/d/1OD9F_altGOjGhBZb4YsQQI-oJJ-oT6YL/view?usp=sharing"
-# Recruiter mode's résumé: a Word file opened in Google Docs (anyone with the link can view).
-# Docs exports it as a PDF, which both the sheet and the Download button use.
-RECRUITER_CV_URL = "https://docs.google.com/document/d/1I9r2JRAZNCa9Ej9AuDN5b10PXsnvO7v-/edit"
+# The résumé, in both views: a Word file opened in Google Docs (anyone with the link can view).
+# Docs exports it as a PDF, which the sheet and the Download button use. Empty shows a "coming soon" note.
+CV_URL = "https://docs.google.com/document/d/1I9r2JRAZNCa9Ej9AuDN5b10PXsnvO7v-/edit"
 
 
 def access_level(key=None):
@@ -414,29 +411,25 @@ def inject_projects_unlocked():
     if level == "cv" and recruiter_mode():
         cv = {"url": None, "page": True}
     elif level == "cv":
-        cv = {"url": CV_DRIVE_URL or None, "page": cv_file_id() is not None}
+        cv = {"url": CV_URL or None, "page": cv_file_id() is not None}
     return dict(projects_unlocked=level is not None, cv=cv)
 
 
 def cv_file_id():
-    match = re.search(r"/d/([\w-]+)", CV_DRIVE_URL)
+    match = re.search(r"/d/([\w-]+)", CV_URL)
     return match.group(1) if match else None
 
 
 # The CV tab draws the PDF itself (design_list.html) instead of embedding Drive's viewer, which brings
-# its own gray backdrop and toolbar. Recruiter mode gets its own résumé; ?download=1 saves it instead.
-# Both are fetched in the background when the server starts, and a visitor always gets the copy in hand:
+# its own gray backdrop and toolbar; ?download=1 saves it instead.
+# It's fetched in the background when the server starts, and a visitor always gets the copy in hand:
 # one older than five minutes is refreshed behind the scenes, so a new upload still shows up soon.
 _cv_pdf = {}
 _cv_refreshing = set()
 
 
-def _cv_urls():
-    doc_id = re.search(r"/d/([\w-]+)", RECRUITER_CV_URL).group(1)
-    urls = {"recruiter": f"https://docs.google.com/document/d/{doc_id}/export?format=pdf"}
-    if cv_file_id():
-        urls["site"] = f"https://drive.usercontent.google.com/download?id={cv_file_id()}&export=download&confirm=t"
-    return urls
+def _cv_export_url():
+    return f"https://docs.google.com/document/d/{cv_file_id()}/export?format=pdf" if cv_file_id() else None
 
 
 def _fetch_cv(url):
@@ -455,15 +448,15 @@ def _refresh_cv(url):
         threading.Thread(target=_fetch_cv, args=(url,), daemon=True).start()
 
 
-for _url in _cv_urls().values():
-    _refresh_cv(_url)
+if _cv_export_url():
+    _refresh_cv(_cv_export_url())
 
 
 @app.route("/cv.pdf")
 def cv_pdf():
     if access_level() != "cv":
         abort(404)
-    url = _cv_urls().get("recruiter" if recruiter_mode() else "site") or abort(404)
+    url = _cv_export_url() or abort(404)
     cached = _cv_pdf.get(url)
     if not cached:
         # Not in yet (the server just started, or Google was down): wait for it this once
