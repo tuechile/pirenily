@@ -70,11 +70,11 @@
         var desktop = window.matchMedia("(min-width: 881px)");
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var PITCH = 380;
-        var PULL = 240;   // px of scrolling past an end before the next filter comes
+        var PULL = 480;   // px of scrolling past an end before the next filter comes
 
         var view = "selected", projects = [], sel = 0, f = 0, target = 0;
         var following = false, items = [];
-        var strain = 0, shown = 0, shift = 0, easing = false, letGo = 0, hushUntil = 0;
+        var strain = 0, shown = 0, shift = 0, easing = false, letGo = 0, hush = false, hushTimer = 0;
 
         // fromEnd: arriving from the filter after this one, so start on its last project
         function pick(name, fromEnd) {
@@ -237,8 +237,9 @@
             // Scrolling back the other way first undoes the strain
             if ((strain > 0 && s < 0) || (strain < 0 && s > 0)) s = 0;
             if (Math.abs(s) >= PULL) {
-                // The rest of that flick is swallowed for a moment, so it doesn't carry on through the new filter
-                hushUntil = performance.now() + 300;
+                // One change per swipe: the rest of it is swallowed until the wheel goes quiet
+                hush = true;
+                hushTimer = setTimeout(function () { hush = false; }, 250);
                 jump(s > 0 ? 1 : -1);
                 return;
             }
@@ -250,7 +251,11 @@
         section.addEventListener("wheel", function (e) {
             if (track.hidden) return;
             e.preventDefault();
-            if (performance.now() < hushUntil) return;
+            if (hush) {
+                clearTimeout(hushTimer);
+                hushTimer = setTimeout(function () { hush = false; }, 250);
+                return;
+            }
             // Lines (Firefox) are about 40px each
             var px = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
             var lo = -sel, hi = projects.length - 1 - sel;

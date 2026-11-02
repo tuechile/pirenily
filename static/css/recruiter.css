@@ -9,7 +9,7 @@
     --rc-page: var(--sheet);                       /* the white page area */
     --rc-veil: rgba(var(--sheet-rgb), 0.7);        /* the white veil over the middle column */
     --rc-clear: rgba(var(--sheet-rgb), 0);         /* the end of the header and footer fades */
-    --rc-gray: rgba(var(--fg-rgb), 0.28);         /* light gray: the nav links not hovered or not the page you're on */
+    --rc-gray: var(--rail-ink);                    /* the case study rail's pale ink: nav links not hovered or not the page you're on */
     --rc-sub: var(--rc-gray);                      /* "CS & AFVS @ Harvard" */
     --rc-font-head: "IM Fell DW Pica", serif;      /* Your view's header face, only where the rule below puts it */
     --rc-head-stroke: 0.02em;
@@ -148,6 +148,28 @@ body.rc {
 .rc-nav:has([aria-current="page"], .rc-links a:hover, .rc-sound:hover) :is(.rc-links a, .rc-sound):hover,
 .rc-nav:not(:has(.rc-links a:hover, .rc-sound:hover)) .rc-links a[aria-current="page"] {
     color: var(--c-title);
+}
+
+/* Case studies in recruiter mode (layout.html): my contacts over the footer line, centered under the page */
+.rc-case-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 4rem auto 0;
+    padding: 1.5rem 1rem calc(2.5rem + env(safe-area-inset-bottom));
+    font-family: var(--font-sans);
+    font-size: var(--rc-fs-text);
+    color: var(--c-faint);
+}
+
+.rc-case-foot .rc-contacts {
+    margin-left: 0;
+}
+
+/* The site footer pads its icons for its own layout; these keep their full size */
+.rc-case-foot .rc-contacts .contact-logo {
+    padding: 0;
 }
 
 /* Case studies in recruiter mode (layout.html): the same header, stuck to the top as the page scrolls */

@@ -58,12 +58,20 @@
         // Pages with a single picture feather its edges into the black; anything busier stays crisp
         if (document.querySelectorAll("main img:not(.contact-logo)").length < 2) document.body.classList.add("one-pic");
     </script>
+    {% if recruiter %}
+    {# Recruiter mode: my contacts over the recruiter pages' footer line, instead of the page's own footer #}
+    <footer class="rc rc-case-foot">
+        <div class="rc-contacts">{% include "recruiter/_contacts.html" %}</div>
+        <span>Chi (Tue) Le | pirenily | Updated {{ last_updated }}</span>
+    </footer>
+    {% else %}
     <footer class="site-footer">
         {% block footer %}
         {% endblock %}
         <span>Chi (Tue) Le | pirenily | Updated {{ last_updated }}</span>
         {% include "partials/recruiter_return.html" %}
     </footer>
+    {% endif %}
 
     <script src="{{ url_for('static', filename='loading.js') }}?v={{ asset_v }}">
     </script>
