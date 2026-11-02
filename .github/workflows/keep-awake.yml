@@ -1,4 +1,4 @@
-# Loads pirenily.com every 10 minutes so Koyeb doesn't put the server to sleep between visits
+# Loads www.pirenily.com (the Koyeb server; the bare domain is a GitHub Pages redirect) every 10 minutes so Koyeb doesn't put the server to sleep between visits
 # (the first visit after a sleep waits for it to start back up). GitHub may run it a few minutes late.
 name: Keep the site awake
 
@@ -11,4 +11,4 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -fsS -o /dev/null --max-time 60 https://pirenily.com/ || true
+      - run: curl -fsS -o /dev/null --max-time 60 https://www.pirenily.com/ || true
