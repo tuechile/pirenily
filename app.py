@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "317"
+ASSET_VERSION = "318"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -545,16 +545,16 @@ def recruiter_view():
 # img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture;
 # chips are the skills that drop onto the picture on hover.
 RECRUITER_PROJECTS = [
-    {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "UX Designer", "tags": ["selected", "uiux"], "chips": ["Figma", "User Interviews", "Affinity Mapping", "User Flows", "Lo-fi → Hi-fi", "Usability Testing"],
+    {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Figma", "User Interviews", "Affinity Mapping", "User Flows", "Lo-fi → Hi-fi", "Usability Testing"],
      "desc": "An offline-first inventory system for 2ft Prosthetics' volunteers across 10 countries. Delivered as a tested hi-fi prototype.",
      "img": ("ux", "t4sg/preview.webp"), "alt": "T4SG × 2ft inventory system preview", "note": "SUPER DETAILED",
      "previews": ("ux", ["t4sg/hifi view.webp", "t4sg/hifi add.webp", "t4sg/userflow.png", "t4sg/affmap.png"])},
-    {"href": "/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design", "tags": ["selected", "brand"], "chips": ["Brand Identity", "Campaign Design", "Web Design", "Figma Make", "Merch Design", "Team Leadership"],
-     "desc": "Led a team of 7 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.",
+    {"href": "/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design & Engineering", "tags": ["selected", "brand"], "chips": ["Brand Identity", "Campaign Design", "Web Design", "Figma Make", "Merch Design", "Team Leadership"],
+     "desc": "Led a team of 6 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.",
      "img": ("design", "hackharvard/logo-thumb.png"), "alt": "HackHarvard logo in red on black", "note": "DETAILED AND NUMBERS",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "hackharvard/site-about.jpg", "hackharvard/site-tracks.jpg", "hackharvard/stickers.png"])},
-    {"href": "/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Senior UX Designer / Project Manager", "tags": ["selected", "uiux"], "chips": ["Project Management", "Stakeholder Interviews", "Figma", "Prototyping", "Data Visualization"],
-     "desc": "12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Handed off to engineering.",
+    {"href": "/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Project Management", "Stakeholder Interviews", "Figma", "Prototyping", "Data Visualization"],
+     "desc": "12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Shipped.",
      "img": ("ux", "commonspirit/preview.webp"), "alt": "T4SG × CommonSpirit Health redesign preview", "note": "LEAD, LESS DETAILED",
      "previews": ("ux", ["commonspirit/redes1.webp", "commonspirit/redes2.webp", "commonspirit/impact-effort.png"])},
     {"href": "/cs1710", "title": "The Story of Unicode", "role": "Developer & Designer", "tags": ["selected"], "chips": ["D3.js", "JavaScript", "Data Visualization", "Prototyping", "Think-aloud Testing"],
@@ -568,7 +568,7 @@ RECRUITER_PROJECTS = [
      "desc": "Crests, posters and goods for HPAIR, IVMUN and HUDC.",
      "img": ("design", "merch/hpair-crest.png"), "alt": "HCONF crest", "note": "",
      "previews": ("design", ["merch/aconf-poster.png", "merch/hconf-sketch.png", "merch/ivmun-placards.webp", "merch/hudc-the-game-shirt.webp"])},
-    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design · Student Content Creator · Director of Internal Relations", "tags": [], "chips": ["Team Leadership", "Campaign Strategy", "Social Analytics", "Event Marketing"],
+    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design & Engineering · Student Content Creator · Director of Internal Relations", "tags": [], "chips": ["Team Leadership", "Campaign Strategy", "Social Analytics", "Event Marketing"],
      "desc": "Three Harvard organizations, with a measured result for each.",
      "img": ("design", "hackharvard/poster-apps.jpg"), "alt": "HackHarvard 2026 poster announcing that hacker applications are open", "note": "",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "merch/hpair-crest.png", "hackharvard/lanyard.webp"])},
