@@ -24,7 +24,6 @@
         const railTop = shell.getBoundingClientRect().top + window.scrollY + parseFloat(getComputedStyle(shell).paddingTop);
         shell.style.setProperty("--rail-top", railTop + "px");
         const hero = document.querySelector(".cs-hero");
-        document.getElementById("csRailTitle").textContent = hero ? hero.dataset.index : "";
         const sections = [...document.querySelectorAll("[data-index]")].filter(el => el !== hero);
         const links = sections.map((sec, i) => {
             const num = String(i + 1).padStart(2, "0");

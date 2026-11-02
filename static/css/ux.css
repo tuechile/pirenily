@@ -1231,13 +1231,6 @@ html {
     transition: filter var(--dur-1) var(--ease-out);
 }
 
-.cs-rail-title {
-    margin: var(--s-1) 0 var(--s-5);
-    font-size: 0.95rem;
-    line-height: 1.35;
-    color: var(--text-primary);
-}
-
 /* Progress rail: rings on a line that fills as you read; the section you're in
    lights up as a blurred blob, white at the core and teal around it */
 .cs-index {

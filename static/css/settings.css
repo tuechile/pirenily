@@ -49,7 +49,7 @@
     box-shadow: none;
 }
 
-/* The case-study rail (and its kicker and title) rests in pale ink and goes full ink while hovered */
+/* The case-study rail rests in pale ink and goes full ink while hovered */
 :root[data-theme="light"] .cs-rail {
     --rail-track: var(--rail-ink-soft);
     --rail-ring: var(--rail-ink);
