@@ -154,6 +154,10 @@
     if (card) {
         var front = card.querySelector(".rc-card-front");
         var flip = function () {
+            card.querySelectorAll(".rc-card-photos img[data-src]").forEach(function (im) {
+                im.src = im.dataset.src;
+                im.removeAttribute("data-src");
+            });
             var flipped = card.classList.toggle("is-flipped");
             front.setAttribute("aria-pressed", String(flipped));
             if (layer) layer.innerHTML = "";

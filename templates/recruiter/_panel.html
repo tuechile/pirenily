@@ -10,12 +10,13 @@
     <div class="rc-card">
         <button type="button" class="rc-card-front" aria-label="Flip to see more pictures" aria-pressed="false">
             <img src="{{ img('other', 'Headshot_Chi Le.jpg') }}" alt="Chi Le"
-                data-previews="{% for f in about_photos %}{{ img('about', f) }}{% if not loop.last %}|{% endif %}{% endfor %}" data-pop-width="300">
+                data-previews="{% for f in about_photos %}{{ img('about', f, thumb=True) }}{% if not loop.last %}|{% endif %}{% endfor %}" data-pop-width="300">
         </button>
         <div class="rc-card-back">
             <button type="button" class="rc-card-photos" aria-label="Flip back to the headshot">
                 {% for f in about_photos %}
-                <img src="{{ img('about', f) }}" alt="" loading="lazy" data-previews="{{ img('about', f) }}" data-pop-width="300">
+                {# Small copies, and only fetched the first time the card flips (recruiter.js) #}
+                <img data-src="{{ img('about', f, thumb=True) }}" alt="" data-previews="{{ img('about', f, thumb=True) }}" data-pop-width="300">
                 {% endfor %}
             </button>
             <a class="rc-card-eye" href="{{ url_for('full_site') }}">

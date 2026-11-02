@@ -41,7 +41,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "301"
+ASSET_VERSION = "302"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -178,6 +178,13 @@ try:
 except (OSError, ValueError):
     WEB_IMAGES = {}
 
+# Small copies for places that show photos tiny (tools/web_images.py, THUMB_FOLDERS), same check
+try:
+    with open(os.path.join(app.static_folder, "asset", "images", "_thumb", "manifest.json")) as f:
+        THUMB_IMAGES = json.load(f)
+except (OSError, ValueError):
+    THUMB_IMAGES = {}
+
 
 @app.after_request
 def cache_static(response):
@@ -196,7 +203,7 @@ def cache_static(response):
 
 @app.context_processor
 def inject_image_helper():
-    def img(folder, filename="", original=False):
+    def img(folder, filename="", original=False, thumb=False):
         real_folder = IMAGE_FOLDERS.get(folder, folder)
         rel = f"{real_folder}/{filename}"
         path = f"asset/images/{rel}".rstrip("/")
@@ -204,7 +211,10 @@ def inject_image_helper():
         if not filename or not os.path.isfile(full):
             return url_for("static", filename=path)
         # Big photos have a web-sized copy (tools/web_images.py); a replaced original skips its stale copy
-        if not original and WEB_IMAGES.get(rel) == os.path.getsize(full):
+        if thumb and THUMB_IMAGES.get(rel) == os.path.getsize(full):
+            path = f"asset/images/_thumb/{rel}"
+            full = os.path.join(app.static_folder, path)
+        elif not original and WEB_IMAGES.get(rel) == os.path.getsize(full):
             path = f"asset/images/_web/{rel}"
             full = os.path.join(app.static_folder, path)
         return url_for("static", filename=path, v=_file_hash(full))

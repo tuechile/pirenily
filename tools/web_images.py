@@ -3,6 +3,9 @@
 Pages show static/asset/images/_web/<path> instead of the original when a copy exists and the
 manifest still matches the original's size (app.py, img()); the gallery lightbox keeps the original.
 Run it again after adding or replacing a big photo:  python3 tools/web_images.py
+
+Folders in THUMB_FOLDERS also get small copies in static/asset/images/_thumb/<path>, for places that show
+them tiny (the recruiter flip card and its hover pops: img(folder, file, thumb=True)).
 """
 import json
 import os
@@ -13,6 +16,9 @@ WEB = os.path.join(ROOT, "_web")
 LONG_EDGE = 2000
 MIN_BYTES = 700 * 1024
 EXTENSIONS = {".jpg", ".jpeg", ".png"}
+THUMB = os.path.join(ROOT, "_thumb")
+THUMB_FOLDERS = ["about"]
+THUMB_EDGE = 600
 
 
 def dimensions(path):
@@ -49,5 +55,26 @@ def main():
         json.dump(manifest, f, indent=1, sort_keys=True)
 
 
+def thumbs():
+    manifest = {}
+    for folder in THUMB_FOLDERS:
+        for name in sorted(os.listdir(os.path.join(ROOT, folder))):
+            if os.path.splitext(name)[1].lower() not in EXTENSIONS:
+                continue
+            rel = os.path.join(folder, name)
+            src = os.path.join(ROOT, rel)
+            dst = os.path.join(THUMB, rel)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            args = ["sips", "-Z", str(THUMB_EDGE), src, "--out", dst]
+            if name.lower().endswith((".jpg", ".jpeg")):
+                args[1:1] = ["-s", "formatOptions", "75"]
+            subprocess.run(args, capture_output=True, check=True)
+            manifest[rel] = os.path.getsize(src)
+            print(f"{rel}: {os.path.getsize(src) // 1024}KB -> {os.path.getsize(dst) // 1024}KB")
+    with open(os.path.join(THUMB, "manifest.json"), "w") as f:
+        json.dump(manifest, f, indent=1, sort_keys=True)
+
+
 if __name__ == "__main__":
     main()
+    thumbs()
