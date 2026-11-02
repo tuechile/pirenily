@@ -28,19 +28,14 @@
     {% call cs.section("Context", lead="Known for the Harvard name, not for the hackathon") %}
     <p>
         HackHarvard is a 36-hour undergraduate hackathon hosted at Harvard University, bringing more than
-        500 students from 30+ universities to campus each October. As Director of Design &amp; Engineering, I ran the team
-        that owned how the event looked and spoke: the promotional campaign, the brand, the website and
-        everything printed for the weekend.
+        500 students from 30+ universities to campus each October. As Director of Design &amp; Engineering, I managed
+        promotional campaigns, brand identity, the website and everything printed for the weekend.
     </p>
     <p>
         For years, engineers usually handled marketing, since we put tech quality first. That left little
         visual consistency and a logo nobody could read. When I asked past members about it, most couldn't
-        say what the old mark was supposed to mean.
-    </p>
-    <p>
-        Next to the big hackathons, we looked unremarkable. And 2026 was our first year without MLH
-        promoting us, so our own feed had to bring hackers in. The board asked me for a complete revamp of
-        the brand, so the event could stand on its own.
+        say what the old mark was supposed to mean. The board asked me for a complete revamp of the brand,
+        so the event could stand on its own.
     </p>
     <p class="cs-hmw">
         How might a student hackathon stand out next to the big ones, with no MLH behind it?
@@ -83,8 +78,8 @@
     {# ===== System ===== #}
     {% call cs.section("System", lead="I kept the rules small enough for engineers and designers alike") %}
     <p>
-        I kept the identity deliberately small so the whole team could produce on-brand work without
-        checking with me on every piece:
+        I kept the identity deliberately small so the whole team could produce on-brand work
+        quicker:
         <br>— <strong>Palette:</strong> near-black navy, a hot magenta accent, teal to ocean blue, cream
         glows, and yellow only for the wordmark and small highlights.
         <br>— <strong>Signature gradient:</strong> navy → ocean blue → teal → mauve → pink, used on the
@@ -97,15 +92,10 @@
     {# ===== Campaign ===== #}
     {% call cs.section("Campaign", lead="Redesigned content strategy") %}
     <p>
-        Every post drew from the same set of towers, moons and rockets, so the feed read as one story
-        from announcement to applications. Last year's whole campaign was a single launch post, and this
-        was our first year without MLH promoting the event, so our own feed was the main way hackers found us.
-    </p>
-    <p>
-        Launch against launch, "HackHarvard is back" drew 3.4× the interactions of last year's post (670 →
-        2,254), with 4.2× the likes and 6.5× the saves. It wasn't a one-off: all three campaign posts beat
-        last year's on likes, comments, reposts, shares and saves, holding at 500+ likes and 400+ saves each.
-        Followers grew 30.3%, from 3,663 to 4,772.
+        Last year's whole campaign was a single launch post, and this was our first year without MLH
+        promoting the event, so our own feed was the main way hackers found us. Hence, I decided to be a
+        little more bold with the elements. Every post drew from the same set of towers, moons and rockets,
+        so the feed can be more memorable and eye-striking.
     </p>
     {% endcall %}
 
@@ -121,14 +111,6 @@
         {{ cs.card(img('design', 'hackharvard/insights-back.jpg'), "Instagram insights for HackHarvard is back: 24,341 viewers, 934 likes, 6 comments, 23 reposts, 667 shares, 624 saves, 310 follows", ar=0.591) }}
         {{ cs.card(img('design', 'hackharvard/insights-apps.jpg'), "Instagram insights for Hacker applications open: 23,242 viewers, 571 likes, 5 comments, 12 reposts, 823 shares, 428 saves, 146 follows", ar=0.591) }}
         {{ cs.card(img('design', 'hackharvard/insights-moon.jpg'), "Instagram insights for Hack to the Moon: 20,776 viewers, 501 likes, 14 comments, 13 reposts, 541 shares, 443 saves, 112 follows", ar=0.591) }}
-    {% endcall %}
-
-    {% call cs.section() %}
-    <p>
-        The campaign also travelled past people who already knew us. 64.1% of last year's viewers didn't
-        follow HackHarvard; this year it was 84–85% on every post. About 20,600 non-followers saw the launch
-        post, against about 17,700 last year, even though it had fewer viewers overall.
-    </p>
     {% endcall %}
 
     {% call cs.row("fit", caption="Who viewed each post. Left: last year, 64.1% non-followers. Then this year's three: 84.6%, 84.2% and 85%.") %}
@@ -162,8 +144,7 @@
         I prototyped the site in Figma Make before any visual design. The team then built it as a reusable
         component package: every color is a design token, the
         decorations are a shared SVG library, and the same pieces feed social graphics and event
-        materials, 20+ brand assets in all. About sits inside a temple, Tracks floats on
-        an island with a satellite you can spin, and each FAQ you open lights a lamp on the arch gate.
+        materials, 20+ brand assets in all.
     </p>
     {% endcall %}
 
@@ -220,18 +201,12 @@
     <p>
         From April to October I set direction, split the work across six designers and engineers, and
         kept our output in step with sponsorship, logistics and outreach. Before handing off, I wrote the
-        site's README as a guide for next year's team. It separates what every HackHarvard site needs, no
-        matter the theme, from this year's theme-specific rules, so the next team can swap the theme
-        without rebuilding the foundation.
+        site's README as a guide for next year's team.
     </p>
     <p>
         I planned an internal component tracker with Codex and built it, and its artifacts, with Claude Code,
         so both AI agents and teammates can read it. That let members of other teams ship on-brand graphics quickly, for example
-        mid-conversation with a sponsor.
-    </p>
-    <p>
-        With the tracker and the reusable package, a post went from 3–4 days to 1–2 days on average. Members asked
-        for direction half as often, from 4.2 questions to 2.1 on average. Before, they were mostly about tracking: where to
+        mid-conversation with a sponsor. Before, the questions were mostly about tracking: where to
         upload, where the assets were, when something was due and who it was for. After, they were mostly about
         approving the quality of a design.
     </p>

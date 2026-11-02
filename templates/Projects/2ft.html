@@ -246,26 +246,8 @@
             </article>
 
         </div>
-
-        <div class="so-what">
-            <div class="so-what-item">
-                <div class="kicker">The real bottleneck</div>
-                <div class="big">Updating is harder than tracking</div>
-            </div>
-            <div class="so-what-item">
-                <div class="kicker">The default environment</div>
-                <div class="big">Internet is unreliable (or absent)</div>
-            </div>
-            <div class="so-what-item">
-                <div class="kicker">The trust requirement</div>
-                <div class="big">“Who changed this?” must be obvious</div>
-            </div>
-        </div>
     </div>
     {% endcall %}
-
-    {{ cs.callout("What we learned quickly", display=False,
-                  text="Most existing tools failed in the same four ways: they assumed stable internet, crammed too much onto each screen, mixed logistics with technical data, and took new volunteers too long to learn.") }}
 
     {% call cs.section("Idea", lead="We put clarity and offline use first, and power features later") %}
     <p>
@@ -358,9 +340,8 @@
 
     {% call cs.section("Hi-Fi", lead="A complex record that still feels calm") %}
     <p>
-        The blue and yellow design adds structure without noise:
-        <strong>logistics → technical → manufacturer</strong> sections, collapsible panels, inline edit
-        popups and a visible history.
+        The blue and yellow design adds structure without noise: collapsible panels, inline edit popups
+        and a visible history.
     </p>
     {% endcall %}
 
@@ -401,10 +382,9 @@
 
     {% call cs.section() %}
     <p>
-        <strong>How we measured it:</strong> all 5 people we interviewed (the president, treasurer and three volunteers) ran the same set tasks on the old spreadsheets and on
-        the prototype, saying aloud what they saw and what they'd do next. We counted the clicks each task took
-        and asked a single ease rating after every task. Across clicks per task and those ease ratings, updating
-        records took about 70% less cognitive load than on the spreadsheets.
+        <strong>How we measured it:</strong> we used two stand-ins for cognitive load, clicks per task and a
+        single ease rating after every task. All 5 people we interviewed ran the same tasks on the old spreadsheets and on the prototype, thinking aloud as they went.
+        Combined, those two measures put the prototype about 70% lighter than the spreadsheets.
     </p>
     {% endcall %}
 

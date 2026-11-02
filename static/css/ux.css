@@ -1003,22 +1003,6 @@ html {
     background: rgba(var(--fg-rgb), 0.1);
 }
 
-/* "Why this matters" row (was so-what) */
-.so-what {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--s-3);
-    margin: var(--s-4) 0 var(--s-5);
-    justify-items: center;
-    text-align: center;
-}
-
-.so-what-item {
-    padding: var(--s-4);
-    background: rgba(var(--fg-rgb), 0.03);
-    max-width: 32ch;
-}
-
 .kicker {
     font-size: var(--fs-1);
     color: var(--text-secondary);
@@ -1150,10 +1134,6 @@ html {
 }
 
 @media (max-width: 860px) {
-    .so-what {
-        grid-template-columns: 1fr;
-    }
-
     .insights-grid,
     .insights-grid--key {
         grid-template-columns: 1fr;
