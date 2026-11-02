@@ -14,10 +14,12 @@
 {{ cs.figure(img('design', 'hackharvard/banner.jpg'),
              "Hack to the Moon banner with a domed tower, planets and glowing orbs", zoom=False) }}
 
-{{ cs.callout("TL;DR", points=[
-    "I led a 7-person design and engineering team from April to the hackathon in October, owning promotional campaigns, brand and cross-team coordination.",
-    "We rebuilt the brand around one theme and shipped it as a reusable component package for the website, social media and event materials.",
-    "Our launch post drew 3.4× the interactions of last year's, and every campaign post after it beat last year's too. 84–85% of viewers didn't follow us yet, up from 64.1%. Followers grew 30.3%, applications doubled and completed submissions rose 1.45×, in our first year without MLH promoting us.",
+{{ cs.callout("Long story short",
+    text="I led a 7-person team that rebuilt HackHarvard's brand and doubled applications, in our first year without MLH promoting us.",
+    points=[
+    "<strong>Brand.</strong> Redrew the logo from scratch and shipped the identity as a reusable component package for the website, social media and merch.",
+    "<strong>Campaign.</strong> The launch post drew 3.4× last year's interactions, 84–85% of viewers were new to us, and followers grew 30.3%.",
+    "<strong>Leadership.</strong> Ran the team from April to October. With a shared tracker, a post went from 3–4 days to 1–2, and questions for direction halved.",
 ]) }}
 
 {% call cs.body() %}
@@ -31,20 +33,22 @@
         everything printed for the weekend.
     </p>
     <p>
-        For years, marketing had been handled by usually engineers since we prioritized tech quality, 
-        which led to little visual consistency and a logo nobody could read. 
-        In conversations with past members to improve current imagery, most of them couldn't say what 
-        the old mark was supposed to mean.
+        For years, engineers usually handled marketing, since we put tech quality first. That left little
+        visual consistency and a logo nobody could read. When I asked past members about it, most couldn't
+        say what the old mark was supposed to mean.
     </p>
     <p>
-        The board saw the cost as we stood next to the big contemporary hackathons and looked unremarkable.
-        They asked me for a complete revamp of the brand assets and identity, so the event could stand
-        on its own.
+        Next to the big hackathons, we looked unremarkable. And 2026 was our first year without MLH
+        promoting us, so our own feed had to bring hackers in. The board asked me for a complete revamp of
+        the brand, so the event could stand on its own.
+    </p>
+    <p class="cs-hmw">
+        How might a student hackathon stand out next to the big ones, with no MLH behind it?
     </p>
     {% endcall %}
 
     {# ===== Branding ===== #}
-    {% call cs.section("Branding and Logo", lead="Rebuilding the identity from zero to one") %}
+    {% call cs.section("Branding and Logo", lead="I redrew the mark from scratch") %}
     <p>
         Before any campaign work, the brand itself had to be rebuilt from scratch. The new mark puts the
         emphasis on the letters H and A, stacked into a single monogram with a small chip-like spark, and
@@ -77,7 +81,7 @@
     {% endcall %}
 
     {# ===== System ===== #}
-    {% call cs.section("System", lead="Rules comprehensible to both engineers and designers") %}
+    {% call cs.section("System", lead="I kept the rules small enough for engineers and designers alike") %}
     <p>
         I kept the identity deliberately small so the whole team could produce on-brand work without
         checking with me on every piece:

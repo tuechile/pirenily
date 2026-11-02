@@ -204,7 +204,7 @@
     {% if text %}<p>{{ text|safe }}</p>{% endif %}
     {% if points %}
     <ol class="cs-points">
-        {% for point in points %}<li>{{ point|safe }}</li>{% endfor %}
+        {% for point in points %}<li><span>{{ point|safe }}</span></li>{% endfor %}
     </ol>
     {% endif %}
 </div>

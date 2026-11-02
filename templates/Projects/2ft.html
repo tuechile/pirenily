@@ -6,7 +6,7 @@
 {% block case %}
 
 {{ cs.hero("T4SG × 2ft Prosthetics",
-           "A UX case study on designing an <strong>offline-first</strong> system for global prosthetics care.",
+           "An <strong>offline-first</strong> inventory system for a nonprofit that ships prosthetic parts to 10 countries.",
            tags=["Role: UX Designer",
                  "My scope: Add / Edit / View Component",
                  "Research: President + Treasurer + 3 Volunteers",
@@ -14,16 +14,17 @@
 
 {{ cs.figure(img('ux', 't4sg/preview.webp'), "2ft inventory system preview", zoom=False) }}
 
-{{ cs.callout("TL;DR", points=[
-    "One prosthetic fitting needs 9+ components. One missing part means the patient goes home without a leg.",
-    "2ft tracked those parts across spreadsheets and manual cross-checks, which break down with volunteer turnover and weak Wi-Fi.",
-    "We designed an offline-first inventory system that separates logistics from technical detail. I owned the view, edit and add component flows.",
-    "Delivered to 2ft as a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”",
+{{ cs.callout("Long story short",
+    text="I designed how 2ft's volunteers view, edit and add prosthetic parts, even with no internet.",
+    points=[
+    "<strong>Research.</strong> Watched the president, treasurer and 3 volunteers do real inventory work, and compared Airtable, Sortly, Notion and Odoo.",
+    "<strong>Design.</strong> Owned the view, edit and add component flows, putting where a part is before what it is.",
+    "<strong>Outcome.</strong> Delivered a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”",
 ]) }}
 
 {% call cs.body() %}
 
-    {% call cs.section("Context", lead="A Prosthetic Is Never Just One Thing") %}
+    {% call cs.section("Context", lead="A prosthetic is never just one thing") %}
     <p>
         A prosthetic leg is a system. On average, nine separate components come together for one fitting.
         If one part is missing, delayed or mislabeled, the patient goes home without a leg.
@@ -41,7 +42,7 @@
 
     {{ cs.figure(img('ux', 't4sg/redes.webp'), "2ft inventory system redesign overview", zoom=False) }}
 
-    {% call cs.section("Problem", lead="Fragile Management Systems") %}
+    {% call cs.section("Problem", lead="Everything was recorded, and nobody knew what they had") %}
     <p>
         Inventory lived in spreadsheets, Notion pages and manual cross-checks. On paper, everything was
         recorded. In practice, volunteers couldn't answer basic questions:
@@ -50,7 +51,10 @@
         1. What do we actually have right now?<br>
         2. Where is this component stored?<br>
         3. Has it shipped? Has it been fitted?<br>
-        4. Who donated this — and how do we report impact back?
+        4. Who donated this, and how do we report impact back?
+    </p>
+    <p class="cs-hmw">
+        How might volunteers always know what's there and what's safe to change, even offline?
     </p>
     {% endcall %}
 
@@ -60,7 +64,7 @@
         {{ cs.card(img('ux', 't4sg/sheet3.png'), "Spreadsheet: summary of requested components") }}
     {% endcall %}
 
-    {% call cs.section("Interview & User Research") %}
+    {% call cs.section("Research", lead="We asked 5 people to show us their real work") %}
     <p>
         We interviewed 2ft's <strong>president</strong>, <strong>treasurer</strong> and
         <strong>three volunteers</strong> who update inventory in the field.
@@ -146,7 +150,7 @@
                 </div>
                 <h4>“I just want to know what we have right now.”</h4>
                 <p>
-                    There is no reliable real-time snapshot of inventory — checking availability means digging
+                    There is no reliable live snapshot of inventory. Checking availability means digging
                     through spreadsheets and asking people directly.
                 </p>
                 <button class="expand" type="button">Why this mattered</button>
@@ -229,7 +233,7 @@
                     <span class="pill">Treasurer</span>
                     <span class="tag-mini">Accountability</span>
                 </div>
-                <h4>“I don’t directly manage inventory — but I’m responsible for it.”</h4>
+                <h4>“I don’t directly manage inventory, but I’m responsible for it.”</h4>
                 <p>
                     Components represent real financial value, yet inventory tracking doesn’t clearly support
                     auditing or accountability.
@@ -263,29 +267,25 @@
     {{ cs.callout("What we learned quickly", display=False,
                   text="Most existing tools failed in the same four ways: they assumed stable internet, crammed too much onto each screen, mixed logistics with technical data, and took new volunteers too long to learn.") }}
 
-    {% call cs.section("Idea", lead="Five principles from the affinity map") %}
+    {% call cs.section("Idea", lead="We put clarity and offline use first, and power features later") %}
     <p>
-        — Clarity over completeness<br>
-        — Fast entry over perfect data<br>
-        — Offline-first by default<br>
-        — Low cognitive load for new volunteers<br>
-        — Traceability without visual overload
+        Five principles came out of the affinity map:
+        <br>— Clarity over completeness
+        <br>— Fast entry over perfect data
+        <br>— Offline-first by default
+        <br>— Low cognitive load for new volunteers
+        <br>— Traceability without visual overload
     </p>
     {% endcall %}
 
     {% call cs.media_text(img('ux', 't4sg/affmap.png'), "Impact vs effort matrix",
-                          heading="Ideation", lead="Feature decisions by Impact × Effort") %}
+                          lead="Feature decisions by impact × effort") %}
     <p>
-        We ranked every feature idea by how fast it would cut uncertainty. On an impact × effort map, the
-        quick wins went first, and more powerful features waited until the core flows worked.
-    </p>
-    <p>
-        That kept the product simple enough for a new volunteer, with room to grow as 2ft scales.
+        We ranked every feature idea by how fast it would cut uncertainty. The quick wins went first, and
+        more powerful features waited until the core flows worked. That kept the product simple enough for
+        a new volunteer, with room to grow as 2ft scales.
     </p>
     {% endcall %}
-    {{ cs.img_caption("Clarity and offline reliability first; power features later.") }}
-
-    {{ cs.section("Feature Rollout", index="Rollout") }}
 
     {{ cs.rollout([
         ("Phase 1", "Core Inventory Reliability", "Simple viewing, terminology, edit component."),
@@ -293,7 +293,7 @@
         ("Phase 3", "Scalability Features", "Add component flow, filters, helpers."),
     ]) }}
 
-    {% call cs.section("User Flow", lead="View / Edit / Add Component Flow") %}
+    {% call cs.section("My Contribution", lead="I owned how a volunteer views, edits and adds a component") %}
     <p>
         I wrote the user journeys and owned the end-to-end flow for how a volunteer <strong>views</strong> a
         component, makes a safe <strong>edit</strong>, and <strong>adds</strong> a new component without
@@ -309,7 +309,7 @@
     {% endcall %}
 
     {% call cs.media_text(img('ux', 't4sg/userflow.png'), "User flow: View Component",
-                          heading="Flow Breakdown", lead="View Component", flow=True) %}
+                          lead="Where it is first, what it is second", flow=True) %}
     <p>
         The component page answers "where is it and what state is it in?" first (logistics), and only
         then the technical details. Collapsible sections keep the rest out of the way.
@@ -318,7 +318,7 @@
         logistics → technical → manufacturer.</p>
     {% endcall %}
 
-    {% call cs.section("Lo-Fi Prototyping", lead="Stripping It Down Until It Made Sense") %}
+    {% call cs.section("Lo-Fi", lead="I cut every field that didn't earn its place") %}
     {{ cs.card(img('ux', 't4sg/lofi up.webp'), "Lo-fi ideation sketches", size="lg") }}
     <p>
         The black and white prototypes tested only hierarchy, navigation and density. If a field didn’t
@@ -356,7 +356,7 @@
     ]) }}
     {{ cs.img_caption("<strong>Designer note:</strong> the goal wasn’t polish. It was making the same work feel <em>lighter</em> and more reliable.") }}
 
-    {% call cs.section("Hi-Fi Design", lead="Making Complexity Feel Calm") %}
+    {% call cs.section("Hi-Fi", lead="A complex record that still feels calm") %}
     <p>
         The blue and yellow design adds structure without noise:
         <strong>logistics → technical → manufacturer</strong> sections, collapsible panels, inline edit
@@ -370,7 +370,7 @@
         (img('ux', 't4sg/hifi add.webp'), "Hi-fi add component (blue/yellow)"),
     ], caption="(1) View component, (2) Edit component, (3) Add component") }}
 
-    {% call cs.section("Testing & Feedback", lead="Where the design got smarter, fast") %}
+    {% call cs.section("Testing", lead="Stakeholders wanted less typing and clear roles") %}
     <p>
         <strong>What worked:</strong> starting from the component type. Each type has its own properties,
         so picking the type first felt far more natural than showing every spreadsheet field and making
@@ -408,7 +408,7 @@
     </p>
     {% endcall %}
 
-    {% call cs.section("Try It Yourself", lead="Explore the prototype the way a volunteer would") %}
+    {% call cs.section("Try It", lead="Explore the prototype the way a volunteer would") %}
     <p>
         This is the hi-fi prototype shown above. Start by picking a component type, then work your way
         into a detailed edit.
@@ -424,15 +424,18 @@
     </p>
     {% endcall %}
 
-    {% call cs.section("Reflection", lead="What this project taught me") %}
+    {% call cs.section("Reflection", lead="Removing uncertainty mattered more than adding features") %}
     <p>
-        This was my first UX project as a CS major :), so I was learning the frameworks while using them.
-        The biggest lesson: designing for social impact is less about adding features and more about removing
-        uncertainty, so a volunteer always knows what's there and what's safe to change.
+        <strong>Learning while doing.</strong> This was my first UX project as a CS major :), so I was
+        learning the frameworks while using them.
     </p>
     <p>
-        We were building from scratch in a field none of us knew, so we tried a lot of flows and structures
-        before one held up.
+        <strong>Less, not more.</strong> Designing for social impact was less about adding features and more
+        about removing uncertainty, so a volunteer always knows what's there and what's safe to change.
+    </p>
+    <p>
+        <strong>Trying until it held.</strong> We were building from scratch in a field none of us knew, so
+        we tried a lot of flows and structures before one held up.
     </p>
     <p>
         <strong>Status:</strong> delivered to 2ft as a hi-fi prototype. Their own team builds it from here,

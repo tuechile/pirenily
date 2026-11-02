@@ -16,16 +16,12 @@
 {{ cs.figure(img('ux', 'cs171/preview.gif'),
              "Final project preview showing the Unicode data story interface with interactive sections", zoom=False) }}
 
-{{ cs.callout("TL;DR", points=[
-    "We started out making a typography story for designers. The data didn’t hold up, so halfway through we pivoted to Unicode, for everyone in CS 1710.",
-    "I owned the emoji half: seven datasets, a bubble chart of how one emoji’s design drifts across platforms and years, and the “What emoji are you (right now)?” game.",
-    "Two think-aloud tests showed the problem was our words, not the data, so the last round was mostly relabelling.",
-]) }}
-
-{{ cs.callout("Goals & Success Criteria", points=[
-    "A non-technical reader can see the pattern of evolution quickly",
-    "Each section teaches clear idea in primary interactions (no wall of text).",
-    "Users can move through the story without getting stuck on labels or navigation.",
+{{ cs.callout("Long story short",
+    text="I designed the emoji half of a scroll-driven story about Unicode, after our first idea fell apart.",
+    points=[
+    "<strong>Pivot.</strong> We started with a typography story for designers. The data didn’t hold up, so halfway through we switched to Unicode, for everyone in CS 1710.",
+    "<strong>Design.</strong> I sourced seven datasets and built a bubble chart of how each emoji’s design drifts across platforms, plus the “What emoji are you (right now)?” game.",
+    "<strong>Testing.</strong> Two think-aloud tests showed the problem was our words, not the data, so the last round was mostly relabelling.",
 ]) }}
 
 {% call cs.body() %}
@@ -42,6 +38,15 @@
     <p>
         Our audience was everyone in CS 1710, not designers or engineers. Every chart had to make sense to
         someone who had never heard the word “encoding”, without boring the people who had.
+    </p>
+    <p>
+        We set three goals:
+        <br>— A non-technical reader sees how text encoding evolved, quickly
+        <br>— Each section teaches one idea through its main interaction, not a wall of text
+        <br>— Nobody gets stuck on a label or lost in the navigation
+    </p>
+    <p class="cs-hmw">
+        How might we make people notice a standard that only shows up when it breaks?
     </p>
     {% endcall %}
 
@@ -86,7 +91,7 @@
     </p>
     {% endcall %}
 
-    {% call cs.section("My Contribution", lead="The emoji half: data, a bubble chart and a game") %}
+    {% call cs.section("My Contribution", lead="I built the emoji half: the data, a bubble chart and a game") %}
     <p>
         Rain took the story up to 2010: ASCII, the Unicode timeline and the Sankey of Unicode’s growth. I took
         everything after, which is mostly emoji.
@@ -150,13 +155,12 @@
     {% endcall %}
 
     {{ cs.stats([
-        ("2 of 2", "think-aloud testers got the main message"),
         ("7", "datasets I sourced and cleaned after we pivoted to Unicode"),
     ]) }}
 
     {% call cs.section() %}
     <p>
-        One tester said everything was “extremely clear” and worked out every control on her own. The other got
+        Both think-aloud testers got the main message. One said everything was “extremely clear” and worked out every control on her own. The other got
         the gist but stalled on terms like “version” and “code value”, and on the long text between charts.
     </p>
     <p>
@@ -181,15 +185,18 @@
     {{ cs.cta("https://github.com/tuechile/CS1710.git", "View the code on GitHub →") }}
     {% endcall %}
 
-    {% call cs.section("Reflection", lead="What I’d improve next") %}
+    {% call cs.section("Reflection", lead="Plain words did more than any chart") %}
     <p>
-        Next iteration, I’d strengthen onboarding even further: a short guided “tour,” clearer transitions that
-        explain why each section matters, and more progressive disclosure (show basics first, advanced controls
-        second) to keep first-time users confident.
+        <strong>Labels are design.</strong> Our charts held up in testing; our words didn’t. Next time I’d
+        test the copy as early as the charts.
     </p>
     <p>
-        I also want to focus more on accessibility: ensuring all interactive elements are keyboard navigable,
-        animations respect user preferences, and color choices meet contrast standards.
+        <strong>Show the basics first.</strong> A short guided tour and transitions that say why each section
+        matters would keep first-time readers from stalling, with the advanced controls coming second.
+    </p>
+    <p>
+        <strong>Access is the other gap.</strong> The floating emoji should hold still for readers who turn
+        motion off, and every bubble and filter should work from the keyboard.
     </p>
     {% endcall %}
 

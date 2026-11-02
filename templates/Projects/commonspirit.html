@@ -6,123 +6,111 @@
 {% block case %}
 
 {{ cs.hero("T4SG × CommonSpirit Health",
-           "A UX case study on redesigning CommonSpirit Health's internal Community Health Needs Assessment (CHNA) analysis tool.",
-           tags=["Role: Senior UX Designer / Project Manager",
+           "Redesigning the internal tool CommonSpirit's investment team uses to read community health needs.",
+           tags=["Role: Senior UX Designer + Project Manager",
+                 "Timeline: 12 weeks",
+                 "Team: 5 designers",
                  "My scope: System Design + Settings Page",
-                 "Research: 6 CommonSpirit board members and CIP staff, 1:1",
-                 "Constraint: Storytelling + Data visualization + New internal tool"]) }}
+                 "Research: 6 board members and CIP staff, 1:1"]) }}
 
 {{ cs.figure(img('ux', 'commonspirit/preview.webp'), "CommonSpirit Health redesign preview", zoom=False) }}
 
-{{ cs.callout("TL;DR", points=[
-    "CIP staff had to manually read through 50–60 CHNA PDFs a year and dig through a cluttered, color-dense dashboard just to compare health priorities across hospitals, regions, and time.",
-    "The legacy tool leaned on dense color-coding and text-heavy outputs that staff described as \"overwhelming,\" and it got noticeably less useful in the years between CHNA updates.",
-    "As project manager I led 5 designers through rebuilding the system around four focused pages (Home, Regional, Compare, Trends) with CommonSpirit's own brand palette. I owned the Account/Settings experience end-to-end.",
+{{ cs.callout("Long story short",
+    text="I led 5 designers through rebuilding CommonSpirit's health needs tool around four focused pages.",
+    points=[
+    "<strong>Leadership.</strong> Ran the team for 12 weeks, from 1:1 interviews with 6 board members and staff to the handoff document.",
+    "<strong>Design.</strong> Owned the system design and rebuilt Account and Settings from one bare screen into a full Preferences flow.",
+    "<strong>Client.</strong> Turned research into four pages (Home, Regional, Compare, Trends) that a T4SG engineering team built on after us.",
 ]) }}
 
 {% call cs.body() %}
 
-    {% call cs.section("Context", lead="A health-equity investment tool that had outgrown its own interface") %}
+    {% call cs.section("Context", lead="The tool worked, but staff still read 50–60 PDFs a year by hand") %}
     <p>
-        CommonSpirit Health is the largest nonprofit health system in the U.S., reaching more than 20 million
-        patients a year across 2,300+ clinics and 138 hospitals in 24 states. Its Community Investment
-        Program (CIP) puts capital — mostly below-market-rate loans — into organizations addressing the
-        social determinants of health in the communities CommonSpirit serves. Working with the CIP team
-        through Tech for Social Good (T4SG), I joined a 12-week project to improve the internal tool CIP
-        staff use to analyze community health needs assessment data — the evidence base behind where and how
-        the program invests.
+        CommonSpirit Health is the largest nonprofit health system in the U.S., with 138 hospitals in 24
+        states. Its Community Investment Program (CIP) lends money, mostly below market rate, to groups
+        working on the social causes of poor health in those communities. To decide where it goes, staff
+        read each hospital's Community Health Needs Assessment (CHNA).
     </p>
     <p>
-        A previous T4SG team had built the tool the year before, and while it worked, it hadn't kept pace
-        with how CIP staff actually needed to use it. Staff wanted to upload and manage data, cross-tabulate
-        results, and compare health indicators across time, sector, and geography — but the tool offered no
-        reporting dashboards, no way to surface correlations between data points, and little room to add
-        context around the numbers. That gap made it hard to turn raw needs-assessment data into the kind of
-        clear, comparative insight CIP staff needed to prioritize investments across 200+ communities.
+        A T4SG team built an analysis tool for this the year before. It worked, but staff still couldn't
+        compare a health priority across hospitals, regions or years, and the color-heavy, text-heavy
+        dashboard felt "overwhelming". So they kept going back to the PDFs.
+    </p>
+    <p class="cs-hmw">
+        How might CIP staff compare health priorities across 200+ communities without reading every report?
     </p>
     {% endcall %}
 
-    {{ cs.section("Research", lead = "Interviews & User Research") }}
+    {{ cs.section("Research", lead="I interviewed 6 board members and CIP staff one on one") }}
 
-    {{ cs.insights("Pain points", [
-        ("Data extraction friction", "Staff read 50–60 CHNA PDFs a year by hand to pull out key insights."),
-        ("Poor usability", "No way to look up a priority across regions, and terms like \"access to care\" stay vague."),
-        ("Inflexible data cycles", "CHNAs update every three years, so the tool goes stale between cycles."),
-        ("No connection across entities", "Hospitals can't see who shares a priority or compare communities over time."),
+    {{ cs.insights("Four pain points", [
+        ("Reading by hand", "Staff read 50–60 CHNA PDFs a year to pull out the key points."),
+        ("No lookup across regions", "There was no way to find one priority across regions, and terms like \"access to care\" stayed vague."),
+        ("Stale between cycles", "CHNAs update every three years, so the tool went stale in between."),
+        ("No link between hospitals", "Hospitals couldn't see who shared a priority or compare communities over time."),
     ]) }}
 
-    {{ cs.section("Idea", lead = "Ideation & Affinity Mapping") }}
+    {{ cs.section("Idea", lead="We cut the tool down to four pages") }}
 
     {% call cs.media_text(img('ux', 'commonspirit/impact-effort.png'),
                           "Impact x Effort prioritization board mapping feature ideas from research") %}
     <p>
-        The tool needed to support quick, visual comparisons
-        across hospitals, regions, and time without turning into another wall of text, and stay
-        useful between CHNA cycles. 
-        </p>
-        <p> We ran an impact-vs-effort pass on every feature idea
-        that came out of research — main KPI numbers, region maps, hospital comparison charts,
-        batch upload, notes, and more — and used it to decide what shipped first, and what we'd
-        explicitly avoid building for now.
+        We ranked every idea from research (KPI numbers, region maps, hospital comparison charts, batch
+        upload, notes and more) by impact and effort. That decided what came first and what we left out
+        on purpose.
     </p>
     {% endcall %}
 
     {% call cs.section() %}
     <p>
-        From there, we scoped the product down to four pages: <strong>Home</strong> for the top-line KPIs
-        staff check first, <strong>Regional</strong> because so many priorities turned out to be shared
-        well beyond a single city or market, <strong>Compare</strong> because comparing hospitals was the
-        CIP team's original ask, and <strong>Trends</strong> because trend data over time was consistently
-        the most-praised part of the legacy tool for what's fundamentally an internal analytics product.
+        Four pages made the cut. <strong>Home</strong> holds the numbers staff check first.
+        <strong>Regional</strong> exists because many priorities turned out to be shared well beyond one
+        city. <strong>Compare</strong> was the CIP team's original ask. <strong>Trends</strong> kept the one
+        part of the old tool staff praised most.
     </p>
     <p>
-        We also iterated on where the navbar lived — the legacy top nav didn't leave room for four sections
-        plus settings, so we moved it into a persistent left sidebar — and swapped in CommonSpirit's own
-        brand palette instead of a generic dashboard theme, so the tool would read as unmistakably
-        "CommonSpirit" to the staff and board members using it.
+        Four pages plus settings didn't fit in the old top nav, so we moved it to a left sidebar. We also
+        swapped the generic dashboard theme for CommonSpirit's own colors, so the tool looked like theirs.
     </p>
     {% endcall %}
 
-    {% call cs.section("My Contribution", lead="System design and the Account / Settings flow") %}
+    {% call cs.section("My Contribution", lead="I rebuilt Settings from one bare screen into a Preferences flow") %}
     <p>
-        My part of this was the system design and the Account/Settings experience shown below. The legacy
-        settings page was a single dark-mode screen with a username, email, and bio field. I rebuilt it
-        into a proper Account + Preferences flow: structured profile fields with role and avatar, a
-        Security & Privacy section (password, 2FA, data export), and a Preferences page that lets staff set
-        defaults for chart color mode, contrast, sorting, default document sets, and geography level — so
-        the visualizations they see first match how they actually work.
+        Besides the system design, I owned Account and Settings. The old page was a single dark screen with
+        a username, an email and a bio. I split it into an Account page (profile with role and avatar, plus
+        password, two-factor login and data export) and a Preferences page, where staff set their default
+        chart colors, contrast, sorting, document sets and geography level. That way the first chart they
+        see already matches how they work.
     </p>
     {% endcall %}
 
-    {{ cs.figure(img('ux', 'commonspirit/redes1.webp'), "CommonSpirit Health redesign — Preferences page", size="lg",
-                 caption="Preferences — renamed from \"General,\" since the page had grown into advanced settings (chart color mode, contrast, sorting, default document sets, geography level) that \"General\" undersold.") }}
+    {{ cs.figure(img('ux', 'commonspirit/redes1.webp'), "CommonSpirit Health redesign, Preferences page", size="lg",
+                 caption="Preferences, renamed from \"General\" once it held chart, sorting and geography defaults.") }}
 
-    {{ cs.figure(img('ux', 'commonspirit/redes2.webp'), "CommonSpirit Health redesign — Account page", size="lg",
-                 caption="Account — accessible directly from the profile card, which is why it's the first settings screen staff land on.") }}
+    {{ cs.figure(img('ux', 'commonspirit/redes2.webp'), "CommonSpirit Health redesign, Account page", size="lg",
+                 caption="Account opens straight from the profile card, so it's the first settings screen staff see.") }}
 
-    {% call cs.section("Reflection", lead="Palette and IA decisions carry more weight in an internal tool") %}
+    {% call cs.section("Reflection", lead="In a tool people open every day, small system choices matter most") %}
     <p>
-        The biggest lesson was that for an internal, repeat-use tool, small system decisions — where the
-        nav lives, how many clicks to a comparison chart, whether the palette feels "theirs" — matter as
-        much as any individual screen. Leaning on CommonSpirit's own palette made the tool feel adopted
-        rather than imposed by an outside team.
+        Where the nav lives, how many clicks it takes to reach a comparison, whether the colors feel like
+        theirs: these mattered as much as any single screen. Using CommonSpirit's own palette made the tool
+        feel like it belonged to them, not to an outside team.
     </p>
     <p>
-        It's also the choice I'd want to pressure-test next: a palette built mostly around CommonSpirit's
-        magenta is a bold accessibility bet for a data-dense internal tool, especially since the comparison
-        charts already lean on color coding to separate series. Next time, I'd check contrast ratios and
-        colorblind-safe alternatives before rolling a brand palette this saturated into the actual data
-        visualizations, not just the chrome around them.
+        It's also the choice I'd test next. CommonSpirit's palette is mostly magenta, and the comparison
+        charts already use color to tell series apart. Next time I'd check contrast and colorblind-safe
+        options before putting brand colors that strong inside the charts themselves.
     </p>
     <p>
         <strong>Status:</strong> handed off. I wrote the handoff document, and a T4SG engineering team built
         on it over the summer (backend and a Supabase trial). I wasn't on that build.
     </p>
     <p>
-        <strong>How we measured it:</strong> in the 1:1 interviews, all 6 board members and CIP staff worked through set decisions on the
-        old tool and on our redesign while we timed each one and noted what they took from the charts. From
-        those sessions we project about 35% less time per task. Once it's built, the measure is time to compare
-        one priority across hospitals, against reading 50–60 CHNA PDFs by hand.
+        <strong>How we measured it:</strong> in the 1:1 interviews, all 6 board members and CIP staff worked
+        through the same decisions on the old tool and on our redesign while we timed each one. From those
+        sessions we project about 35% less time per task. Once it's built, the measure is the time to compare
+        one priority across hospitals, against reading the PDFs by hand.
     </p>
     {% endcall %}
 

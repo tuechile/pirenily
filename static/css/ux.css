@@ -1736,6 +1736,17 @@ html {
     color: var(--text-secondary);
 }
 
+/* "How might we" line: the question the rest of the case study answers */
+.cs-prose p.cs-hmw {
+    margin: var(--s-5) 0;
+    padding-left: var(--s-4);
+    border-left: 1px solid var(--hairline);
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
 .cs-insights {
     padding-left: var(--s-4);
     border-left: 1px solid var(--hairline);
