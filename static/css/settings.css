@@ -267,7 +267,7 @@ body:not(.rc) p a:hover {
 }
 
 :root[data-mode="easy"] :is(h1, h2, h3, h4, .page-title, .case-title, .bio-name, .cs-heading, .cs-subheading,
-    .insights-title, .next-case-title, .evidence-title, .cta-title, .project-thumb-title, .strip-caption, .nav-header, .header):not(.cs-label) {
+    .insights-title, .next-case-title, .cta-title, .project-thumb-title, .strip-caption, .nav-header, .header):not(.cs-label) {
     font-family: var(--font-head);
     font-weight: 400;
     -webkit-text-stroke: var(--head-stroke) currentColor;
