@@ -279,5 +279,6 @@
 {% set internal = href.startswith('/') %}
 <a href="{{ href }}"{% if not internal %} target="_blank" rel="noopener"{% endif %} class="cta-button">
     <span class="cta-title">{{ label|replace(' →', '')|safe }}</span>
+    <span class="cta-arrow" aria-hidden="true">→</span>
 </a>
 {% endmacro %}
