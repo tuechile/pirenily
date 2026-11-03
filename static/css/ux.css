@@ -1892,6 +1892,51 @@ html {
     color: var(--text-tertiary);
 }
 
+/* Box grid: a TL;DR or a set of decisions, one small panel each */
+.cs-boxes-title {
+    margin-bottom: var(--s-3);
+}
+
+.cs-boxes-lead {
+    max-width: 66ch;
+    margin: 0 0 var(--s-4);
+    font-family: var(--font-body);
+    font-size: var(--fs-2);
+    line-height: var(--lh);
+    color: var(--text-primary);
+}
+
+.cs-boxes {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+    gap: var(--s-3);
+}
+
+.cs-box {
+    padding: var(--s-4);
+    border: 1px solid var(--hairline);
+    background: var(--glass);
+}
+
+.cs-box .cs-label {
+    margin-bottom: var(--s-2);
+    color: var(--accent);
+}
+
+.cs-box p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-body-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+@media screen and (max-width: 666px) {
+    .cs-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ----- Projects gate page (form styles live in styles.css) ----- */
 .gate {
     width: min(34rem, 100% - 2rem);

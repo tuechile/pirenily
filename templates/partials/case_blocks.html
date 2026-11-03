@@ -226,6 +226,22 @@
 </div>
 {% endmacro %}
 
+{# Box grid — items: list of (label, text), one small panel each; cols defaults to one row #}
+{% macro boxes(items, title=None, text=None, cols=None) %}
+<div class="cs-block">
+    {% if title %}<h3 class="cs-label cs-boxes-title">{{ title|safe }}</h3>{% endif %}
+    {% if text %}<p class="cs-boxes-lead">{{ text|safe }}</p>{% endif %}
+    <div class="cs-boxes" style="--cols: {{ cols or items|length }}">
+        {% for label, body in items %}
+        <div class="cs-box">
+            <h4 class="cs-label">{{ label|safe }}</h4>
+            <p>{{ body|safe }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
 {# boxes: two dicts with title, points, and optional display #}
 {% macro compare(boxes) %}
 <div class="cs-block">

@@ -14,38 +14,24 @@
 
 {{ cs.figure(img('ux', 't4sg/preview.webp'), "2ft inventory system preview", zoom=False) }}
 
-{{ cs.callout("Long story short",
-    text="I designed how 2ft's volunteers view, edit and add prosthetic parts, even with no internet.",
-    points=[
-    "<strong>Research.</strong> Watched the president, treasurer and 3 volunteers do real inventory work, and compared Airtable, Sortly, Notion and Odoo.",
-    "<strong>Design.</strong> Owned the view, edit and add component flows, putting where a part is before what it is.",
-    "<strong>Outcome.</strong> Delivered a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”",
-]) }}
+{{ cs.boxes([
+    ("Research", "Watched the president, treasurer and 3 volunteers do real inventory work, and compared Airtable, Sortly, Notion and Odoo."),
+    ("Design", "Owned the view, edit and add component flows, putting where a part is before what it is."),
+    ("Outcome", "Delivered a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”"),
+], title="TL;DR", text="I designed how 2ft's volunteers view, edit and add prosthetic parts, even with no internet.") }}
 
 {% call cs.body() %}
 
-    {% call cs.section("Context", lead="A prosthetic is never just one thing") %}
-    <p>
-        A prosthetic leg is a system. On average, nine separate components come together for one fitting.
-        If one part is missing, delayed or mislabeled, the patient goes home without a leg.
-    </p>
+    {% call cs.section("Context", lead="Everything was recorded, and nobody knew what they had") %}
     <p>
         2ft Prosthetics works across 10 countries, sending donated components from U.S. manufacturers and
         clinics to amputees who can't otherwise get them. Most of the work is done by volunteers (students,
         clinicians and prosthetists) across time zones, languages and patchy internet.
     </p>
     <p>
-        As 2ft grew, collecting parts stopped being the hard part.
-        <br><em>Keeping track of them was.</em>
-    </p>
-    {% endcall %}
-
-    {{ cs.figure(img('ux', 't4sg/redes.webp'), "2ft inventory system redesign overview", zoom=False) }}
-
-    {% call cs.section("Problem", lead="Everything was recorded, and nobody knew what they had") %}
-    <p>
-        Inventory lived in spreadsheets, Notion pages and manual cross-checks. On paper, everything was
-        recorded. In practice, volunteers couldn't answer basic questions:
+        As 2ft grew, collecting parts stopped being the hard part. Keeping track of them was. Inventory
+        lived in spreadsheets, Notion pages and manual cross-checks, and volunteers couldn't answer basic
+        questions:
     </p>
     <p>
         1. What do we actually have right now?<br>
@@ -58,6 +44,8 @@
     </p>
     {% endcall %}
 
+    {{ cs.figure(img('ux', 't4sg/redes.webp'), "2ft inventory system redesign overview", zoom=False) }}
+
     {% call cs.row("3", caption="The spreadsheets 2ft ran its inventory on before the redesign.") %}
         {{ cs.card(img('ux', 't4sg/spreadsheets.png'), "Spreadsheet: general inventory view") }}
         {{ cs.card(img('ux', 't4sg/sheet2.png'), "Spreadsheet: component tracking tab") }}
@@ -66,7 +54,10 @@
 
     {% call cs.section("Research", lead="We asked 5 people to show us their real work") %}
     <p>
-        We interviewed 2ft's <strong>president</strong>, <strong>treasurer</strong> and
+        We started by comparing existing inventory tools, including Airtable, Sortly, Notion and Odoo.
+    </p>
+    <p>
+        Then we interviewed 2ft's <strong>president</strong>, <strong>treasurer</strong> and
         <strong>three volunteers</strong> who update inventory in the field.
         Instead of hypotheticals, we asked them to show us real work:
     </p>
@@ -75,9 +66,6 @@
         2. How updates happen under time pressure<br>
         3. Where mistakes, duplication, or confusion creep in<br>
         4. What happens when Wi-Fi disappears
-    </p>
-    <p>
-        We also compared existing inventory tools, including Airtable, Sortly, Notion and Odoo.
     </p>
     {% endcall %}
 
@@ -281,14 +269,14 @@
         component, makes a safe <strong>edit</strong>, and <strong>adds</strong> a new component without
         breaking traceability.
     </p>
-    <p>
-        The decisions I made, and why:
-        <br>— Primary actions (view history, edit, add) are always in reach, never buried in a menu
-        <br>— Edits open in inline popups with clear save states, because fear of breaking records kept people from updating them
-        <br>— Technical fields use dropdowns and placeholders, not free text, so the same part never gets three names
-        <br>— Every record shows who changed it and when, so "who changed this?" has an answer
-    </p>
     {% endcall %}
+
+    {{ cs.boxes([
+        ("Always in reach", "Primary actions (view history, edit, add) are always in reach, never buried in a menu."),
+        ("Inline edits", "Edits open in inline popups with clear save states, because fear of breaking records kept people from updating them."),
+        ("No free text", "Technical fields use dropdowns and placeholders, not free text, so the same part never gets three names."),
+        ("Visible history", "Every record shows who changed it and when, so “who changed this?” has an answer."),
+    ], title="The decisions I made, and why", cols=2) }}
 
     {% call cs.media_text(img('ux', 't4sg/userflow.png'), "User flow: View Component",
                           lead="Where it is first, what it is second", flow=True) %}
