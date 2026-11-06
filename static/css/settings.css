@@ -220,6 +220,15 @@ body:not(.rc) p a:hover {
     --fs-kicker: 0.75rem;
 }
 
+/* Home footer: the sans reads larger than the serif, so name, role and recruiter line step down */
+:root[data-mode="easy"] .home-footer-name {
+    font-size: 1.25rem;
+}
+
+:root[data-mode="easy"] :is(.home-footer-meta, .home-footer-pitch) {
+    font-size: var(--fs-tiny);
+}
+
 /* About: bigger text needs more of the row */
 @media (min-width: 881px) {
     :root[data-mode="easy"] .bio-side {

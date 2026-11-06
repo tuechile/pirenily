@@ -1994,8 +1994,16 @@ html {
     color: var(--text-secondary);
 }
 
-/* Principles: a row of centred panels, the name over its one line */
+/* Principles: centred panels three to a row (five sit 3 + 2), the name over its one line */
+.cs-boxes.cs-principles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .cs-principles .cs-box {
+    flex: 0 0 calc((100% - 2 * var(--s-3)) / 3);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
@@ -2025,6 +2033,10 @@ html {
 @media screen and (max-width: 666px) {
     .cs-boxes {
         grid-template-columns: 1fr;
+    }
+
+    .cs-principles .cs-box {
+        flex-basis: 100%;
     }
 
     .cs-tools {

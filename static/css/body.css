@@ -1014,7 +1014,7 @@
         transition: max-width var(--dur-3) var(--ease-out);
     }
 
-    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within, .is-intro) .vb-i {
+    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :has(:focus-visible), .is-intro) .vb-i {
         max-width: 0;
     }
 
@@ -1033,7 +1033,7 @@
         transition: max-width var(--dur-3) var(--ease-out);
     }
 
-    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :focus-within, .is-intro) .vb-rest {
+    :root:not([data-mode="mine"]) #portfolio .view-toggle:is(:hover, :has(:focus-visible), .is-intro) .vb-rest {
         max-width: 9em;
     }
 
