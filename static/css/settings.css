@@ -36,8 +36,8 @@
 }
 
 /* Text that's already pink selects yellow, so it still reads as selected */
-:root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .cs-num, .gif-text .gif-kicker, .page-note a, .card__meta)::selection,
-:root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .cs-num, .gif-text .gif-kicker, .page-note a, .card__meta) ::selection {
+:root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .gif-text .gif-kicker, .page-note a, .card__meta)::selection,
+:root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .gif-text .gif-kicker, .page-note a, .card__meta) ::selection {
     color: var(--yellow-select);
 }
 

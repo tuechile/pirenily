@@ -17,21 +17,21 @@
 {{ cs.boxes([
     ("Research", "Watched the president, treasurer and 3 volunteers do real inventory work, and compared six inventory tools, from Airtable to Alma."),
     ("Design", "Owned the view, edit and add component flows, putting where a part is before what it is."),
-    ("Outcome", "Delivered a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”"),
-], title="TL;DR", text="I designed how 2ft's volunteers view, edit and add prosthetic parts, even with no internet.") }}
+    ("Outcome", "Delivered a hi-fi prototype. After testing, the president said: “I’m so much more confident in onboarding volunteers, and I think they are too!”"),
+], title="TL;DR", text="I designed how 2ft's volunteers view, edit and add prosthetic parts!") }}
 
 {% call cs.body() %}
 
-    {% call cs.section("Context", lead="Everything was recorded, and nobody knew what they had") %}
+    {% call cs.section("Context", label="small") %}
     <p>
         2ft Prosthetics works across 10 countries, sending donated components from U.S. manufacturers and
         clinics to amputees who can't otherwise get them. Most of the work is done by volunteers (students,
         clinicians and prosthetists) across time zones, languages and patchy internet.
     </p>
+    <h2 class="cs-heading cs-heading--inline">Everything was recorded, but nobody knew what they had</h2>
     <p>
-        As 2ft grew, collecting parts stopped being the hard part. Keeping track of them was. Inventory
-        lived in spreadsheets, Notion pages and manual cross-checks, and volunteers couldn't answer basic
-        questions:
+        As 2ft grew, collecting parts stopped being the hard part but keeping track of them was. With
+        fragmented sheets, volunteers couldn't answer basic questions:
     </p>
     <p>
         1. What do we actually have right now?<br>
@@ -39,12 +39,10 @@
         3. Has it shipped? Has it been fitted?<br>
         4. Who donated this, and how do we report impact back?
     </p>
-    <p class="cs-hmw">
-        How might volunteers always know what's there and what's safe to change, even offline?
-    </p>
     {% endcall %}
 
-    {{ cs.figure(img('ux', 't4sg/redes.webp'), "2ft inventory system redesign overview", zoom=False) }}
+    {{ cs.figure(img('ux', 't4sg/redes.webp'), "2ft inventory system redesign overview", zoom=False,
+                 ar=2.36, crop=True, pos="50% 51%") }}
 
     {% call cs.row("3", caption="The spreadsheets 2ft ran its inventory on before the redesign.") %}
         {{ cs.card(img('ux', 't4sg/spreadsheets.png'), "Spreadsheet: general inventory view") }}
@@ -52,7 +50,13 @@
         {{ cs.card(img('ux', 't4sg/sheet3.png'), "Spreadsheet: summary of requested components") }}
     {% endcall %}
 
-    {% call cs.section("Research", lead="We asked 5 people to show us their real work") %}
+    {% call cs.section() %}
+    <p class="cs-hmw">
+        How might volunteers always know what's there<br>and what's safe to change, even offline?
+    </p>
+    {% endcall %}
+
+    {% call cs.section("Research", label="small") %}
     <p>
         We started with market research on six tools teams already use to track inventory.
     </p>
@@ -65,7 +69,7 @@
         ("Odoo", img('ux', 't4sg/tools/odoo.svg')),
         ("Jotform", img('ux', 't4sg/tools/jotform.svg')),
         ("Alma", img('ux', 't4sg/tools/alma.png')),
-    ], title="Market research") }}
+    ]) }}
 
     {% call cs.section() %}
     <p>
@@ -87,7 +91,7 @@
 
         <div class="insights-head">
             <div>
-                <h3 class="insights-title">Three main pain points</h3>
+                <h3 class="insights-title">3 main pain points</h3>
             </div>
             <button class="mini-btn" type="button" id="insightsAll" aria-expanded="false">View all</button>
         </div>
@@ -249,46 +253,30 @@
     </div>
     {% endcall %}
 
-    {% call cs.section("Idea", lead="We put clarity and offline use first, and power features later") %}
-    <p>
-        Five principles came out of the affinity map:
-        <br>— Clarity over completeness
-        <br>— Fast entry over perfect data
-        <br>— Offline-first by default
-        <br>— Low cognitive load for new volunteers
-        <br>— Traceability without visual overload
-    </p>
+    {{ cs.section("Idea", lead="We put clarity and offline use first, and power features later") }}
+
+    {{ cs.principles([
+        ("Clarity", "&gt; Completeness"),
+        ("Fast Entry", "&gt; Perfect Data"),
+        ("Offline-first", "Default"),
+        ("Low Cognitive Load", "for New Volunteers"),
+        ("Traceability", "&gt; Visual Overload"),
+    ], text="Five principles") }}
+
+    {% call cs.block() %}
+    <h3 class="cs-subheading">Feature decisions by impact × effort</h3>
+    <div class="split split-center">
+        {{ cs.card(img('ux', 't4sg/affmap.png'), "Impact vs effort matrix", "sm") }}
+        {{ cs.rollout([
+            ("Phase 1", "Core Inventory Reliability", "Simple viewing, terminology, edit component."),
+            ("Phase 2", "Deeper Traceability", "Edit history, comments, richer categorization."),
+            ("Phase 3", "Scalability Features", "Add component flow, filters, helpers."),
+        ], stack=True, bare=True) }}
+    </div>
     {% endcall %}
 
-    {% call cs.media_text(img('ux', 't4sg/affmap.png'), "Impact vs effort matrix",
-                          lead="Feature decisions by impact × effort") %}
-    <p>
-        We ranked every feature idea by how fast it would cut uncertainty. The quick wins went first, and
-        more powerful features waited until the core flows worked. That kept the product simple enough for
-        a new volunteer, with room to grow as 2ft scales.
-    </p>
-    {% endcall %}
-
-    {{ cs.rollout([
-        ("Phase 1", "Core Inventory Reliability", "Simple viewing, terminology, edit component."),
-        ("Phase 2", "Deeper Traceability", "Edit history, comments, richer categorization."),
-        ("Phase 3", "Scalability Features", "Add component flow, filters, helpers."),
-    ]) }}
-
-    {% call cs.section("My Contribution", lead="I owned how a volunteer views, edits and adds a component") %}
-    <p>
-        I wrote the user journeys and owned the end-to-end flow for how a volunteer <strong>views</strong> a
-        component, makes a safe <strong>edit</strong>, and <strong>adds</strong> a new component without
-        breaking traceability.
-    </p>
-    {% endcall %}
-
-    {{ cs.boxes([
-        ("Always in reach", "Primary actions (view history, edit, add) are always in reach, never buried in a menu."),
-        ("Inline edits", "Edits open in inline popups with clear save states, because fear of breaking records kept people from updating them."),
-        ("No free text", "Technical fields use dropdowns and placeholders, not free text, so the same part never gets three names."),
-        ("Visible history", "Every record shows who changed it and when, so “who changed this?” has an answer."),
-    ], title="The decisions I made, and why", cols=2) }}
+    {{ cs.section("Contribution", lead="I owned how a volunteer views, edits and adds a component",
+                  index="My Contribution") }}
 
     {% call cs.media_text(img('ux', 't4sg/userflow.png'), "User flow: View Component",
                           lead="Where it is first, what it is second", flow=True) %}
@@ -300,8 +288,9 @@
         logistics → technical → manufacturer.</p>
     {% endcall %}
 
-    {% call cs.section("Lo-Fi", lead="I cut every field that didn't earn its place") %}
-    {{ cs.card(img('ux', 't4sg/lofi up.webp'), "Lo-fi ideation sketches", size="lg") }}
+    {{ cs.figure(img('ux', 't4sg/lofi up.webp'), "Lo-fi ideation sketches", ar=2.04, crop=True, pos="50% 61%") }}
+
+    {% call cs.section("Lo-Fi", label="title") %}
     <p>
         The black and white prototypes tested only hierarchy, navigation and density. If a field didn’t
         earn its place, it was cut.
@@ -313,12 +302,7 @@
         (img('ux', 't4sg/lofi add.webp'), "Lo-fi add component flow (B&W)"),
     ]) }}
 
-    {% call cs.section("Iteration", lead="The feedback was about trust, not looks") %}
-    <p>
-        Lo-fi proved the hierarchy. But once stakeholders clicked through it, their feedback wasn’t about
-        visuals. It was about speed, trust and the fear of breaking something.
-    </p>
-    {% endcall %}
+    {{ cs.section("Iteration", lead="The president advocated for simplicity", label="none") }}
 
     {{ cs.compare([
         {"title": "What wasn’t working", "display": False, "points": [
@@ -336,9 +320,8 @@
             "A clear step order for adding a component",
         ]},
     ]) }}
-    {{ cs.img_caption("<strong>Designer note:</strong> the goal wasn’t polish. It was making the same work feel <em>lighter</em> and more reliable.") }}
 
-    {% call cs.section("Hi-Fi", lead="A complex record that still feels calm") %}
+    {% call cs.section("Hi-Fi", label="title") %}
     <p>
         The blue and yellow design adds structure without noise: collapsible panels, inline edit popups
         and a visible history.
@@ -351,28 +334,19 @@
         (img('ux', 't4sg/hifi add.webp'), "Hi-fi add component (blue/yellow)"),
     ], caption="(1) View component, (2) Edit component, (3) Add component") }}
 
-    {% call cs.section("Testing", lead="Stakeholders wanted less typing and clear roles") %}
-    <p>
-        <strong>What worked:</strong> starting from the component type. Each type has its own properties,
-        so picking the type first felt far more natural than showing every spreadsheet field and making
-        volunteers guess.
-    </p>
-    <p>
-        <strong>What stakeholders asked for:</strong> less typing. Autofill, a stock image when a part has no
-        photo, and adding new fields on the fly all came up.
-    </p>
-    <p>
-        <strong>Permissions:</strong> changing a field can cause mix-ups across the whole organization, so
-        stakeholders wanted clear roles, for example who can edit fields and who can only edit values.
-    </p>
+    {{ cs.section("Testing", lead="Stakeholders wanted less typing and clear roles") }}
+
+    {{ cs.boxes([
+        ("Less typing", "Autofill, a stock image when a part has no photo, and adding new fields on the fly all came up."),
+        ("Permissions", "Clear roles, for example who can edit fields and who can only edit values."),
+        ("Clear type", "Each type has its own properties, so picking the type first means volunteers never guess."),
+    ]) }}
+
+    {% call cs.section() %}
     <p>
         <strong>What we flagged for the build:</strong> open backend questions, such as whether field
         management needs its own admin page, and what autofill would pull from (model number, a
         manufacturer database or past entries).
-    </p>
-    <p>
-        After testing the prototype, the president told us:
-        <br><em>“I don’t feel like I’m going to break anything.”</em>
     </p>
     {% endcall %}
 
@@ -380,19 +354,10 @@
         ("70%", "less cognitive load updating records than on the spreadsheets"),
     ]) }}
 
-    {% call cs.section() %}
-    <p>
-        <strong>How we measured it:</strong> we used two stand-ins for cognitive load, clicks per task and a
-        single ease rating after every task. All 5 people we interviewed ran the same tasks on the old spreadsheets and on the prototype, thinking aloud as they went.
-        Combined, those two measures put the prototype about 70% lighter than the spreadsheets.
-    </p>
-    {% endcall %}
+    {{ cs.note("How we measured it",
+               "Used two stand-ins for cognitive load, clicks per task and a single ease rating after every task.<br><br>All 5 people we interviewed ran the same tasks on the old spreadsheets and on the prototype, thinking aloud as they went.") }}
 
-    {% call cs.section("Try It", lead="Explore the prototype the way a volunteer would") %}
-    <p>
-        This is the hi-fi prototype shown above. Start by picking a component type, then work your way
-        into a detailed edit.
-    </p>
+    {% call cs.section("Try It", lead="Explore the prototype the way a volunteer would", label="none") %}
     <a href="https://www.figma.com/proto/dWSwmnPwX50N8TKSQIPS5S/Lo-fi---%3E-Hi-fi--Copy-?t=UO7WjHeEBFCJ3JlO-1"
         target="_blank" rel="noopener" class="cta-button">
         <div class="video"><video src="{{ img('ux', 't4sg/preview.mp4') }}" autoplay muted loop playsinline></video></div>
@@ -472,12 +437,12 @@
             if (toggle) toggle.addEventListener("click", () => card.classList.toggle("open"));
         });
 
-        // Three main pain points first; View all opens every quote with the persona and theme filters
+        // 3 main pain points first; View all opens every quote with the persona and theme filters
         viewAll.addEventListener("click", () => {
             const all = card.classList.toggle("is-all");
             viewAll.textContent = all ? "Show less" : "View all";
             viewAll.setAttribute("aria-expanded", all);
-            card.querySelector(".insights-title").textContent = all ? "Interview Highlights" : "Three main pain points";
+            card.querySelector(".insights-title").textContent = all ? "Interview Highlights" : "3 main pain points";
             if (!all) {
                 tabs[0].click();
                 chips[0].click();

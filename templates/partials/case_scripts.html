@@ -17,7 +17,7 @@
         onScroll();
     })();
 
-    // Left rail: number every headed section, list it, and mark the one being read
+    // Left rail: list every headed section and mark the one being read
     (function () {
         const list = document.getElementById("csIndex");
         const shell = document.querySelector(".cs-shell");
@@ -28,8 +28,6 @@
         const links = sections.map((sec, i) => {
             const num = String(i + 1).padStart(2, "0");
             sec.id = sec.id || sec.dataset.index.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-            const slot = sec.querySelector(".cs-num");
-            if (slot) slot.textContent = num;
             const li = document.createElement("li");
             li.innerHTML = `<a href="#${sec.id}" aria-label="${num} ${sec.dataset.index}"><span class="cs-index-label">${sec.dataset.index}</span></a>`;
             list.appendChild(li);

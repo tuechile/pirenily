@@ -64,13 +64,18 @@
 {% endmacro %}
 
 
-{# §2 Section — heading is the numbered eyebrow (and rail entry), lead is the big line under it.
-   index: a shorter rail label for long headings #}
-{% macro section(heading=None, lead=None, index=None, meta=None, links=[]) %}
+{# §2 Section — heading is the eyebrow (and rail entry), lead is the big line under it.
+   index: the rail label when it should differ from the heading (long headings, or a renamed eyebrow).
+   label: how the heading shows. None (old pages): eyebrow over the lead, or the heading alone as the big line.
+          "small": the eyebrow only, lead under it if given. "title": the eyebrow at heading size.
+          "none": no eyebrow, just the lead; the section still gets its rail entry. #}
+{% macro section(heading=None, lead=None, index=None, meta=None, links=[], label=None) %}
+{% set show_eyebrow = heading and label != "none" and (lead or label) %}
+{% set big = lead or (heading if not label else None) %}
 <section class="cs-section{% if not heading %} cs-section--cont{% endif %}"
     {%- if heading %} data-index="{{ index or heading|striptags }}"{% endif %}>
-    {% if heading %}<p class="cs-eyebrow"><span class="cs-num"></span>{% if lead %}{{ heading|safe }}{% endif %}</p>{% endif %}
-    {% if lead or heading %}<h2 class="cs-heading{% if meta or links %} cs-heading--org{% endif %}">{{ (lead or heading)|safe }}</h2>{% endif %}
+    {% if show_eyebrow %}<p class="cs-eyebrow{% if label == 'title' %} cs-eyebrow--title{% endif %}">{{ heading|safe }}</p>{% endif %}
+    {% if big %}<h2 class="cs-heading{% if meta or links %} cs-heading--org{% endif %}">{{ big|safe }}</h2>{% endif %}
     {% if meta or links %}{{ org(meta, links) }}{% endif %}
     {% if caller %}<div class="cs-prose">{{ caller() }}</div>{% endif %}
 </section>
@@ -111,16 +116,18 @@
 {# §4 Figure — a single media card #}
 {# ar: width / height, used by the "fit" row so every image shares one height #}
 {# still: no lightbox and no hover change #}
-{% macro card(src, alt, size=None, zoom=True, ar=None, still=False) %}
+{# crop (with ar): cut the image to that shape; pos is the object-position that stays in frame #}
+{% macro card(src, alt, size=None, zoom=True, ar=None, still=False, crop=False, pos=None) %}
 {% if still %}{% set zoom = False %}{% endif %}
-<div class="media-card{% if size %} media-card--{{ size }}{% endif %}{% if still %} media-card--still{% endif %}"{% if ar %} style="--ar: {{ ar }}"{% endif %}>
+<div class="media-card{% if size %} media-card--{{ size }}{% endif %}{% if still %} media-card--still{% endif %}{% if crop %} media-card--crop{% endif %}"
+    {%- if ar or pos %} style="{% if ar %}--ar: {{ ar }};{% endif %}{% if pos %} --pos: {{ pos }};{% endif %}"{% endif %}>
     <img{% if zoom %} class="lightboxable"{% endif %} src="{{ src }}" alt="{{ alt }}" loading="lazy" decoding="async">
 </div>
 {% endmacro %}
 
-{% macro figure(src, alt, size=None, caption=None, zoom=True) %}
+{% macro figure(src, alt, size=None, caption=None, zoom=True, ar=None, crop=False, pos=None) %}
 <figure class="cs-figure">
-    {{ card(src, alt, size, zoom) }}
+    {{ card(src, alt, size, zoom, ar=ar, crop=crop, pos=pos) }}
     {% if caption %}{{ img_caption(caption, fig=True) }}{% endif %}
 </figure>
 {% endmacro %}
@@ -290,10 +297,11 @@
 {% endmacro %}
 
 
-{# §9 Rollout grid — phases: list of (label, title, description) #}
-{% macro rollout(phases) %}
-<div class="cs-block">
-    <div class="rollout-grid">
+{# §9 Rollout grid — phases: list of (label, title, description).
+   stack: one column of joined cards. bare: no block wrapper, to sit inside a split. #}
+{% macro rollout(phases, stack=False, bare=False) %}
+{% if not bare %}<div class="cs-block">{% endif %}
+    <div class="rollout-grid{% if stack %} rollout-grid--stack{% endif %}">
         {% for label, title, description in phases %}
         <div class="rollout-card">
             <p class="rollout-phase">{{ label }}</p>
@@ -301,6 +309,30 @@
         </div>
         {% endfor %}
     </div>
+{% if not bare %}</div>{% endif %}
+{% endmacro %}
+
+
+{# Principles — a row of centred panels; items: list of (name, line under it) #}
+{% macro principles(items, text=None) %}
+<div class="cs-block">
+    {% if text %}<p class="cs-boxes-lead">{{ text|safe }}</p>{% endif %}
+    <div class="cs-boxes cs-principles" style="--cols: {{ items|length }}">
+        {% for name, line in items %}
+        <div class="cs-box">
+            <p class="cs-principle-name">{{ name|safe }}</p>
+            <p>{{ line|safe }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Note — a short aside behind an accent rule; title is the bold first line #}
+{% macro note(title, text) %}
+<div class="cs-block">
+    <p class="cs-note"><strong>{{ title|safe }}</strong><br>{{ text|safe }}</p>
 </div>
 {% endmacro %}
 

@@ -62,6 +62,28 @@
     }
 }
 
+/* Stacked: one column of cards sharing their borders, beside a picture */
+.rollout-grid.rollout-grid--stack {
+    grid-auto-flow: row;
+    gap: 0;
+}
+
+.rollout-grid--stack .rollout-card + .rollout-card {
+    border-top: 0;
+}
+
+/* Picture and its panel side by side, centred on each other */
+.split.split-center {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+@media screen and (max-width: 666px) {
+    .split.split-center {
+        grid-template-columns: 1fr;
+    }
+}
+
 .rollout-card {
     border: 1px solid var(--hairline);
     background: var(--glass);
@@ -289,6 +311,13 @@ html {
 
 .media-card--sm {
     max-width: 420px;
+}
+
+/* Cut to a set shape (--ar), keeping --pos in frame */
+.media-card--crop img {
+    aspect-ratio: var(--ar);
+    object-fit: cover;
+    object-position: var(--pos, 50% 50%);
 }
 
 .media-card--md {
@@ -946,7 +975,8 @@ html {
 
 .insights-title {
     margin: 0;
-    font-size: var(--fs-2);
+    font-size: var(--fs-heading);
+    line-height: 1.2;
     font-family: var(--font-body);
     color: var(--text-primary);
     font-weight: 600;
@@ -1638,8 +1668,14 @@ html {
     margin-bottom: var(--s-4);
 }
 
-.cs-num {
-    color: var(--accent);
+/* A section label set at heading size, standing in for the heading (Lo-Fi, Hi-Fi) */
+.cs-eyebrow.cs-eyebrow--title {
+    margin-bottom: var(--s-5);
+    font-size: var(--fs-heading);
+    font-style: normal;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--text-primary);
 }
 
 .cs-heading {
@@ -1651,6 +1687,11 @@ html {
     line-height: 1.2;
     color: var(--text-primary);
     text-wrap: balance;
+}
+
+/* A heading set inside the prose, under an opening paragraph */
+.cs-prose .cs-heading--inline {
+    margin-top: var(--s-5);
 }
 
 .cs-heading--org {
@@ -1723,12 +1764,29 @@ html {
 
 /* "How might we" line: the question the rest of the case study answers */
 .cs-prose p.cs-hmw {
+    max-width: none;
     margin: var(--s-5) 0;
     padding-left: var(--s-4);
-    border-left: 1px solid var(--hairline);
-    font-size: 1.3rem;
+    border-left: 5px solid var(--accent);
+    font-size: var(--fs-heading);
     font-style: italic;
-    line-height: 1.5;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+/* A short aside behind the same accent rule, at reading size */
+.cs-note {
+    max-width: 66ch;
+    margin: 0;
+    padding-left: var(--s-4);
+    border-left: 5px solid var(--accent);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: var(--lh);
+    color: var(--text-secondary);
+}
+
+.cs-note strong {
     color: var(--text-primary);
 }
 
@@ -1934,6 +1992,20 @@ html {
     font-size: var(--fs-body-sm);
     line-height: 1.6;
     color: var(--text-secondary);
+}
+
+/* Principles: a row of centred panels, the name over its one line */
+.cs-principles .cs-box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    text-align: center;
+}
+
+.cs-box p.cs-principle-name {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: var(--text-primary);
 }
 
 .cs-tool {
