@@ -16,13 +16,11 @@
 {{ cs.figure(img('ux', 'cs171/preview.gif'),
              "Final project preview showing the Unicode data story interface with interactive sections", zoom=False) }}
 
-{{ cs.callout("Long story short",
-    text="I designed the emoji half of a scroll-driven story about Unicode, after our first idea fell apart.",
-    points=[
-    "<strong>Pivot.</strong> We started with a typography story for designers. The data didn’t hold up, so halfway through we switched to Unicode, for everyone in CS 1710.",
-    "<strong>Design.</strong> I sourced seven datasets and built a bubble chart of how each emoji’s design drifts across platforms, plus the “What emoji are you (right now)?” game.",
-    "<strong>Testing.</strong> Two think-aloud tests showed the problem was our words, not the data, so the last round was mostly relabelling.",
-]) }}
+{{ cs.boxes([
+    ("Pivot", "Our typography story for designers didn’t hold up, so halfway through we switched to Unicode, for everyone in CS 1710."),
+    ("Design", "Sourced seven datasets, built a bubble chart of how each emoji drifts across platforms, and the “What emoji are you (right now)?” game."),
+    ("Testing", "Two think-aloud tests showed the problem was our words, not the data, so the last round was mostly relabelling."),
+], title="TL;DR", text="I designed the emoji half of a scroll-driven story about Unicode, after our first idea fell apart.") }}
 
 {% call cs.body() %}
 

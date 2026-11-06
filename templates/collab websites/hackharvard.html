@@ -15,13 +15,11 @@
 {{ cs.figure(img('design', 'hackharvard/banner.jpg'),
              "Hack to the Moon banner with a domed tower, planets and glowing orbs", zoom=False) }}
 
-{{ cs.callout("Long story short",
-    text="I led a 6-person team that rebuilt HackHarvard's brand and doubled applications, in our first year without MLH promoting us.",
-    points=[
-    "<strong>Brand.</strong> Redrew the logo from scratch and shipped the identity as a reusable component package for the website, social media and merch.",
-    "<strong>Campaign.</strong> The launch post drew 3.4× last year's interactions, 84–85% of viewers were new to us, and followers grew 30.3%.",
-    "<strong>Leadership.</strong> Ran the team from April to October. With a shared tracker, a post went from 3–4 days to 1–2, and questions for direction halved.",
-]) }}
+{{ cs.boxes([
+    ("Brand", "Redrew the logo from scratch and shipped the identity as one reusable component package for the website, social media and merch."),
+    ("Campaign", "The launch post drew 3.4× last year's interactions, 84–85% of viewers were new to us, and followers grew 30.3%."),
+    ("Leadership", "With a shared tracker, a post went from 3–4 days to 1–2, and questions for direction halved."),
+], title="TL;DR", text="I led a 6-person team that rebuilt HackHarvard's brand and doubled applications, in our first year without MLH promoting us.") }}
 
 {% call cs.body() %}
 

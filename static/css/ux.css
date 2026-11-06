@@ -1689,11 +1689,6 @@ html {
     text-wrap: balance;
 }
 
-/* A heading set inside the prose, under an opening paragraph */
-.cs-prose .cs-heading--inline {
-    margin-top: var(--s-5);
-}
-
 .cs-heading--org {
     margin-bottom: var(--s-2);
 }
@@ -1772,6 +1767,13 @@ html {
     font-style: italic;
     line-height: 1.2;
     color: var(--text-primary);
+}
+
+/* A line set at the "How might we" size, without its rule */
+.cs-prose p.cs-statement {
+    max-width: none;
+    font-size: var(--fs-heading);
+    line-height: 1.2;
 }
 
 /* A short aside behind the same accent rule, at reading size */
