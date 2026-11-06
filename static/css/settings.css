@@ -11,7 +11,7 @@
     color-scheme: light;
     --bg-rgb: 255, 255, 255;          /* white paper */
     --fg-rgb: 0, 0, 0;                /* black ink */
-    --accent: #ffa8c2;                /* on paper the teal becomes pink: text, dots, globe */
+    --accent: #ffa8c2;                /* on paper the teal becomes pink: text, dots */
     --accent-rgb: 255, 168, 194;
     --pink-soft: #ffc9de;             /* focus ring, photo shadow, slider, panel tint */
     --pink-soft-rgb: 255, 201, 222;
@@ -41,7 +41,7 @@
     color: var(--yellow-select);
 }
 
-:root[data-theme="light"] :is(.progress-bar, .load-bar span, .btn:hover, .travel-globe .globe-legend i),
+:root[data-theme="light"] :is(.progress-bar, .load-bar span, .btn:hover),
 :root[data-theme="light"] .cs-index a.is-current::before {
     box-shadow: none;
 }
@@ -220,22 +220,8 @@ body:not(.rc) p a:hover {
     --fs-kicker: 0.75rem;
 }
 
-/* About: bigger text needs more of the row, so the globe gives some up */
+/* About: bigger text needs more of the row */
 @media (min-width: 881px) {
-    :root[data-mode="easy"] .bio-text {
-        flex: 1 1 32rem;
-        width: auto;
-    }
-
-    :root[data-mode="easy"] .globe-stage {
-        flex: 0 1 auto;
-        width: auto;
-    }
-
-    :root[data-mode="easy"] .travel-globe {
-        width: clamp(220px, 22vw, 400px);
-    }
-
     :root[data-mode="easy"] .bio-side {
         max-width: 240px;
     }

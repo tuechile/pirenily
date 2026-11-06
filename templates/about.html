@@ -6,6 +6,18 @@
 <link href="/static/css/body.css?v={{ asset_v }}" rel="stylesheet">
 {% endblock %}
 
+{# Groups of skills as joined tags, two columns #}
+{% macro skill_groups(groups) %}
+<div class="bio-skills">
+    {% for group, items in groups %}
+    <div>
+        <h3>{{ group }}</h3>
+        <ul class="tag-row">{% for item in items %}<li class="tag-chip">{{ item }}</li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}
+
 {% block content %}
 <!--- Navigation page for personal information --->
 <script>
@@ -131,447 +143,105 @@
         </div>
         <p class="bio-contact-text">Feel free to reach out through <a href="mailto:chile@college.harvard.edu">mail</a> or <a class="ext" href="https://www.instagram.com/pju_irza/" target="_blank" rel="noopener">Instagram</a>!</p>
     </div>
-    <div class="bio-text">
-        <p class="bio-lead">I’m a design engineer, a designer who codes &amp;&amp; a developer who draws, based in Cambridge, MA.</p>
-        <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
-        <p>
-            I am currently a junior at Harvard College, concentrating in <a class="ext" href="https://seas.harvard.edu/computer-science" target="_blank" rel="noopener">Computer Science</a>
-            and <a class="ext" href="https://afvs.fas.harvard.edu/" target="_blank" rel="noopener">Art, Film, and Visual Studies</a> with a secondary in <a class="ext" href="https://www.math.harvard.edu/" target="_blank" rel="noopener">Mathematics</a>.
-            Right now I am Director of Design &amp; Engineering at the Harvard Undergraduate Hackathon (HackHarvard), a project manager at Tech for Social Good (T4SG),
-            Director of Internal Relations at HPAIR, and a student content creator at the Office for the Arts.
-        </p>
-        <p></p> <p></p>
-        <p>
-            My passion for film and installation art grows within my identity: <em>pirenily</em>. I use pirenily as a
-            vessel of self-expression through graphic design, photography, and storyboards. My main interests lie in
-            the construction of interdependence: of the movement of time within the static, of the existence of the
-            multiverse through doors-and-paths-related design, and of myself as a locus of socialization. This also
-            affects how I perceive selfhood and technology. <a href = "/afvs"> Recently, something I have been thinking about is the voyeuristic 
-            gaze deconstructed in the digital age and the grotesqueness of personhood as a public repo. </a>
-            Every form of visual presentation on this website is mainly experimented, taken, edited, scripted, and modeled by me.
-        </p>
-        <details class="bio-where">
-            <summary>Where am I?</summary>
-            <ul>
-                <li><strong>HackHarvard</strong> <em>Director of Design &amp; Engineering.</em> Rebuilt the brand for a 500+ hacker weekend, and applications doubled.</li>
-                <li><strong>Office for the Arts</strong> <em>Student Content Creator.</em> Campaigns for 10+ arts events a semester, with engagement up 2&times;.</li>
-                <li><strong>HPAIR</strong> <em>Director of Internal Relations.</em> Freshman programming now; before that, marketing for a 2,000-person conference.</li>
-                <li><strong>Tech for Social Good</strong> <em>Project Manager.</em> An offline-first system for prosthetics care.</li>
-            </ul>
+    {# Five lengths of the same bio (the recruiter About's text). The stretch bar on the right picks one: the longer it is, the more there is #}
+    <div class="bio-text" aria-live="polite">
+        {# Level 1 is five emoji strung diagonally across the middle #}
+        <div data-level="1" class="bio-emoji" hidden>
+            <span>🤗</span><span>🐷</span><span>👠</span><span>🎞️</span><span>🚶‍♀️‍➡️</span>
+        </div>
+        <div data-level="2" hidden>
+            <p class="bio-lead">Hi hi what’s up!<br>I’m Chi! I’m a Harvard junior :)</p>
+            <p>My sixth grade fanfiction author name was Iron Pig. I like collecting heels and taking polaroids. I also like walking a lot (especially in Europe and San Francisco). My record is like 56k a day in Paris!</p>
+        </div>
+        <div data-level="3" hidden>
+            <p class="bio-lead">I have a diverse background as an artist, designer, and software developer.</p>
+            <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
+            <p>I am currently based in Cambridge, MA, but I’m from Vietnam and have a lot to say about my upbringing.</p>
+            <p>I’m a junior at Harvard College, concentrating in Computer Science and Art, Film, and Visual Studies with a secondary in Mathematics.</p>
+            <p>Right now I lead design at HackHarvard and work as a project manager at Tech for Social Good.</p>
+            <p>My skills span:</p>
+            <ul class="tag-row">{% for item in ["Product & Research", "AI & ML", "Engineering", "Design"] %}<li class="tag-chip">{{ item }}</li>{% endfor %}</ul>
+        </div>
+        <div data-level="4" hidden>
+            <p class="bio-lead">I’m a design engineer, a designer who codes &amp;&amp; a developer who draws, based in Cambridge, MA.</p>
+            <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
+            <p>I am a junior at Harvard College, concentrating in Computer Science and Art, Film, and Visual Studies with a secondary in Mathematics. Right now I am Director of Design &amp; Engineering at HackHarvard, a project manager at Tech for Social Good, Director of Internal Relations at HPAIR, and a student content creator at the Office for the Arts.</p>
+            <p>Before the US, I was born and raised entirely in Vietnam and had never gone abroad, not even for a vacation. Vietnam was unwalkable, so I spent a lot of time in my room illustrating and making online friends. You can definitely ask me about how having unfiltered Internet access nurtured my self-trust.</p>
+            <p>Outside of that, I make things as <a href="/pirenily">pirenily</a>: graphic design, photography and storyboards, nearly all of it taken, edited and built by me, including this website. I think a lot about surveillance and religions.</p>
+            <h2 class="bio-head">Skills</h2>
+            {{ skill_groups([
+                ("Product & Research", ["PRDs", "User Interviews", "User Journeys", "Usability Testing", "Jira", "Confluence", "Power BI"]),
+                ("AI & ML", ["Claude Code", "Cursor", "ChatGPT", "Gemini", "MCP", "PyTorch", "Scikit-learn"]),
+                ("Engineering", ["Python", "TypeScript", "React", "Next.js", "SQL", "C++", "Git"]),
+                ("Design", ["Figma", "Figma Make", "FigJam", "Adobe Creative Suite", "Prototyping", "Branding", "D3.js"]),
+            ]) }}
+        </div>
+        {# Without the script, the whole bio shows #}
+        <div data-level="5">
+            <p class="bio-lead">I work as a product manager and a design engineer based in Cambridge, MA!</p>
+            <p>I’m looking for summer 2027 internships, and open to part-time work now.</p>
+            <p>
+                I am currently a junior at Harvard College, concentrating in <a class="ext" href="https://seas.harvard.edu/computer-science" target="_blank" rel="noopener">Computer Science</a>
+                and <a class="ext" href="https://afvs.fas.harvard.edu/" target="_blank" rel="noopener">Art, Film, and Visual Studies</a> with a secondary in <a class="ext" href="https://www.math.harvard.edu/" target="_blank" rel="noopener">Mathematics</a>.
+                Right now I am Director of Design &amp; Engineering at the Harvard Undergraduate Hackathon (HackHarvard), a project manager at Tech for Social Good (T4SG),
+                Director of Internal Relations at HPAIR, and a student content creator at the Office for the Arts.
+            </p>
+            <p>
+                My passion for film and installation art grows within my identity: <em>pirenily</em>. I use pirenily as a
+                vessel of self-expression through graphic design, photography, and storyboards. My main interests lie in
+                the construction of interdependence: of the movement of time within the static, of the existence of the
+                multiverse through doors-and-paths-related design, and of myself as a locus of socialization. This also
+                affects how I perceive selfhood and technology. <a href="/afvs">Recently, something I have been thinking about is the voyeuristic
+                gaze deconstructed in the digital age and the grotesqueness of personhood as a public repo.</a>
+                Every form of visual presentation on this website is mainly experimented, taken, edited, scripted, and modeled by me.
+            </p>
+            {# From the résumé's skills and the rest of my stack #}
+            <h2 class="bio-head">Skills</h2>
+            {{ skill_groups([
+                ("Product & Research", ["PRDs", "User Interviews", "User Journeys", "Personas", "Usability Testing", "Surveys", "Jira", "Confluence", "Excel", "Power BI", "Microsoft Office"]),
+                ("AI & ML", ["Claude Code", "ChatGPT", "Cursor", "Gemini", "Codex", "Lovable", "Base44", "MCP", "PyTorch", "Scikit-learn", "OpenCV"]),
+                ("Languages", ["Python", "C++", "Java", "Swift", "Rust", "TypeScript", "JavaScript", "SQL", "HTML/CSS"]),
+                ("Frameworks & Libraries", ["React", "Next.js", "Node.js", "Flask", "D3.js", "p5.js", "pandas", "NumPy", "Matplotlib"]),
+                ("Tools", ["Git", "Linux", "Docker", "Jupyter", "PostgreSQL", "AWS (EC2/S3)", "REST APIs"]),
+                ("Design", ["Figma", "Figma Make", "Figma Motion", "FigJam", "Adobe Creative Suite", "Prototyping", "Branding"]),
+            ]) }}
+            <h2 class="bio-head">Involvements</h2>
+            <dl class="bio-roles">
+                <div><dt>HackHarvard<span>Director of Design &amp; Engineering</span></dt><dd>Rebuilt the brand for a 500+ hacker weekend, and applications doubled.</dd></div>
+                <div><dt>Office for the Arts<span>Student Content Creator</span></dt><dd>Campaigns for 10+ arts events a semester, with engagement up 2&times;.</dd></div>
+                <div><dt>HPAIR<span>Director of Internal Relations</span></dt><dd>Freshman programming now; before that, marketing for a 2,000-person conference.</dd></div>
+                <div><dt>Tech for Social Good<span>UX Lead and Software Engineer</span></dt><dd>Worked with 2ft Prosthetics, CommonSpirit Health and Everyone On.</dd></div>
+            </dl>
             <p class="bio-where-more"><a href="/involvement">See it all on Campus Involvement &rarr;</a> <span>(needs the projects password)</span></p>
-        </details>
+        </div>
     </div>
-    <!-- Globe on the right side -->
-    <div class="globe-stage">
-        <figure class="travel-globe">
-            <canvas id="globe" aria-label="Rotating globe of places I've been and want to go"></canvas>
-            <figcaption>
-                <p class="globe-place" id="globe-place"></p>
-                <p class="globe-count" id="globe-count"></p>
-                <p class="globe-legend"><i class="home"></i>home<i></i>been<i class="wish"></i>someday</p>
-                <p class="globe-zoom"><button type="button" data-zoom="0.5" aria-label="Zoom out">&minus;</button><button type="button" data-zoom="2" aria-label="Zoom in">+</button></p>
-            </figcaption>
-        </figure>
+    {# The stretch bar: a plain rectangle. Drag it down and it grows longer, five lengths, no labels. It opens at the longest.
+       A see-through range input lies over its full reach, so mouse, touch and the arrow keys all work #}
+    <div class="bio-stretch">
+        <div class="bio-stretch-bar" aria-hidden="true"></div>
+        <input class="bio-stretch-range" type="range" min="1" max="5" step="1" value="5"
+            aria-label="How much of my bio to show, from short to everything" aria-valuetext="Level 5 of 5">
     </div>
-
-
 </div>
 
 <script>
-    // Travel globe. Add a place as [name, country/state, lat, lon]; it shows up on the globe and in the counts.
-    const BEEN = [
-        ['Venice', 'Italy', 45.44, 12.33], ['Rome', 'Italy', 41.90, 12.50], ['Milan', 'Italy', 45.46, 9.19],
-        ['Lake Como', 'Italy', 46.00, 9.26], ['Florence', 'Italy', 43.77, 11.26],
-        ['Treviso', 'Italy', 45.67, 12.24], ['Bologna', 'Italy', 44.49, 11.34], ['Padua', 'Italy', 45.41, 11.88],
-        ['Vicenza', 'Italy', 45.55, 11.55],
-        ['Prague', 'Czechia', 50.08, 14.44],
-        ['Salzburg', 'Austria', 47.80, 13.04], ['Vienna', 'Austria', 48.21, 16.37],
-        ['Rotterdam', 'Netherlands', 51.92, 4.48], ['Amsterdam', 'Netherlands', 52.37, 4.90],
-        ['Luxembourg City', 'Luxembourg', 49.61, 6.13],
-        ['Brussels', 'Belgium', 50.85, 4.35],
-        ['Paris', 'France', 48.86, 2.35], ['Lyon', 'France', 45.76, 4.84],
-        ['Madrid', 'Spain', 40.42, -3.70], ['Ibiza', 'Spain', 38.91, 1.43], ['Barcelona', 'Spain', 41.39, 2.17],
-        ['Cancún', 'Mexico', 21.16, -86.85],
-        ['Kingston', 'Jamaica', 17.97, -76.79],
-        ['Phnom Penh', 'Cambodia', 11.56, 104.93],
-        ['Bangkok', 'Thailand', 13.76, 100.50],
-        ['Cebu', 'Philippines', 10.32, 123.89],
-    ];
-    const BEEN_US = [
-        ['Portland', 'Maine', 43.66, -70.26], ['Bangor', 'Maine', 44.80, -68.77],
-        ['Bar Harbor', 'Maine', 44.39, -68.20],
-        ['Portsmouth', 'New Hampshire', 43.07, -70.76],
-        ['Boston', 'Massachusetts', 42.36, -71.06], ['Cambridge', 'Massachusetts', 42.37, -71.11],
-        ['Somerville', 'Massachusetts', 42.39, -71.10], ['Newburyport', 'Massachusetts', 42.81, -70.88],
-        ['New Haven', 'Connecticut', 41.31, -72.92], ['Madison', 'Connecticut', 41.28, -72.60],
-        ['New York City', 'New York', 40.71, -74.01],
-        ['Jersey City', 'New Jersey', 40.73, -74.08],
-        ['Providence', 'Rhode Island', 41.82, -71.41], ['Pawtucket', 'Rhode Island', 41.88, -71.38],
-        ['Philadelphia', 'Pennsylvania', 39.95, -75.17],
-        ['Washington', 'D.C.', 38.91, -77.04],
-        ['Atlanta', 'Georgia', 33.75, -84.39],
-        ['San Juan', 'Puerto Rico', 18.47, -66.11],
-        ['San Francisco', 'California', 37.77, -122.42], ['San Jose', 'California', 37.34, -121.89],
-        ['Santa Cruz', 'California', 36.97, -122.03], ['Mountain View', 'California', 37.39, -122.08],
-        ['Palo Alto', 'California', 37.44, -122.14],
-        ['Los Angeles', 'California', 34.05, -118.24], ['Irvine', 'California', 33.68, -117.83],
-        ['Orange County', 'California', 33.79, -117.85],
-    ];
-    // On a trip but not counted (it's home)
-    const STOPS = [['Hanoi', 'Vietnam', 21.03, 105.85]];
-    // Trips, drawn as lines once zoomed in. Each path is a chain of place names from the lists above.
-    const TRIPS = [
-        { name: 'Eurosummer 2025', paths: [
-            ['Venice', 'Bologna', 'Rome'], ['Venice', 'Milan', 'Lake Como'], ['Venice', 'Florence'],
-            ['Venice', 'Padua'], ['Venice', 'Vicenza'],
-            ['Venice', 'Salzburg', 'Vienna', 'Prague', 'Amsterdam', 'Rotterdam', 'Brussels'],
-            ['Brussels', 'Luxembourg City'],
-            ['Brussels', 'Paris', 'Lyon', 'Madrid', 'Ibiza', 'Barcelona'],
-        ] },
-        { name: 'ASEAN Summer 2026', paths: [['Phnom Penh', 'Bangkok', 'Hanoi', 'Cebu']] },
-        { name: 'East Coast Summer 2024', paths: [[
-            'Washington', 'Philadelphia', 'New York City', 'New Haven', 'Madison', 'Providence', 'Pawtucket',
-            'Boston', 'Portsmouth', 'Portland', 'Bar Harbor',
-        ]] },
-        { name: 'California Winter 2024', paths: [['San Jose', 'Santa Cruz', 'Los Angeles', 'Irvine']] },
-        { name: 'SF Summer 2026', paths: [['Boston', 'San Francisco', 'Mountain View', 'Palo Alto', 'San Francisco', 'Boston']] },
-    ];
-    // Home: Vietnam, drawn as a filled shape. Rough outline as [lon, lat], clockwise from the northwest corner.
-    const HOME = { name: 'Vietnam (home)', at: [16.0, 107.0], outline: [
-        [102.15, 22.40], [102.70, 22.70], [103.30, 22.80], [104.00, 22.80], [104.80, 22.80], [105.40, 23.30],
-        [106.20, 22.95], [106.70, 22.80], [107.40, 21.80], [108.05, 21.55], [107.40, 21.10], [106.70, 20.70],
-        [106.00, 19.90], [105.70, 19.00], [106.40, 18.20], [106.60, 17.50], [107.20, 16.80], [108.20, 16.10],
-        [108.80, 15.40], [109.20, 14.00], [109.30, 12.60], [109.20, 11.60], [108.70, 11.10], [107.80, 10.60],
-        [106.80, 10.30], [106.60, 9.60], [105.80, 8.60], [104.80, 8.60], [105.00, 9.80], [104.60, 10.40],
-        [105.10, 10.95], [106.10, 11.10], [106.40, 11.70], [107.50, 12.30], [107.60, 13.50], [107.40, 14.50],
-        [107.70, 15.30], [107.20, 16.20], [106.50, 16.80], [106.00, 17.60], [105.60, 18.30], [105.10, 18.70],
-        [104.50, 19.10], [104.00, 19.40], [104.40, 19.90], [104.50, 20.40], [103.80, 20.70], [103.20, 20.85],
-        [102.80, 21.40], [102.40, 21.90],
-    ] };
-    const SOMEDAY = [
-        ['Bohemia', 'Czechia', 49.80, 13.40], ['Germany', '', 52.52, 13.40],
-        ['Antwerp', 'Belgium', 51.22, 4.40], ['Leuven', 'Belgium', 50.88, 4.70],
-        ['Greece', '', 37.98, 23.73], ['Finland', '', 60.17, 24.94], ['Portugal', '', 38.72, -9.14],
-        ['United Kingdom', '', 51.51, -0.13], ['Dublin', 'Ireland', 53.35, -6.26],
-        ['Mexico City', 'Mexico', 19.43, -99.13],
-        ['Montreal', 'Canada', 45.50, -73.57], ['Toronto', 'Canada', 43.65, -79.38], ['Vancouver', 'Canada', 49.28, -123.12],
-        ['Dominican Republic', '', 18.49, -69.93], ['Brazil', '', -14.24, -51.93], ['Cuba', '', 23.11, -82.37],
-        ['Chile', '', -33.45, -70.67],
-        ['Japan', '', 35.68, 139.69],
-    ];
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('globe');
-        const place = document.getElementById('globe-place');
-        const ctx = canvas.getContext('2d');
-        const css = getComputedStyle(document.documentElement);
-        const color = name => css.getPropertyValue(name).trim();
-        const C = {};
-        // Re-read when the visitor switches theme or view, so the globe never keeps the old colors
-        const readColors = () => Object.assign(C, {
-            accent: color('--accent'), land: color('--globe-land'), back: color('--globe-land-back'),
-            wish: color('--globe-wish'), rim: color('--border'), home: color('--globe-home'),
-            route: color('--globe-route'),
-        });
-        readColors();
-        document.addEventListener('pirenily:settings', () => { readColors(); draw(); });
-        const rad = Math.PI / 180;
-
-        const countries = new Set(BEEN.map(p => p[1]));
-        const states = new Set(BEEN_US.map(p => p[1]));
-        document.getElementById('globe-count').innerHTML =
-            `${countries.size} countries · ${BEEN.length} cities<br>${states.size} U.S. states &amp; territories`;
-
-        const markers = [
-            ...BEEN.concat(BEEN_US, STOPS).map(p => ({ p, been: true })),
-            ...SOMEDAY.map(p => ({ p, been: false })),
-            { p: [HOME.name, '', ...HOME.at], been: true, home: true },
-        ];
-        const homeOutline = HOME.outline.map(([lon, lat]) => [Math.sin(lat * rad), Math.cos(lat * rad), lon * rad]);
-        markers.forEach(m => { m.sin = Math.sin(m.p[2] * rad); m.cos = Math.cos(m.p[2] * rad); m.lam = m.p[3] * rad; });
-
-        // Each leg follows the great circle, a point per degree, so long flights bend with the globe
-        const byName = new Map(markers.map(m => [m.p[0], m]));
-        function leg(a, b) {
-            const v = m => [m.cos * Math.cos(m.lam), m.cos * Math.sin(m.lam), m.sin];
-            const A = v(a), B = v(b);
-            const w = Math.acos(Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2]));
-            const n = Math.max(1, Math.ceil(w / rad));
-            const pts = [];
-            for (let i = 0; i <= n; i++) {
-                const fa = w ? Math.sin((1 - i / n) * w) / Math.sin(w) : 1;
-                const fb = w ? Math.sin(i / n * w) / Math.sin(w) : 0;
-                const x = fa * A[0] + fb * B[0], y = fa * A[1] + fb * B[1], z = fa * A[2] + fb * B[2];
-                const lat = Math.atan2(z, Math.hypot(x, y));
-                pts.push([Math.sin(lat), Math.cos(lat), Math.atan2(y, x)]);
-            }
-            return pts;
+    (function () {
+        var range = document.querySelector(".bio-stretch-range");
+        var bar = document.querySelector(".bio-stretch-bar");
+        var levels = document.querySelectorAll(".bio-text [data-level]");
+        var narrow = window.matchMedia("(max-width: 880px)");
+        function show() {
+            // Phones have no bar (no room beside the text), so they get the whole bio
+            var n = narrow.matches ? 5 : Number(range.value);
+            levels.forEach(function (l) { l.hidden = Number(l.dataset.level) !== n; });
+            // 60px at the shortest, 75px longer each level, 360px at the longest
+            bar.style.height = (60 + (n - 1) * 75) + "px";
+            range.setAttribute("aria-valuetext", "Level " + n + " of 5");
         }
-        TRIPS.forEach(t => {
-            t.lines = t.paths.map(names => names.slice(1).flatMap((name, i) => leg(byName.get(names[i]), byName.get(name))));
-            t.screen = [];
-        });
-
-        let land = null; // [sinLat, cosLat, lon] triples
-        fetch("{{ url_for('static', filename='asset/data/land-dots.json') }}?v={{ asset_v }}")
-            .then(r => r.json())
-            .then(pts => {
-                land = new Float32Array(pts.length / 2 * 3);
-                for (let i = 0, j = 0; i < pts.length; i += 2, j += 3) {
-                    land[j] = Math.sin(pts[i + 1] * rad);
-                    land[j + 1] = Math.cos(pts[i + 1] * rad);
-                    land[j + 2] = pts[i] * rad;
-                }
-            });
-
-        // View center (lon, lat); starts over the Atlantic so the U.S. and Europe are both in sight
-        let lam0 = -35 * rad, phi0 = 25 * rad;
-        let size = 0, dpr = 1, hover = null, dragging = null, pinch = null, visible = true;
-        let zoom = 1;
-        const ZOOM_MAX = 10, ROUTES_AT = 2.5; // trips show up from ROUTES_AT on
-        const touches = new Map();
-        const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        function resize() {
-            dpr = window.devicePixelRatio || 1;
-            size = canvas.clientWidth;
-            canvas.width = canvas.height = Math.round(size * dpr);
-        }
-
-        // Orthographic projection; z > 0 is the near hemisphere
-        function project(sinPhi, cosPhi, lam, R) {
-            const dl = lam - lam0, cosDl = Math.cos(dl);
-            const sp0 = Math.sin(phi0), cp0 = Math.cos(phi0);
-            return [
-                R * cosPhi * Math.sin(dl),
-                -R * (cp0 * sinPhi - sp0 * cosPhi * cosDl),
-                sp0 * sinPhi + cp0 * cosPhi * cosDl,
-            ];
-        }
-
-        function draw() {
-            if (size < 20) return; // not laid out yet
-            const R = size / 2 - 6, c = size / 2, Z = R * zoom;
-            const k = Math.max(1, R / 140); // dots grow with the globe
-            const kl = k * Math.sqrt(Math.min(zoom, 4)); // and land a little more when zoomed
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            ctx.clearRect(0, 0, size, size);
-
-            ctx.beginPath();
-            ctx.arc(c, c, R, 0, Math.PI * 2);
-            ctx.strokeStyle = C.rim;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            // Zoomed in, the globe is bigger than the canvas; the rim becomes a lens
-            ctx.save();
-            ctx.clip();
-
-            if (land) {
-                const front = new Path2D(), back = new Path2D();
-                for (let j = 0; j < land.length; j += 3) {
-                    const [x, y, z] = project(land[j], land[j + 1], land[j + 2], Z);
-                    if (Math.abs(x) > R + 4 || Math.abs(y) > R + 4) continue;
-                    const r = (z > 0 ? 0.5 + 0.5 * z : 0.6) * kl;
-                    const path = z > 0 ? front : back;
-                    path.moveTo(c + x + r, c + y);
-                    path.arc(c + x, c + y, r, 0, Math.PI * 2);
-                }
-                ctx.fillStyle = C.back;
-                ctx.fill(back);
-                ctx.fillStyle = C.land;
-                ctx.fill(front);
-            }
-
-            // Home, filled in; skipped once it turns past the rim
-            const home = homeOutline.map(([s, co, l]) => project(s, co, l, Z));
-            if (home.every(([, , z]) => z > 0)) {
-                ctx.beginPath();
-                home.forEach(([x, y], i) => (i ? ctx.lineTo : ctx.moveTo).call(ctx, c + x, c + y));
-                ctx.closePath();
-                ctx.fillStyle = ctx.strokeStyle = C.home;
-                ctx.lineWidth = k;
-                ctx.lineJoin = 'round';
-                ctx.fill();
-                ctx.stroke();
-            }
-
-            // Trips, the hovered one drawn last and brightest
-            const showRoutes = zoom >= ROUTES_AT;
-            for (const t of [...TRIPS].sort((a, b) => (a === hover) - (b === hover))) {
-                t.screen = [];
-                if (!showRoutes) continue;
-                ctx.beginPath();
-                for (const line of t.lines) {
-                    let run = null;
-                    for (const [s, co, l] of line) {
-                        const [x, y, z] = project(s, co, l, Z);
-                        if (z <= 0) { run = null; continue; }
-                        if (run) ctx.lineTo(c + x, c + y);
-                        else { run = []; t.screen.push(run); ctx.moveTo(c + x, c + y); }
-                        run.push([c + x, c + y]);
-                    }
-                }
-                ctx.strokeStyle = t === hover ? C.accent : C.route;
-                ctx.lineWidth = (t === hover ? 1.6 : 1) * k;
-                ctx.lineJoin = 'round';
-                ctx.stroke();
-            }
-
-            for (const m of markers) {
-                const [x, y, z] = project(m.sin, m.cos, m.lam, Z);
-                m.x = c + x; m.y = c + y; m.z = x * x + y * y < R * R ? z : 0; // outside the lens counts as hidden
-                if (m.z <= 0 || m.home) continue;
-                const big = (m === hover ? 1.7 : 1) * k;
-                ctx.beginPath();
-                if (m.been) {
-                    ctx.arc(m.x, m.y, 2 * big, 0, Math.PI * 2);
-                    ctx.fillStyle = C.accent;
-                    ctx.shadowColor = C.accent;
-                    ctx.shadowBlur = document.documentElement.dataset.theme === "light" ? 0 : 8 * k; // no glow on paper
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                } else {
-                    ctx.arc(m.x, m.y, 2.4 * big, 0, Math.PI * 2);
-                    ctx.strokeStyle = C.wish;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                }
-            }
-            ctx.restore();
-        }
-
-        // Screen point (relative to the center) back to [lat, lon]; null off the globe
-        function unproject(x, y, Z) {
-            const rho = Math.hypot(x, y);
-            if (rho >= Z) return null;
-            if (!rho) return [phi0, lam0];
-            const cc = Math.asin(rho / Z), sc = Math.sin(cc), coc = Math.cos(cc), up = -y;
-            return [
-                Math.asin(coc * Math.sin(phi0) + up * sc * Math.cos(phi0) / rho),
-                lam0 + Math.atan2(x * sc, rho * Math.cos(phi0) * coc - up * Math.sin(phi0) * sc),
-            ];
-        }
-
-        // Zoom keeping the spot under (x, y) in place
-        function zoomTo(z, x = 0, y = 0) {
-            z = Math.max(1, Math.min(ZOOM_MAX, z));
-            const R = size / 2 - 6;
-            const before = unproject(x, y, R * zoom);
-            zoom = z;
-            const after = unproject(x, y, R * zoom);
-            if (before && after) {
-                lam0 += before[1] - after[1];
-                phi0 = Math.max(-80 * rad, Math.min(80 * rad, phi0 + before[0] - after[0]));
-            }
-            canvas.classList.toggle('zoomed', zoom > 1);
-            draw();
-        }
-
-        function frame() {
-            if (!dragging && !hover && !still && zoom === 1) lam0 += 0.0016;
-            draw();
-            if (visible) requestAnimationFrame(frame);
-        }
-
-        function nearest(e) {
-            const box = canvas.getBoundingClientRect();
-            const x = e.clientX - box.left, y = e.clientY - box.top;
-            let best = null, bestD = 100; // within 10px
-            for (const m of markers) {
-                if (!(m.z > 0)) continue;
-                const d = (m.x - x) ** 2 + (m.y - y) ** 2;
-                if (d < bestD) { best = m; bestD = d; }
-            }
-            if (best) return best;
-            bestD = 49; // trips: within 7px of a line
-            for (const t of TRIPS) {
-                for (const run of t.screen) {
-                    for (let i = 1; i < run.length; i++) {
-                        const [ax, ay] = run[i - 1], [bx, by] = run[i];
-                        const dx = bx - ax, dy = by - ay, len = dx * dx + dy * dy;
-                        const u = len ? Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / len)) : 0;
-                        const d = (ax + u * dx - x) ** 2 + (ay + u * dy - y) ** 2;
-                        if (d < bestD) { best = t; bestD = d; }
-                    }
-                }
-            }
-            return best;
-        }
-
-        function label(m) {
-            hover = m;
-            place.textContent = !m ? '' : m.paths ? m.name : (m.p[1] && m.p[1] !== m.p[0] ? `${m.p[0]}, ${m.p[1]}` : m.p[0]) + (m.been ? '' : ' (someday)');
-            if (still) draw();
-        }
-
-        const center = e => {
-            const box = canvas.getBoundingClientRect();
-            return [e.clientX - box.left - box.width / 2, e.clientY - box.top - box.height / 2];
-        };
-        const spread = () => {
-            const [a, b] = [...touches.values()];
-            return [Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), { clientX: (a.clientX + b.clientX) / 2, clientY: (a.clientY + b.clientY) / 2 }];
-        };
-
-        canvas.addEventListener('pointerdown', e => {
-            touches.set(e.pointerId, e);
-            canvas.setPointerCapture(e.pointerId);
-            if (touches.size === 2) { // two fingers: pinch to zoom
-                pinch = { d: spread()[0], zoom };
-                dragging = null;
-                canvas.classList.remove('dragging');
-                return;
-            }
-            dragging = { x: e.clientX, y: e.clientY, lam: lam0, phi: phi0, moved: false };
-            canvas.classList.add('dragging');
-        });
-        canvas.addEventListener('pointermove', e => {
-            if (touches.has(e.pointerId)) touches.set(e.pointerId, e);
-            if (pinch && touches.size === 2) {
-                const [d, mid] = spread();
-                zoomTo(pinch.zoom * d / pinch.d, ...center(mid));
-                return;
-            }
-            if (!dragging) { if (!pinch) label(nearest(e)); return; }
-            const dx = e.clientX - dragging.x, dy = e.clientY - dragging.y;
-            if (Math.abs(dx) + Math.abs(dy) > 3) dragging.moved = true;
-            lam0 = dragging.lam - dx * 0.5 * rad / zoom;
-            phi0 = Math.max(-80 * rad, Math.min(80 * rad, dragging.phi + dy * 0.5 * rad / zoom));
-            if (still) draw();
-        });
-        const release = e => {
-            touches.delete(e.pointerId);
-            if (pinch) { if (!touches.size) pinch = null; return; }
-            // A tap without dragging picks the nearest place or trip (how touch screens get labels)
-            if (dragging && !dragging.moved) label(nearest(e));
-            else if (e.pointerType !== 'mouse') label(null);
-            dragging = null;
-            canvas.classList.remove('dragging');
-        };
-        canvas.addEventListener('pointerup', release);
-        canvas.addEventListener('pointercancel', release);
-        canvas.addEventListener('wheel', e => {
-            // Let the page scroll on when there's no more zooming to do
-            if ((e.deltaY > 0 && zoom === 1) || (e.deltaY < 0 && zoom === ZOOM_MAX)) return;
-            e.preventDefault();
-            zoomTo(zoom * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.002)), ...center(e));
-        }, { passive: false });
-        document.querySelectorAll('.globe-zoom button').forEach(btn =>
-            btn.addEventListener('click', () => zoomTo(zoom * btn.dataset.zoom)));
-        canvas.addEventListener('pointerleave', e => { if (!dragging && e.pointerType === 'mouse') label(null); });
-
-        // Only spin while on screen
-        new IntersectionObserver(([entry]) => {
-            const was = visible;
-            visible = entry.isIntersecting;
-            if (visible && !was) requestAnimationFrame(frame);
-        }).observe(canvas);
-        window.addEventListener('resize', () => { resize(); draw(); });
-
-        resize();
-        requestAnimationFrame(frame);
-    });
+        range.addEventListener("input", show);
+        narrow.addEventListener("change", show);
+        show();
+    })();
 </script>
 
 {% endblock %}

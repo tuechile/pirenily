@@ -3,7 +3,7 @@
 (function () {
     // What every first-time visitor gets
     var DEFAULTS = {
-        light: true,
+        light: false,
         sound: false
     };
 

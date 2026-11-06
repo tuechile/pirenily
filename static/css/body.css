@@ -9,11 +9,6 @@
     --text: var(--c-text);
     --title: var(--c-title);
     --lead: var(--c-lead);
-    --globe-land: rgba(var(--fg-rgb), 0.32);
-    --globe-land-back: rgba(var(--fg-rgb), 0.05);
-    --globe-wish: var(--c-text);
-    --globe-home: rgba(var(--fg-rgb), 0.9);
-    --globe-route: rgba(var(--accent-rgb), 0.4);
     /* the p5 sketch paints its own white paper in every theme */
     --sketch-paper: rgb(255, 255, 255);
     --sketch-note: rgba(0, 0, 0, 0.55);
@@ -219,8 +214,8 @@
     z-index: 2;
     /* Ensure text stays above the images */
     position: relative;
-    width: 75vw;
-    /* Limit image width */
+    flex: 1 1 auto;
+    max-width: 60rem;
     text-align: justify;
     text-decoration: none;
     /* Adds space between the text and the image */
@@ -247,108 +242,6 @@
 .bio-text p {
     font-size: var(--fs-1);
     color: var(--c-text);
-}
-
-/* Travel globe on the right (drawn by the inline script in about.html) */
-.globe-stage {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.travel-globe {
-    width: clamp(260px, 37vw, 560px);
-    margin: 0;
-    text-align: center;
-    z-index: 0;
-}
-
-.travel-globe canvas {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1;
-    cursor: grab;
-    touch-action: pan-y;
-}
-
-.travel-globe canvas.dragging {
-    cursor: grabbing;
-}
-
-/* Zoomed in, a finger on the globe moves the globe rather than the page */
-.travel-globe canvas.zoomed {
-    touch-action: none;
-}
-
-.travel-globe .globe-zoom {
-    margin: 0.2rem 0 0;
-}
-
-.travel-globe .globe-zoom button {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1;
-    color: var(--text);
-    background: none;
-    border: 1px solid var(--border);
-    width: 1.6rem;
-    height: 1.6rem;
-    margin: 0 0.2rem;
-    padding: 0;
-    cursor: pointer;
-}
-
-.travel-globe .globe-zoom button:hover {
-    filter: var(--hover-blur);
-}
-
-.travel-globe .globe-place {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: var(--fs-note);
-    color: var(--title);
-    min-height: 1.8em;
-    margin: 0.4rem 0 0;
-}
-
-.travel-globe .globe-count,
-.travel-globe .globe-legend {
-    font-family: var(--font-body);
-    font-size: var(--fs-tiny);
-    line-height: 1.8;
-    color: var(--text);
-    margin: 0;
-}
-
-.travel-globe .globe-legend {
-    font-style: italic;
-}
-
-.travel-globe .globe-legend i {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin: 0 0.35rem 1px 0.6rem;
-    background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-}
-
-.travel-globe .globe-legend i.wish {
-    background: none;
-    box-shadow: none;
-    border: 1px solid var(--globe-wish);
-}
-
-.travel-globe .globe-legend i.home {
-    background: var(--globe-home);
-    box-shadow: none;
-}
-
-@media screen and (max-width: 880px) {
-    .travel-globe {
-        width: min(480px, 90vw);
-    }
 }
 
 @keyframes gradientHover {
@@ -1583,69 +1476,6 @@
     text-align: left;
 }
 
-/* About: "Where am I?" opens in place under the bio, instantly */
-.bio-where {
-    margin-top: 1.4rem;
-    text-align: left;
-}
-
-.bio-where summary {
-    display: inline-block;
-    font-family: var(--font-cinema);
-    font-size: 1.05rem;
-    color: var(--lead);
-    list-style: none;
-    cursor: pointer;
-}
-
-.bio-where summary::-webkit-details-marker {
-    display: none;
-}
-
-.bio-where summary::after {
-    content: " +";
-    font-family: var(--font-body);
-    color: var(--c-dim);
-}
-
-.bio-where[open] summary::after {
-    content: " \2212";
-}
-
-.bio-where summary:hover {
-    filter: var(--hover-blur);
-}
-
-.bio-where summary:focus-visible {
-    outline: 1px solid var(--accent);
-    outline-offset: 3px;
-}
-
-.bio-where ul {
-    list-style: none;
-    margin: 0.6rem 0 0;
-    padding: 0 0 0 0.9rem;
-    border-left: 1px solid var(--border);
-    display: grid;
-    gap: 0.35rem;
-}
-
-.bio-where li {
-    font-family: var(--font-body);
-    font-size: var(--fs-1);
-    line-height: 1.6;
-    color: var(--c-text);
-}
-
-.bio-where li strong {
-    font-weight: 400;
-    color: var(--title);
-}
-
-.bio-where li em {
-    color: var(--lead);
-}
-
 .bio-text .bio-where-more {
     margin: 0.6rem 0 0 0.9rem;
     font-size: var(--fs-note);
@@ -1658,6 +1488,178 @@
 
 .bio-where-more span {
     color: var(--c-faint);
+}
+
+/* About: five lengths of the bio, one shown at a time (the stretch bar picks it) */
+.bio-text > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.bio-text > div[hidden] {
+    display: none;
+}
+
+/* Level 1: five emoji on a diagonal across the middle */
+.bio-text > .bio-emoji {
+    display: block;
+    position: relative;
+    height: 60vh;
+    min-height: 320px;
+}
+
+.bio-emoji span {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+.bio-emoji span:nth-child(1) { left: 8%; top: 10%; }
+.bio-emoji span:nth-child(2) { left: 29%; top: 30%; }
+.bio-emoji span:nth-child(3) { left: 50%; top: 50%; }
+.bio-emoji span:nth-child(4) { left: 71%; top: 70%; }
+.bio-emoji span:nth-child(5) { left: 92%; top: 90%; }
+
+.bio-text p {
+    margin: 0;
+}
+
+.bio-text .bio-head {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--lead);
+    text-align: left;
+    margin: 1rem 0 0.2rem;
+}
+
+.bio-text .tag-row {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+.bio-skills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+    text-align: left;
+}
+
+.bio-skills h3 {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--fs-note);
+    color: var(--c-faint);
+    margin: 0 0 0.4rem;
+}
+
+.bio-roles {
+    margin: 0;
+    text-align: left;
+}
+
+.bio-roles > div {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-body);
+    font-size: var(--fs-1);
+    line-height: 1.6;
+    color: var(--c-text);
+}
+
+.bio-roles dt {
+    color: var(--title);
+}
+
+.bio-roles dt span {
+    display: block;
+    font-style: italic;
+    color: var(--lead);
+}
+
+.bio-roles dd {
+    margin: 0;
+}
+
+/* The bio changes length with the stretch bar, so the photo side stays at the top instead of riding the middle */
+@media screen and (min-width: 881px) {
+    .bio-container {
+        align-items: flex-start;
+    }
+
+    .bio-side {
+        position: sticky;
+        top: 6rem;
+    }
+}
+
+/* The stretch bar: drag it down and the bio gets longer. A see-through range input covers its full reach */
+.bio-stretch {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    position: sticky;
+    top: 6rem;
+    width: 14px;
+    height: 360px;
+    margin-right: 1vw;
+}
+
+.bio-stretch-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 360px;
+    background: var(--title);
+}
+
+.bio-stretch-range {
+    writing-mode: vertical-lr;
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: ns-resize;
+}
+
+.bio-stretch:hover .bio-stretch-bar {
+    filter: var(--hover-blur);
+}
+
+.bio-stretch:has(.bio-stretch-range:focus-visible) {
+    outline: 1px solid var(--accent);
+    outline-offset: 4px;
+}
+
+@media screen and (max-width: 880px) {
+    .bio-stretch {
+        display: none;
+    }
+
+    .bio-text {
+        max-width: 100%;
+    }
+
+    .bio-skills {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bio-roles > div {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.2rem;
+    }
 }
 
 /* ===== Strip cards (Code page, home Projects) =====
