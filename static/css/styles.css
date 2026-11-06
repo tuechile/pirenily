@@ -641,6 +641,33 @@ footer {
     visibility: hidden;
 }
 
+/* Page change: the old page blurs away and the next one comes into focus (cross-document view
+   transitions; browsers without them just swap pages). Reduced motion swaps instantly. */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: page-blur-out var(--dur-3) var(--ease-out) both;
+}
+
+::view-transition-new(root) {
+    animation: page-blur-in var(--dur-3) var(--ease-out) both;
+}
+
+:root[data-motion="reduced"]::view-transition-old(root),
+:root[data-motion="reduced"]::view-transition-new(root) {
+    animation: none;
+}
+
+@keyframes page-blur-out {
+    to { opacity: 0; filter: blur(12px); }
+}
+
+@keyframes page-blur-in {
+    from { opacity: 0; filter: blur(12px); }
+}
+
 /* ========================================= Video settings ========================================= */
 #video-container {
     display: flex;

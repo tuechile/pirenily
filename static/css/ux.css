@@ -2112,3 +2112,14 @@ html {
         grid-column: auto;
     }
 }
+
+/* Case studies: the header slides away on scroll down and back on scroll up (case_scripts.html) */
+:is(.navigator, .rc-bar) {
+    transition: transform var(--dur-2) var(--ease-out);
+    will-change: transform;
+}
+
+.nav-hidden :is(.navigator, .rc-bar) {
+    transform: translateY(-100%);
+    pointer-events: none;
+}

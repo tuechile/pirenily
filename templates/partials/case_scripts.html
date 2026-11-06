@@ -83,6 +83,21 @@
         window.addEventListener("keydown", (e) => { if (e.key === "Escape") shut(); });
     })();
 
+    // Header gets out of the way while reading down and comes back the moment you scroll up
+    (function () {
+        const root = document.documentElement;
+        const nav = document.querySelector(".navigator, .rc-bar");
+        if (!nav) return;
+        let last = window.scrollY;
+        window.addEventListener("scroll", () => {
+            const y = window.scrollY;
+            if (Math.abs(y - last) < 6) return;
+            const down = y > last && y > nav.offsetHeight;
+            root.classList.toggle("nav-hidden", down && !root.classList.contains("menu-open"));
+            last = y;
+        }, { passive: true });
+    })();
+
     // GIF-style videos: data-rate sets the speed; loading resets playbackRate, so set it again on metadata
     document.querySelectorAll("video[data-rate]").forEach(v => {
         const rate = Number(v.dataset.rate);
