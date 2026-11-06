@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "342"
+ASSET_VERSION = "345"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -108,9 +108,8 @@ def _date_sort_key(filename):
 NAV_SECTIONS = {
     "about": ["about"],
     "code": ["code"],
-    "play": ["play", "afvs", "gifafvs", "essays", "fysemr", "illustration", "portal", "street", "superface"],
-    "projects": ["hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg", "commonspirit", "cs1710",
-                 "pirenily"],
+    "play": ["play"],
+    "projects": ["projects"],
 }
 
 
@@ -262,38 +261,38 @@ SEARCH_INDEX = [
                "aero tone", "arduino", "neural reconstruction", "handwritten curves", "handwriting",
                "machine learning", "ascii avatar", "ascii", "avatar", "my superface", "ukuraoke", "ukulele",
                "karaoke", "backtiming"]),
-    ("/hackharvard", ["hackharvard", "hack harvard", "hackharvard 2026", "hack to the moon", "hackathon",
+    ("/projects/hackharvard", ["hackharvard", "hack harvard", "hackharvard 2026", "hack to the moon", "hackathon",
                       "harvard hackathon", "hhuh", "director of design"]),
-    ("/involvement", ["involvement", "campus involvement", "campus", "marketing", "office for the arts", "ofa",
+    ("/projects/involvement", ["involvement", "campus involvement", "campus", "marketing", "office for the arts", "ofa",
                       "harvard office for the arts", "content creator", "harvard project for international relations",
                       "internal relations", "extracurriculars", "organizations"]),
-    ("/merch", ["merch", "merchandise", "hpair", "hconf", "aconf", "hudc", "the game", "harvard yale", "tote", "tote bag", "crest", "notebook",
+    ("/projects/merch", ["merch", "merchandise", "hpair", "hconf", "aconf", "hudc", "the game", "harvard yale", "tote", "tote bag", "crest", "notebook",
                 "stickers", "sticker", "pin", "t shirt", "shirt"]),
-    ("/olympics", ["olympics", "cnn olympics", "olympic", "hoi thao", "cnn hoi thao", "team logos"]),
-    ("/recit", ["recit", "recit film studio", "film studio", "hanoi"]),
-    ("/highlander", ["highlander", "cnn english club", "english club", "cec", "cec oscar", "oscar", "short film",
+    ("/projects/olympics", ["olympics", "cnn olympics", "olympic", "hoi thao", "cnn hoi thao", "team logos"]),
+    ("/projects/recit", ["recit", "recit film studio", "film studio", "hanoi"]),
+    ("/projects/highlander", ["highlander", "cnn english club", "english club", "cec", "cec oscar", "oscar", "short film",
                      "film", "matcha"]),
     ("https://www.facebook.com/official.ivmun", ["ivmun", "model un", "model united nations", "mun",
                                                  "vietnam model united nations", "conference"]),
-    ("/afvs", ["afvs", "afvs 97", "coding and interactivity", "interactivity", "interactive", "pig",
+    ("/play/afvs", ["afvs", "afvs 97", "coding and interactivity", "interactivity", "interactive", "pig",
                "a pigs death", "a pigs funeral", "pigs death", "pigs funeral", "sculpture", "projection", "360"]),
-    ("/gifafvs", ["gifafvs", "what brings you here", "gif", "gifs", "p5", "p5js", "sketch",
+    ("/play/gifafvs", ["gifafvs", "what brings you here", "gif", "gifs", "p5", "p5js", "sketch",
                   "mind others business", "processing"]),
-    ("/essays", ["essays", "essay", "video essays", "video essay", "video"]),
-    ("/fysemr", ["fysemr", "fysemr 65r", "tea garden", "land of rivers", "the land of rivers", "rivers",
+    ("/play/essays", ["essays", "essay", "video essays", "video essay", "video"]),
+    ("/play/fysemr", ["fysemr", "fysemr 65r", "tea garden", "land of rivers", "the land of rivers", "rivers",
                  "clip studio", "indesign"]),
-    ("/superface", ["superface", "super face", "self portrait", "self portraits", "portrait", "portraits",
+    ("/play/superface", ["superface", "super face", "self portrait", "self portraits", "portrait", "portraits",
                     "makeup", "persona"]),
-    ("/illustration", ["illustration", "illustrations", "drawing", "drawings", "cartoon", "cartoons", "art"]),
-    ("/portal", ["portal", "the portal", "poems", "poem", "poetry", "short stories", "stories", "writing"]),
-    ("/street", ["street", "street photography", "photography", "photos", "photo", "nikon", "camera"]),
-    ("/t4sg", ["t4sg", "2ft", "2feet", "2 ft", "2 feet", "2ft prosthetics", "prosthetics", "t4sg x 2ft",
+    ("/play/illustration", ["illustration", "illustrations", "drawing", "drawings", "cartoon", "cartoons", "art"]),
+    ("/play/portal", ["portal", "the portal", "poems", "poem", "poetry", "short stories", "stories", "writing"]),
+    ("/play/street", ["street", "street photography", "photography", "photos", "photo", "nikon", "camera"]),
+    ("/projects/t4sg", ["t4sg", "2ft", "2feet", "2 ft", "2 feet", "2ft prosthetics", "prosthetics", "t4sg x 2ft",
                "tech 4 social good", "tech for social good", "inventory"]),
-    ("/commonspirit", ["commonspirit", "common spirit", "commonspirit health", "t4sg x commonspirit", "chna",
+    ("/projects/commonspirit", ["commonspirit", "common spirit", "commonspirit health", "t4sg x commonspirit", "chna",
                        "health", "dashboard"]),
-    ("/cs1710", ["cs171", "cs1710", "cs 171", "unicode", "chi x rain", "rain", "typos", "the typos",
+    ("/projects/cs1710", ["cs171", "cs1710", "cs 171", "unicode", "chi x rain", "rain", "typos", "the typos",
                  "data visualization", "data vis", "dataviz", "visualization"]),
-    ("/pirenily", ["this website", "this site", "website", "how i built this", "how i built this website",
+    ("/projects/pirenily", ["this website", "this site", "website", "how i built this", "how i built this website",
                    "how this website was built", "pirenily com", "flask", "jinja", "jinja2"]),
 ]
 
@@ -493,7 +492,7 @@ def unlock():
 
 
 def recruiter_link():
-    # ?next=/t4sg lets the CV link straight to a case study and unlock it on the way.
+    # ?next=/projects/t4sg lets the CV link straight to a case study and unlock it on the way.
     # The link also turns on recruiter mode: home, About, Play and Writing become the light recruiter pages.
     target = request.args.get("next", "")
     if not target.startswith("/") or target[1:2] in ("/", "\\"):
@@ -545,38 +544,38 @@ def recruiter_view():
 # img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture;
 # chips are the skills that drop onto the picture on hover.
 RECRUITER_PROJECTS = [
-    {"href": "/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Figma", "User Interviews", "Affinity Mapping", "User Flows", "Lo-fi → Hi-fi", "Usability Testing"],
+    {"href": "/projects/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Figma", "User Interviews", "Affinity Mapping", "User Flows", "Lo-fi → Hi-fi", "Usability Testing"],
      "desc": "An offline-first inventory system for 2ft Prosthetics' volunteers across 10 countries. Delivered as a tested hi-fi prototype.",
      "img": ("ux", "t4sg/preview.webp"), "alt": "T4SG × 2ft inventory system preview", "note": "SUPER DETAILED",
      "previews": ("ux", ["t4sg/hifi view.webp", "t4sg/hifi add.webp", "t4sg/userflow.png", "t4sg/affmap.png"])},
-    {"href": "/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design & Engineering", "tags": ["selected", "brand"], "chips": ["Brand Identity", "Campaign Design", "Web Design", "Figma Make", "Merch Design", "Team Leadership"],
+    {"href": "/projects/hackharvard", "title": "HackHarvard 2026: Hack to the Moon", "role": "Director of Design & Engineering", "tags": ["selected", "brand"], "chips": ["Brand Identity", "Campaign Design", "Web Design", "Figma Make", "Merch Design", "Team Leadership"],
      "desc": "Led a team of 6 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.",
      "img": ("design", "hackharvard/logo-thumb.png"), "alt": "HackHarvard logo in red on black", "note": "DETAILED AND NUMBERS",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "hackharvard/site-about.jpg", "hackharvard/site-tracks.jpg", "hackharvard/stickers.png"])},
-    {"href": "/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Project Management", "Stakeholder Interviews", "Figma", "Prototyping", "Data Visualization"],
+    {"href": "/projects/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Project Management", "Stakeholder Interviews", "Figma", "Prototyping", "Data Visualization"],
      "desc": "12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Shipped.",
      "img": ("ux", "commonspirit/preview.webp"), "alt": "T4SG × CommonSpirit Health redesign preview", "note": "LEAD, LESS DETAILED",
      "previews": ("ux", ["commonspirit/redes1.webp", "commonspirit/redes2.webp", "commonspirit/impact-effort.png"])},
-    {"href": "/cs1710", "title": "The Story of Unicode", "role": "Developer & Designer", "tags": ["selected"], "chips": ["D3.js", "JavaScript", "Data Visualization", "Prototyping", "Think-aloud Testing"],
+    {"href": "/projects/cs1710", "title": "The Story of Unicode", "role": "Developer & Designer", "tags": ["selected"], "chips": ["D3.js", "JavaScript", "Data Visualization", "Prototyping", "Think-aloud Testing"],
      "desc": "A scroll-driven data story for non-technical readers, our CS 1710 final as a team of two. Live, and both think-aloud testers got the main message.",
      "img": ("ux", "cs171/preview.gif"), "alt": "Visualization: A Unicode Story", "note": "DETAILED, FUN",
      "previews": ("ux", ["cs171/hifi overview.png", "cs171/hifi time.png", "cs171/hifi emoji.png", "cs171/map_q.png"])},
-    {"href": "/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [], "chips": ["Python", "Flask", "Jinja2", "HTML", "CSS", "JavaScript"],
+    {"href": "/projects/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [], "chips": ["Python", "Flask", "Jinja2", "HTML", "CSS", "JavaScript"],
      "desc": "How I built this website. Hardcoded, and every visual element is drawn by me ^v^ (not the fonts).",
      "img": None, "alt": "", "note": "", "previews": None},
-    {"href": "/merch", "title": "Merch Compilations", "role": "Designer", "tags": ["brand"], "chips": ["Merch Design", "Print Design", "Illustration", "Adobe Creative Suite"],
+    {"href": "/projects/merch", "title": "Merch Compilations", "role": "Designer", "tags": ["brand"], "chips": ["Merch Design", "Print Design", "Illustration", "Adobe Creative Suite"],
      "desc": "Crests, posters and goods for HPAIR, IVMUN and HUDC.",
      "img": ("design", "merch/hpair-crest.png"), "alt": "HCONF crest", "note": "",
      "previews": ("design", ["merch/aconf-poster.png", "merch/hconf-sketch.png", "merch/ivmun-placards.webp", "merch/hudc-the-game-shirt.webp"])},
-    {"href": "/involvement", "title": "Campus Involvement", "role": "Director of Design & Engineering · Student Content Creator · Director of Internal Relations", "tags": [], "chips": ["Team Leadership", "Campaign Strategy", "Social Analytics", "Event Marketing"],
+    {"href": "/projects/involvement", "title": "Campus Involvement", "role": "Director of Design & Engineering · Student Content Creator · Director of Internal Relations", "tags": [], "chips": ["Team Leadership", "Campaign Strategy", "Social Analytics", "Event Marketing"],
      "desc": "Three Harvard organizations, with a measured result for each.",
      "img": ("design", "hackharvard/poster-apps.jpg"), "alt": "HackHarvard 2026 poster announcing that hacker applications are open", "note": "",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "merch/hpair-crest.png", "hackharvard/lanyard.webp"])},
-    {"href": "/olympics", "title": "CNN Olympics", "role": "Commissioned Designer", "tags": ["brand"], "chips": ["Logo Design", "Brand Identity", "Illustration"],
+    {"href": "/projects/olympics", "title": "CNN Olympics", "role": "Commissioned Designer", "tags": ["brand"], "chips": ["Logo Design", "Brand Identity", "Illustration"],
      "desc": "Commissioned team logos for CNN Hội Thao.",
      "img": ("olympics", "6Artboard.webp"), "alt": "CNN Olympics team logos", "note": "",
      "previews": ("olympics", ["2Sapphire.jpg", "4Ruby.jpg", "5Emerald.jpg", "3Amethyst.jpg"])},
-    {"href": "/recit", "title": "Recít Film Studio", "role": "Art Director", "tags": [], "chips": ["Art Direction", "Poster Design", "Film"],
+    {"href": "/projects/recit", "title": "Recít Film Studio", "role": "Art Director", "tags": [], "chips": ["Art Direction", "Poster Design", "Film"],
      "desc": "Posters and banners for a student-run Hanoi film studio making short films about Vietnamese stories.",
      "img": ("art_direction", "recit.jpg"), "alt": "Recít Film Studio", "note": "",
      "previews": ("recit", ["recitbanner.jpg", "recitposter.jpg"])},
@@ -584,7 +583,7 @@ RECRUITER_PROJECTS = [
      "desc": "Led design with a team of 7 for a conference of over 1,000 people.",
      "img": ("art_direction", "ivmun-cover.webp"), "alt": "IVMUN 2023 banner: the title over red-green mountains, a crescent moon and a geometric tower", "note": "",
      "previews": ("art_direction", ["ivmun-quarter.webp", "ivmun-banner.webp", "ivmun-header.webp", "ivmun-storm.webp"])},
-    {"href": "/highlander", "title": "CNN English Club: Highlander", "role": "Director", "tags": [], "chips": ["Directing", "Short Film", "Storyboarding"],
+    {"href": "/projects/highlander", "title": "CNN English Club: Highlander", "role": "Director", "tags": [], "chips": ["Directing", "Short Film", "Storyboarding"],
      "desc": "A short film production team for CEC Oscar, a film event of CNN English Club.",
      "img": ("art_direction", "highlander.jpg"), "alt": "Highlander short film", "note": "",
      "previews": ("art_direction", ["poster.jpg"])},
@@ -613,23 +612,23 @@ RECRUITER_PLAY = [
      "desc": "Syncs with my calendars and works backwards from each event to maximize grwm time.", "previews": None},
     {"title": "CineNode", "cat": "code", "when": "Jun 2026 – Ongoing", "at": 999994, "href": None,
      "desc": "A node-based pipeline for generating and arranging shots into a shot list and storyboard. Started at the TekTrek residency.", "previews": None},
-    {"title": "Street Photography", "cat": "art", "when": "Ongoing", "at": 999970, "href": "/street",
+    {"title": "Street Photography", "cat": "art", "when": "Ongoing", "at": 999970, "href": "/play/street",
      "desc": "Through the lens of my Nikon D5100 since 2017.", "previews": ("street", None)},
-    {"title": "Coding and Interactivity", "cat": "interactivity", "when": "Ongoing", "at": 999999, "href": "/afvs",
+    {"title": "Coding and Interactivity", "cat": "interactivity", "when": "Ongoing", "at": 999999, "href": "/play/afvs",
      "desc": "Self-expression through code: press a key to see the face react.",
      "previews": ("afvs", ["p1-final.jpg", "p1-360-1.jpg", "p1-360-2.jpg", "p1-code-face.jpg", "p1-progress-1.jpg", "p1-progress-2.jpg"])},
-    {"title": "What Brings You Here", "cat": "interactivity", "when": "Oct 2024", "at": 202410, "href": "/gifafvs",
+    {"title": "What Brings You Here", "cat": "interactivity", "when": "Oct 2024", "at": 202410, "href": "/play/gifafvs",
      "desc": "Do you wish someone would tell you what to do?", "previews": ("processing", ["candy.png", "fish.png", "lid_open.png"])},
-    {"title": "The land of rivers: An imagined tea garden", "cat": "essays", "when": "December 2024", "at": 202412, "href": "/fysemr",
+    {"title": "The land of rivers: An imagined tea garden", "cat": "essays", "when": "December 2024", "at": 202412, "href": "/play/fysemr",
      "desc": "Final project for FYSEMR 65R, created with Clip Studio Paint and InDesign.",
      "previews": ("fish", ["full.webp", "fish outline.jpg", "no fish.webp", "no sub.webp"])},
-    {"title": "Superface", "cat": "art", "when": "Delayed after 2023", "at": 202300, "href": "/superface",
+    {"title": "Superface", "cat": "art", "when": "Delayed after 2023", "at": 202300, "href": "/play/superface",
      "desc": "Self-edited self-portraits exploring makeup and persona.", "previews": ("self", None)},
-    {"title": "Video essays", "cat": "essays", "when": "May 2025", "at": 202505, "href": "/essays",
+    {"title": "Video essays", "cat": "essays", "when": "May 2025", "at": 202505, "href": "/play/essays",
      "desc": "A list of possible video essays I might create.", "previews": None},
-    {"title": "The Portal", "cat": "essays", "when": "Discontinued in 2021", "at": 202100, "href": "/portal",
+    {"title": "The Portal", "cat": "essays", "when": "Discontinued in 2021", "at": 202100, "href": "/play/portal",
      "desc": "A collection of poems and short stories.", "previews": ("portal", None)},
-    {"title": "Illustrations", "cat": "art", "when": "Delayed after 2022", "at": 202200, "href": "/illustration",
+    {"title": "Illustrations", "cat": "art", "when": "Delayed after 2022", "at": 202200, "href": "/play/illustration",
      "desc": "My journey in the world of drawing cartoons (2018-2024).", "previews": ("illustration", None)},
 ]
 RECRUITER_PLAY.sort(key=lambda c: -c["at"])
@@ -654,12 +653,12 @@ def home():
     return redirect(url)
 
 
-@app.route("/t4sg")
+@app.route("/projects/t4sg")
 def t4sg():
     return render_template(PROJECT_TEMPLATES["t4sg"])
 
 
-@app.route("/commonspirit")
+@app.route("/projects/commonspirit")
 def commonspirit():
     return render_template(PROJECT_TEMPLATES["commonspirit"])
 
@@ -700,27 +699,27 @@ def play():
 def writing():
     return render_template("recruiter/writing.html")
 
-@app.route("/illustration")
+@app.route("/play/illustration")
 def illustration():
     return render_gallery("illustration")
 
-@app.route("/portal")
+@app.route("/play/portal")
 def portal():
     return render_gallery("portal")
 
-@app.route("/street")
+@app.route("/play/street")
 def street():
     return render_gallery("street")
 
-@app.route("/superface")
+@app.route("/play/superface")
 def superface():
     return render_gallery("superface")
 
-@app.route("/afvs")
+@app.route("/play/afvs")
 def afvs():
     return render_template("personal websites/afvs.html")
 
-@app.route("/gifafvs")
+@app.route("/play/gifafvs")
 def gifafvs():
     return render_template("personal websites/gifafvs.html")
 
@@ -749,39 +748,39 @@ def drive_video(name):
     passed.update({"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=86400"})
     return Response(chunks(), status=upstream.status, mimetype="video/mp4", headers=passed)
 
-@app.route("/fysemr")
+@app.route("/play/fysemr")
 def fysemr():
     return render_template("personal websites/fysemr.html")
 
-@app.route("/essays")
+@app.route("/play/essays")
 def essays():
     return render_template("personal websites/essays.html")
 
-@app.route("/highlander")
+@app.route("/projects/highlander")
 def highlander():
     return render_template("collab websites/highlander.html")
 
-@app.route("/recit")
+@app.route("/projects/recit")
 def recit():
     return render_template("collab websites/recit.html")
 
-@app.route("/olympics")
+@app.route("/projects/olympics")
 def olympics():
     return render_gallery("olympics")
 
-@app.route("/hackharvard")
+@app.route("/projects/hackharvard")
 def hackharvard():
     return render_template("collab websites/hackharvard.html")
 
-@app.route("/merch")
+@app.route("/projects/merch")
 def merch():
     return render_template("collab websites/merch.html")
 
-@app.route("/involvement")
+@app.route("/projects/involvement")
 def involvement():
     return render_template("involvement.html")
 
-@app.route("/cs1710")
+@app.route("/projects/cs1710")
 def cs171():
     return render_template(PROJECT_TEMPLATES["cs171"])
 
@@ -824,12 +823,30 @@ def commit_weeks():
     return weeks
 
 
-@app.route("/pirenily")
+@app.route("/projects/pirenily")
 def pirenily():
     # Reading mode: a recording of the essay, shown only once the file exists
     path = os.path.join(app.static_folder, "asset", "audio", "pirenily-essay.mp3")
     narration = url_for("static", filename="asset/audio/pirenily-essay.mp3", v=_file_hash(path)) if os.path.isfile(path) else None
     return render_template(PROJECT_TEMPLATES["pirenily"], narration=narration, commit_weeks=commit_weeks())
+
+
+# Old flat addresses (/t4sg, /afvs, ...) moved under /projects/ and /play/; send them along
+OLD_PAGE_PATHS = {name: section for section, names in (
+    ("projects", ["t4sg", "commonspirit", "cs1710", "pirenily", "hackharvard", "merch", "involvement",
+                  "olympics", "recit", "highlander"]),
+    ("play", ["illustration", "portal", "street", "superface", "afvs", "gifafvs", "fysemr", "essays"]),
+) for name in names}
+
+for _name, _section in OLD_PAGE_PATHS.items():
+    app.add_url_rule(f"/{_name}", f"old_{_name}",
+                     lambda _to=f"/{_section}/{_name}": redirect(_to, code=301))
+
+
+@app.route("/projects")
+@app.route("/projects/")
+def projects():
+    return redirect("/#portfolio")
 
 
 # Any address that isn't a page goes to the landing page. Only when no route matched, so a missing

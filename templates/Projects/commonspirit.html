@@ -22,7 +22,7 @@
 
 {% call cs.body() %}
 
-    {% call cs.section("Context", lead="The tool worked, but staff still read 50–60 PDFs a year by hand") %}
+    {% call cs.section("Context", label="small") %}
     <p>
         CommonSpirit Health is the largest nonprofit health system in the U.S., with 138 hospitals in 24
         states. Its Community Investment Program (CIP) lends money, mostly below market rate, to groups
@@ -39,46 +39,52 @@
     </p>
     {% endcall %}
 
-    {{ cs.section("Research", lead="I interviewed 6 CommonSpirit board members one on one") }}
+    {% call cs.section("Research", label="small") %}
+    <p class="cs-statement">
+        I interviewed 6 CommonSpirit board members one on one.
+    </p>
+    {% endcall %}
 
-    {{ cs.insights("Four pain points", [
+    {{ cs.boxes([
         ("Reading by hand", "Staff read 50–60 CHNA PDFs a year to pull out the key points."),
         ("No lookup across regions", "There was no way to find one priority across regions, and terms like \"access to care\" stayed vague."),
         ("Stale between cycles", "CHNAs update every three years, so the tool went stale in between."),
         ("No link between hospitals", "Hospitals couldn't see who shared a priority or compare communities over time."),
-    ]) }}
+    ], title="4 main pain points", cols=2) }}
 
     {{ cs.section("Idea", lead="We cut the tool down to four pages") }}
 
-    {% call cs.media_text(img('ux', 'commonspirit/impact-effort.png'),
-                          "Impact x Effort prioritization board mapping feature ideas from research") %}
-    <p>
-        We ranked every idea from research (KPI numbers, region maps, hospital comparison charts, batch
-        upload, notes and more) by impact and effort. That decided what came first and what we left out
-        on purpose.
-    </p>
+    {% call cs.block() %}
+    <h3 class="cs-subheading">Feature decisions by impact × effort</h3>
+    <div class="split split-center">
+        {{ cs.card(img('ux', 'commonspirit/impact-effort.png'),
+                   "Impact x Effort prioritization board mapping feature ideas from research", "sm") }}
+        <div class="cs-prose">
+            <p>
+                We ranked every idea from research (KPI numbers, region maps, hospital comparison charts,
+                batch upload, notes and more) by impact and effort. That decided what came first and what we
+                left out on purpose.
+            </p>
+        </div>
+    </div>
     {% endcall %}
 
+    {{ cs.boxes([
+        ("Home", "Holds the numbers staff check first."),
+        ("Regional", "Many priorities turned out to be shared well beyond one city."),
+        ("Compare", "The CIP team's original ask."),
+        ("Trends", "Kept the one part of the old tool staff praised most."),
+    ], title="Four pages made the cut") }}
+
     {% call cs.section() %}
-    <p>
-        Four pages made the cut. <strong>Home</strong> holds the numbers staff check first.
-        <strong>Regional</strong> exists because many priorities turned out to be shared well beyond one
-        city. <strong>Compare</strong> was the CIP team's original ask. <strong>Trends</strong> kept the one
-        part of the old tool staff praised most.
-    </p>
     <p>
         Four pages plus settings didn't fit in the old top nav, so we moved it to a left sidebar. We also
         swapped the generic dashboard theme for CommonSpirit's own colors, so the tool looked like theirs.
     </p>
     {% endcall %}
 
-    {% call cs.section("My Contribution", lead="I rebuilt Settings from one bare screen into a Preferences flow") %}
-    <p>
-        Besides the system design, I owned Account and Settings. The old page was a single dark screen with
-        a username, an email and a bio, so I split it in two. That way the first chart staff see already
-        matches how they work.
-    </p>
-    {% endcall %}
+    {{ cs.section("Contribution", lead="I rebuilt Settings from one bare screen into a Preferences flow",
+                  index="My Contribution") }}
 
     {{ cs.boxes([
         ("Account", "Profile with role and avatar, plus password, two-factor login and data export."),
@@ -91,23 +97,14 @@
     {{ cs.figure(img('ux', 'commonspirit/redes2.webp'), "CommonSpirit Health redesign, Account page", size="lg",
                  caption="Account opens straight from the profile card, so it's the first settings screen staff see.") }}
 
-    {% call cs.section("Testing", lead="The same decisions took less time on the redesign") %}
-    <p>
-        In the 1:1 interviews, all 6 board members worked through the same decisions on the old tool and on
-        our redesign while we timed each one.
-    </p>
-    {% endcall %}
+    {{ cs.section("Testing", lead="The same decisions took less time on the redesign") }}
 
     {{ cs.stats([
         ("35%", "less time per task than the old tool, projected from testing"),
     ]) }}
 
-    {% call cs.section() %}
-    <p>
-        <strong>How we measured it:</strong> from those timed sessions we project about 35% less time per
-        task. That figure comes from testing, not from use.
-    </p>
-    {% endcall %}
+    {{ cs.note("How we measured it",
+               "In the 1:1 interviews, all 6 board members worked through the same decisions on the old tool and on our redesign while we timed each one.<br><br>From those timed sessions we project about 35% less time per task. That figure comes from testing, not from use.") }}
 
     {% call cs.section("Reflection", lead="In a tool people open every day, small system choices matter most") %}
     <p>

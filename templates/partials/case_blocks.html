@@ -338,7 +338,7 @@
 
 
 {# §11 Call to action (use inside a section) — a panel link with the destination's host.
-   Site-internal links ("/hackharvard") open in the same tab; kicker overrides the small label. #}
+   Site-internal links ("/projects/hackharvard") open in the same tab; kicker overrides the small label. #}
 {% macro cta(href, label) %}
 {% set internal = href.startswith('/') %}
 <a href="{{ href }}"{% if not internal %} target="_blank" rel="noopener"{% endif %} class="cta-button">
