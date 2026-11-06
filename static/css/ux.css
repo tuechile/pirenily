@@ -94,7 +94,7 @@
 .rollout-phase {
     font-family: var(--font-body);
     font-size: var(--fs-1);
-    color: var(--accent);
+    color: var(--accent-text);
     text-transform: uppercase;
     margin: 0 0 var(--s-2) 0;
 }
@@ -213,7 +213,7 @@ html {
 }
 
 .pill {
-    color: var(--accent);
+    color: var(--accent-text);
     padding: 4px 10px;
     font-size: var(--fs-1);
     opacity: 0.95;
@@ -648,7 +648,7 @@ html {
 
 .bio-text h2 {
     font-size: var(--fs-3);
-    color: var(--accent);
+    color: var(--accent-text);
     font-weight: 600;
 }
 
@@ -1588,7 +1588,7 @@ html {
 }
 
 .essay-week-note {
-    color: var(--accent);
+    color: var(--accent-text);
     align-self: end;
 }
 
@@ -1866,7 +1866,7 @@ html {
     font-size: var(--fs-kicker);
     font-style: normal;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .img-caption a {
@@ -1926,7 +1926,7 @@ html {
     content: counter(point, decimal-leading-zero);
     padding-top: 0.3rem;
     font-size: var(--fs-kicker);
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .cs-stats {
@@ -1983,7 +1983,7 @@ html {
 
 .cs-box .cs-label {
     margin-bottom: var(--s-2);
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .cs-box p {

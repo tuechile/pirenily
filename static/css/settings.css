@@ -26,6 +26,11 @@
     --view-bubble: rgba(255, 255, 255, 0.75);   /* a white bubble, lighter than the paper */
     --rail-ink: #b3aca5;              /* case study rail at rest: a solid pale ink, so lines and rings don't stack */
     --rail-ink-soft: #ddd7d0;         /* its track */
+    --accent-text: var(--rail-ink);   /* no pink type on paper: accent text goes the rail's pale ink */
+}
+
+:root[data-theme="light"] .essay-notes li::marker {
+    color: var(--rail-ink);
 }
 
 /* No glows on paper: selected text is plain pink */
@@ -35,7 +40,7 @@
     background-color: transparent;
 }
 
-/* Text that's already pink selects yellow, so it still reads as selected */
+/* Text that's already pink selects yellow, so it still reads as selected (accent text is grey now, but keep it legible) */
 :root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .gif-text .gif-kicker, .page-note a, .card__meta)::selection,
 :root[data-theme="light"] :is(.feedback-footer a, .rollout-phase, .bio-text h2, .gif-text .gif-kicker, .page-note a, .card__meta) ::selection {
     color: var(--yellow-select);
@@ -272,7 +277,7 @@ body:not(.rc) p a:hover {
 }
 
 :root[data-mode="easy"] :is(h1, h2, h3, h4, .page-title, .case-title, .bio-name, .cs-heading, .cs-subheading,
-    .insights-title, .next-case-title, .cta-title, .project-thumb-title, .strip-caption, .nav-header, .header):not(.cs-label) {
+    .insights-title, .next-case-title, .cta-title, .cs-eyebrow--title, .project-thumb-title, .strip-caption, .nav-header, .header):not(.cs-label) {
     font-family: var(--font-head);
     font-weight: 400;
     -webkit-text-stroke: var(--head-stroke) currentColor;

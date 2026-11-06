@@ -303,7 +303,7 @@
 .gif-text .gif-kicker {
     font-style: italic;
     font-size: var(--fs-1);
-    color: var(--accent);
+    color: var(--accent-text);
     text-align: left;
     margin: 0 0 0.3rem;
 }
@@ -761,7 +761,7 @@
 
 .view-btn:hover,
 .view-btn:focus-visible {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 /* Five tabs: tighten so the row fits a phone */
@@ -1139,7 +1139,7 @@
 }
 
 :root[data-mode="mine"] :is(#portfolio, #filterToggle) .view-btn.active {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 /* On laptops and up the words are stacked in both views (rails, or Your view's column),
@@ -1338,7 +1338,7 @@
     :root[data-mode="mine"] #portfolio .view-current {
         font-style: italic;
         font-size: 1.1rem;
-        color: var(--accent);
+        color: var(--accent-text);
     }
 
     :root[data-mode="mine"] #portfolio .view-toggle .view-btn {
@@ -1459,7 +1459,7 @@
 
 /* Same links as the home page's feedback footer */
 .page-note a {
-    color: var(--accent);
+    color: var(--accent-text);
     text-decoration: none;
     transition: filter var(--dur-1) var(--ease-out);
 }
@@ -1483,7 +1483,7 @@
 
 .bio-where-more a {
     font-style: italic;
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .bio-where-more span {

@@ -13,6 +13,7 @@
     --sheet: rgb(var(--sheet-rgb));
     --bg: rgb(var(--bg-rgb));
     --accent: #1ca591;
+    --accent-text: var(--accent);            /* accent-coloured text; light mode swaps it for the rail grey */
     --c-strong: rgb(var(--fg-rgb));          /* #fff */
     --c-title: rgba(var(--fg-rgb), 0.933);   /* #eee */
     --c-soft: rgba(var(--fg-rgb), 0.867);    /* #ddd */
@@ -167,7 +168,7 @@ body {
 }
 
 .feedback-footer a {
-    color: var(--accent);
+    color: var(--accent-text);
     text-decoration: none;
     transition: filter var(--dur-1) var(--ease-out);
 }
@@ -578,7 +579,7 @@ footer {
 }
 
 *::selection {
-    color: var(--accent);
+    color: var(--accent-text);
     text-shadow: 0px 0px 5px rgba(var(--fg-rgb), 1.5);
     background-color: transparent;
 }
