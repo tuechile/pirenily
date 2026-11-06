@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "345"
+ASSET_VERSION = "347"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -544,7 +544,7 @@ def recruiter_view():
 # img and previews are (IMAGE_FOLDERS key, file(s)); note is what the cursor says over the picture;
 # chips are the skills that drop onto the picture on hover.
 RECRUITER_PROJECTS = [
-    {"href": "/projects/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Figma", "User Interviews", "Affinity Mapping", "User Flows", "Lo-fi → Hi-fi", "Usability Testing"],
+    {"href": "/projects/t4sg", "title": "T4SG × 2ft Prosthetics", "role": "UX Designer", "tags": ["selected", "uiux"], "chips": ["Figma", "User Interviews", "Affinity Mapping", "User Flows", "Lo-fi → Hi-fi", "Usability Testing"],
      "desc": "An offline-first inventory system for 2ft Prosthetics' volunteers across 10 countries. Delivered as a tested hi-fi prototype.",
      "img": ("ux", "t4sg/preview.webp"), "alt": "T4SG × 2ft inventory system preview", "note": "SUPER DETAILED",
      "previews": ("ux", ["t4sg/hifi view.webp", "t4sg/hifi add.webp", "t4sg/userflow.png", "t4sg/affmap.png"])},
@@ -562,7 +562,7 @@ RECRUITER_PROJECTS = [
      "previews": ("ux", ["cs171/hifi overview.png", "cs171/hifi time.png", "cs171/hifi emoji.png", "cs171/map_q.png"])},
     {"href": "/projects/pirenily", "title": "Pirenily", "role": "Designer & Developer", "tags": [], "chips": ["Python", "Flask", "Jinja2", "HTML", "CSS", "JavaScript"],
      "desc": "How I built this website. Hardcoded, and every visual element is drawn by me ^v^ (not the fonts).",
-     "img": None, "alt": "", "note": "", "previews": None},
+     "img": ("other", "coming-soon.webp"), "alt": "Coming soon: an arched doorway with a key, a moon and a river", "note": "", "previews": None},
     {"href": "/projects/merch", "title": "Merch Compilations", "role": "Designer", "tags": ["brand"], "chips": ["Merch Design", "Print Design", "Illustration", "Adobe Creative Suite"],
      "desc": "Crests, posters and goods for HPAIR, IVMUN and HUDC.",
      "img": ("design", "merch/hpair-crest.png"), "alt": "HCONF crest", "note": "",
@@ -609,9 +609,9 @@ RECRUITER_PLAY = [
     {"title": "Neural Reconstruction of Handwritten Curves", "cat": "code", "when": "Dec 2025", "at": 202512, "href": None,
      "desc": "Training a small language model from scratch.", "previews": ("ux", ["chi111.webp"])},
     {"title": "Backtiming", "cat": "code", "when": "Aug 2026 – Ongoing", "at": 999996, "href": "https://github.com/tuechile/backtiming",
-     "desc": "Syncs with my calendars and works backwards from each event to maximize grwm time.", "previews": None},
+     "desc": "Syncs with my calendars and works backwards from each event to maximize grwm time.", "previews": ("other", ["coming-soon.webp"])},
     {"title": "CineNode", "cat": "code", "when": "Jun 2026 – Ongoing", "at": 999994, "href": None,
-     "desc": "A node-based pipeline for generating and arranging shots into a shot list and storyboard. Started at the TekTrek residency.", "previews": None},
+     "desc": "A node-based pipeline for generating and arranging shots into a shot list and storyboard. Started at the TekTrek residency.", "previews": ("other", ["coming-soon.webp"])},
     {"title": "Street Photography", "cat": "art", "when": "Ongoing", "at": 999970, "href": "/play/street",
      "desc": "Through the lens of my Nikon D5100 since 2017.", "previews": ("street", None)},
     {"title": "Coding and Interactivity", "cat": "interactivity", "when": "Ongoing", "at": 999999, "href": "/play/afvs",
@@ -625,7 +625,7 @@ RECRUITER_PLAY = [
     {"title": "Superface", "cat": "art", "when": "Delayed after 2023", "at": 202300, "href": "/play/superface",
      "desc": "Self-edited self-portraits exploring makeup and persona.", "previews": ("self", None)},
     {"title": "Video essays", "cat": "essays", "when": "May 2025", "at": 202505, "href": "/play/essays",
-     "desc": "A list of possible video essays I might create.", "previews": None},
+     "desc": "A list of possible video essays I might create.", "previews": ("other", ["coming-soon.webp"])},
     {"title": "The Portal", "cat": "essays", "when": "Discontinued in 2021", "at": 202100, "href": "/play/portal",
      "desc": "A collection of poems and short stories.", "previews": ("portal", None)},
     {"title": "Illustrations", "cat": "art", "when": "Delayed after 2022", "at": 202200, "href": "/play/illustration",

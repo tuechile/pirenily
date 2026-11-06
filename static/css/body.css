@@ -1924,6 +1924,19 @@
     }
 }
 
+/* Code page: two cards a row on wider screens, one on phones */
+.code-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2rem;
+    width: min(1080px, 90vw);
+}
+
+@media screen and (max-width: 700px) {
+    .code-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 /* Your view's filters (home Projects, Play), like the kit's view toggle: square options with no outlines,
    the chosen one a solid block of ink. No frosted bar and no sliding bubble */
 :root:not([data-mode="mine"]) :is(#portfolio, .filters) .view-toggle {
