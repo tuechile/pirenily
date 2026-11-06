@@ -1138,6 +1138,11 @@
     filter: var(--hover-blur);
 }
 
+/* The landing's rails are full white, not the gray of Play's filter */
+:root[data-mode="mine"] #portfolio :is(.view-btn, .view-btn:hover, .view-btn:focus-visible) {
+    color: var(--c-strong);
+}
+
 :root[data-mode="mine"] :is(#portfolio, #filterToggle) .view-btn.active {
     color: var(--accent-text);
 }
@@ -1578,14 +1583,10 @@
     color: var(--title);
 }
 
-.bio-roles dt span {
-    display: block;
-    font-style: italic;
-    color: var(--lead);
-}
-
 .bio-roles dd {
     margin: 0;
+    font-style: italic;
+    color: var(--lead);
 }
 
 /* The bio changes length with the stretch bar, so the photo side stays at the top instead of riding the middle */
