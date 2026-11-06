@@ -8,6 +8,8 @@
 {{ cs.hero("T4SG × 2ft Prosthetics",
            "An <strong>offline-first</strong> inventory system for a nonprofit that ships prosthetic parts to 10 countries.",
            tags=["Role: Project Manager",
+                 "Timeline: Sep – Dec 2025",
+                 "Team: 3 designers + 2 leads",
                  "My scope: Add / Edit / View Component",
                  "Research: President + Treasurer + 3 Volunteers",
                  "Constraint: Built from scratch + Unreliable internet"]) }}
@@ -15,7 +17,7 @@
 {{ cs.figure(img('ux', 't4sg/preview.webp'), "2ft inventory system preview", zoom=False) }}
 
 {{ cs.boxes([
-    ("Research", "Watched the president, treasurer and 3 volunteers do real inventory work, and compared Airtable, Sortly, Notion and Odoo."),
+    ("Research", "Watched the president, treasurer and 3 volunteers do real inventory work, and compared six inventory tools, from Airtable to Alma."),
     ("Design", "Owned the view, edit and add component flows, putting where a part is before what it is."),
     ("Outcome", "Delivered a hi-fi prototype. After testing it, the president said: “I don’t feel like I’m going to break anything.”"),
 ], title="TL;DR", text="I designed how 2ft's volunteers view, edit and add prosthetic parts, even with no internet.") }}
@@ -54,8 +56,20 @@
 
     {% call cs.section("Research", lead="We asked 5 people to show us their real work") %}
     <p>
-        We started by comparing existing inventory tools, including Airtable, Sortly, Notion and Odoo.
+        We started with market research on six tools teams already use to track inventory.
     </p>
+    {% endcall %}
+
+    {{ cs.tools([
+        ("Airtable", img('ux', 't4sg/tools/airtable.svg')),
+        ("Sortly", img('ux', 't4sg/tools/sortly.svg')),
+        ("Notion", img('ux', 't4sg/tools/notion.svg')),
+        ("Odoo", img('ux', 't4sg/tools/odoo.svg')),
+        ("Jotform", img('ux', 't4sg/tools/jotform.svg')),
+        ("Alma", img('ux', 't4sg/tools/alma.png')),
+    ], title="Market research") }}
+
+    {% call cs.section() %}
     <p>
         Then we interviewed 2ft's <strong>president</strong>, <strong>treasurer</strong> and
         <strong>three volunteers</strong> who update inventory in the field.

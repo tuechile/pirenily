@@ -455,6 +455,11 @@ html {
     .split-quad {
         grid-template-columns: 1fr;
     }
+
+    .split-3.split-keep {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--s-2);
+    }
 }
 
 /* §3 Chapter */
@@ -1931,9 +1936,27 @@ html {
     color: var(--text-secondary);
 }
 
+.cs-tool {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+}
+
+.cs-tool-logo {
+    display: block;
+    height: 1.6rem;
+    background: var(--text-primary);
+    -webkit-mask: var(--logo) left center / contain no-repeat;
+    mask: var(--logo) left center / contain no-repeat;
+}
+
 @media screen and (max-width: 666px) {
     .cs-boxes {
         grid-template-columns: 1fr;
+    }
+
+    .cs-tools {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 

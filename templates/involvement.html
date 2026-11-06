@@ -72,13 +72,13 @@
         ("+15%", "event turnout (projected)"),
     ]) }}
 
-    {% call cs.row("3") %}
+    {% call cs.row("3", keep=True) %}
         {% for post in ["Dee9VvhGxXa", "DQurTHpDlDU", "DSC5gGcDsJv"] %}
         {{ cs.embed("https://www.instagram.com/p/" ~ post ~ "/embed/", "Office for the Arts Instagram post " ~ loop.index, ar=0.72) }}
         {% endfor %}
     {% endcall %}
 
-    {% call cs.row("3", caption="Campaign posts for the Office for the Arts on Instagram.") %}
+    {% call cs.row("3", caption="Campaign posts for the Office for the Arts on Instagram.", keep=True) %}
         {% for post in ["DYAxHelDNKl", "DXwtyJiAVza", "DTk0YYgDoph"] %}
         {{ cs.embed("https://www.instagram.com/p/" ~ post ~ "/embed/", "Office for the Arts Instagram post " ~ (loop.index + 3), ar=0.72) }}
         {% endfor %}

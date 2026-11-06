@@ -2,6 +2,9 @@
    Pirenily, then About · Leadership · Projects, and Writing · Play · ♪ on the right #}
 <nav class="rc-nav" aria-label="Main">
     <a class="rc-logo" href="/">Pirenily</a>
+    <button class="nav-toggle rc-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    {# Laptops: just the links in the header. Phones: the "=" opens them full screen, like Your view's menu (nav.js) #}
+    <div class="rc-menu">
     <div class="rc-links">
         <a href="/about"{% if request.endpoint == "about" %} aria-current="page"{% endif %}>About</a>
         <a href="/involvement"{% if request.endpoint == "involvement" %} aria-current="page"{% endif %}>Leadership</a>
@@ -13,5 +16,6 @@
             <a href="/play"{% if request.endpoint == "play" %} aria-current="page"{% endif %}>Play</a>
         </div>
         <button class="rc-sound" type="button" data-switch="sound" aria-label="Sound">♪</button>
+    </div>
     </div>
 </nav>

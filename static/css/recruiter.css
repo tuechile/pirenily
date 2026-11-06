@@ -139,6 +139,20 @@ body.rc {
     text-decoration: none;
 }
 
+/* The links' wrapper only matters on phones, where it becomes the full-screen menu */
+.rc-menu {
+    display: contents;
+}
+
+.rc .rc-toggle {
+    display: none;
+}
+
+/* The home filter hides projects with [hidden]; .rc-project's flex would show them anyway */
+.rc-project[hidden] {
+    display: none;
+}
+
 /* The page you're on is ink and the rest gray; hovering one makes it ink and grays the rest, instantly */
 .rc-nav:has([aria-current="page"], .rc-links a:hover, .rc-sound:hover) :is(.rc-links a, .rc-sound) {
     color: var(--rc-gray);
@@ -1306,4 +1320,109 @@ body.rc,
 
 .rc .rc-about :is(.rc-bio .rc-bio-lead, .rc-bio-head) {
     font-size: calc(var(--fs-tiny) + 2px);
+}
+
+/* ---------- Phones and narrow tablets: Pirenily on the left, "=" on the right opens the links full screen,
+   wiping open as a circle from the button, like Your view's menu (styles.css, nav.js) ---------- */
+@media (max-width: 880px) {
+    .rc-nav {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding-bottom: 24px;
+    }
+
+    .rc-logo {
+        position: relative;
+        z-index: 1001;
+        flex-basis: auto;
+        text-align: left;
+        font-size: 1.6rem;
+        line-height: 40px;
+    }
+
+    .rc .rc-toggle {
+        position: relative;
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7.5px;
+        width: 40px;
+        height: 40px;
+        padding: 0 9px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .rc .rc-toggle span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--c-title);
+        transition: transform 400ms var(--ease-out);
+    }
+
+    .menu-open .rc .rc-toggle span:first-child {
+        transform: translateY(4.5px) rotate(45deg);
+    }
+
+    .menu-open .rc .rc-toggle span:last-child {
+        transform: translateY(-4.5px) rotate(-45deg);
+    }
+
+    .rc-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 120px var(--rc-gutter) 40px;
+        background: var(--rc-page);
+        text-align: left;
+        clip-path: circle(0% at calc(100% - 36px) 42px);
+        visibility: hidden;
+        transition: clip-path 700ms var(--ease-wipe), visibility 0s linear 700ms;
+    }
+
+    .menu-open .rc-menu {
+        clip-path: circle(150% at calc(100% - 36px) 42px);
+        visibility: visible;
+        transition: clip-path 700ms var(--ease-wipe), visibility 0s;
+    }
+
+    .rc-menu .rc-links,
+    .rc-menu .rc-nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        margin: 0;
+    }
+
+    .rc-menu .rc-links a {
+        font-size: 2.75rem;
+        line-height: 1.1;
+        padding: 0.15rem 0;
+    }
+
+    .rc-menu .rc-sound {
+        width: auto;
+        margin-top: var(--s-4, 1rem);
+        font-size: 1.6rem;
+    }
+
+    html.menu-open {
+        overflow: hidden;
+    }
+
+    /* The résumé covers the profile panel instead of sitting under it */
+    .rc.has-cv .rc-panel {
+        z-index: auto;
+    }
+
+    /* Play: the cards read left to right as on laptops */
+    .rc-cards {
+        text-align: left;
+    }
 }

@@ -139,6 +139,19 @@
         card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); load(); } });
     });
 
+    // Instagram won't lay out narrower than 326px, so a row that keeps three posts on a phone
+    // draws each at 326px and zooms it down to its column
+    const IG_MIN = 326;
+    const fitEmbeds = () => {
+        document.querySelectorAll('.split-keep iframe[src*="instagram.com"]').forEach(f => {
+            const w = f.parentElement.clientWidth;
+            f.style.width = w < IG_MIN ? IG_MIN + "px" : "";
+            f.style.zoom = w < IG_MIN ? (w / IG_MIN).toFixed(4) : "";
+        });
+    };
+    fitEmbeds();
+    window.addEventListener("resize", fitEmbeds);
+
     // Instagram embeds post their own height; size each frame to it so nothing is clipped
     window.addEventListener("message", (e) => {
         if (!/instagram\.com$/.test(new URL(e.origin).hostname)) return;

@@ -129,9 +129,10 @@
 {# §5 Rows — layout: pair | equal | auto | 3 | quad | fit (cards need ar); cells are card / video_card / placeholder #}
 {# match (fit only): the ar sum of a two-card fit row to share its height with
    seamless (fit or 3): posts designed to run together; apart at rest, they slide into one strip on hover or pinch #}
-{% macro row(layout="pair", caption=None, match=None, seamless=False) %}
+{# keep: stays on one line on phones too #}
+{% macro row(layout="pair", caption=None, match=None, seamless=False, keep=False) %}
 <figure class="cs-figure">
-    <div class="split{% if layout != 'auto' %} split-{{ layout }}{% endif %}{% if match %} split-fit--match{% endif %}{% if seamless %} split-seamless{% endif %}"{% if match %} style="--row-ar: {{ match }}"{% endif %}>
+    <div class="split{% if layout != 'auto' %} split-{{ layout }}{% endif %}{% if match %} split-fit--match{% endif %}{% if seamless %} split-seamless{% endif %}{% if keep %} split-keep{% endif %}"{% if match %} style="--row-ar: {{ match }}"{% endif %}>
         {{ caller() }}
     </div>
     {% if caption %}{{ img_caption(caption, fig=True) }}{% endif %}
@@ -236,6 +237,21 @@
         <div class="cs-box">
             <h4 class="cs-label">{{ label|safe }}</h4>
             <p>{{ body|safe }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{# Tool strip — items: list of (name, logo src); logos are masked so they take the text color #}
+{% macro tools(items, title=None) %}
+<div class="cs-block">
+    {% if title %}<h3 class="cs-label cs-boxes-title">{{ title|safe }}</h3>{% endif %}
+    <div class="cs-boxes cs-tools" style="--cols: {{ items|length }}">
+        {% for name, src in items %}
+        <div class="cs-box cs-tool">
+            <span class="cs-tool-logo" style="--logo: url('{{ src }}')" role="img" aria-label="{{ name }} logo"></span>
+            <p>{{ name }}</p>
         </div>
         {% endfor %}
     </div>
