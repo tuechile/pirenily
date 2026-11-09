@@ -83,7 +83,7 @@
     </p>
     {% endcall %}
 
-    {% call cs.row("fit", caption="The sidebar in grayscale first, then in CommonSpirit's colors.") %}
+    {% call cs.row("fit", caption="LoFi → HiFi template for dashboard") %}
         {{ cs.card(img('ux', 'commonspirit/sidebar-wireframe.webp'), "Grayscale wireframe of the Home page with the new left sidebar", ar=1.176) }}
         {{ cs.card(img('ux', 'commonspirit/sidebar-branded.webp'), "The same layout in CommonSpirit's magenta palette", ar=0.918) }}
     {% endcall %}
@@ -124,11 +124,6 @@
         feel like it belonged to them, not to an outside team.
     </p>
     <p>
-        It's also the choice I'd test next. CommonSpirit's palette is mostly magenta, and the comparison
-        charts already use color to tell series apart. Next time I'd check contrast and colorblind-safe
-        options before putting brand colors that strong inside the charts themselves.
-    </p>
-    <p>
         <strong>Status:</strong> shipped. I wrote the handoff document, and a T4SG engineering team built
         on it over the summer (backend and a Supabase trial). I wasn't on that build.
     </p>
@@ -143,6 +138,15 @@
 
     {{ cs.figure(img('ux', 'commonspirit/berryline.webp'), "Selfie of the design team at a Berryline table", size="sm",
                  caption="Our Berryline outing right after (missing Grace).") }}
+
+    {% call cs.section() %}
+    <p>
+        Throughout my first experience as a UX Lead, I held workshops on UI principles (Design from a
+        Marketing Perspective, Data Visualization, etc.). Most of our UX Designers are complete beginners,
+        so it was important to share knowledge with a super adaptive team so we can move fast in creating
+        a useful product!
+    </p>
+    {% endcall %}
 
 {% endcall %}
 
