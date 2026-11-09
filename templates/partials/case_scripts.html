@@ -70,6 +70,14 @@
             img.src = src;
             img.alt = alt || "Expanded image";
             overlay.style.display = "flex";
+            // Hold the photo back until it has decoded, then let it sharpen into focus
+            img.classList.remove("focus-in");
+            img.classList.add("is-loading");
+            img.decode().catch(() => {}).then(() => {
+                img.classList.remove("is-loading");
+                void img.offsetWidth;
+                img.classList.add("focus-in");
+            });
         }
         function shut() {
             overlay.style.display = "none";

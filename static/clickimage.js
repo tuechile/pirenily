@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Append the overlay to the document
     document.body.appendChild(lightboxOverlay);
 
+    // Hold the photo back until it has decoded, then let it sharpen into focus
+    function pullFocus(el) {
+        el.classList.remove("focus-in");
+        el.classList.add("is-loading");
+        el.decode().catch(() => {}).then(() => {
+            el.classList.remove("is-loading");
+            void el.offsetWidth;
+            el.classList.add("focus-in");
+        });
+    }
+
     // Event: Open the lightbox
     const lightboxLinks = document.querySelectorAll(".lightbox");
     lightboxLinks.forEach((link) => {
@@ -21,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             img.src = link.href;
             lightboxOverlay.style.display = "flex";
+            pullFocus(img);
         });
     });
 

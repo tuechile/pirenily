@@ -44,6 +44,9 @@
     /* The signature hover; easy mode and reduced motion turn it off */
     --hover-blur: blur(1px);
 
+    /* Lightbox photos open out of focus and sharpen (pull focus) */
+    --lightbox-shadow: drop-shadow(0 4px 8px rgba(var(--shadow-rgb), 0.5));
+
     /* Frosted pills and panels */
     --glass: rgba(var(--fg-rgb), 0.03);
     --glass-strong: rgba(var(--fg-rgb), 0.08);
@@ -1097,4 +1100,14 @@ footer {
     color: var(--c-title);
 }
 
-
+/* Lightbox pull focus: clickimage.js and case_scripts.html add .focus-in once the photo has decoded */
+@keyframes pull-focus {
+    from { filter: blur(28px) var(--lightbox-shadow); transform: scale(1.04); }
+    to   { filter: blur(0) var(--lightbox-shadow); transform: none; }
+}
+.lightbox-overlay img { filter: var(--lightbox-shadow); }
+.lightbox-overlay img.is-loading { visibility: hidden; }
+.lightbox-overlay img.focus-in { animation: pull-focus var(--dur-3) var(--ease-out); }
+@media (prefers-reduced-motion: reduce) {
+    .lightbox-overlay img.focus-in { animation: none; }
+}

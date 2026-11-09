@@ -637,7 +637,6 @@
 .lightbox-overlay img {
     max-width: 90%;
     max-height: 90%;
-    filter: drop-shadow(0 4px 8px rgba(var(--shadow-rgb), 0.5));
 }
 
 /* ========================================= Other small items ========================================= */
