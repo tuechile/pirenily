@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "350"
+ASSET_VERSION = "351"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -356,6 +356,8 @@ def find_page(query):
 #   PROJECTS_PASSWORD_HASH       the full password: projects and the CV tab
 #   PROJECTS_ONLY_PASSWORD_HASH  the projects-only password
 #   RECRUITER_LINK               pirenily.com/<this> opens the full level with no password
+#                                (recruiter view as Technical Product Manager, the main résumé)
+#   DESIGN_RECRUITER_LINK        the same, as Product Designer with the design résumé
 # Make a hash with:
 #   python3 -c "from werkzeug.security import generate_password_hash as g; print(g('the password', method='pbkdf2:sha256:260000'))"
 # The cookie keeps what the visitor typed (or the link) and is re-checked on every visit, so it
@@ -377,6 +379,7 @@ _load_env_file()
 PROJECTS_PASSWORD_HASH = os.environ.get("PROJECTS_PASSWORD_HASH", "")
 PROJECTS_ONLY_PASSWORD_HASH = os.environ.get("PROJECTS_ONLY_PASSWORD_HASH", "")
 RECRUITER_LINK = os.environ.get("RECRUITER_LINK", "")
+DESIGN_LINK = os.environ.get("DESIGN_RECRUITER_LINK", "")
 PROJECTS_COOKIE = "projects_key"
 GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "highlander", "t4sg",
                   "commonspirit", "cs171", "pirenily"}
@@ -384,6 +387,16 @@ GATED_PROJECTS = {"hackharvard", "merch", "involvement", "olympics", "recit", "h
 # The résumé, in both views: a Word file opened in Google Docs (anyone with the link can view).
 # Docs exports it as a PDF, which the sheet and the Download button use. Empty shows a "coming soon" note.
 CV_URL = "https://docs.google.com/document/d/1I9r2JRAZNCa9Ej9AuDN5b10PXsnvO7v-/edit"
+# The product design résumé, for the design recruiter link (DESIGN_RECRUITER_LINK)
+DESIGN_CV_URL = "https://docs.google.com/document/d/11dQyfTq5Ep3VOSEsZvTa2MJPSq22Sn6D/edit"
+
+
+def design_track():
+    return bool(DESIGN_LINK) and hmac.compare_digest(request.cookies.get(PROJECTS_COOKIE, ""), DESIGN_LINK)
+
+
+def current_cv_url():
+    return DESIGN_CV_URL if design_track() else CV_URL
 
 
 def access_level(key=None):
@@ -392,6 +405,7 @@ def access_level(key=None):
     if not key:
         return None
     if (RECRUITER_LINK and hmac.compare_digest(key, RECRUITER_LINK)) or \
+            (DESIGN_LINK and hmac.compare_digest(key, DESIGN_LINK)) or \
             (PROJECTS_PASSWORD_HASH and check_password_hash(PROJECTS_PASSWORD_HASH, key)):
         return "cv"
     if PROJECTS_ONLY_PASSWORD_HASH and check_password_hash(PROJECTS_ONLY_PASSWORD_HASH, key):
@@ -410,12 +424,12 @@ def inject_projects_unlocked():
     if level == "cv" and recruiter_mode():
         cv = {"url": None, "page": True}
     elif level == "cv":
-        cv = {"url": CV_URL or None, "page": cv_file_id() is not None}
+        cv = {"url": current_cv_url() or None, "page": cv_file_id() is not None}
     return dict(projects_unlocked=level is not None, cv=cv)
 
 
-def cv_file_id():
-    match = re.search(r"/d/([\w-]+)", CV_URL)
+def cv_file_id(url=None):
+    match = re.search(r"/d/([\w-]+)", current_cv_url() if url is None else url)
     return match.group(1) if match else None
 
 
@@ -427,8 +441,9 @@ _cv_pdf = {}
 _cv_refreshing = set()
 
 
-def _cv_export_url():
-    return f"https://docs.google.com/document/d/{cv_file_id()}/export?format=pdf" if cv_file_id() else None
+def _cv_export_url(url=None):
+    file_id = cv_file_id(url)
+    return f"https://docs.google.com/document/d/{file_id}/export?format=pdf" if file_id else None
 
 
 def _fetch_cv(url):
@@ -447,8 +462,9 @@ def _refresh_cv(url):
         threading.Thread(target=_fetch_cv, args=(url,), daemon=True).start()
 
 
-if _cv_export_url():
-    _refresh_cv(_cv_export_url())
+for _url in (CV_URL, DESIGN_CV_URL):
+    if _cv_export_url(_url):
+        _refresh_cv(_cv_export_url(_url))
 
 
 @app.route("/cv.pdf")
@@ -491,20 +507,24 @@ def unlock():
     return response
 
 
-def recruiter_link():
+def recruiter_link(link=None):
     # ?next=/projects/t4sg lets the CV link straight to a case study and unlock it on the way.
     # The link also turns on recruiter mode: home, About, Play and Writing become the light recruiter pages.
     target = request.args.get("next", "")
     if not target.startswith("/") or target[1:2] in ("/", "\\"):
         target = "/"
     response = redirect(target)
-    response.set_cookie(PROJECTS_COOKIE, RECRUITER_LINK, max_age=60 * 60 * 24 * 30,
+    response.set_cookie(PROJECTS_COOKIE, link or RECRUITER_LINK, max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
     response.set_cookie(RECRUITER_COOKIE, "1", max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
     response.set_cookie(RECRUITER_SEEN_COOKIE, "1", max_age=60 * 60 * 24 * 30,
                         httponly=True, secure=request.is_secure, samesite="Lax")
     return response
+
+
+def design_link():
+    return recruiter_link(DESIGN_LINK)
 
 
 RECRUITER_COOKIE = "recruiter_view"
@@ -519,7 +539,7 @@ def recruiter_mode():
 @app.context_processor
 def inject_recruiter_mode():
     seen = request.cookies.get(RECRUITER_SEEN_COOKIE) == "1" and projects_unlocked()
-    return dict(recruiter=recruiter_mode(), recruiter_seen=seen)
+    return dict(recruiter=recruiter_mode(), recruiter_seen=seen, design_track=design_track())
 
 
 # The eye on the back of the recruiter flip card: "Not a recruiter?" drops back to the normal site
@@ -637,6 +657,8 @@ RECRUITER_PLAY.sort(key=lambda c: -c["at"])
 # Only when it's set: an empty link would take over the home page
 if RECRUITER_LINK:
     app.add_url_rule("/" + RECRUITER_LINK, "recruiter_link", recruiter_link)
+if DESIGN_LINK:
+    app.add_url_rule("/" + DESIGN_LINK, "design_link", design_link)
 
 
 @app.route("/", methods=["GET", "POST"])
