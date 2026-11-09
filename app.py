@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "351"
+ASSET_VERSION = "354"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -572,7 +572,7 @@ RECRUITER_PROJECTS = [
      "desc": "Led a team of 6 on the brand, campaign, website and merch for a 500+ participant hackathon. Applications doubled.",
      "img": ("design", "hackharvard/logo-thumb.png"), "alt": "HackHarvard logo in red on black", "note": "DETAILED AND NUMBERS",
      "previews": ("design", ["hackharvard/poster-moon.jpg", "hackharvard/site-about.jpg", "hackharvard/site-tracks.jpg", "hackharvard/stickers.png"])},
-    {"href": "/projects/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "Project Manager", "tags": ["selected", "uiux"], "chips": ["Project Management", "Stakeholder Interviews", "Figma", "Prototyping", "Data Visualization"],
+    {"href": "/projects/commonspirit", "title": "T4SG × CommonSpirit Health", "role": "UX Lead", "tags": ["selected", "uiux"], "chips": ["Project Management", "Stakeholder Interviews", "Figma", "Prototyping", "Data Visualization"],
      "desc": "12 weeks rebuilding CommonSpirit Health's internal tool for comparing community health needs across 200+ communities. Shipped.",
      "img": ("ux", "commonspirit/preview.webp"), "alt": "T4SG × CommonSpirit Health redesign preview", "note": "LEAD, LESS DETAILED",
      "previews": ("ux", ["commonspirit/redes1.webp", "commonspirit/redes2.webp", "commonspirit/impact-effort.png"])},

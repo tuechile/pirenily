@@ -7,18 +7,18 @@
 
 {{ cs.hero("T4SG × CommonSpirit Health",
            "Redesigning the internal tool CommonSpirit's investment team uses to read community health needs.",
-           tags=["Role: Project Manager",
-                 "Team: 5 designers",
+           tags=["Role: UX Lead",
+                 "Team: 1 Co-Lead, 4 designers",
                  "Timeline: Feb – May 2026",
                  "Tools: Figma / FigJam · HTML/CSS/JS · Cursor"]) }}
 
 {{ cs.figure(img('ux', 'commonspirit/preview.webp'), "CommonSpirit Health redesign preview", zoom=False) }}
 
 {{ cs.boxes([
-    ("Research", "Ran 1:1 interviews with 6 board members, and led 5 designers for 12 weeks through to the handoff document."),
+    ("Research", "Ran 1:1 interviews with 6 board members, and co-led 4 designers for 12 weeks through to the handoff document."),
     ("Design", "Owned the system design and rebuilt Account and Settings from one bare screen into a full Preferences flow."),
     ("Outcome", "Four focused pages (Home, Regional, Compare, Trends), shipped by a T4SG engineering team on our handoff."),
-], title="TL;DR", text="I led 5 designers through rebuilding CommonSpirit's health needs tool around four focused pages.") }}
+], title="TL;DR", text="With a co-lead, I led 4 designers through rebuilding CommonSpirit's health needs tool around four focused pages.") }}
 
 {% call cs.body() %}
 
@@ -83,8 +83,19 @@
     </p>
     {% endcall %}
 
+    {% call cs.row("fit", caption="The sidebar in grayscale first, then in CommonSpirit's colors.") %}
+        {{ cs.card(img('ux', 'commonspirit/sidebar-wireframe.webp'), "Grayscale wireframe of the Home page with the new left sidebar", ar=1.176) }}
+        {{ cs.card(img('ux', 'commonspirit/sidebar-branded.webp'), "The same layout in CommonSpirit's magenta palette", ar=0.918) }}
+    {% endcall %}
+
     {{ cs.section("Contribution", lead="I rebuilt Settings from one bare screen into a Preferences flow",
                   index="My Contribution") }}
+
+    {% call cs.row("fit", caption="I kept track of the design system: the shared component library, the hi-fi rules and the type scale.") %}
+        {{ cs.card(img('ux', 'commonspirit/ds-library.webp'), "Component library page with dropdowns, toggles, checkboxes and side-nav hover states", ar=0.972) }}
+        {{ cs.card(img('ux', 'commonspirit/ds-guidelines.webp'), "High-fidelity prototyping guidelines on layout grid, color, typeface and button sizes", ar=1.893) }}
+        {{ cs.card(img('ux', 'commonspirit/ds-typography.webp'), "Typography scale from title to subtitle, next to CommonSpirit's brand type guide", ar=1.639) }}
+    {% endcall %}
 
     {{ cs.boxes([
         ("Account", "Profile with role and avatar, plus password, two-factor login and data export."),
@@ -126,6 +137,12 @@
         hospitals, against reading the PDFs by hand.
     </p>
     {% endcall %}
+
+    {{ cs.figure(img('ux', 'commonspirit/thanks-email.webp'), "Thank-you email from Alex at CommonSpirit to the T4SG team", size="lg",
+                 caption="Thanks Alex and the CommonSpirit team!") }}
+
+    {{ cs.figure(img('ux', 'commonspirit/berryline.webp'), "Selfie of the design team at a Berryline table", size="sm",
+                 caption="Our Berryline outing right after (missing Grace).") }}
 
 {% endcall %}
 
