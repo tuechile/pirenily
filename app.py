@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "360"
+ASSET_VERSION = "361"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -356,7 +356,7 @@ def find_page(query):
 #   PROJECTS_PASSWORD_HASH       the full password: projects and the CV tab
 #   PROJECTS_ONLY_PASSWORD_HASH  the projects-only password
 #   RECRUITER_LINK               pirenily.com/<this> opens the full level with no password
-#                                (recruiter view as Consumer Product Manager, the main résumé)
+#                                (recruiter view as Technical Product Manager, the main résumé)
 #   DESIGN_RECRUITER_LINK        the same, as Product Designer with the design résumé
 # Make a hash with:
 #   python3 -c "from werkzeug.security import generate_password_hash as g; print(g('the password', method='pbkdf2:sha256:260000'))"
