@@ -24,50 +24,9 @@
         Hey, sorry if I say “niche” or “chic” a lot. Those are my vocal stims right now, and as you’ll
         notice, this whole website is full of them.
     </p>
-
-    <p data-t="26">
-        One thing first: I don’t think AI restricts design. I think it makes it more accessible. I started
-        this site with a taste, but no coding skills, and I kind of learned it off of ChatGPT when it was
-        really bad. Now Claude writes most of the code (instead of me manually checking if moving 0.01rem is
-        perfectly aligned), organizes feedback, and tracks progress, and I spend my time on the part that’s
-        mine. You can see it in my commit messages from 2024, how I was struggling, manually checking if
-        moving 0.01rem is perfectly aligned.
-    </p>
 </div>
 
-{% set notes = {"2024-12-08": "CS50 final project due",
-                "2025-07-09": "Free in Venice: and a phone layout",
-                "2026-01-02": "Just finished my first semester at T4SG, and I knew I wanted to do UX design",
-                "2026-08-17": "Finished my fellowship, so I added CommonSpirit. As a CS major I figured I should tinker, so I added a bunch of dumb coding projects, and rearranged the UX of a site I hadn’t touched in a long time",
-                "2026-10-21": "A lot more of my own taste. Claude Code got really good, so I could make things right away instead of writing them in my notes and waiting for a free day"} %}
-{% if commit_weeks %}
-<figure class="cs-figure essay-activity">
-    {# Two rows, like GitHub's year rows, so the squares stay big enough to see #}
-    {% set half = (commit_weeks|length + 1) // 2 %}
-    {% set ns = namespace(note=0) %}
-    <div class="essay-grid-scroll" role="img"
-        aria-label="My commits per day since December 2024, in five bursts: December 2024, July 2025, January 2026, August 2026 and October 2026">
-        {% for row in commit_weeks|batch(half) %}
-        <div class="essay-grid" style="--weeks: {{ half }}">
-            {% for week in row %}
-            <div class="essay-week">
-                <span class="essay-week-note">{% for d, n in week.days if d in notes %}{% set ns.note = ns.note + 1 %}{{ ns.note }}{% endfor %}</span>
-                {% for d, n in week.days %}
-                <span class="essay-day" data-level="{{ 0 if n == 0 else 1 if n < 4 else 2 if n < 10 else 3 if n < 20 else 4 }}"
-                    title="{{ d }}: {{ n }} commit{{ '' if n == 1 else 's' }}"></span>
-                {% endfor %}
-                <span class="essay-week-month">{{ week.month or (week.first if loop.first else '') }}</span>
-            </div>
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </div>
-    <ol class="essay-notes">
-        {% for d, note in notes|dictsort %}<li>{{ note }}</li>{% endfor %}
-    </ol>
-</figure>
-{% endif %}
-
+{# 1. The name #}
 <div class="essay cs-prose">
     <p data-t="102">
         Pirenily is two of my names put together. Emily is my English name. I picked it in sixth grade (Chi
@@ -89,7 +48,10 @@
         Emily Tiles, because Tiles is Chi Le with the Ch turned into a T, and I love a tile texture. Chi Bell, which is what people call me in Vietnam. Kai, because that’s
         how some people read my name (I’m not Greek). And The Country, as in Chile.
     </p>
+</div>
 
+{# 2. Where it came from #}
+<div class="essay cs-prose">
     <p data-t="223">
         I’ve always been a self-taught designer, but I didn’t know code before I came to the US. Vietnam doesn’t really
         teach it; “IT” class meant studying for Microsoft Office tests. So finding out that code could be
@@ -109,31 +71,6 @@
         I didn’t want to build a final project I’d never use again, and archives have always fascinated me.
         So I thought: I want to be a niche artist. Let’s build a niche, weird website, and keep everything
         there.
-    </p>
-
-    <p data-t="274">
-        I’m a big maximalist, but I don’t want to be maximalist about just one thing. I want to be everything
-        at once. So the site stays minimal, and everything inside it gets to be loud.
-    </p>
-
-    {# TODO (Chi): the reasons below are drafted from the site's own rules; rewrite any that aren't yours #}
-    <p data-t="291">
-        That’s the one idea every decision goes through: an archive. Quiet, so the work is the loudest thing
-        on the page. Personal, so it’s mine and not a template. A little weird, because a niche artist gets a
-        niche website. If something doesn’t fit, it goes, even if I love it.
-    </p>
-
-    <p>
-        — <strong>Black, with gray text.</strong> The frame should disappear, so the work is the brightest
-        thing you see.<br>
-        — <strong>One color, teal.</strong> If there’s only one, it means something when it shows up.<br>
-        — <strong>Serif everywhere, one display font for the name.</strong> It should read like a book, not an
-        app. Pirenily gets its own font because it’s the title.<br>
-        — <strong>Blur on hover, not a color change.</strong> Things go soft when you look at them, and the
-        palette stays quiet.<br>
-        — <strong>No fades.</strong> Things just appear and disappear, like flipping through a box of photos.<br>
-        — <strong>No rounded corners, and no stretched-out letters.</strong> Rounded buttons look like an app.
-        Wide letter spacing is cringe.
     </p>
 
     <p data-t="307">
@@ -163,49 +100,44 @@
     <img src="{{ img('other', 'loader.gif') }}" alt="The loader that plays between pages">
 </figure>
 
+{# 3. What it says #}
 <div class="essay cs-prose">
-    <p data-t="362">
-        A few things people ask about. The search bar doesn’t need you to spell anything right. It tries,
-        in order: the exact name, a name hiding inside what you typed, the start of a name you’re still
-        typing, and then the closest spelling. Try it here, it won’t take you anywhere:
+    <p data-t="274">
+        I’m a big maximalist, but I don’t want to be maximalist about just one thing. I want to be everything
+        at once. So the site stays minimal, and everything inside it gets to be loud.
     </p>
-</div>
 
-<div class="essay-demo">
-    <input type="text" id="finderDemo" class="essay-demo-input" placeholder="try “streeet”, “hack harvrd” or “emily”"
-        autocomplete="off" spellcheck="false" aria-label="Try the finder">
-    <p class="img-caption" id="finderDemoOut" aria-live="polite">It’ll tell you where you’d land.</p>
-</div>
-
-<div class="essay cs-prose">
-    <p>
-        Hovering doesn’t change colors; things just go soft. <span class="essay-blur">Hover over this.</span>
-        In the light view it dims instead.
+    {# TODO (Chi): the reasons below are drafted from the site's own rules; rewrite any that aren't yours #}
+    <p data-t="291">
+        That’s the one idea every decision goes through: an archive. Quiet, so the work is the loudest thing
+        on the page. Personal, so it’s mine and not a template. A little weird, because a niche artist gets a
+        niche website. If something doesn’t fit, it goes, even if I love it.
     </p>
 
     <p>
-        The ☀ and ♪ in the nav are the only settings. ☀ swaps the whole site between the two views, and ♪
-        turns on music and click sounds. Everything is colored from a few shared values, so one switch
+        — <strong>Black, with gray text.</strong> The frame should disappear, so the work is the brightest
+        thing you see.<br>
+        — <strong>One color, teal.</strong> If there’s only one, it means something when it shows up.<br>
+        — <strong>Serif everywhere, one display font for the name.</strong> It should read like a book, not an
+        app. Pirenily gets its own font because it’s the title.<br>
+        — <strong>Blur on hover, not a color change.</strong> Things go soft when you look at them, and the
+        palette stays quiet.<br>
+        — <strong>No fades.</strong> Things just appear and disappear, like flipping through a box of photos.<br>
+        — <strong>No rounded corners, and no stretched-out letters.</strong> Rounded buttons look like an app.
+        Wide letter spacing is cringe.
+    </p>
+</div>
+
+{# 4. The two views #}
+<div class="essay cs-prose">
+    <p>
+        The site has two views, and the ☀ in the nav switches between them; ♪ turns on music and click
+        sounds. Those are the only settings. Everything is colored from a few shared values, so one switch
         repaints every page, icons included.
-    </p>
-</div>
-
-<div class="essay cs-prose">
-    <p data-t="387">
-        My ideas come all day. In class, when I look at a poster, whenever. I don’t write them down, because
-        writing cleans out the stuttering and the fast talking, and later I can’t tell what I was feeling.
-        So I talk instead: voice-to-text, and voice notes to my brother (thanks, I love him a lot). When he
-        answers, I have to defend the idea, and I remember exactly what I felt when I said it. You can turn
-        my voice on and off and see how different the same idea can sound to you.
-    </p>
-
-    <p data-t="431">
-        At night my brain turns off, and that’s when I build. The ideas are already there, so I don’t have
-        to think. I just hyperfixate and make them.
     </p>
 
     <p data-t="445">
-        The site has two views, and the ☀ in the nav switches between them. The dark one is for me. It
+        The dark one is for me. It
         started from artists I love: people from the
         <a href="https://sfpc.io/people/" target="_blank" rel="noopener">School for Poetic Computation</a>,
         <a href="https://alicia-nguyen.com/" target="_blank" rel="noopener">Alicia Nguyen</a>,
@@ -252,6 +184,96 @@
     {{ cs.site("https://cyze.dev/", "cyze.dev", hover=True) }}
 {% endcall %}
 
+{# 5. Details #}
+<div class="essay cs-prose">
+    <p data-t="362">
+        A few details people ask about. The search bar doesn’t need you to spell anything right. It tries,
+        in order: the exact name, a name hiding inside what you typed, the start of a name you’re still
+        typing, and then the closest spelling. Try it here, it won’t take you anywhere:
+    </p>
+</div>
+
+<div class="essay-demo">
+    <input type="text" id="finderDemo" class="essay-demo-input" placeholder="try “streeet”, “hack harvrd” or “emily”"
+        autocomplete="off" spellcheck="false" aria-label="Try the finder">
+    <p class="img-caption" id="finderDemoOut" aria-live="polite">It’ll tell you where you’d land.</p>
+</div>
+
+<div class="essay cs-prose">
+    <p>
+        Hovering doesn’t change colors; things just go soft. <span class="essay-blur">Hover over this.</span>
+        In the light view it dims instead.
+    </p>
+
+    <p>
+        Every icon is my own line drawing, in whatever color the text is, so they follow both views:
+    </p>
+</div>
+
+<div class="essay-icons" aria-label="The site’s hand-drawn icons">
+    {% for kind in ["star", "square", "circle", "triangle", "kiki", "bouba", "mail", "instagram",
+                    "linkedin", "github", "facebook", "x", "website", "article", "chevron"] %}
+    {{ icons.icon(kind, kind, "essay-icon") }}
+    {% endfor %}
+</div>
+
+{# 6. How I work, and AI #}
+<div class="essay cs-prose">
+    <p data-t="387">
+        My ideas come all day. In class, when I look at a poster, whenever. I don’t write them down, because
+        writing cleans out the stuttering and the fast talking, and later I can’t tell what I was feeling.
+        So I talk instead: voice-to-text, and voice notes to my brother (thanks, I love him a lot). When he
+        answers, I have to defend the idea, and I remember exactly what I felt when I said it.{% if narration %} You can turn
+        my voice on and off and see how different the same idea can sound to you.{% endif %}
+    </p>
+
+    <p data-t="431">
+        At night my brain turns off, and that’s when I build. The ideas are already there, so I don’t have
+        to think. I just hyperfixate and make them.
+    </p>
+
+    <p data-t="26">
+        About AI: I don’t think it restricts design. I think it makes it more accessible. I started this
+        site with taste but no coding skills, and learned off of ChatGPT back when it was really bad. You
+        can see it in my commits from 2024, me struggling, manually checking if moving 0.01rem made
+        something perfectly aligned. Now Claude writes most of the code, organizes feedback and tracks
+        progress, and I spend my time on the part that’s mine.
+    </p>
+</div>
+
+{% set notes = {"2024-12-08": "CS50 final project due",
+                "2025-07-09": "Free in Venice: and a phone layout",
+                "2026-01-02": "Just finished my first semester at T4SG, and I knew I wanted to do UX design",
+                "2026-08-17": "Finished my fellowship, so I added CommonSpirit. As a CS major I figured I should tinker, so I added a bunch of dumb coding projects, and rearranged the UX of a site I hadn’t touched in a long time",
+                "2026-10-21": "A lot more of my own taste. Claude Code got really good, so I could make things right away instead of writing them in my notes and waiting for a free day"} %}
+{% if commit_weeks %}
+<figure class="cs-figure essay-activity">
+    {# Two rows, like GitHub's year rows, so the squares stay big enough to see #}
+    {% set half = (commit_weeks|length + 1) // 2 %}
+    {% set ns = namespace(note=0) %}
+    <div class="essay-grid-scroll" role="img"
+        aria-label="My commits per day since December 2024, in five bursts: December 2024, July 2025, January 2026, August 2026 and October 2026">
+        {% for row in commit_weeks|batch(half) %}
+        <div class="essay-grid" style="--weeks: {{ half }}">
+            {% for week in row %}
+            <div class="essay-week">
+                <span class="essay-week-note">{% for d, n in week.days if d in notes %}{% set ns.note = ns.note + 1 %}{{ ns.note }}{% endfor %}</span>
+                {% for d, n in week.days %}
+                <span class="essay-day" data-level="{{ 0 if n == 0 else 1 if n < 4 else 2 if n < 10 else 3 if n < 20 else 4 }}"
+                    title="{{ d }}: {{ n }} commit{{ '' if n == 1 else 's' }}"></span>
+                {% endfor %}
+                <span class="essay-week-month">{{ week.month or (week.first if loop.first else '') }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <ol class="essay-notes">
+        {% for d, note in notes|dictsort %}<li>{{ note }}</li>{% endfor %}
+    </ol>
+</figure>
+{% endif %}
+
 <div class="essay cs-prose">
     <p data-t="490">
         <a href="https://andydieu.com/" target="_blank" rel="noopener">Andy Dieu</a> is this site’s biggest
@@ -276,24 +298,13 @@
     {{ cs.site("https://pirenily.com/pirenily-ui/storybook/", "Pirenily UI Storybook", hover=True) }}
 {% endcall %}
 
-<div class="essay cs-prose">
-    <p>
-        Every icon is my own line drawing, in whatever color the text is, so they follow both views:
-    </p>
-</div>
-
-<div class="essay-icons" aria-label="The site’s hand-drawn icons">
-    {% for kind in ["star", "square", "circle", "triangle", "kiki", "bouba", "mail", "instagram",
-                    "linkedin", "github", "facebook", "x", "website", "article", "chevron"] %}
-    {{ icons.icon(kind, kind, "essay-icon") }}
-    {% endfor %}
-</div>
-
+{# 7. Close #}
 <div class="essay cs-prose">
     <p data-t="570">
-        The code is Flask and plain HTML, CSS and JavaScript, and most of it was written by Claude, from my
+        Under the hood, the code is Flask and plain HTML, CSS and JavaScript, and most of it was written by Claude, from my
         decisions.
     </p>
+
     <p data-t="573">
         If you’re making your own: talk your ideas out. Decide before AI can decide for you. Write down why
         you made every choice, and why you said no to the others, because you won’t remember, no matter how

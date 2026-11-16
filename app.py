@@ -42,7 +42,7 @@ IMAGE_FOLDERS = {
 
 # Cache-busting version appended to local CSS/JS URLs (?v=...).
 # Bump on every change so browsers fetch fresh assets.
-ASSET_VERSION = "357"
+ASSET_VERSION = "360"
 
 GALLERY_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
@@ -356,7 +356,7 @@ def find_page(query):
 #   PROJECTS_PASSWORD_HASH       the full password: projects and the CV tab
 #   PROJECTS_ONLY_PASSWORD_HASH  the projects-only password
 #   RECRUITER_LINK               pirenily.com/<this> opens the full level with no password
-#                                (recruiter view as Technical Product Manager, the main résumé)
+#                                (recruiter view as Consumer Product Manager, the main résumé)
 #   DESIGN_RECRUITER_LINK        the same, as Product Designer with the design résumé
 # Make a hash with:
 #   python3 -c "from werkzeug.security import generate_password_hash as g; print(g('the password', method='pbkdf2:sha256:260000'))"
@@ -847,9 +847,11 @@ def commit_weeks():
 
 @app.route("/projects/pirenily")
 def pirenily():
-    # Reading mode: a recording of the essay, shown only once the file exists
+    # Reading mode: a recording of the essay, shown only once the file exists.
+    # Off for now while the essay is reordered (the recording no longer follows it); set True to bring it back.
+    voice_on = False
     path = os.path.join(app.static_folder, "asset", "audio", "pirenily-essay.mp3")
-    narration = url_for("static", filename="asset/audio/pirenily-essay.mp3", v=_file_hash(path)) if os.path.isfile(path) else None
+    narration = url_for("static", filename="asset/audio/pirenily-essay.mp3", v=_file_hash(path)) if voice_on and os.path.isfile(path) else None
     return render_template(PROJECT_TEMPLATES["pirenily"], narration=narration, commit_weeks=commit_weeks())
 
 
